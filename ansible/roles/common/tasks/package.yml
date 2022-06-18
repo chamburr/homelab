@@ -1,0 +1,36 @@
+---
+
+- name: Add EPEL repository
+  ansible.builtin.dnf:
+    name: epel-release
+    state: present
+
+- name: Install packages
+  ansible.builtin.dnf:
+    name:
+      - bat
+      - curl
+      - git
+      - htop
+      - iotop
+      - iperf3
+      - jq
+      - ncdu
+      - neofetch
+      - neovim
+      - rsync
+      - tar
+      - telnet
+      - tmux
+      - unzip
+      - wget
+    state: present
+
+- name: Upgrade packages
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+
+- name: Cleanup packages
+  ansible.builtin.dnf:
+    autoremove: true

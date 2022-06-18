@@ -1,0 +1,46 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: grafana
+      version: 6.29.11
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-charts
+        namespace: flux-system
+  values:
+    grafana.ini:
+      server:
+        root_url: https://grafana.${DOMAIN}
+      analytics:
+        reporting_enabled: false
+        check_for_updates: false
+      security:
+        allow_embedding: true
+      smtp:
+        enabled: true
+        host: ${MAIL_HOST}:${MAIL_PORT}
+        username: ${MAIL_USERNAME}
+        password: ${MAIL_PASSWORD}
+        from_address: ${MAIL_SENDER}
+    serviceMonitor:
+      enabled: true
+    persistence:
+      enabled: true
+      existingClaim: grafana-data
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      path: /
+      pathType: Prefix
+      hosts:
+        - grafana.${DOMAIN}
+      tls:
+        - hosts:
+            - grafana.${DOMAIN}

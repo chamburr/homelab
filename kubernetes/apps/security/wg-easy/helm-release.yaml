@@ -1,0 +1,68 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wg-easy
+  namespace: security
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: kah-common-chart
+      version: 1.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  values:
+    global:
+      nameOverride: wg-easy
+    image:
+      repository: docker.io/weejewel/wg-easy
+      tag: 6
+    env:
+      WG_HOST: vpn.${DOMAIN}
+      WG_PORT: 51820
+      WG_MTU: null
+      WG_PERSISTENT_KEEPALIVE: 0
+      WG_DEFAULT_ADDRESS: 10.8.0.x
+      WG_DEFAULT_DNS: 1.1.1.1
+      WG_ALLOWED_IPS: 0.0.0.0/0, ::/0
+    service:
+      main:
+        ports:
+          http:
+            port: 51821
+      wireguard-udp:
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: ${LB_WG_EASY_IP}
+        ports:
+          dns-tcp:
+            enabled: true
+            port: 51820
+            protocol: UDP
+            targetPort: 51820
+        externalTrafficPolicy: Local
+    persistence:
+      config:
+        enabled: true
+        existingClaim: wg-easy-data
+        mountPath: /etc/wireguard
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - host: wireguard.${DOMAIN}
+            paths:
+              - path: /
+                pathType: prefix
+        tls:
+          - hosts:
+              - wireguard.${DOMAIN}
+  valuesFrom:
+    - kind: Secret
+      name: wg-easy-secret
+      valuesKey: password
+      targetPath: env.PASSWORD

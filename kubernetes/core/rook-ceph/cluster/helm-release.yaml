@@ -1,0 +1,100 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rook-ceph-cluster
+  namespace: rook-ceph
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: rook-ceph-cluster
+      version: 1.7.9
+      sourceRef:
+        kind: HelmRepository
+        name: rook-ceph-charts
+        namespace: flux-system
+  dependsOn:
+    - name: rook-ceph
+      namespace: rook-ceph
+  values:
+    monitoring:
+      enabled: true
+    dashboard:
+      enabled: true
+    ingress:
+      dashboard:
+        enabled: true
+        ingressClassName: traefik
+        host:
+          name: ceph.${DOMAIN}
+          path: /
+        tls:
+          - hosts:
+              - ceph.${DOMAIN}
+    configOverride: |
+      [global]
+      bdev_enable_discard = true
+      bdev_async_discard = true
+    cephClusterSpec:
+      # TODO: Configure storage
+      crashCollector:
+        disable: false
+      dashboard:
+        enabled: true
+      network:
+        provider: host
+    cephBlockPools:
+      - name: ceph-blockpool
+        spec:
+          failureDomain: host
+          replicated:
+            size: 3
+        storageClass:
+          enabled: true
+          name: ceph-block
+          isDefault: true
+          reclaimPolicy: Delete
+          allowVolumeExpansion: true
+    cephFileSystems:
+      - name: ceph-filesystem
+        spec:
+          metadataPool:
+            failureDomain: host
+            replicated:
+              size: 3
+          dataPools:
+            - failureDomain: host
+              replicated: 3
+          metadataServer:
+            activeCount: 1
+            activeStandby: true
+        storageClass:
+          enabled: true
+          name: ceph-filesystem
+          isDefault: false
+          reclaimPolicy: Delete
+          allowVolumeExpansion: true
+    cephObjectStores:
+      - name: ceph-objectstore
+        spec:
+          metadataPool:
+            failureDomain: host
+            replicated:
+              size: 3
+          dataPools:
+            failureDomain: host
+          preservePoolsOnDelete: true
+          gateway:
+            port: 80
+          healthCheck:
+            bucket:
+              interval: 60s
+        storageClass:
+          enabled: true
+          name: ceph-bucket
+          isDefault: false
+          reclaimPolicy: Delete
+          allowVolumeExpansion: true
+          parameters:
+            region: us-east-1

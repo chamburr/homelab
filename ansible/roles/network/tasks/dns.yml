@@ -1,0 +1,9 @@
+---
+
+- name: Copy resolv configuration
+  ansible.builtin.copy:
+    src: resolv.conf
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: 0644

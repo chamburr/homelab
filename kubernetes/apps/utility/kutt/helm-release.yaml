@@ -1,0 +1,77 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kutt
+  namespace: utility
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: wallabag
+      version: 6.2.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  values:
+    global:
+      nameOverride: kutt
+    image:
+      repository: docker.io/kutt/kutt
+      tag: v2.7.4
+    env:
+      SITE_NAME: Kutt
+      DEFAULT_DOMAIN: s.${DOMAIN}
+      LINK_LENGTH: 6
+      DB_HOST: kutt-postgresql
+      DB_PORT: 5432
+      DB_NAME: kutt
+      DB_USER: kutt
+      DB_PASSWORD: kutt-pass
+      REDIS_HOST: kutt-redis
+      REDIS_PORT: 6379
+      DISALLOW_REGISTRATION: true
+      DISALLOW_ANONYMOUS_LINKS: true
+      USER_LIMIT_PER_DAY: 10000
+      DEFAULT_MAX_STATS_PER_LINK: 10000
+      CUSTOM_DOMAIN_USE_HTTPS: true
+    postgresql:
+      enabled: true
+      postgresqlUsername: kutt
+      postgresqlPassword: kutt-pass
+      postgresqlDatabase: kutt
+      persistence:
+        enabled: true
+        existingClaim: kutt-postgresql
+    redis:
+      enabled: true
+      persistence:
+        enabled: true
+        existingClaim: kutt-redis
+    service:
+      main:
+        ports:
+          http:
+            port: 3000
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - host: s.${DOMAIN}
+            paths:
+              - path: /
+                pathType: prefix
+        tls:
+          - hosts:
+              - s.${DOMAIN}
+  valuesFrom:
+    - kind: Secret
+      name: kutt-secret
+      valuesKey: admin_emails
+      targetPath: env.ADMIN_EMAILS
+    - kind: Secret
+      name: kutt-secret
+      valuesKey: jwt_secret
+      targetPath: env.JWT_SECRET

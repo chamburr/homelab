@@ -1,0 +1,59 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: haste
+  namespace: utility
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: wallabag
+      version: 6.2.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  values:
+    global:
+      nameOverride: haste
+    image:
+      repository: ghcr.io/k8s-at-home/haste-server
+      tag: latest@sha256:827aa2f2389d94a522e333080fa8cbc0e0a487c5681173caca785b3b6b9e5b01
+    env:
+      STORAGE_TYPE: postgres
+      STORAGE_HOST: haste-postgresql
+      STORAGE_PORT: 5432
+      STORAGE_EXPIRE_SECONDS: 604800
+      STORAGE_DB: haste
+      STORAGE_USERNAME: haste
+      STORAGE_PASSWORD: haste-pass
+      KEY_LENGTH: 6
+      KEY_GENERATOR_TYPE: random
+      RATELIMITS_NORMAL_TOTAL_REQUESTS: 50
+      RATELIMITS_NORMAL_EVERY_MILLISECONDS: 60000
+    postgresql:
+      enabled: true
+      postgresqlUsername: haste
+      postgresqlPassword: haste-pass
+      postgresqlDatabase: haste
+      persistence:
+        enabled: true
+        existingClaim: haste-postgresql
+    service:
+      main:
+        ports:
+          http:
+            port: 7777
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - host: p.${DOMAIN}
+            paths:
+              - path: /
+                pathType: prefix
+        tls:
+          - hosts:
+              - p.${DOMAIN}

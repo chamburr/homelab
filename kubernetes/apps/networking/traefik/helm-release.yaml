@@ -1,0 +1,58 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: networking
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: traefik
+      version: 10.19.5
+      sourceRef:
+        kind: HelmRepository
+        name: traefik-charts
+        namespace: flux-system
+  values:
+    deployment:
+      replicas: 3
+    ingressClass:
+      enabled: true
+      isDefaultClass: true
+    ingressRoute:
+      dashboard:
+        enabled: false
+    providers:
+      kubernetesCRD:
+        enabled: false
+    logs:
+      general:
+        level: INFO
+      access:
+        enabled: true
+    globalArguments:
+      - --api.insecure=true
+      - --serverstransport.insecureskipverify=true
+      - --metrics.prometheus=true
+      - --metrics.prometheus.entryPoint=metrics
+      - --entrypoints.websecure.http.middlewares=networking-global@kubernetescrd"
+      - --global.checknewversion=false
+    additionalArguments:
+      - --providers.kubernetesingress.ingressendpoint.ip=${LB_TRAEFIK_IP}
+    ports:
+      web:
+        redirectTo: websecure
+      websecure:
+        tls:
+          enabled: true
+    tlsOptions:
+      default:
+        minVersion: VersionTLS12
+        maxVersion: VersionTLS13
+        sniStrict: true
+    service:
+      enabled: true
+      type: LoadBalancer
+      spec:
+        loadBalancerIP: ${LB_TRAEFIK_IP}

@@ -1,0 +1,19 @@
+---
+
+- name: Install kvm packages
+  ansible.builtin.dnf:
+    name:
+      - qemu-img
+      - qemu-kvm
+      - libvirt
+      - libvirt-client
+      - virt-install
+      - virt-manager
+      - virt-viewer
+    state: present
+
+- name: Enable kvm service
+  ansible.builtin.service:
+    name: libvirtd
+    enabled: true
+    state: present

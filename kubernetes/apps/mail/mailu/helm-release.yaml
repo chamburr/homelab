@@ -1,0 +1,63 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mailu
+  namespace: mail
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: mailu
+      version: 0.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: mailu-charts
+        namespace: flux-system
+  values:
+    hostnames:
+      - mail.${DOMAIN}
+      - imap.${DOMAIN}
+    subnet: ${K8S_CLUSTER_CIDR}
+    postmaster: postmaster
+    domain: ${MAIL_DOMAIN}
+    initialAccount:
+      password: admin
+    mail:
+      messageSizeLimitInMegabytes: 100
+    certmanager:
+      enabled: false
+    front:
+      externalService:
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: ${LB_MAILU_IP}
+        smtp:
+          smtp: false
+          smtps: false
+          submission: false
+    webdav:
+      enabled: true
+    persistence:
+      single_pvc: false
+      existingClaim: mailu-data
+    ingress:
+      externalIngress: true
+      className: traefik
+  valuesFrom:
+    - kind: Secret
+      name: mailu-secret
+      valuesKey: admin_user
+      targetPath: initialAccount.username
+    - kind: Secret
+      name: mailu-secret
+      valuesKey: admin_domain
+      targetPath: initialAccount.domain
+    - kind: Secret
+      name: mailu-secret
+      valuesKey: mail_domain
+      targetPath: domain
+    - kind: Secret
+      name: mailu-secret
+      valuesKey: secret_key
+      targetPath: secretKey

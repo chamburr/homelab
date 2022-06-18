@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: global-config
+  namespace: flux-system
+data:
+  GATEWAY_IP: ""
+
+  K8S_CLUSTER_CIDR: ""
+  K8S_SERVICE_CIDR: ""
+
+  LB_CIDR: ""
+  LB_ADGUARD_IP: ""
+  LB_IPSEC_VPN_IP: ""
+  LB_MAILU_IP: ""
+  LB_NETMAKER_IP: "" # TODO
+  LB_SAMBA_IP: ""
+  LB_TRAEFIK_IP: ""
+  LB_WG_EASY_IP: ""

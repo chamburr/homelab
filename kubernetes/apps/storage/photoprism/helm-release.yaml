@@ -1,0 +1,40 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: photoprism
+  namespace: storage
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: photoprism
+      version: 6.6.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  values:
+    env:
+      PHOTOPRISM_ADMIN_PASSWORD: photoprism
+      PHOTOPRISM_SITE_URL: https://photos.${DOMAIN}
+      PHOTOPRISM_PUBLIC: false
+    persistence:
+      config:
+        enabled: true
+        existingClaim: photoprism-data
+      originals:
+        enabled: true
+        existingClaim: photoprism-originals
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - host: photos.${DOMAIN}
+            paths:
+              - path: /
+                pathType: prefix
+        tls:
+          - hosts:
+              - photos.${DOMAIN}

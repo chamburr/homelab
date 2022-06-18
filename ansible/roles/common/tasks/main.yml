@@ -1,0 +1,7 @@
+---
+
+- include_tasks: basic.yml
+- include_tasks: package.yml
+- include_tasks: swap.yml
+- include_tasks: upgrade.yml
+- include_tasks: user.yml

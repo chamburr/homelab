@@ -1,0 +1,51 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: vaultwarden
+  namespace: security
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: vaultwarden
+      version: 4.2.3
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  values:
+    env:
+      SIGNUPS_ALLOWED: false
+      DOMAIN: https://bitwarden.${DOMAIN}
+      SMTP_HOST: ${MAIL_HOST}
+      SMTP_PORT: ${MAIL_PORT}
+      SMTP_USERNAME: ${MAIL_USERNAME}
+      SMTP_PASSWORD: ${MAIL_PASSWORD}
+      SMTP_FROM: ${MAIL_SENDER}
+    service:
+      main:
+        ports:
+          websocket:
+            enabled: false
+    persistence:
+      config:
+        enabled: true
+        existingClaim: vaultwarden-data
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - host: bitwarden.${DOMAIN}
+            paths:
+              - path: /
+                pathType: prefix
+        tls:
+          - hosts:
+              - bitwarden.${DOMAIN}
+  valuesFrom:
+    - kind: Secret
+      name: vaultwarden-secret
+      valuesKey: admin_token
+      targetPath: env.ADMIN_TOKEN

@@ -1,0 +1,11 @@
+[DEFAULT]
+banction = iptables-allports
+maxretry = 3
+findtime = 600
+bantime = 86400
+ignoreip = 127.0.0.1/8
+
+[sshd]
+enabled = true
+port = 22
+filter = sshd

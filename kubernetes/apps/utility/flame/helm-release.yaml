@@ -1,0 +1,49 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: flame
+  namespace: utility
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: kah-common-chart
+      version: 1.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  values:
+    global:
+      nameOverride: flame
+    image:
+      repository: docker.io/pawelmalak/flame
+      tag: 2.3.0
+    service:
+      main:
+        ports:
+          http:
+            port: 5005
+    persistence:
+      config:
+        enabled: true
+        existingClaim: flame-data
+        mountPath: /app/data
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - host: dashboard.${DOMAIN}
+            paths:
+              - path: /
+                pathType: prefix
+        tls:
+          - hosts:
+              - dashboard.${DOMAIN}
+  valuesFrom:
+    - kind: Secret
+      name: flame-secret
+      valuesKey: password
+      targetPath: env.PASSWORD

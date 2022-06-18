@@ -1,0 +1,34 @@
+---
+
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+    use: systemd
+
+- name: Replace ipv4 in host file
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regexp: ^127.0.0.1
+    line: 127.0.0.1 {{ inventory_hostname }} localhost localhost.localdomain localhost4 localhost4.localdomain4
+    state: present
+
+- name: Replace ipv6 in host file
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regexp: ^::1
+    line: ::1 {{ inventory_hostname }} localhost localhost.localdomain localhost6 localhost6.localdomain6
+    state: present
+
+- name: Set timezone
+  community.general.timezone:
+    name: "{{ timezone }}"
+
+- name: Generate locale
+  community.general.locale_gen:
+    name: "{{ locale }}"
+    state: present
+
+- name: Enable SELinux
+  ansible.posix.selinux:
+    policy: targeted
+    state: enforcing

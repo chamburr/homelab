@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: netmaker-charts
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: https://gravitl.github.io/netmaker-helm/
+  timeout: 3m

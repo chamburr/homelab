@@ -1,0 +1,54 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: n8n
+  namespace: automation
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: kah-common-chart
+      version: 1.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  values:
+    global:
+      nameOverride: n8n
+    image:
+      repository: docker.io/n8nio/n8n
+      tag: 0.181.2
+    env:
+      N8N_EDITOR_BASE_URL: https://n8n.${DOMAIN}
+      WEBHOOK_URL: https://n8n.${DOMAIN}
+      N8N_TEMPLATES_ENABLED: false
+      N8N_PERSONALIZATION_ENABLED: false
+      N8N_VERSION_NOTIFICATIONS_ENABLED: false
+      N8N_DIAGONISTICS_ENABLED: false
+      N8N_HIRING_BANNER_ENABLED: false
+      EXECUTIONS_DATA_PRUNE: true
+      EXECUTIONS_DATA_MAX_AGE: 336
+    service:
+      main:
+        ports:
+          http:
+            port: 5678
+    persistence:
+      config:
+        enabled: true
+        existingClaim: n8n-data
+        mountPath: /home/node/.n8n
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - host: n8n.${DOMAIN}
+            paths:
+              - path: /
+                pathType: prefix
+        tls:
+          - hosts:
+              - n8n.${DOMAIN}

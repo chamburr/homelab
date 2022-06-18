@@ -1,0 +1,5 @@
+---
+skip_list:
+  - experimental
+  - no-handler
+  - package-latest

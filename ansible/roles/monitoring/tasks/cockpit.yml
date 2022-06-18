@@ -1,0 +1,37 @@
+---
+
+- name: Add cockpit repository
+  ansible.builtin.yum_repository:
+    name: 45drives
+    description: 45Drives
+    baseurl: https://repo.45drives.com/rhel/el8/stable
+    gpgkey: https://repo.45drives.com/key/gpg.asc
+    gpgcheck: true
+    state: present
+
+- name: Install cockpit packages
+  ansible.builtin.dnf:
+    name:
+      - cockpit
+      - cockpit-storaged
+      - cockpit-networkmanager
+      - cockpit-packagekit
+      - cockpit-machines
+      - cockpit-zfs
+      - cockpit-file-sharing
+      - cockpit-navigator
+    state: present
+
+- name: Copy cockpit configuration
+  ansible.builtin.copy:
+    src: cockpit.conf
+    dest: /etc/cockpit/cockpit.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable cockpit service
+  ansible.builtin.service:
+    name: cockpit.socket
+    enabled: true
+    state: started

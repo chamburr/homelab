@@ -1,0 +1,33 @@
+---
+
+- name: Install firewall package
+  ansible.builtin.dnf:
+    name: firewalld
+    state: present
+
+- name: Allow public services
+  ansible.posix.firewalld:
+    service: "{{ item }}"
+    permanent: true
+    immediate: true
+    state: enabled
+  loop:
+    - ssh
+    - http
+    - https
+
+- name: Deny public services
+  ansible.posix.firewalld:
+    service: "{{ item }}"
+    permanent: true
+    immediate: true
+    state: disabled
+  loop:
+    - cockpit
+    - dhcpv6-client
+
+- name: Enable firewall service
+  ansible.builtin.dnf:
+    name: firewalld
+    enabled: true
+    state: started

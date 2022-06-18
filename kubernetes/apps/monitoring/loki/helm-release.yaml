@@ -1,0 +1,29 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: loki
+  namespace: monitoring
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: loki
+      version: 2.12.1
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-charts
+        namespace: flux-system
+  values:
+    config:
+      limits_config:
+        max_entries_limit_per_query: 5000
+      compactor:
+        retention_enabled: true
+    serviceMonitor:
+      enabled: true
+    persistence:
+      enabled: true
+      existingClaim: loki-data
+    ingress:
+      enabled: false

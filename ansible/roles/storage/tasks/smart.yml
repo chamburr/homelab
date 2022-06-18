@@ -1,0 +1,12 @@
+---
+
+- name: Install smartd package
+  ansible.builtin.dnf:
+    name: smartmontools
+    state: present
+
+- name: Enable smartd service
+  ansible.builtin.dnf:
+    name: smartd
+    enabled: true
+    state: started
