@@ -1,0 +1,87 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: plausible
+  namespace: developer
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: plausible-analytics
+      version: 0.3.19
+      sourceRef:
+        kind: HelmRepository
+        name: varac-plausible-charts
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    nameOverride: plausible
+    image:
+      repository: docker.io/plausible/analytics
+      tag: v1.4.4
+    disableRegistration: true
+    baseURL: https://plausible.${DOMAIN}
+    adminUser:
+      name: Admin
+    postgresql:
+      enabled: true
+      url: postgresql://plausible:plausible-pass@plausible-postgresql:5432/plausible
+      auth:
+        username: plausible
+        password: plausible-pass
+        database: plausible
+      primary:
+        persistence:
+          enabled: true
+          existingClaim: plausible-postgresql
+    clickhouse:
+      enabled: true
+      clickhouse:
+        replicas: 1
+        configmap:
+          remote_servers:
+            internal_replication: true
+            replica:
+              backup:
+                enabled: false
+        persistentVolumeClaim:
+          enabled: false
+          dataPersistentVolume:
+            enabled: true
+    smtp:
+      enabled: true
+      mailer:
+        emailAddress: ${MAIL_SENDER}
+      host: ${MAIL_HOST}
+      port: ${MAIL_PORT}
+      username: ${MAIL_USERNAME}
+      password: ${MAIL_PASSWORD}
+      ssl:
+        enabled: true
+    ingress:
+      enabled: true
+      className: traefik
+      hosts:
+        - host: plausible.${DOMAIN}
+          paths:
+            - /
+      tls:
+        - hosts:
+            - plausible.${DOMAIN}
+    podAnnotations:
+      secret.reloader.stakater.com/reload: plausible-secret
+  valuesFrom:
+    - kind: Secret
+      name: plausible-secret
+      valuesKey: admin_email
+      targetPath: adminUser.email
+    - kind: Secret
+      name: plausible-secret
+      valuesKey: admin_password
+      targetPath: adminUser.password

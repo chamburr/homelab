@@ -1,0 +1,7 @@
+---
+- name: talos-1
+  endpoint: 192.168.123.11
+- name: talos-2
+  endpoint: 192.168.123.12
+- name: talos-3
+  endpoint: 192.168.123.13

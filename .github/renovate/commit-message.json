@@ -1,0 +1,27 @@
+{
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{newVersion}}",
+  "commitMessageSuffix": "",
+  "packageRules": [
+    {
+      "matchDatasources": ["galaxy", "galaxy-collection"],
+      "commitMessageTopic": "{{depName}}"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "commitMessageTopic": "{{{replace 'ghcr.io/' '' (replace 'docker.io/' '' depName)}}}"
+    },
+    {
+      "matchDatasources": ["github-releases", "github-tags", "github-actions"],
+      "commitMessageTopic": "{{depName}}"
+    },
+    {
+      "matchDatasources": ["helm"],
+      "commitMessageTopic": "{{depName}}"
+    },
+    {
+      "matchDatasources": ["terraform-provider"],
+      "commitMessageTopic": "{{depName}}"
+    }
+  ]
+}

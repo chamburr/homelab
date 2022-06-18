@@ -1,0 +1,97 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sentry
+  namespace: developer
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: sentry
+      version: 15.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: sentry-charts
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    system:
+      url: https://sentry.${DOMAIN}
+    auth:
+      register: false
+    mail:
+      backend: smtp
+      useTls: true
+      host: ${MAIL_HOST}
+      port: ${MAIL_PORT}
+      username: ${MAIL_USERNAME}
+      password: ${MAIL_PASSWORD}
+      from: ${MAIL_SENDER}
+    sentry:
+      web:
+        strategyType: Recreate
+      worker:
+        replicas: 1
+    clickhouse:
+      clickhouse:
+        replicas: 1
+        persistentVolumeClaim:
+          enabled: false
+          dataPersistentVolume:
+            enabled: true
+    zookeeper:
+      replicaCount: 1
+      persistence:
+        enabled: true
+        existingClaim: sentry-zookeeper-clickhouse
+    kafka:
+      replicaCount: 1
+      defaultReplicationFactor: 1
+      persistence:
+        enabled: true
+        existingClaim: sentry-kafka
+      zookeeper:
+        nameOverride: zookeeper-kafka
+        persistence:
+          enabled: true
+          existingClaim: sentry-zookeeper-kafka
+    redis:
+      master:
+        persistence:
+          enabled: true
+          existingClaim: sentry-redis
+      replica:
+        replicaCount: 0
+    postgresql:
+      postgresqlPassword: sentry-pass
+      postgresqlPostgresPassword: sentry-pass
+      persistence:
+        enabled: true
+        existingClaim: sentry-postgresql
+    rabbitmq:
+      replicaCount: 1
+      persistence:
+        enabled: true
+        existingClaim: sentry-rabbitmq
+    nginx:
+      enabled: false
+    filestore:
+      filesystem:
+        persistence:
+          enabled: true
+          persistentWorkers: false
+          existingClaim: sentry-data
+    ingress:
+      enabled: true
+      regexPathStyle: traefik
+      ingressClassName: traefik
+      hostname: sentry.${DOMAIN}
+      tls:
+        - hosts:
+            - sentry.${DOMAIN}

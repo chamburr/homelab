@@ -1,0 +1,37 @@
+---
+- name: Add kubernetes repository
+  ansible.builtin.yum_repository:
+    name: kubernetes
+    description: Kubernetes
+    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+    gpgkey:
+      - https://packages.cloud.google.com/yum/doc/yum-key.gpg
+      - https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+    gpgcheck: true
+    state: present
+
+- name: Add talos repository
+  ansible.builtin.yum_repository:
+    name: talos
+    description: Talos
+    baseurl: https://download.copr.fedorainfracloud.org/results/talosdev/Talos/epel-8-x86_64
+    gpgkey: https://download.copr.fedorainfracloud.org/results/talosdev/Talos/pubkey.gpg
+    gpgcheck: true
+    state: present
+
+- name: Add flux repository
+  ansible.builtin.yum_repository:
+    name: flux
+    description: Flux
+    baseurl: https://download.copr.fedorainfracloud.org/results/talosdev/Flux/epel-8-x86_64
+    gpgkey: https://download.copr.fedorainfracloud.org/results/talosdev/Flux/pubkey.gpg
+    gpgcheck: true
+    state: present
+
+- name: Install client packages
+  ansible.builtin.dnf:
+    name:
+      - kubectl
+      - talosctl
+      - flux
+    state: present

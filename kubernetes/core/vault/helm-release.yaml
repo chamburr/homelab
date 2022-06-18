@@ -1,0 +1,83 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: vault
+  namespace: vault
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: vault
+      version: 0.21.0
+      sourceRef:
+        kind: HelmRepository
+        name: hashicorp-charts
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  values:
+    server:
+      dataStorage:
+        enabled: false
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: vault-data
+      volumeMounts:
+        - name: data
+          mountPath: /vault/data
+      standalone:
+        enabled: true
+        config: |
+          ui = true
+          listener "tcp" {
+            tls_disable = 1
+            address = "[::]:8200"
+            cluster_address = "[::]:8201"
+          }
+          storage "file" {
+            path = "/vault/data"
+          }
+      ingress:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - host: vault.${DOMAIN}
+            paths:
+              - /
+        tls:
+          - hosts:
+              - vault.${DOMAIN}
+      readinessProbe:
+        path: /v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204
+      postStart:
+        - /bin/sh
+        - -c
+        - if [ "$VAULT_KEY" ]; then vault operator unseal $VAULT_KEY; fi
+    ui:
+      enabled: true
+      serviceType: ClusterIP
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: Statefulset
+              name: vault
+            patch:
+              - op: add
+                path: /spec/template/spec/containers/0/env/-
+                value:
+                  name: VAULT_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: vault-secret
+                      key: VAULT_KEY
+                      optional: true

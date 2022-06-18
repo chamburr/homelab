@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
+  pre_tasks:
+    - name: Pause for 3 seconds
+      ansible.builtin.pause:
+        seconds: 3
+      tags: always
+  roles:
+    - role: common
+      tags: common
+    - role: network
+      tags: network
+    - role: storage
+      tags: storage
+    - role: apps
+      tags: apps
+    - role: kubernetes
+      tags: kubernetes

@@ -1,0 +1,57 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: flame
+  namespace: utility
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: kah-common-chart
+      version: 1.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    global:
+      nameOverride: flame
+    image:
+      repository: ghcr.io/fdarveau/flame
+      tag: "2022-08-09"
+    service:
+      main:
+        ports:
+          http:
+            port: 5005
+    persistence:
+      config:
+        enabled: true
+        existingClaim: flame-data
+        mountPath: /app/data
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - host: dashboard.${DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - dashboard.${DOMAIN}
+    podAnnotations:
+      secret.reloader.stakater.com/reload: flame-secret
+  valuesFrom:
+    - kind: Secret
+      name: flame-secret
+      valuesKey: password
+      targetPath: env.PASSWORD

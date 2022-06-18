@@ -1,0 +1,21 @@
+---
+network_name: kubernetes
+network_address: 192.168.123.1
+network_mask: 255.255.255.0
+network_start: 192.168.123.200
+network_end: 192.168.123.254
+
+volume_name: kubernetes
+volume_size: 200G
+volume_format: raw
+
+vms:
+  - talos-1
+  - talos-2
+  - talos-3
+
+vm_cpu: 8
+vm_ram: 12288
+vm_disk: 30
+vm_image: https://github.com/siderolabs/talos/releases/latest/download/talos-amd64.iso
+vm_script: https://raw.githubusercontent.com/chamburr/homelab/master/scripts/configure.sh

@@ -1,0 +1,70 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: gitea
+  namespace: developer
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: gitea
+      version: 6.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: gitea-charts
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    gitea:
+      config:
+        repository:
+          DEFAULT_BRANCH: master
+          DEFAULT_PRIVATE: public
+        server:
+          DOMAIN: gitea.${DOMAIN}
+          ROOT_URL: https://gitea.${DOMAIN}
+          DISABLE_SSH: true
+          ENABLE_GZIP: true
+          LFS_START_SERVER: true
+        database:
+          DB_TYPE: sqlite3
+        indexer:
+          REPO_INDEXER_ENABLED: true
+        service:
+          DISABLE_REGISTRATION: true
+        mailer:
+          ENABLED: true
+          MAILER_TYPE: smtp
+          HOST: ${MAIL_HOST}:${MAIL_PORT}
+          USER: ${MAIL_USERNAME}
+          PASSWD: ${MAIL_PASSWORD}
+          FROM: ${MAIL_SENDER}
+        cron:
+          ENABLED: true
+    memcached:
+      enabled: true
+    postgresql:
+      enabled: false
+    signing:
+      enabled: true
+      gpgHome: /data/git/.gnupg
+    persistence:
+      enabled: true
+      existingClaim: gitea-data
+    ingress:
+      enabled: true
+      className: traefik
+      hosts:
+        - host: git.${DOMAIN}
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - git.${DOMAIN}

@@ -1,0 +1,62 @@
+---
+- name: Install mdadm package
+  ansible.builtin.dnf:
+    name: mdadm
+    state: present
+
+- name: Check array
+  ansible.builtin.shell:
+    cmd: cat /proc/mdstat | grep {{ array_name }}
+  register: array_check
+  changed_when: false
+  failed_when: false
+  check_mode: false
+
+- name: Create array
+  ansible.builtin.shell:
+    cmd: |
+      yes | mdadm \
+        --create /dev/{{ array_name }} \
+        --level={{ array_level }} \
+        --raid-devices={{ array_devices | count }} \
+        {{ array_devices | join(' ') }}
+  register: array_create
+  when: array_check.rc != 0
+
+- name: Create array filesystem
+  community.general.filesystem:
+    fstype: "{{ array_filesystem }}"
+    dev: /dev/{{ array_name }}
+    state: present
+
+- name: Mount array filesystem
+  ansible.posix.mount:
+    path: "{{ array_mountpoint }}"
+    src: /dev/{{ array_name }}
+    fstype: "{{ array_filesystem }}"
+    state: mounted
+
+- name: Get array details
+  ansible.builtin.command:
+    cmd: mdadm --detail --scan
+  register: array_details
+  changed_when: false
+  when: array_create is changed
+
+- name: Update mdadm config
+  ansible.builtin.lineinfile:
+    path: /etc/mdadm.conf
+    regexp: ^{{ item }}
+    line: "{{ item }}"
+    create: true
+    owner: root
+    group: root
+    mode: 0644
+    state: present
+  loop: "{{ array_details.stdout_lines }}"
+  when: array_create is changed
+
+- name: Update initramfs
+  ansible.builtin.command:
+    cmd: dracut -f
+  when: array_create is changed

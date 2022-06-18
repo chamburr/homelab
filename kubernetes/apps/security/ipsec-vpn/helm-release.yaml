@@ -1,0 +1,97 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ipsec-vpn
+  namespace: security
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: kah-common-chart
+      version: 1.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    global:
+      nameOverride: ipsec-vpn
+    image:
+      repository: docker.io/hwdsl2/ipsec-vpn-server
+      tag: latest@sha256:e1c8e3b7141fc69733460f9a05f1df75e8ae0d2874b9f05e901550b7fcd19ac6
+    env:
+      VPN_DNS_NAME: vpn.${DOMAIN}
+      VPN_DNS_SRV1: 1.1.1.1
+      VPN_DNS_SRV2: 8.8.8.8
+    securityContext:
+      privileged: true
+    probes:
+      liveness:
+        enabled: true
+        custom: true
+        spec:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - if [ "$(wget -qO- https://icanhazip.com)" ]; then exit 0; else exit $?; fi
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
+    service:
+      main:
+        enabled: false
+      ipsec-udp:
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: ${METALLB_IP}
+        annotations:
+          metallb.universe.tf/allow-shared-ip: global
+        ports:
+          ipsec-udp:
+            enabled: true
+            port: 500
+            protocol: UDP
+            targetPort: 500
+        externalTrafficPolicy: Cluster
+      ikev2-udp:
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: ${METALLB_IP}
+        annotations:
+          metallb.universe.tf/allow-shared-ip: global
+        ports:
+          ikev2-udp:
+            enabled: true
+            port: 4500
+            protocol: UDP
+            targetPort: 4500
+        externalTrafficPolicy: Cluster
+    persistence:
+      config:
+        enabled: true
+        existingClaim: ipsec-vpn-data
+        mountPath: /etc/ipsec.d
+    podAnnotations:
+      secret.reloader.stakater.com/reload: ipsec-vpn-secret
+  valuesFrom:
+    - kind: Secret
+      name: ipsec-vpn-secret
+      valuesKey: ipsec_psk
+      targetPath: env.VPN_IPSEC_PSK
+    - kind: Secret
+      name: ipsec-vpn-secret
+      valuesKey: username
+      targetPath: env.VPN_USER
+    - kind: Secret
+      name: ipsec-vpn-secret
+      valuesKey: password
+      targetPath: env.VPN_PASSWORD

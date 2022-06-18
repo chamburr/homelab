@@ -1,0 +1,36 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: homepage
+  namespace: networking
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`${DOMAIN}`) && Path(`/u/[^\/]+`)
+      middlewares:
+        - name: strip-prefix
+          namespace: networking
+      services:
+        - kind: Service
+          name: zipline-main
+          namespace: utility
+    - kind: Rule
+      match: Host(`${DOMAIN}`) && Path(`/.well-known/(?:carddav|caldav)`)
+      services:
+        - kind: Service
+          name: mailu-front
+          namespace: mail
+    - kind: Rule
+      match: Host(`${DOMAIN}`)
+      middlewares:
+        - name: homepage-redirect
+          namespace: networking
+      services:
+        - kind: TraefikService
+          name: noop@internal
+  tls:
+    domains:
+      - main: ${DOMAIN}

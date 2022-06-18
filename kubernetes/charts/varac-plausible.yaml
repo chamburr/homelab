@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: varac-plausible-charts
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: https://0xacab.org/api/v4/projects/3963/packages/helm/stable
+  timeout: 3m

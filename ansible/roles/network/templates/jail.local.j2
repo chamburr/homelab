@@ -1,0 +1,11 @@
+[DEFAULT]
+banaction = {{ fail2ban_ban_action }}
+maxretry = {{ fail2ban_max_retry }}
+findtime = {{ fail2ban_find_time }}
+bantime = {{ fail2ban_ban_time }}
+ignoreip = {{ fail2ban_ignore_ip | join(' ') }}
+
+[sshd]
+enabled = true
+port = 22
+filter = sshd

@@ -1,0 +1,36 @@
+{
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["major"],
+      "labels": ["version/major"]
+    },
+    {
+      "matchUpdateTypes": ["minor"],
+      "labels": ["version/minor"]
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "labels": ["version/patch"]
+    },
+    {
+      "matchDatasources": ["galaxy", "galaxy-collection"],
+      "addLabels": ["renovate/ansible"]
+    },
+    {
+      "matchDatasources": ["docker"],
+      "addLabels": ["renovate/docker"]
+    },
+    {
+      "matchDatasources": ["github-releases", "github-tags", "github-actions"],
+      "addLabels": ["renovate/github"]
+    },
+    {
+      "matchDatasources": ["helm"],
+      "addLabels": ["renovate/helm"]
+    },
+    {
+      "matchDatasources": ["terraform-provider"],
+      "addLabels": ["renovate/terraform"]
+    }
+  ]
+}

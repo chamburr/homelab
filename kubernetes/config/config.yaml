@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: global-config
+  namespace: flux-system
+data:
+  DOMAIN: chamburr.xyz
+
+  GATEWAY_IP: 192.168.123.1
+
+  K8S_CLUSTER_CIDR: 10.42.0.0/16
+  K8S_SERVICE_CIDR: 10.43.0.0/16
+
+  METALLB_IP: 192.168.123.100
+  METALLB_CIDR: 192.168.123.0/24

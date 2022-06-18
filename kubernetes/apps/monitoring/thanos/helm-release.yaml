@@ -1,0 +1,84 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: thanos
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: thanos
+      version: 10.5.2
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-charts
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    objstoreConfig:
+      type: s3
+      config:
+        insecure: true
+    query:
+      enabled: true
+      dnsDiscovery:
+        sidecarsService: kube-prometheus-stack-thanos-discovery
+        sidecarsNamespace: monitoring
+    queryFrontend:
+      enabled: false
+    bucketweb:
+      enabled: false
+    compactor:
+      enabled: true
+      retentionResolutionRaw: 14d
+      retentionResolution5m: 30d
+      retentionResolution1h: 1y
+      persistence:
+        enabled: true
+        existingClaim: thanos-compactor
+      podAnnotations:
+        secret.reloader.stakater.com/reload: thanos-secret
+    storegateway:
+      enabled: true
+      persistence:
+        enabled: true
+        existingClaim: thanos-storegateway
+      podAnnotations:
+        secret.reloader.stakater.com/reload: thanos-secret
+    ruler:
+      enabled: false
+    receive:
+      enabled: false
+    receiveDistributor:
+      enabled: false
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+  valuesFrom:
+    - kind: Secret
+      name: thanos-secret
+      valuesKey: bucket_name
+      targetPath: objstoreConfig.config.bucket
+    - kind: Secret
+      name: thanos-secret
+      valuesKey: bucket_host
+      targetPath: objstoreConfig.config.endpoint
+    - kind: Secret
+      name: thanos-secret
+      valuesKey: bucket_region
+      targetPath: objstoreConfig.config.region
+    - kind: Secret
+      name: thanos-secret
+      valuesKey: access_key
+      targetPath: objstoreConfig.config.access_key
+    - kind: Secret
+      name: thanos-secret
+      valuesKey: secret_key
+      targetPath: objstoreConfig.config.secret_key

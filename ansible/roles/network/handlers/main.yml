@@ -1,0 +1,14 @@
+---
+- name: Restart fail2ban service
+  ansible.builtin.service:
+    name: fail2ban
+    state: restarted
+
+- name: Reload systemctl
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Restart ssh service
+  ansible.builtin.service:
+    name: sshd
+    state: restarted

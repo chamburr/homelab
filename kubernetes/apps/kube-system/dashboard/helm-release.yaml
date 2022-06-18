@@ -1,0 +1,35 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kubernetes-dashboard
+  namespace: kube-system
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: kubernetes-dashboard
+      version: 5.10.0
+      sourceRef:
+        kind: HelmRepository
+        name: kubernetes-dashboard-charts
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    extraArgs:
+      - --token-ttl=0
+    metricsScraper:
+      enabled: true
+    ingress:
+      enabled: true
+      className: traefik
+      hosts:
+        - kubernetes.${DOMAIN}
+      tls:
+        - hosts:
+            - kubernetes.${DOMAIN}

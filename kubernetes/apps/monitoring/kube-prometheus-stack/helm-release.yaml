@@ -1,0 +1,39 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 35.5.3
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community-charts
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    alertmanager:
+      enabled: false
+    grafana:
+      enabled: false
+    prometheusSpec:
+      scrapeInterval: 15s
+      scrapeTimeout: 30s
+      thanos:
+        objectStorageConfig:
+          name: thanos-objstore-secret
+          key: objstore.yml
+    prometheus:
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enable: true

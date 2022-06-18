@@ -1,0 +1,32 @@
+---
+- name: Enable ssh service
+  ansible.builtin.service:
+    name: sshd
+    enabled: true
+    state: started
+
+- name: Update ssh configuration
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    validate: sshd -T -f %s
+    state: present
+  loop:
+    - regexp: ^#?PasswordAuthentication
+      line: PasswordAuthentication {{ ssh_password }}
+    - regexp: ^#?PermitRootLogin
+      line: PermitRootLogin {{ ssh_root }}
+  notify: Restart ssh service
+
+- name: Override ssh configuration
+  ansible.builtin.blockinfile:
+    path: /etc/ssh/sshd_config
+    block: |
+      Match Address {{ ssh_whitelist_ip | join(',') }}
+      	PasswordAuthentication yes
+      	PermitRootLogin yes
+    validate: sshd -T -f %s
+    state: present
+  when: ssh_whitelist_ip | length != 0
+  notify: Restart ssh service

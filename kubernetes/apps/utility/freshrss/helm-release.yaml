@@ -1,0 +1,57 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: freshrss
+  namespace: utility
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: kah-common-chart
+      version: 1.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    global:
+      nameOverride: freshrss
+    image:
+      repository: docker.io/freshrss/freshrss
+      tag: 1.19.2
+    env:
+      CRON_MIN: 0,30
+      FRESHRSS_INSTALL: >
+        --api_enabled
+        --base_url https://freshrss.${DOMAIN}
+        --default_user admin
+        --disable_update
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+    persistence:
+      config:
+        enabled: true
+        existingClaim: freshrss-data
+        mountPath: /var/www/FreshRSS/data
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - host: freshrss.${DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - freshrss.${DOMAIN}

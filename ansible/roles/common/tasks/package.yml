@@ -1,0 +1,29 @@
+---
+- name: Add epel repository
+  ansible.builtin.dnf:
+    name: epel-release
+    state: present
+
+- name: Install packages
+  ansible.builtin.dnf:
+    name: "{{ packages }}"
+    state: present
+
+- name: Install auto upgrade package
+  ansible.builtin.dnf:
+    name: dnf-automatic
+    state: present
+
+- name: Copy auto upgrade configuration
+  ansible.builtin.copy:
+    src: automatic.conf
+    dest: /etc/dnf/automatic.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable auto upgrade service
+  ansible.builtin.service:
+    name: dnf-automatic.timer
+    enabled: true
+    state: started

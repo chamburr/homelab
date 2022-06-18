@@ -1,0 +1,52 @@
+---
+- name: Install firewall package
+  ansible.builtin.dnf:
+    name: firewalld
+    state: present
+
+- name: Enable firewall service
+  ansible.builtin.service:
+    name: firewalld
+    enabled: true
+    state: started
+
+- name: Set firewall zone
+  ansible.posix.firewalld:
+    zone: public
+    interface: enp5s0
+    immediate: true
+    permanent: true
+    state: enabled
+
+- name: Set firewall default zone
+  ansible.builtin.command:
+    cmd: firewall-cmd --set-default-zone=trusted
+  register: zone_set
+  changed_when:
+    - "'ZONE_ALREADY_SET' not in zone_set.stderr"
+
+- name: Allow firewall masquerade
+  ansible.posix.firewalld:
+    zone: public
+    masquerade: true
+    permanent: true
+    immediate: true
+    state: enabled
+
+- name: Configure firewall services
+  ansible.posix.firewalld:
+    zone: public
+    service: "{{ item.key }}"
+    permanent: true
+    immediate: true
+    state: "{{ item.value }}"
+  with_dict: "{{ firewall_services }}"
+
+- name: Configure firewall ports
+  ansible.posix.firewalld:
+    zone: public
+    port: "{{ item.key }}"
+    permanent: true
+    immediate: true
+    state: "{{ item.value }}"
+  with_dict: "{{ firewall_ports }}"

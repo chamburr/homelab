@@ -1,0 +1,19 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rook-ceph-osd-0
+  namespace: rook-ceph
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
+    kustomize.toolkit.fluxcd.io/ssa: merge
+spec:
+  selector:
+    matchLabels:
+      app: rook-ceph-osd
+      ceph-osd-id: "0"
+      rook_cluster: rook-ceph
+  template:
+    spec:
+      nodeSelector: {}
+      containers: []

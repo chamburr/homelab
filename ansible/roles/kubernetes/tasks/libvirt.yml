@@ -1,0 +1,47 @@
+---
+- name: Install libvirt packages
+  ansible.builtin.dnf:
+    name:
+      - qemu-img
+      - qemu-kvm
+      - libvirt
+      - virt-install
+    state: present
+
+- name: Enable libvirt service
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  loop:
+    - virtqemud
+    - virtinterfaced.socket
+    - virtnetworkd.socket
+    - virtnodedevd.socket
+    - virtnwfilterd.socket
+    - virtproxyd.socket
+    - virtsecretd.socket
+    - virtstoraged.socket
+
+- name: Create libvirt network
+  community.libvirt.virt_net:
+    command: define
+    name: kubernetes
+    xml: "{{ lookup('template', 'network.xml.j2') }}"
+
+- name: Enable libvirt network autostart
+  community.libvirt.virt_net:
+    autostart: true
+    name: kubernetes
+
+- name: Start libvirt network
+  community.libvirt.virt_net:
+    name: kubernetes
+    state: active
+
+- name: Create libvirt disk
+  ansible.builtin.shell:
+    cmd: |
+      virsh vol-create-as default {{ volume_name }} {{ volume_size }} \
+        --format {{ volume_format }}
+    creates: /var/lib/libvirt/images/{{ volume_name }}

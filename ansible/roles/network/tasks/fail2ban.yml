@@ -1,0 +1,20 @@
+---
+- name: Install fail2ban package
+  ansible.builtin.dnf:
+    name: fail2ban
+    state: present
+
+- name: Copy fail2ban configuration
+  ansible.builtin.template:
+    src: jail.local.j2
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart fail2ban service
+
+- name: Enable fail2ban service
+  ansible.builtin.service:
+    name: fail2ban
+    enabled: true
+    state: started

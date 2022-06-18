@@ -1,0 +1,5 @@
+---
+- include_tasks: client.yml
+- include_tasks: libvirt.yml
+- include_tasks: vm.yml
+- include_tasks: cluster.yml

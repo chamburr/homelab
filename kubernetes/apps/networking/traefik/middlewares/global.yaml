@@ -1,0 +1,12 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: global
+  namespace: networking
+spec:
+  chain:
+    middlewares:
+      - name: ip-whitelist
+      - name: redirect
+      - name: errors
