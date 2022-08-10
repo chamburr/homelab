@@ -28,9 +28,9 @@ spec:
       ipsec-udp:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: ${LB_IPSEC_VPN_IP}
+        loadBalancerIP: ${METALLB_IP}
         annotations:
-          metallb.universe.tf/allow-shared-ip: ipsec-vpn
+          metallb.universe.tf/allow-shared-ip: global
         ports:
           dns-tcp:
             enabled: true
@@ -41,9 +41,9 @@ spec:
       ikev2-udp:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: ${LB_IPSEC_VPN_IP}
+        loadBalancerIP: ${METALLB_IP}
         annotations:
-          metallb.universe.tf/allow-shared-ip: ipsec-vpn
+          metallb.universe.tf/allow-shared-ip: global
         ports:
           dns-tcp:
             enabled: true

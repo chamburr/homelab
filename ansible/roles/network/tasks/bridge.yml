@@ -1,0 +1,14 @@
+---
+
+- name: Create bridge interface
+  community.general.nmcli:
+    conn_name: br0
+    type: bridge
+    state: present
+
+- name: Create bridge slave interface
+  community.general.nmcli:
+    conn_name: enp5s0
+    type: bridge-slave
+    master: br0
+    state: present

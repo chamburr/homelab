@@ -19,7 +19,7 @@ spec:
       nameOverride: haste
     image:
       repository: docker.io/diced/zipline
-      tag: trunk@sha256:da6a711a53dfe85f73edb3888b06ac75a98cd5b5eb0e9b00006760a3da84097b
+      tag: trunk@sha256:4c3e35a82218ae803b423d4f849ab8a1c5c38d9bee8ce954c63b1d295af19b69
     env:
       SECURE: false
       DATABASE_URL: postgresql://zipline:zipline-pass@zipline-postgresql/zipline

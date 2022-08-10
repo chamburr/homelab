@@ -1,0 +1,26 @@
+---
+
+- name: Install nfs packages
+  ansible.builtin.dnf:
+    name:
+      - nfs-utils
+      - nfs-utils-lib
+      - rpcbind
+
+- name: Enable nfs services
+  ansible.builtin.service:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  loop:
+    - rpc-bind
+    - nfs-server
+
+- name: Copy nfs config
+  ansible.builtin.file:
+    src: exports
+    path: /etc/exports
+    owner: root
+    group: root
+    mode: 0644
+  notify: Reload nfs

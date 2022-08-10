@@ -22,7 +22,7 @@ spec:
         accessMode: ReadWriteOnce
         size: 5Gi
       extraEnvironmentVars:
-        VAULT_TOKEN: ${VAULT_TOKEN}
+        VAULT_KEY: ${VAULT_KEY}
       standalone:
         enabled: false
       ha:
@@ -56,7 +56,7 @@ spec:
       postStart:
         - /bin/sh
         - -c
-        - vault operator unseal $VAULT_TOKEN
+        - "[[ -n $VAULT_KEY ]] && vault operator unseal $VAULT_KEY"
     ui:
       enabled: true
       serviceType: ClusterIP

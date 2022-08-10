@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: netmaker
-      version: 0.1.0
+      version: 0.2.0
       sourceRef:
         kind: HelmRepository
         name: netmaker-charts
@@ -17,10 +17,12 @@ spec:
   values:
     image:
       repository: docker.io/gravitl/netmaker
-      tag: v0.14.2
+      tag: v0.14.5
     baseDomain: netmaker.${DOMAIN}
     replicas: 3
     ui:
+      replicas: 1
+    mq:
       replicas: 1
     wireguard:
       enabled: true
@@ -40,4 +42,4 @@ spec:
       hostPrefix:
         ui: ""
         rest: api.
-        grpc: grpc.
+        broker: broker.

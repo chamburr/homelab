@@ -25,6 +25,7 @@
   loop:
     - cockpit
     - dhcpv6-client
+    - nfs
 
 - name: Enable firewall service
   ansible.builtin.dnf:

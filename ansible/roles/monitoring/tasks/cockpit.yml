@@ -17,7 +17,6 @@
       - cockpit-networkmanager
       - cockpit-packagekit
       - cockpit-machines
-      - cockpit-zfs
       - cockpit-file-sharing
       - cockpit-navigator
     state: present

@@ -5,16 +5,10 @@ metadata:
   name: global-config
   namespace: flux-system
 data:
-  GATEWAY_IP: ""
+  GATEWAY_IP: 192.168.122.1
 
-  K8S_CLUSTER_CIDR: ""
-  K8S_SERVICE_CIDR: ""
+  K8S_CLUSTER_CIDR: 10.42.0.0/16
+  K8S_SERVICE_CIDR: 10.43.0.0/16
 
-  LB_CIDR: ""
-  LB_ADGUARD_IP: ""
-  LB_IPSEC_VPN_IP: ""
-  LB_MAILU_IP: ""
-  LB_NETMAKER_IP: "" # TODO
-  LB_SAMBA_IP: ""
-  LB_TRAEFIK_IP: ""
-  LB_WG_EASY_IP: ""
+  METALLB_IP: 192.168.100.1
+  METALLB_CIDR: 192.168.100.0/24

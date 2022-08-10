@@ -1,3 +1,6 @@
 ---
 
+- include_tasks: mdadm.yml
+- include_tasks: nfs.yml
+- include_tasks: partition.yml
 - include_tasks: smart.yml

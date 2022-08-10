@@ -36,7 +36,9 @@ spec:
       wireguard-udp:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: ${LB_WG_EASY_IP}
+        loadBalancerIP: ${METALLB_IP}
+        annotations:
+          metallb.universe.tf/allow-shared-ip: global
         ports:
           dns-tcp:
             enabled: true

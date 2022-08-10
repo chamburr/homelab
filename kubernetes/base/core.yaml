@@ -21,4 +21,6 @@ spec:
       - kind: ConfigMap
         name: global-config
       - kind: Secret
+        name: global-vault-secret
+      - kind: Secret
         name: global-secret
