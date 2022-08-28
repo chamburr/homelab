@@ -24,6 +24,7 @@
       - tmux
       - unzip
       - wget
+      - yq
     state: present
 
 - name: Upgrade packages

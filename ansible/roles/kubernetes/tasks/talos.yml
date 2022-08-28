@@ -1,1 +1,43 @@
 ---
+
+- name: Check talos status
+  ansible.builtin.stat:
+    path: /home/{{ username }}/.talos
+  register: talos_status
+
+- name: Install and configure talos
+  block:
+
+    - name: Create talos directory
+      ansible.builtin.file:
+        name: /home/{{ username }}/.talos
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: 0755
+        state: directory
+
+    - name: Download configure script
+      ansible.builtin.get_url:
+        url: https://github.com/chamburr/homelab/blob/master/talos/configure.sh
+        dest: /home/{{ username }}/.talos/configure.sh
+        mode: 0755
+
+    - name: Run configure script
+      ansible.builtin.script:
+        chdir: /home/{{ username }}/.talos
+        cmd: configure.sh
+
+    - name: Delete configure script
+      ansible.builtin.file:
+        path: /home/{{ username }}/.talos/configure.sh
+        state: absent
+
+    - name: Update file permissions
+      ansible.builtin.file:
+        dest: /home/{{ username }}/.talos
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: u=rwX,g=rX,o=rX
+        recurse: true
+
+  when: not talos_status.stat.exists

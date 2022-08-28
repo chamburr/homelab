@@ -18,6 +18,11 @@ spec:
     role: Stateless-Aggregator
     podMonitor:
       enabled: true
+    service:
+      enabled: true
+      type: LoadBalancer
+      annotations:
+        metallb.universe.tf/allow-shared-ip: global
     customConfig:
       data_dir: /vector-data-dir
       api:
@@ -105,3 +110,13 @@ spec:
               {{`{{ __host }}`}}
             service: >-
               {{`{{ "talos-service" }}`}}
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: Service
+              name: vector
+            patch:
+              - op: add
+                path: /spec/loadBalancerIP
+                value: ${METALLB_IP}

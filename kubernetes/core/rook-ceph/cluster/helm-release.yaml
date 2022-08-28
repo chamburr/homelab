@@ -37,13 +37,15 @@ spec:
       bdev_enable_discard = true
       bdev_async_discard = true
     cephClusterSpec:
-      # TODO: Configure storage
       crashCollector:
         disable: false
       dashboard:
         enabled: true
       network:
         provider: host
+      storage:
+        useAllNodes: true
+        useAllDevices: true
     cephBlockPools:
       - name: ceph-blockpool
         spec:

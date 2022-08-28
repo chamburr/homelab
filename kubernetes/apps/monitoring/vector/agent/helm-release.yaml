@@ -31,7 +31,7 @@ spec:
         kubernetes_logs:
           type: kubernetes_logs
         talos_kernel_logs:
-          type: socoket
+          type: socket
           mode: udp
           address: 127.0.0.1:12000
         talos_service_logs:

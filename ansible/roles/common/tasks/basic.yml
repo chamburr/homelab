@@ -28,7 +28,6 @@
     name: "{{ locale }}"
     state: present
 
-- name: Enable SELinux
+- name: Disable SELinux
   ansible.posix.selinux:
-    policy: targeted
-    state: enforcing
+    state: disabled

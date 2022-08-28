@@ -11,7 +11,7 @@
   register: array_check
   changed_when: false
   failed_when: false
-  check_mode: no
+  check_mode: false
 
 - name: Create array
   ansible.builtin.command:
@@ -37,18 +37,18 @@
     cmd: mdadm --detail --scan
   register: array_details
   changed_when: false
-  when: array_create.changed
+  when: array_create is changed
 
 - name: Update mdadm config
   ansible.builtin.lineinfile:
     path: /etc/mdadm.conf
-    regexp: "^{{ item }}"
+    regexp: ^{{ item }}
     line: "{{ item }}"
     state: present
   loop: "{{ array_details.stdout_lines }}"
-  when: array_create.changed
+  when: array_create is changed
 
 - name: Update initramfs
   ansible.builtin.command:
     cmd: dracut -f
-  when: array_create.changed
+  when: array_create is changed
