@@ -19,7 +19,7 @@ spec:
       nameOverride: shiori
     image:
       respository: ghcr.io/go-shiori/shiori
-      tag: v1.5.2
+      tag: v1.5.3
     service:
       main:
         ports:

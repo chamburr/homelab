@@ -19,7 +19,7 @@ spec:
       nameOverride: wg-easy
     image:
       repository: docker.io/weejewel/wg-easy
-      tag: 6
+      tag: 7
     env:
       WG_HOST: vpn.${DOMAIN}
       WG_PORT: 51820

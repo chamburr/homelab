@@ -42,4 +42,75 @@ spec:
       hostPrefix:
         ui: ""
         rest: api.
-        broker: broker.
+        broker: mq.
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: Service
+              name: netmaker-wireguard
+            patch:
+              - op: add
+                path: /metadata/annotations
+                value:
+                  metallb.universe.tf/allow-shared-ip: global
+              - op: add
+                path: /spec/loadBalancerIP
+                value: ${METALLB_IP}
+              - op: replace
+                path: /spec/type
+                value: LoadBalancer
+              - op: remove
+                path: /spec/externalTrafficPolicy
+          - target:
+              kind: Service
+              name: netmaker-mqtt-nodeport
+            patch:
+              - op: add
+                path: /metadata/annotations
+                value:
+                  metallb.universe.tf/allow-shared-ip: global
+              - op: add
+                path: /spec/loadBalancerIP
+                value: ${METALLB_IP}
+              - op: replace
+                path: /spec/type
+                value: LoadBalancer
+          - target:
+              kind: Deployment
+              name: netmaker-mqtt
+            patch:
+              - op: replace
+                path: /spec/template/spec/volumes/1/persistentVolumeClaim
+                value:
+                  claimName: netmaker-certs
+          - target:
+              kind: Ingress
+              name: netmaker-ui
+            patch:
+              - op: add
+                path: /spec/tls
+                value:
+                  - hosts:
+                      - netmaker.${DOMAIN}
+          - target:
+              kind: Ingress
+              name: netmaker-rest
+            patch:
+              - op: add
+                path: /spec/tls
+                value:
+                  - hosts:
+                      - api.netmaker.${DOMAIN}
+          - target:
+              kind: IngressRouteTCP
+              name: netmaker-mq
+            patch:
+              - op: remove
+                path: /spec/tls/secretName
+        patchesStrategicMerge:
+          - $patch: delete
+            apiVersion: v1
+            kind: PersistentVolumeClaim
+            metadata:
+              name: netmaker-shared-certs-pvc

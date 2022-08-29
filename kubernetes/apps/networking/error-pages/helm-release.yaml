@@ -18,7 +18,7 @@ spec:
     nameOverride: error-pages
     image:
       repository: ghcr.io/tarampampam/error-pages
-      tag: 2.16.0
+      tag: 2.18.0
     env:
       TEMPLATE_NAME: connection
     service:

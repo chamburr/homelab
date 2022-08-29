@@ -15,6 +15,8 @@ spec:
         name: k8s-at-home-charts
         namespace: flux-system
   values:
+    image:
+      tag: 220730-jammy
     env:
       PHOTOPRISM_ADMIN_PASSWORD: photoprism
       PHOTOPRISM_SITE_URL: https://photos.${DOMAIN}

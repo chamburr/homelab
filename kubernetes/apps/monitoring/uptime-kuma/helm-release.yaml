@@ -19,7 +19,7 @@ spec:
       nameOverride: uptime-kuma
     image:
       repository: docker.io/louislam/uptime-kuma
-      tag: 1.16.1
+      tag: 1.17.1
     service:
       main:
         ports:

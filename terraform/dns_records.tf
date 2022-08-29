@@ -22,7 +22,7 @@ resource "cloudflare_record" "wildcard" {
 
 resource "cloudflare_record" "vpn" {
   zone_id = vars.CLOUDFLARE_ZONE_ID
-  name    = "*"
+  name    = "vpn"
   type    = "CNAME"
   value   = vars.CLOUDFLARE_DOMAIN
   ttl     = 1
@@ -31,7 +31,7 @@ resource "cloudflare_record" "vpn" {
 
 resource "cloudflare_record" "smb" {
   zone_id = vars.CLOUDFLARE_ZONE_ID
-  name    = "*"
+  name    = "smb"
   type    = "CNAME"
   value   = vars.CLOUDFLARE_DOMAIN
   ttl     = 1
@@ -49,9 +49,9 @@ resource "cloudflare_record" "imap" {
 
 resource "cloudflare_record" "smtp" {
   zone_id = vars.CLOUDFLARE_ZONE_ID
-  name    = "*"
+  name    = "smtp"
   type    = "CNAME"
   value   = "TODO.mxrouting.net"
   ttl     = 1
-  proxied = true
+  proxied = false
 }
