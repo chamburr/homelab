@@ -1,5 +1,4 @@
 ---
-
 - name: Add kubernetes repository
   ansible.builtin.yum_repository:
     name: kubernetes

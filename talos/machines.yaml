@@ -1,5 +1,4 @@
 ---
-
 nodes:
   - name: talos-1
     endpoint: 192.168.122.11

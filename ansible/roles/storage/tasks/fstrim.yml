@@ -1,5 +1,4 @@
 ---
-
 - name: Enable fstrim service
   ansible.builtin.service:
     name: fstrim.timer

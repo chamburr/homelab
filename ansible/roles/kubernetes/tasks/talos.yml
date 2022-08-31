@@ -1,5 +1,4 @@
 ---
-
 - name: Check talos status
   ansible.builtin.stat:
     path: /home/{{ username }}/.talos
@@ -7,7 +6,6 @@
 
 - name: Install and configure talos
   block:
-
     - name: Create talos directory
       ansible.builtin.file:
         name: /home/{{ username }}/.talos

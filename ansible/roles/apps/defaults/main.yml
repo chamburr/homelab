@@ -1,5 +1,4 @@
 ---
-
 cockpit_plugins:
   - cockpit-storaged
   - cockpit-networkmanager

@@ -1,5 +1,4 @@
 ---
-
 - name: Add EPEL repository
   ansible.builtin.dnf:
     name: epel-release

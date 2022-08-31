@@ -1,5 +1,4 @@
 ---
-
 - name: Install mdadm package
   ansible.builtin.dnf:
     name: mdadm

@@ -1,5 +1,4 @@
 ---
-
 - name: Add netmaker repository
   ansible.builtin.yum_repository:
     name: netclient

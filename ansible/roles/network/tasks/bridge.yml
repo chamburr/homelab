@@ -1,5 +1,4 @@
 ---
-
 - name: Create bridge interface
   community.general.nmcli:
     conn_name: "{{ bridge_master }}"

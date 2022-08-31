@@ -1,5 +1,4 @@
 ---
-
 - name: Add cockpit repository
   ansible.builtin.yum_repository:
     name: 45drives

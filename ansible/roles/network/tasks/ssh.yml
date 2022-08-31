@@ -1,5 +1,4 @@
 ---
-
 - name: Enable ssh service
   ansible.builtin.service:
     name: sshd

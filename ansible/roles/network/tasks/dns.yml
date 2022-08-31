@@ -1,5 +1,4 @@
 ---
-
 - name: Copy resolv configuration
   ansible.builtin.template:
     src: resolv.conf.j2

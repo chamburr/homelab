@@ -1,5 +1,4 @@
 ---
-
 kubeProxyReplacement: strict
 
 k8sServiceHost: 192.168.122.10

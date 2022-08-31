@@ -1,0 +1,15 @@
+tap "fluxcd/tap"
+tap "siderolabs/talos"
+
+brew "ansible"
+brew "ansible-lint"
+brew "fluxcd/tap/flux"
+brew "helm"
+brew "kubeconform"
+brew "kubernetes-cli"
+brew "prettier"
+brew "terraform"
+brew "tflint"
+brew "yamllint"
+
+cask "talosctl"

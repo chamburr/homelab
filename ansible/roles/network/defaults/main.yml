@@ -1,5 +1,4 @@
 ---
-
 bridge_master: br0
 bridge_slave: enp5s0
 

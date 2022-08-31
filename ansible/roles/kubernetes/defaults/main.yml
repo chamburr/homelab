@@ -1,5 +1,4 @@
 ---
-
 volume_name: kubernetes
 volume_size: 200G
 volume_format: raw

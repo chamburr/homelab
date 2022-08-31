@@ -1,6 +1,5 @@
 ---
 ignore: |
-  kubernetes/base/flux-system/gotk-components.yaml
   talos/cilium/install.yaml
 extends: default
 rules:
@@ -24,7 +23,7 @@ rules:
     spaces: 2
   line-length: disable
   quoted-strings:
-    quote-type: double
+    quote-type: any
     required: only-when-needed
   truthy:
     level: error

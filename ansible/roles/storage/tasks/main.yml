@@ -1,5 +1,4 @@
 ---
-
 - include_tasks: fstrim.yml
 - include_tasks: mdadm.yml
 - include_tasks: nfs.yml
