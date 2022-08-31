@@ -2,13 +2,13 @@
 
 - name: Create bridge interface
   community.general.nmcli:
-    conn_name: br0
+    conn_name: "{{ bridge_master }}"
     type: bridge
     state: present
 
 - name: Create bridge slave interface
   community.general.nmcli:
-    conn_name: enp5s0
+    conn_name: "{{ bridge_slave }}"
     type: bridge-slave
-    master: br0
+    master: "{{ bridge_master }}"
     state: present

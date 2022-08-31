@@ -11,14 +11,7 @@
 
 - name: Install cockpit packages
   ansible.builtin.dnf:
-    name:
-      - cockpit
-      - cockpit-storaged
-      - cockpit-networkmanager
-      - cockpit-packagekit
-      - cockpit-machines
-      - cockpit-file-sharing
-      - cockpit-navigator
+    name: "{{ ['cockpit'] + cockpit_plugins }}"
     state: present
 
 - name: Copy cockpit configuration

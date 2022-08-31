@@ -11,10 +11,7 @@
     permanent: true
     immediate: true
     state: enabled
-  loop:
-    - ssh
-    - http
-    - https
+  loop: "{{ firewall_allow }}"
 
 - name: Deny public services
   ansible.posix.firewalld:
@@ -22,10 +19,7 @@
     permanent: true
     immediate: true
     state: disabled
-  loop:
-    - cockpit
-    - dhcpv6-client
-    - nfs
+  loop: "{{ firewall_deny }}"
 
 - name: Enable firewall service
   ansible.builtin.dnf:

@@ -15,16 +15,17 @@
     state: present
   loop:
     - regexp: ^PasswordAuthentication
-      line: PasswordAuthentication no
+      line: PasswordAuthentication {{ ssh_password }}
     - regexp: ^PermitRootLogin
-      line: PermitRootLogin no
+      line: PermitRootLogin {{ ssh_root }}
   notify: Restart ssh service
 
 - name: Override ssh configuration
   ansible.builtin.blockinfile:
     path: /etc/ssh/sshd_config
     block: |
-      Match Address 10.0.0.0/8
+      Match Address {{ ssh_whitelist_ip }}
       PasswordAuthentication yes
+      PermitRootLogin yes
     validate: sshd -T -f %s
     state: present

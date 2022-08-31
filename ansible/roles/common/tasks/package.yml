@@ -7,31 +7,24 @@
 
 - name: Install packages
   ansible.builtin.dnf:
-    name:
-      - bat
-      - curl
-      - git
-      - htop
-      - iotop
-      - iperf3
-      - jq
-      - ncdu
-      - neofetch
-      - neovim
-      - rsync
-      - tar
-      - telnet
-      - tmux
-      - unzip
-      - wget
-      - yq
+    name: "{{ packages }}"
     state: present
 
-- name: Upgrade packages
+- name: Install auto upgrade package
   ansible.builtin.dnf:
-    name: "*"
-    state: latest
+    name: dnf-automatic
+    state: present
 
-- name: Cleanup packages
-  ansible.builtin.dnf:
-    autoremove: true
+- name: Copy auto upgrade configuration
+  ansible.builtin.copy:
+    src: automatic.conf
+    dest: /etc/dnf/automatic.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable auto upgrade service
+  ansible.builtin.service:
+    name: dnf-automatic.timer
+    state: started
+    enabled: true

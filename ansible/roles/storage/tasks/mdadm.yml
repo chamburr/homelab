@@ -7,7 +7,7 @@
 
 - name: Check array
   ansible.builtin.command:
-    cmd: cat /proc/mdstat | grep md0
+    cmd: cat /proc/mdstat | grep {{ array_name }}
   register: array_check
   changed_when: false
   failed_when: false
@@ -15,21 +15,26 @@
 
 - name: Create array
   ansible.builtin.command:
-    cmd: yes | mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sda /dev/sdb
+    cmd: >
+      yes | mdadm \
+        --create /dev/{{ array_name }} \
+        --level={{ array_level }} \
+        --raid-devices={{ array_devices | count }} \
+        {{ array_devices | join(' ') }}
   register: array_create
   when: array_check.results[0].rc != 0
 
 - name: Create array filesystem
   ansible.general.filesystem:
-    fstype: ext4
-    dev: /dev/md0
+    fstype: "{{ array_filesystem }}"
+    dev: /dev/{{ array_name }}
     state: present
 
 - name: Mount array filesystem
   ansible.posix.mount:
-    path: /mnt/md0
-    src: /dev/md0
-    fstype: ext4
+    path: "{{ array_mountpoint }}"
+    src: /dev/{{ array_name }}
+    fstype: "{{ array_filesystem }}"
     state: mounted
 
 - name: Get array details

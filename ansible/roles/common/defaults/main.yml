@@ -1,2 +1,43 @@
 ---
 
+timezone: Etc/UTC
+
+kernel_modules:
+  - br_netfilter
+  - overlay
+  - rbd
+
+packages:
+  - bat
+  - bc
+  - curl
+  - git
+  - htop
+  - iotop
+  - iperf3
+  - jq
+  - lsof
+  - man-pages
+  - nano
+  - net-tools
+  - ncdu
+  - neofetch
+  - neovim
+  - rsync
+  - tar
+  - telnet
+  - tmux
+  - tree
+  - unzip
+  - usbutils
+  - wget
+  - yq
+  - zip
+
+swap_path: /swapfile
+swap_size: 32768
+swap_swappiness: 60
+
+username: user
+password: "*"
+ssh_keys: []

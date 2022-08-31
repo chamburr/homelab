@@ -17,8 +17,8 @@
     - nfs-server
 
 - name: Copy nfs config
-  ansible.builtin.file:
-    src: exports
+  ansible.builtin.template:
+    src: exports.j2
     path: /etc/exports
     owner: root
     group: root

@@ -1,8 +1,8 @@
 ---
 
 - name: Copy resolv configuration
-  ansible.builtin.copy:
-    src: resolv.conf
+  ansible.builtin.template:
+    src: resolv.conf.j2
     dest: /etc/resolv.conf
     owner: root
     group: root

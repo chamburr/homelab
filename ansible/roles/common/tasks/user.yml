@@ -8,7 +8,7 @@
 - name: Create user
   ansible.builtin.user:
     name: "{{ username }}"
-    password: "{{ password_hash }}"
+    password: "{{ password }}"
     group: "{{ username }}"
     groups: wheel
     append: true
@@ -27,7 +27,7 @@
     user: "{{ username }}"
     key: "{{ item }}"
     state: present
-  loop: "{{ ssh_authorized_keys }}"
+  loop: "{{ ssh_keys }}"
 
 - name: Suppress login message
   ansible.builtin.file:

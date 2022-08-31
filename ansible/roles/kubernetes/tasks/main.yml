@@ -3,3 +3,4 @@
 - include_tasks: client.yml
 - include_tasks: kvm.yml
 - include_tasks: talos.yml
+- include_tasks: flux.yml

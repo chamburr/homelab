@@ -6,11 +6,7 @@
       - qemu-img
       - qemu-kvm
       - libvirt
-      - libvirt-client
-      - libvirt-daemon-config-network
       - virt-install
-      - virt-manager
-      - virt-viewer
     state: present
 
 - name: Enable kvm service
@@ -28,8 +24,10 @@
 
 - name: Create virtual disk
   ansible.builtin.command:
-    cmd: virsh vol-create-as default kubernetes 300G --format raw
-    creates: /var/lib/libvirt/images/kubernetes
+    cmd: >
+      virsh vol-create-as default {{ volume_name }} {{ volume_size }} \
+        --format {{ volume_format }}
+    creates: /var/lib/libvirt/images/{{ volume_name }}
 
 - name: Get virtual machines
   community.libvirt.virt:
@@ -38,15 +36,14 @@
 
 - name: Create virtual machines
   ansible.builtin.command:
-    cmd: virt-install --name={{ item }} \
-      --cpu=host --vcpus=8 --ram=8192 \
-      --os-type=linux --os-variant=generic --boot=cdrom,hd,network \
-      --cdrom=https://github.com/siderolabs/talos/releases/latest/download/talos-amd64.iso \
-      --disk=pool=default,size=5 --disk=vol=default/kubernetes,cache=none,io=native \
-      --network=bridge=br0 --network=network=default \
-      --graphics=none --noautoconsole --autostart
-  loop:
-    - talos-1
-    - talos-2
-    - talos-3
+    cmd: >
+      virt-install --name={{ item }} \
+        --cpu=host --vcpus={{ vm_cpu }} --ram={{ vm_ram }} \
+        --os-type=linux --os-variant=generic \
+        --boot=cdrom,hd,network --cdrom={{ vm_image }} \
+        --disk=pool=default,size={{ vm_disk }} \
+        --disk=vol=default/{{ vm_volume }},cache=none,io=native \
+        --network=bridge={{ vm_bridge }} --network=network=default \
+        --graphics=none --noautoconsole --autostart
+  loop: "{{ vms }}"
   when: all_vms | length == 0

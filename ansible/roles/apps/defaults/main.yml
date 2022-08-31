@@ -1,0 +1,14 @@
+---
+
+cockpit_plugins:
+  - cockpit-storaged
+  - cockpit-networkmanager
+  - cockpit-packagekit
+  - cockpit-machines
+  - cockpit-file-sharing
+  - cockpit-navigator
+
+cockpit_title: Homelab
+cockpit_unencrypted: "true"
+cockpit_root: /
+cockpit_timeout: 30
