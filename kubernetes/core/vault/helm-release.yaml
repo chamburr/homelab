@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: vault
-      version: 0.20.0
+      version: 0.21.0
       sourceRef:
         kind: HelmRepository
         name: hashicorp-charts
@@ -17,10 +17,14 @@ spec:
   values:
     server:
       dataStorage:
-        enabled: true
-        storageClass: ceph-block
-        accessMode: ReadWriteOnce
-        size: 5Gi
+        enabled: false
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: vault-data
+      volumeMounts:
+        - name: data
+          mountPath: /vault/data
       extraEnvironmentVars:
         VAULT_KEY: ${VAULT_KEY}
       standalone:

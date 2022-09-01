@@ -1,0 +1,25 @@
+---
+- name: Check cluster status
+  ansible.builtin.stat:
+    path: /home/{{ username }}/.talos
+  register: cluster_status
+
+- name: Install and configure cluster
+  block:
+    - name: Download configure script
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/chamburr/homelab/master/scripts/configure.sh
+        dest: /home/{{ username }}/configure.sh
+        mode: 0755
+
+    - name: Run configure script
+      ansible.builtin.script:
+        chdir: /home/{{ username }}
+        cmd: configure.sh
+
+    - name: Delete configure script
+      ansible.builtin.file:
+        path: /home/{{ username }}/configure.sh
+        state: absent
+
+  when: not cluster_status.stat.exists
