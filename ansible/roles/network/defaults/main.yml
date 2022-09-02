@@ -1,12 +1,4 @@
 ---
-bridge_master: br0
-bridge_slave: enp5s0
-
-dns_servers:
-  - 1.1.1.1
-  - 8.8.8.8
-  - 8.8.4.4
-
 fail2ban_ban_action: iptables-allports
 fail2ban_max_retry: 3
 fail2ban_find_time: 600
@@ -14,14 +6,35 @@ fail2ban_ban_time: 86400
 fail2ban_ignore_ip:
   - 127.0.0.1/8
 
-firewall_allow:
-  - ssh
-  - http
-  - https
-firewall_deny:
-  - cockpit
-  - dhcpv6-client
-  - nfs
+firewall_services:
+  ssh: enabled
+  dns: enabled
+  dhcpv6-client: enabled
+  http: enabled
+  https: enabled
+  imaps: enabled
+  mqtt-tls: enabled
+  wireguard: enabled
+  cockpit: disabled
+  nfs: disabled
+firewall_ports:
+  445/tcp: enabled
+  500/udp: enabled
+  4500/udp: enabled
+  51821-51820/udp: enabled
+
+firewall_forward_address: 192.168.122.100
+firewall_forward_ports:
+  - 53/tcp
+  - 53/udp
+  - 80/tcp
+  - 443/tcp
+  - 445/tcp
+  - 500/udp
+  - 1883/tcp
+  - 4500/udp
+  - 51820/udp
+  - 51821-51830/udp
 
 ssh_password: "no"
 ssh_root: "no"

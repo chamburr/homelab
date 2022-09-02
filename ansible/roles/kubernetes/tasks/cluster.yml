@@ -8,7 +8,7 @@
   block:
     - name: Download configure script
       ansible.builtin.get_url:
-        url: https://raw.githubusercontent.com/chamburr/homelab/master/scripts/configure.sh
+        url: "{{ configure_script }}"
         dest: /home/{{ username }}/configure.sh
         mode: 0755
 
@@ -16,6 +16,11 @@
       ansible.builtin.script:
         chdir: /home/{{ username }}
         cmd: configure.sh
+      register: result
+
+    - name: Print configure script output
+      ansible.builtin.debug:
+        var: result.stdout_lines
 
     - name: Delete configure script
       ansible.builtin.file:

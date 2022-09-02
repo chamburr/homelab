@@ -2,8 +2,8 @@
 
 echo 'Generating cilium files...'
 
-helm template cilium cilium/cilium -n kube-system -f talos/cilium/values.yaml \
-  > talos/cilium/install.yaml
+helm template cilium cilium/cilium -n kube-system -f scripts/cilium/values.yaml \
+  > scripts/cilium/install.yaml
 
 echo 'Generating secret files...'
 
@@ -21,4 +21,4 @@ for file in $(find . -type f -name 'secret.yaml'); do
   data+="vault kv put $path $keys\n"
 done
 
-echo "${data%??}" > scripts/secrets.txt
+echo "${data%??}" > scripts/vault/secrets.txt

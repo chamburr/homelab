@@ -1,6 +1,6 @@
 ---
 ignore: |
-  talos/cilium/install.yaml
+  scripts/cilium/install.yaml
 extends: default
 rules:
   braces:

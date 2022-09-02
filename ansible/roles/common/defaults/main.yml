@@ -9,6 +9,7 @@ kernel_modules:
 packages:
   - bat
   - bc
+  - bind-utils
   - curl
   - git
   - htop
@@ -30,7 +31,6 @@ packages:
   - unzip
   - usbutils
   - wget
-  - yq
   - zip
 
 swap_path: /swapfile

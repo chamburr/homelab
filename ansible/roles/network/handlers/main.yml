@@ -1,4 +1,19 @@
 ---
+- name: Reload networkmanager service
+  ansible.builtin.service:
+    name: NetworkManager
+    state: reloaded
+
+- name: Restart dnsmasq service
+  ansible.builtin.service:
+    name: dnsmasq
+    state: restarted
+
+- name: Restart fail2ban service
+  ansible.builtin.service:
+    name: fail2ban
+    state: restarted
+
 - name: Restart ssh service
   ansible.builtin.service:
     name: sshd

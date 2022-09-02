@@ -24,14 +24,6 @@
       dhcp: true
       vip:
         ip: 192.168.122.10
-    - interface: eth1
-      addresses:
-        - 192.168.10.0/24
-      routes:
-        - network: 0.0.0.0/0
-          gateway: 192.168.10.1
-      mtu: 1500
-      dhcp: false
 
 - op: add
   path: /machine/network/hostname
@@ -40,8 +32,7 @@
 - op: add
   path: /machine/network/nameservers
   value:
-    - 1.1.1.1
-    - 8.8.8.8
+    - "[192.168.122.1]:5353"
 
 - op: add
   path: /machine/disks
@@ -55,13 +46,13 @@
   value:
     disk: /dev/vda
     extraKernelArgs:
-      - talos.logging.kernel=udp://192.168.10.2:6050/
+      - talos.logging.kernel=udp://192.168.122.100:6050/
 
 - op: add
   path: /machine/logging
   value:
     destinations:
-      - endpoint: udp://192.168.10.2:6051/
+      - endpoint: udp://192.168.122.100:6051/
         format: json_lines
 
 - op: add
@@ -86,7 +77,7 @@
   value:
     name: custom
     urls:
-      - https://github.com/chamburr/homelab/blob/master/talos/cilium/install.yaml
+      - https://github.com/chamburr/homelab/blob/master/scripts/cilium/install.yaml
 
 - op: add
   path: /cluster/apiServer

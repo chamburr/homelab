@@ -34,6 +34,8 @@ spec:
         loadBalancerIP: ${METALLB_IP}
         annotations:
           metallb.universe.tf/allow-shared-ip: global
+        pop3:
+          pop3s: false
         smtp:
           smtp: false
           smtps: false

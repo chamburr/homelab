@@ -28,3 +28,4 @@
       PermitRootLogin yes
     validate: sshd -T -f %s
     state: present
+  notify: Restart ssh service

@@ -40,7 +40,7 @@ spec:
         annotations:
           metallb.universe.tf/allow-shared-ip: global
         ports:
-          dns-tcp:
+          wireguard-udp:
             enabled: true
             port: 51820
             protocol: UDP

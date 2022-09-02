@@ -1,5 +1,4 @@
 ---
-- include_tasks: bridge.yml
 - include_tasks: dns.yml
 - include_tasks: fail2ban.yml
 - include_tasks: firewall.yml

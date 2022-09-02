@@ -4,24 +4,35 @@
     name: firewalld
     state: present
 
-- name: Allow public services
-  ansible.posix.firewalld:
-    service: "{{ item }}"
-    permanent: true
-    immediate: true
-    state: enabled
-  loop: "{{ firewall_allow }}"
-
-- name: Deny public services
-  ansible.posix.firewalld:
-    service: "{{ item }}"
-    permanent: true
-    immediate: true
-    state: disabled
-  loop: "{{ firewall_deny }}"
-
 - name: Enable firewall service
   ansible.builtin.dnf:
     name: firewalld
     enabled: true
     state: started
+
+- name: Allow firewall masquerade
+  ansible.posix.firewalld:
+    masquerade: true
+    permanent: true
+    immediate: true
+    state: enabled
+
+- name: Configure firewall services
+  ansible.posix.firewalld:
+    service: "{{ item.key }}"
+    permanent: true
+    immediate: true
+    state: "{{ item.value }}"
+  with_dict: "{{ firewall_services }}"
+
+- name: Configure firewall forwarding
+  ansible.posix.firewalld:
+    port_forward:
+      port: "{{ item.split('/').0 }}"
+      proto: "{{ item.split('/').1 }}"
+      toaddr: "{{ firwall_forward_address }}"
+      toport: "{{ item.split('/').0 }}"
+    permanent: true
+    immediate: true
+    state: enabled
+  loop: "{{ firewall_forward_ports }}"

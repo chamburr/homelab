@@ -20,6 +20,7 @@
     owner: root
     group: root
     mode: 0644
+  notify: Restart cockpit service
 
 - name: Enable cockpit service
   ansible.builtin.service:

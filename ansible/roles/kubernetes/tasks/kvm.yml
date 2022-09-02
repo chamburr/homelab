@@ -42,7 +42,7 @@
         --boot=cdrom,hd,network --cdrom={{ vm_image }} \
         --disk=pool=default,size={{ vm_disk }} \
         --disk=vol=default/{{ vm_volume }},cache=none,io=native \
-        --network=bridge={{ vm_bridge }} --network=network=default \
+        --network=network=default \
         --graphics=none --noautoconsole --autostart
   loop: "{{ vms }}"
   when: all_vms | length == 0

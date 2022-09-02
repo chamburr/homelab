@@ -32,7 +32,7 @@ spec:
         annotations:
           metallb.universe.tf/allow-shared-ip: global
         ports:
-          dns-tcp:
+          ipsec-udp:
             enabled: true
             port: 500
             protocol: UDP
@@ -45,7 +45,7 @@ spec:
         annotations:
           metallb.universe.tf/allow-shared-ip: global
         ports:
-          dns-tcp:
+          ikev2-udp:
             enabled: true
             port: 4500
             protocol: UDP

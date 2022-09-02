@@ -12,6 +12,6 @@ vm_cpu: 8
 vm_ram: 8192
 vm_disk: 5
 vm_volume: kubernetes
-vm_bridge: br0
-
 vm_image: https://github.com/siderolabs/talos/releases/latest/download/talos-amd64.iso
+
+configure_script: https://raw.githubusercontent.com/chamburr/homelab/master/scripts/configure.sh
