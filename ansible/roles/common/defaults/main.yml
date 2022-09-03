@@ -7,7 +7,6 @@ kernel_modules:
   - rbd
 
 packages:
-  - bat
   - bc
   - bind-utils
   - curl

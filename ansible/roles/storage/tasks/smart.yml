@@ -5,7 +5,7 @@
     state: present
 
 - name: Enable smartd service
-  ansible.builtin.dnf:
+  ansible.builtin.service:
     name: smartd
     enabled: true
     state: started

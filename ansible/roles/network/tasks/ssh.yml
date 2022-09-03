@@ -13,9 +13,9 @@
     validate: sshd -T -f %s
     state: present
   loop:
-    - regexp: ^PasswordAuthentication
+    - regexp: ^#?PasswordAuthentication
       line: PasswordAuthentication {{ ssh_password }}
-    - regexp: ^PermitRootLogin
+    - regexp: ^#?PermitRootLogin
       line: PermitRootLogin {{ ssh_root }}
   notify: Restart ssh service
 
@@ -23,9 +23,9 @@
   ansible.builtin.blockinfile:
     path: /etc/ssh/sshd_config
     block: |
-      Match Address {{ ssh_whitelist_ip }}
-      PasswordAuthentication yes
-      PermitRootLogin yes
+      Match Address {{ ssh_whitelist_ip | join(',') }}
+      	PasswordAuthentication yes
+      	PermitRootLogin yes
     validate: sshd -T -f %s
     state: present
   notify: Restart ssh service

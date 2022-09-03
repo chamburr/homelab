@@ -1,4 +1,12 @@
 ---
+- name: Allow passwordless sudo
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    regexp: ^# %wheel
+    line: "%wheel	ALL=(ALL)	NOPASSWD: ALL"
+    validate: visudo -cf %s
+    state: present
+
 - name: Create group
   ansible.builtin.group:
     name: "{{ username }}"
@@ -13,15 +21,7 @@
     append: true
     state: present
 
-- name: Allow passwordless sudo
-  ansible.builtin.lineinfile:
-    path: /etc/sudoers
-    regexp: ^%wheel
-    line: "^%wheel ALL=(ALL) NOPASSWD: ALL"
-    validate: visudo -cf %s
-    state: present
-
-- name: Copy SSH public key
+- name: Copy ssh public key
   ansible.posix.authorized_key:
     user: "{{ username }}"
     key: "{{ item }}"
@@ -37,3 +37,8 @@
     access_time: preserve
     modification_time: preserve
     state: touch
+
+- name: Delete root password
+  ansible.builtin.user:
+    name: root
+    password: "*"

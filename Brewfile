@@ -1,3 +1,4 @@
+tap "esolitos/ipa"
 tap "fluxcd/tap"
 tap "siderolabs/talos"
 
@@ -8,6 +9,7 @@ brew "helm"
 brew "kubeconform"
 brew "kubernetes-cli"
 brew "prettier"
+brew "sshpass"
 brew "terraform"
 brew "tflint"
 brew "yamllint"

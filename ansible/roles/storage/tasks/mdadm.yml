@@ -5,7 +5,7 @@
     state: present
 
 - name: Check array
-  ansible.builtin.command:
+  ansible.builtin.shell:
     cmd: cat /proc/mdstat | grep {{ array_name }}
   register: array_check
   changed_when: false
@@ -13,18 +13,18 @@
   check_mode: false
 
 - name: Create array
-  ansible.builtin.command:
-    cmd: >
+  ansible.builtin.shell:
+    cmd: |
       yes | mdadm \
         --create /dev/{{ array_name }} \
         --level={{ array_level }} \
         --raid-devices={{ array_devices | count }} \
         {{ array_devices | join(' ') }}
   register: array_create
-  when: array_check.results[0].rc != 0
+  when: array_check.rc != 0
 
 - name: Create array filesystem
-  ansible.general.filesystem:
+  community.general.filesystem:
     fstype: "{{ array_filesystem }}"
     dev: /dev/{{ array_name }}
     state: present
@@ -48,6 +48,10 @@
     path: /etc/mdadm.conf
     regexp: ^{{ item }}
     line: "{{ item }}"
+    create: true
+    owner: root
+    group: root
+    mode: 0644
     state: present
   loop: "{{ array_details.stdout_lines }}"
   when: array_create is changed

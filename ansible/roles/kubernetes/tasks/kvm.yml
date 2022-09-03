@@ -23,7 +23,7 @@
 
 - name: Create virtual disk
   ansible.builtin.command:
-    cmd: >
+    cmd: |
       virsh vol-create-as default {{ volume_name }} {{ volume_size }} \
         --format {{ volume_format }}
     creates: /var/lib/libvirt/images/{{ volume_name }}
@@ -35,7 +35,7 @@
 
 - name: Create virtual machines
   ansible.builtin.command:
-    cmd: >
+    cmd: |
       virt-install --name={{ item }} \
         --cpu=host --vcpus={{ vm_cpu }} --ram={{ vm_ram }} \
         --os-type=linux --os-variant=generic \

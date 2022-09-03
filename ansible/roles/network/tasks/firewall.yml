@@ -5,7 +5,7 @@
     state: present
 
 - name: Enable firewall service
-  ansible.builtin.dnf:
+  ansible.builtin.service:
     name: firewalld
     enabled: true
     state: started
@@ -25,13 +25,21 @@
     state: "{{ item.value }}"
   with_dict: "{{ firewall_services }}"
 
+- name: Configure firewall ports
+  ansible.posix.firewalld:
+    port: "{{ item.key }}"
+    permanent: true
+    immediate: true
+    state: "{{ item.value }}"
+  with_dict: "{{ firewall_ports }}"
+
 - name: Configure firewall forwarding
   ansible.posix.firewalld:
     port_forward:
-      port: "{{ item.split('/').0 }}"
-      proto: "{{ item.split('/').1 }}"
-      toaddr: "{{ firwall_forward_address }}"
-      toport: "{{ item.split('/').0 }}"
+      - port: "{{ item.split('/').0 }}"
+        proto: "{{ item.split('/').1 }}"
+        toaddr: "{{ firewall_forward_address }}"
+        toport: "{{ item.split('/').0 }}"
     permanent: true
     immediate: true
     state: enabled

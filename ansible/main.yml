@@ -7,6 +7,7 @@
     - name: Pause for 3 seconds
       ansible.builtin.pause:
         seconds: 3
+      tags: always
   roles:
     - role: common
       tags: common

@@ -1,5 +1,5 @@
 ---
-- name: Add EPEL repository
+- name: Add epel repository
   ansible.builtin.dnf:
     name: epel-release
     state: present

@@ -1,7 +1,15 @@
 ---
 timezone: Asia/Singapore
 
+# TODO: generate a password
+# python3 -c "from passlib.hash import sha512_crypt; import getpass; print(sha512_crypt.using(rounds=5000).hash(getpass.getpass()))"
+
 username: chamburr
-password: "*"
+password: "$6$9Kt1UC6DBaEXaX1A$Qyw1e96nHNVq3sj5E/D4ajyAkxBmyK2MkoEtc.5rqP/yjnLiwF7/bSp12Wy/e12jImL\
+  sI5K4UeBJF/RZnuddF/"
 ssh_keys:
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUXll5ke2Ccj3I54kGOIIunQow3wpkcoGa37zbR7VgIYChEWt+2wr48kX8yC14TSqIzVUMqwY53M5wI+sZeDYy5bpxmvhzhQ/nAR1Qv+EY0CcKkkjzSbJ49SJA86q/gn/5hgBGzXcEtyEb/DP8EauoyGi2TS+DF1s4kYs/+r2zE/9Y8wtnwHO1Z9XdHWvMGu4bb7diLV3/Y/Qv55BAhmPM64b8AP2Tv6bTi8zWUq9E/koBL1fdmgSnv0pFnVQyuxpQMeoDaazvmE656ShDyu/d5IhN13aaFhSuEFx3U4aUpyPb/jbTkwmKiUwNhyb6VZWkU8MPJUEoZlJ+Mb3qg/21 chamburr@Hans-MBP
+  - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUXll5ke2Ccj3I54kGOIIunQow3wpkcoGa37zbR7VgIYChEWt+2wr48\
+    kX8yC14TSqIzVUMqwY53M5wI+sZeDYy5bpxmvhzhQ/nAR1Qv+EY0CcKkkjzSbJ49SJA86q/gn/5hgBGzXcEtyEb/DP8Eau\
+    oyGi2TS+DF1s4kYs/+r2zE/9Y8wtnwHO1Z9XdHWvMGu4bb7diLV3/Y/Qv55BAhmPM64b8AP2Tv6bTi8zWUq9E/koBL1fdm\
+    gSnv0pFnVQyuxpQMeoDaazvmE656ShDyu/d5IhN13aaFhSuEFx3U4aUpyPb/jbTkwmKiUwNhyb6VZWkU8MPJUEoZlJ+Mb3\
+    qg/21 chamburr@Hans-MBP"

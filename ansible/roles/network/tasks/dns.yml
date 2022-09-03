@@ -22,7 +22,7 @@
   notify: Restart dnsmasq service
 
 - name: Enable dnsmasq service
-  ansible.builtin.dnf:
+  ansible.builtin.service:
     name: dnsmasq
     enabled: true
     state: started

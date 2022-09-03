@@ -33,7 +33,7 @@ resource "cloudflare_zone_settings_override" "settings" {
       enabled            = true
       preload            = true
       max_age            = 15552000
-      no_sniff           = false
+      nosniff            = false
       include_subdomains = true
     }
   }
