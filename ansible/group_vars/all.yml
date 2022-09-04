@@ -4,9 +4,11 @@ timezone: Asia/Singapore
 # TODO: generate a password
 # python3 -c "from passlib.hash import sha512_crypt; import getpass; print(sha512_crypt.using(rounds=5000).hash(getpass.getpass()))"
 
+# yamllint disable rule:quoted-strings
 username: chamburr
-password: "$6$9Kt1UC6DBaEXaX1A$Qyw1e96nHNVq3sj5E/D4ajyAkxBmyK2MkoEtc.5rqP/yjnLiwF7/bSp12Wy/e12jImL\
-  sI5K4UeBJF/RZnuddF/"
+password:
+  "$6$9Kt1UC6DBaEXaX1A$Qyw1e96nHNVq3sj5E/D4ajyAkxBmyK2MkoEtc.5rqP/yjnLiwF7/bSp12Wy/e12jImLsI5K4UeB\
+  JF/RZnuddF/"
 ssh_keys:
   - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUXll5ke2Ccj3I54kGOIIunQow3wpkcoGa37zbR7VgIYChEWt+2wr48\
     kX8yC14TSqIzVUMqwY53M5wI+sZeDYy5bpxmvhzhQ/nAR1Qv+EY0CcKkkjzSbJ49SJA86q/gn/5hgBGzXcEtyEb/DP8Eau\

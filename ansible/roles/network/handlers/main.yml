@@ -4,11 +4,6 @@
     name: NetworkManager
     state: reloaded
 
-- name: Restart dnsmasq service
-  ansible.builtin.service:
-    name: dnsmasq
-    state: restarted
-
 - name: Restart fail2ban service
   ansible.builtin.service:
     name: fail2ban

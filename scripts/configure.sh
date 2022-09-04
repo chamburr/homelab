@@ -5,14 +5,14 @@ configureTalos() {
 
   username="${PWD##*/}"
 
-  mkdir .talos .kube
+  mkdir -p .talos .kube
   cd .talos
 
-  curl -O https://raw.githubusercontent.com/chamburr/homelab/master/scripts/talos/machines.yaml
-  curl -O https://raw.githubusercontent.com/chamburr/homelab/master/scripts/talos/patch.yaml
+  curl -sO https://raw.githubusercontent.com/chamburr/homelab/master/scripts/talos/machines.yaml
+  curl -sO https://raw.githubusercontent.com/chamburr/homelab/master/scripts/talos/patch.yaml
 
   talosctl gen config cluster https://192.168.122.10:6443 \
-    --config-patch @patch.yaml --with-docs=false --with-examples=false
+    --config-patch-control-plane @patch.yaml --with-docs=false --with-examples=false
 
   nodes=$(cat machines.yaml | sed -e '1d' -e 's/- /{"/' -e 's/: /":"/' \
     | sed -z -e 's/\n  /","/g' -e 's/\n/"}\n/g')
@@ -23,7 +23,7 @@ configureTalos() {
     endpoint=$(echo $node | jq -r '.endpoint')
 
     filename="$name.yaml"
-    ip=$(virsh net-dhcp-leases default | grep $name | grep -oE '192.168.{1,4}.{1,4}')
+    ip=$(virsh domifaddr $name | grep -oE '192.168.{1,4}.[0-9]{1,4}')
 
     cp controlplane.yaml $filename
     sed -i -e "s/\$ENDPOINT/$endpoint/g" -e "s/\$HOSTNAME/$name/g" $filename
@@ -33,18 +33,20 @@ configureTalos() {
     rm $filename
   done
 
-  talosctl config endpoint $endpoints --talosconfig ./talosconfig
-  talosctl config node $endpoints --talosconfig ./talosconfig
-  talosctl config merge ./talosconfig
+  mv talosconfig config
+  export TALOSCONFIG="/home/$username/.talos/config"
+
+  talosctl config endpoint $endpoints
+  talosctl config node $endpoints
 
   until talosctl version > /dev/null 2>&1; do
     sleep 5
   done
 
   talosctl bootstrap -n $(echo $endpoints | cut -f 1 -d ' ')
-  talosctl kubeconfig
+  talosctl kubeconfig ../.kube/config -n $(echo $endpoints | cut -f 1 -d ' ')
 
-  rm controlplane.yaml worker.yaml talosconfig
+  rm controlplane.yaml worker.yaml
   rm machines.yaml patch.yaml
 
   cd ..
@@ -54,10 +56,12 @@ configureTalos() {
 configureFlux() {
   echo 'Configuring flux...'
 
-  kubectl apply -k 'github.com/chamburr/homelab/kubernetes/base/flux-system?ref=master'
+  until talosctl health -n 192.168.122.10 > /dev/null 2>&1; do
+    sleep 5
+  done
 
-  flux reconcile -n flux-system source git flux-cluster
-  flux reconcile -n flux-system kustomization flux-cluster
+  kubectl apply -k 'github.com/fluxcd/flux2/manifests/install?ref=v0.33.0'
+  kubectl apply -k 'github.com/chamburr/homelab/kubernetes/base/flux-system?ref=master'
 }
 
 configureVault() {
@@ -98,6 +102,9 @@ configureVault() {
       bound_service_account_namespaces=vault \
       policies=vault-secrets-operator \
       ttl=24h'
+
+  kubectl -n vault exec vault-0 -- sh -c \
+    "vault kv put secret/flux-system/global $CONFIGURE_VARS"
 
   kubectl -n vault exec vault-0 -- sh -c \
     "$(curl https://raw.githubusercontent.com/chamburr/homelab/master/scripts/vault/secrets.txt)"

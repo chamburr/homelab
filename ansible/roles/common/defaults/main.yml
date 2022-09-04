@@ -9,6 +9,7 @@ kernel_modules:
 packages:
   - bc
   - bind-utils
+  - bridge-utils
   - curl
   - git
   - htop

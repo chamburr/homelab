@@ -34,5 +34,4 @@
       - kubectl
       - talosctl
       - flux
-      - helm
     state: present

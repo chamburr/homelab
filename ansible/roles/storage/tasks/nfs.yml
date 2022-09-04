@@ -6,11 +6,9 @@
 
 - name: Enable nfs services
   ansible.builtin.service:
-    name: "{{ item }}"
+    name: nfs-server
     enabled: true
     state: started
-  loop:
-    - nfs-server
 
 - name: Copy nfs config
   ansible.builtin.template:

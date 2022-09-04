@@ -5,6 +5,8 @@ metadata:
   name: global-config
   namespace: flux-system
 data:
+  DOMAIN: chamburr.xyz
+
   GATEWAY_IP: 192.168.122.1
 
   K8S_CLUSTER_CIDR: 10.42.0.0/16

@@ -1,22 +1,35 @@
 #!/bin/sh
 
-echo 'Linting yaml...'
+lintYaml() {
+  echo 'Linting yaml...'
 
-yamllint -c .yamllint.yaml .
+  yamllint -c .yamllint.yaml .
+}
 
-echo 'Linting ansible...'
+lintAnsible() {
+  echo 'Linting ansible...'
 
-ansible-lint -c .ansible-lint.yaml ansible 2>&1 | grep -v 'WARNING'
+  ansible-lint -c .ansible-lint.yaml ansible 2>&1 | grep -v 'WARNING'
+}
 
-echo 'Linting kubernetes...'
+lintKubernetes() {
+  echo 'Linting kubernetes...'
 
-mkdir -p /tmp/crd-schemas/master-standalone-strict
-curl -sL https://github.com/fluxcd/flux2/releases/latest/download/crd-schemas.tar.gz \
-  | tar zxf - -C /tmp/crd-schemas/master-standalone-strict
-kubeconform -strict -ignore-missing-schemas \
-  -schema-location default -schema-location /tmp/crd-schemas kubernetes
-rm -rf /tmp/crd-schemas
+  mkdir -p /tmp/crd-schemas/master-standalone-strict
+  curl -sL https://github.com/fluxcd/flux2/releases/latest/download/crd-schemas.tar.gz \
+    | tar zxf - -C /tmp/crd-schemas/master-standalone-strict
+  kubeconform -strict -ignore-missing-schemas \
+    -schema-location default -schema-location /tmp/crd-schemas kubernetes
+  rm -rf /tmp/crd-schemas
+}
 
-echo 'Linting terraform...'
+lintTerraform() {
+  echo 'Linting terraform...'
 
-tflint -c .tflint.hcl terraform
+  tflint -c .tflint.hcl terraform
+}
+
+lintYaml
+lintAnsible
+lintKubernetes
+lintTerraform

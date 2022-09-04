@@ -25,5 +25,5 @@
 - name: Enable auto upgrade service
   ansible.builtin.service:
     name: dnf-automatic.timer
-    state: started
     enabled: true
+    state: started

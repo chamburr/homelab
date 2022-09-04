@@ -2,14 +2,13 @@
 - op: add
   path: /machine/certSANs
   value:
-    - $ENDPOINT
+    - 192.168.122.10
 
 - op: add
-  path: /machine/kubelet
+  path: /machine/kubelet/extraArgs
   value:
-    extraArgs:
-      feature-gates: GracefulNodeShutdown=true,MixedProtocolLBService=true
-      rotate-server-certificates: "true"
+    feature-gates: MixedProtocolLBService=true,GracefulNodeShutdown=true
+    rotate-server-certificates: "true"
 
 - op: add
   path: /machine/network/interfaces
@@ -21,7 +20,7 @@
         - network: 0.0.0.0/0
           gateway: 192.168.122.1
       mtu: 1500
-      dhcp: true
+      dhcp: false
       vip:
         ip: 192.168.122.10
 
@@ -32,21 +31,23 @@
 - op: add
   path: /machine/network/nameservers
   value:
-    - "[192.168.122.1]:5353"
+    - 192.168.122.1
 
 - op: add
   path: /machine/disks
   value:
-    - device: /dev/vdb
+    - device: /dev/sdb
       partitions:
         - mountpoint: /var/mnt/extra
 
 - op: add
-  path: /machine/install
+  path: /machine/install/disk
+  value: /dev/sda
+
+- op: add
+  path: /machine/install/extraKernelArgs
   value:
-    disk: /dev/vda
-    extraKernelArgs:
-      - talos.logging.kernel=udp://192.168.122.100:6050/
+    - talos.logging.kernel=udp://192.168.122.100:6050/
 
 - op: add
   path: /machine/logging
@@ -54,13 +55,6 @@
     destinations:
       - endpoint: udp://192.168.122.100:6051/
         format: json_lines
-
-- op: add
-  path: /machine/time
-  value:
-    disabled: false
-    servers:
-      - time.cloudflare.com
 
 - op: add
   path: /machine/files
@@ -73,39 +67,48 @@
       op: create
 
 - op: add
+  path: /cluster/allowSchedulingOnControlPlanes
+  value: true
+
+- op: add
   path: /cluster/network/cni
   value:
     name: custom
     urls:
-      - https://github.com/chamburr/homelab/blob/master/scripts/cilium/install.yaml
+      - https://raw.githubusercontent.com/chamburr/homelab/master/scripts/cilium/install.yaml
+
+- op: replace
+  path: /cluster/apiServer/admissionControl
+  value: []
 
 - op: add
-  path: /cluster/apiServer
+  path: /cluster/apiServer/certSANs
   value:
-    admissionControl: []
-    certSANs:
-      - $ENDPOINT
-    extraArgs:
-      feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
+    - 192.168.122.10
 
 - op: add
-  path: /cluster/controllerManager
+  path: /cluster/apiServer/extraArgs
   value:
-    extraArgs:
-      feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
+    feature-gates: MixedProtocolLBService=true
 
 - op: add
-  path: /cluster/proxy
+  path: /cluster/controllerManager/extraArgs
   value:
-    disabled: true
-    extraArgs:
-      feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
+    feature-gates: MixedProtocolLBService=true
 
 - op: add
-  path: /cluster/scheduler
+  path: /cluster/proxy/disabled
+  value: true
+
+- op: add
+  path: /cluster/proxy/extraArgs
   value:
-    extraArgs:
-      feature-gates: MixedProtocolLBService=true,EphemeralContainers=True
+    feature-gates: MixedProtocolLBService=true
+
+- op: add
+  path: /cluster/scheduler/extraArgs
+  value:
+    feature-gates: MixedProtocolLBService=true
 
 - op: add
   path: /cluster/discovery/registries
@@ -116,4 +119,4 @@
 - op: add
   path: /cluster/extraManifests
   value:
-    - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.5.1/deploy/ha-install.yaml
+    - https://raw.githubusercontent.com/Didstopia/kubelet-serving-cert-approver/2407299/deploy/ha-install.yaml

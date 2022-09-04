@@ -1,5 +1,9 @@
 #!/bin/sh
 
-echo 'Formatting yaml...'
+formatYaml() {
+  echo 'Formatting yaml...'
 
-prettier -cw .
+  prettier -cw .
+}
+
+formatYaml

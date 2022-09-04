@@ -6,8 +6,10 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
+  dependsOn:
+    - name: crds
   path: ./kubernetes/config
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: flux-cluster

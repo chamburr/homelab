@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
-  url: https://github.com/ticoberger/vault-secrets-operator.git
+  url: https://github.com/ricoberger/vault-secrets-operator.git
   ref:
     # renovate: registryUrl=https://ricoberger.github.io/helm-charts chart=vault-secrets-operator
     tag: 1.18.0

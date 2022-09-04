@@ -13,6 +13,7 @@ resources:
   - jetstack.yaml
   - k8s-at-home.yaml
   - kubernetes-dashboard.yaml
+  - lwolf.yaml
   - mailu.yaml
   - metrics-server.yaml
   - netmaker.yaml

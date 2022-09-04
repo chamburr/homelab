@@ -14,9 +14,6 @@ spec:
         kind: HelmRepository
         name: rook-ceph-charts
         namespace: flux-system
-  dependsOn:
-    - name: vault
-      namespace: vault
   values:
     crds:
       enabled: false

@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  url: ssh://git@github.com/chamburr/homelab
+  url: https://github.com/chamburr/homelab
   ref:
     branch: master
 ---
@@ -22,4 +22,4 @@ spec:
   wait: false
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: flux-cluster

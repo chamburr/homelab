@@ -59,7 +59,7 @@ spec:
               - op: add
                 path: /spec/loadBalancerIP
                 value: ${METALLB_IP}
-              - op: replace
+              - op: add
                 path: /spec/type
                 value: LoadBalancer
               - op: remove
@@ -118,7 +118,7 @@ spec:
               - op: add
                 path: /spec/loadBalancerIP
                 value: ${METALLB_IP}
-              - op: replace
+              - op: add
                 path: /spec/type
                 value: LoadBalancer
           - target:

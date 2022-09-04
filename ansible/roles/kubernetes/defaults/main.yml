@@ -3,13 +3,15 @@ volume_name: kubernetes
 volume_size: 200G
 volume_format: raw
 
+domain: cluster.local
+
 vms:
-  - talos-1
-  - talos-2
-  - talos-3
+  talos-1: 192.168.122.11
+  talos-2: 192.168.122.12
+  talos-3: 192.168.122.13
 
 vm_cpu: 8
-vm_ram: 8192
+vm_ram: 16384
 vm_disk: 5
 vm_volume: kubernetes
 vm_image: https://github.com/siderolabs/talos/releases/latest/download/talos-amd64.iso

@@ -4,27 +4,29 @@
     path: /home/{{ username }}/.talos
   register: cluster_status
 
-- name: Install and configure cluster
-  block:
-    - name: Download configure script
-      ansible.builtin.get_url:
-        url: "{{ configure_script }}"
-        dest: /home/{{ username }}/configure.sh
-        mode: 0755
+- name: Download configure script
+  ansible.builtin.get_url:
+    url: "{{ configure_script }}"
+    dest: /home/{{ username }}/configure.sh
+    mode: 0755
+  when: not cluster_status.stat.exists
 
-    - name: Run configure script
-      ansible.builtin.script:
-        chdir: /home/{{ username }}
-        cmd: configure.sh
-      register: result
+- name: Run configure script
+  ansible.builtin.command:
+    chdir: /home/{{ username }}
+    cmd: /home/{{ username }}/configure.sh
+  environment:
+    CONFIGURE_VARS: "{{ lookup('env', 'CONFIGURE_VARS') }}"
+  register: result
+  when: not cluster_status.stat.exists
 
-    - name: Print configure script output
-      ansible.builtin.debug:
-        var: result.stdout_lines
+- name: Print configure script output
+  ansible.builtin.debug:
+    var: result.stdout_lines
+  when: not cluster_status.stat.exists
 
-    - name: Delete configure script
-      ansible.builtin.file:
-        path: /home/{{ username }}/configure.sh
-        state: absent
-
+- name: Delete configure script
+  ansible.builtin.file:
+    path: /home/{{ username }}/configure.sh
+    state: absent
   when: not cluster_status.stat.exists
