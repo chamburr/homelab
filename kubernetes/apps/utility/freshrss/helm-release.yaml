@@ -41,7 +41,7 @@ spec:
           - host: freshrss.${DOMAIN}
             paths:
               - path: /
-                pathType: prefix
+                pathType: Prefix
         tls:
           - hosts:
               - freshrss.${DOMAIN}

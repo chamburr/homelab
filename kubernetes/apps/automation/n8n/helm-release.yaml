@@ -48,7 +48,7 @@ spec:
           - host: n8n.${DOMAIN}
             paths:
               - path: /
-                pathType: prefix
+                pathType: Prefix
         tls:
           - hosts:
               - n8n.${DOMAIN}

@@ -29,7 +29,7 @@ spec:
           - host: home.${DOMAIN}
             paths:
               - path: /
-                pathType: prefix
+                pathType: Prefix
         tls:
           - hosts:
               - home.${DOMAIN}

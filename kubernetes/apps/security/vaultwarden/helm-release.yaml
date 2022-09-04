@@ -42,7 +42,7 @@ spec:
           - host: bitwarden.${DOMAIN}
             paths:
               - path: /
-                pathType: prefix
+                pathType: Prefix
         tls:
           - hosts:
               - bitwarden.${DOMAIN}

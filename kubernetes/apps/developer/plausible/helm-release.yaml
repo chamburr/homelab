@@ -57,7 +57,7 @@ spec:
         - host: plausible.${DOMAIN}
           paths:
             - path: /
-              pathType: prefix
+              pathType: Prefix
       tls:
         - hosts:
             - plausible.${DOMAIN}

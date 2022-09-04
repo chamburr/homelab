@@ -59,7 +59,7 @@ spec:
           - host: wireguard.${DOMAIN}
             paths:
               - path: /
-                pathType: prefix
+                pathType: Prefix
         tls:
           - hosts:
               - wireguard.${DOMAIN}

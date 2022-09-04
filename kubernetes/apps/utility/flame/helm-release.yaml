@@ -38,7 +38,7 @@ spec:
           - host: dashboard.${DOMAIN}
             paths:
               - path: /
-                pathType: prefix
+                pathType: Prefix
         tls:
           - hosts:
               - dashboard.${DOMAIN}

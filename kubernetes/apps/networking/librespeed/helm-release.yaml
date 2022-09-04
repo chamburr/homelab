@@ -28,7 +28,7 @@ spec:
           - host: speedtest.${DOMAIN}
             paths:
               - path: /
-                pathType: prefix
+                pathType: Prefix
         tls:
           - hosts:
               - speedtest.${DOMAIN}

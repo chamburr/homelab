@@ -35,7 +35,7 @@ spec:
         mailer:
           ENABLED: true
           MAILER_TYPE: smtp
-          HOST: ${MAIL_HOST}:${MAIL_PORT}
+          HOST: "${MAIL_HOST}:${MAIL_PORT}"
           USER: ${MAIL_USERNAME}
           PASSWD: ${MAIL_PASSWORD}
           FROM: ${MAIL_SENDER}
@@ -58,7 +58,7 @@ spec:
         - host: git.${DOMAIN}
           paths:
             - path: /
-              pathType: prefix
+              pathType: Prefix
       tls:
         - hosts:
             - git.${DOMAIN}

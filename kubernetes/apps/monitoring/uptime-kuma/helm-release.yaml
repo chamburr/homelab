@@ -37,7 +37,7 @@ spec:
           - host: status.${DOMAIN}
             paths:
               - path: /
-                pathType: prefix
+                pathType: Prefix
         tls:
           - hosts:
               - status.${DOMAIN}

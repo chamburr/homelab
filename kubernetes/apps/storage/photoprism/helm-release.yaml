@@ -36,7 +36,7 @@ spec:
           - host: photos.${DOMAIN}
             paths:
               - path: /
-                pathType: prefix
+                pathType: Prefix
         tls:
           - hosts:
               - photos.${DOMAIN}

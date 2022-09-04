@@ -52,8 +52,7 @@ spec:
         hosts:
           - host: vault.${DOMAIN}
             paths:
-              - path: /
-                pathType: prefix
+              - /
         tls:
           - hosts:
               - vault.${DOMAIN}

@@ -38,7 +38,7 @@ spec:
           - host: shiori.${DOMAIN}
             paths:
               - path: /
-                pathType: prefix
+                pathType: Prefix
         tls:
           - hosts:
               - shiori.${DOMAIN}

@@ -25,7 +25,7 @@ spec:
         allow_embedding: true
       smtp:
         enabled: true
-        host: ${MAIL_HOST}:${MAIL_PORT}
+        host: "${MAIL_HOST}:${MAIL_PORT}"
         username: ${MAIL_USERNAME}
         password: ${MAIL_PASSWORD}
         from_address: ${MAIL_SENDER}

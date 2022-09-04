@@ -62,7 +62,7 @@ spec:
           - host: s.${DOMAIN}
             paths:
               - path: /
-                pathType: prefix
+                pathType: Prefix
         tls:
           - hosts:
               - s.${DOMAIN}

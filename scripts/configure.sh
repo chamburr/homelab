@@ -61,6 +61,10 @@ configureFlux() {
   done
 
   kubectl apply -k 'github.com/fluxcd/flux2/manifests/install?ref=v0.33.0'
+
+  kubectl -n flux-system create secret generic global-secret $(echo $CONFIGURE_VARS \
+    | sed -E 's/(\S+)=/\U\1=/g' | xargs -d ' ' -n1 printf ' --from-literal=%s')
+
   kubectl apply -k 'github.com/chamburr/homelab/kubernetes/base/flux-system?ref=master'
 }
 
