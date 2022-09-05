@@ -18,7 +18,7 @@ spec:
     global:
       nameOverride: shiori
     image:
-      respository: ghcr.io/go-shiori/shiori
+      repository: ghcr.io/go-shiori/shiori
       tag: v1.5.3
     service:
       main:

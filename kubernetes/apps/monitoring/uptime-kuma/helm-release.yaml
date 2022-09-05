@@ -26,9 +26,10 @@ spec:
           http:
             port: 3001
     persistence:
-      enabled: true
-      existingClaim: uptime-kuma-data
-      mountPath: /app/data
+      config:
+        enabled: true
+        existingClaim: uptime-kuma-data
+        mountPath: /app/data
     ingress:
       main:
         enabled: true

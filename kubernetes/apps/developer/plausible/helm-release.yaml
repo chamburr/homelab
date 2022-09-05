@@ -12,7 +12,7 @@ spec:
       version: 0.3.19
       sourceRef:
         kind: HelmRepository
-        name: varac-playsible-charts
+        name: varac-plausible-charts
         namespace: flux-system
   values:
     nameOverride: plausible
@@ -56,8 +56,7 @@ spec:
       hosts:
         - host: plausible.${DOMAIN}
           paths:
-            - path: /
-              pathType: Prefix
+            - /
       tls:
         - hosts:
             - plausible.${DOMAIN}

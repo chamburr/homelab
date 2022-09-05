@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - cert-manager
   - kube-prometheus-stack
+  - metallb
   - rook-ceph
   - traefik
   - vault-secrets-operator

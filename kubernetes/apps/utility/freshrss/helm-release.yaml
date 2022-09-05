@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: freshrss
-  namespace:
+  namespace: utility
 spec:
   interval: 30m
   chart:
@@ -22,7 +22,11 @@ spec:
       tag: 1.19.2
     env:
       CRON_MIN: 0,30
-      FRESHRSS_INSTALL: --baseurl https://freshrss.${DOMAIN} --api_enabled --disable_update
+      FRESHRSS_INSTALL: >
+        --api_enabled
+        --base_url https://freshrss.${DOMAIN}
+        --default_user admin
+        --disable_update
     service:
       main:
         ports:

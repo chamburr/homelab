@@ -65,10 +65,24 @@ configureFlux() {
 
   kubectl apply -k 'github.com/fluxcd/flux2/manifests/install?ref=v0.33.0'
 
+  kubectl -n flux-system create secret generic global-vault-secret
   kubectl -n flux-system create secret generic global-secret $(echo $CONFIGURE_VARS \
     | sed -E 's/(\S+)=/\U\1=/g' | xargs -d ' ' -n1 printf ' --from-literal=%s')
 
   kubectl apply -k 'github.com/chamburr/homelab/kubernetes/base/flux-system?ref=master'
+
+  until flux check --timeout 30s > /dev/null 2>&1; do
+    sleep 5
+  done
+
+  flux reconcile -n flux-system source git flux-cluster
+  flux reconcile -n flux-system kustomization flux-cluster
+
+  flux reconcile kustomization charts
+  flux reconcile kustomization crds
+  flux reconcile kustomization config
+  flux reconcile kustomization core
+  flux suspend kustomization apps
 }
 
 configureVault() {
@@ -89,13 +103,14 @@ configureVault() {
   kubectl -n flux-system create secret generic global-vault-secret \
     --from-literal "VAULT_KEY=$unseal_key" --from-literal "VAULT_TOKEN=$root_token"
 
-  kubectl -n vault exec vault-0 -- vault login -no-print "$root_token"
   kubectl -n vault exec vault-0 -- vault operator unseal "$unseal_key"
+
+  kubectl -n vault exec vault-0 -- vault login -no-print "$root_token"
   kubectl -n vault exec vault-0 -- vault secrets enable -path=secret -version=2 kv
   kubectl -n vault exec vault-0 -- vault auth enable kubernetes
 
   kubectl -n vault exec vault-0 -- sh -c \
-    'echo "path \"secret/data/*\" {\n  capabilities = [\"read\"]\n}" \
+    'echo -e "path \"secret/data/*\" {\n  capabilities = [\"read\"]\n}" \
       | vault policy write vault-secrets-operator -'
   kubectl -n vault exec vault-0 -- sh -c \
     'vault write auth/kubernetes/config \
@@ -112,11 +127,13 @@ configureVault() {
 
   kubectl -n vault exec vault-0 -- sh -c \
     "vault kv put secret/flux-system/global $CONFIGURE_VARS"
-
   kubectl -n vault exec vault-0 -- sh -c \
-    "$(curl https://raw.githubusercontent.com/chamburr/homelab/master/scripts/vault/secrets.txt)"
+    "$(curl -s https://raw.githubusercontent.com/chamburr/homelab/master/scripts/vault/secrets.txt)"
 
   kubectl -n vault exec vault-0 -- rm /home/vault/.vault-token
+
+  flux -n vault reconcile helmrelease vault-secrets-operator
+  flux resume kustomization apps
 }
 
 prepare

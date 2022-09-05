@@ -29,5 +29,5 @@ spec:
         - name: homepage-redirect
           namespace: networking
   tls:
-    - domains:
-        - main: ${DOMAIN}
+    domains:
+      - main: ${DOMAIN}

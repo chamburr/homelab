@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
   values:
     global:
-      nameOverride: haste
+      nameOverride: zipline
     image:
       repository: ghcr.io/diced/zipline
       tag: 3.5.1

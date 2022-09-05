@@ -32,6 +32,13 @@ spec:
       KEY_GENERATOR_TYPE: random
       RATELIMITS_NORMAL_TOTAL_REQUESTS: 50
       RATELIMITS_NORMAL_EVERY_MILLISECONDS: 60000
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/sh
+            - -c
+            - npm uninstall pg@4.1.1 && npm install pg@8.0.1
     postgresql:
       enabled: true
       postgresqlUsername: haste

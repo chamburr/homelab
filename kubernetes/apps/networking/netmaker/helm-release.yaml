@@ -19,7 +19,7 @@ spec:
       repository: docker.io/gravitl/netmaker
       tag: v0.14.5
     baseDomain: netmaker.${DOMAIN}
-    replicas: 3
+    replicas: 1
     ui:
       replicas: 1
     mq:

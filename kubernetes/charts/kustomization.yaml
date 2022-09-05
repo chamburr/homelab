@@ -15,6 +15,7 @@ resources:
   - kubernetes-dashboard.yaml
   - lwolf.yaml
   - mailu.yaml
+  - metallb.yaml
   - metrics-server.yaml
   - netmaker.yaml
   - nextcloud.yaml

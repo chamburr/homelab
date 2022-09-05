@@ -28,24 +28,17 @@ spec:
       extraEnvironmentVars:
         VAULT_KEY: ${VAULT_KEY}
       standalone:
-        enabled: false
-      ha:
         enabled: true
-        replicas: 3
-        raft:
-          enabled: true
-          setNodeId: true
-          config: |
-            ui = true
-            listener "tcp" {
-              tls_disable = 1
-              address = "[::]:8200"
-              cluster_address = "[::]:8201"
-            }
-            storage "raft" {
-              path = "/vault/data"
-            }
-            service_registration "kubernetes" {}
+        config: |
+          ui = true
+          listener "tcp" {
+            tls_disable = 1
+            address = "[::]:8200"
+            cluster_address = "[::]:8201"
+          }
+          storage "file" {
+            path = "/vault/data"
+          }
       ingress:
         enabled: true
         ingressClassName: traefik
@@ -56,10 +49,12 @@ spec:
         tls:
           - hosts:
               - vault.${DOMAIN}
+      readinessProbe:
+        path: /v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204
       postStart:
         - /bin/sh
         - -c
-        - '"[[ -n $VAULT_KEY ]] && vault operator unseal $VAULT_KEY"'
+        - if [ "$VAULT_KEY" ]; then vault operator unseal $VAULT_KEY; fi
     ui:
       enabled: true
       serviceType: ClusterIP
