@@ -3,7 +3,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: certificate
-  namespace: cert-manager
+  namespace: networking
 spec:
   secretName: certificate-secret
   issuerRef:

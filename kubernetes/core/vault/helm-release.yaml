@@ -59,7 +59,7 @@ spec:
       postStart:
         - /bin/sh
         - -c
-        - "[[ -n $VAULT_KEY ]] && vault operator unseal $VAULT_KEY"
+        - '"[[ -n $VAULT_KEY ]] && vault operator unseal $VAULT_KEY"'
     ui:
       enabled: true
       serviceType: ClusterIP

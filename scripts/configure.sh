@@ -1,9 +1,13 @@
 #!/bin/sh
 
+prepare() {
+  export USERNAME="${PWD##*/}"
+  export TALOSCONFIG="/home/$USERNAME/.talos/config"
+  export KUBECONFIG="/home/$USERNAME/.kube/config"
+}
+
 configureTalos() {
   echo 'Configuring talos...'
-
-  username="${PWD##*/}"
 
   mkdir -p .talos .kube
   cd .talos
@@ -34,7 +38,6 @@ configureTalos() {
   done
 
   mv talosconfig config
-  export TALOSCONFIG="/home/$username/.talos/config"
 
   talosctl config endpoint $endpoints
   talosctl config node $endpoints
@@ -50,13 +53,13 @@ configureTalos() {
   rm machines.yaml patch.yaml
 
   cd ..
-  chown -R "$username:$username" .talos .kube
+  chown -R "$USERNAME:$USERNAME" .talos .kube
 }
 
 configureFlux() {
   echo 'Configuring flux...'
 
-  until talosctl health -n 192.168.122.10 > /dev/null 2>&1; do
+  until talosctl health -n 192.168.122.10 --wait-timeout 30s > /dev/null 2>&1; do
     sleep 5
   done
 
@@ -116,6 +119,7 @@ configureVault() {
   kubectl -n vault exec vault-0 -- rm /home/vault/.vault-token
 }
 
+prepare
 configureTalos
 configureFlux
 configureVault

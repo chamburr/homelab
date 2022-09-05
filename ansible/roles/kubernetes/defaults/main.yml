@@ -12,7 +12,7 @@ vms:
 
 vm_cpu: 8
 vm_ram: 16384
-vm_disk: 5
+vm_disk: 25
 vm_volume: kubernetes
 vm_image: https://github.com/siderolabs/talos/releases/latest/download/talos-amd64.iso
 

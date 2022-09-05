@@ -34,13 +34,6 @@
     - 192.168.122.1
 
 - op: add
-  path: /machine/disks
-  value:
-    - device: /dev/sdb
-      partitions:
-        - mountpoint: /var/mnt/extra
-
-- op: add
   path: /machine/install/disk
   value: /dev/sda
 

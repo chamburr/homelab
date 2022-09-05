@@ -22,6 +22,8 @@ spec:
       enabled: true
     dashboard:
       enabled: true
+    toolbox:
+      enabled: true
     ingress:
       dashboard:
         enabled: true
@@ -44,59 +46,36 @@ spec:
       network:
         provider: host
       storage:
-        useAllNodes: true
-        useAllDevices: true
+        useAllNodes: false
+        useAllDevices: false
+        config:
+          osdsPerDevice: "1"
+        nodes:
+          - name: talos-1
+            devices:
+              - name: sdb
     cephBlockPools:
       - name: ceph-blockpool
         spec:
           failureDomain: host
           replicated:
-            size: 3
+            size: 1
+            requireSafeReplicaSize: false
         storageClass:
           enabled: true
           name: ceph-block
           isDefault: true
           reclaimPolicy: Delete
           allowVolumeExpansion: true
-    cephFileSystems:
-      - name: ceph-filesystem
-        spec:
-          metadataPool:
-            failureDomain: host
-            replicated:
-              size: 3
-          dataPools:
-            - failureDomain: host
-              replicated: 3
-          metadataServer:
-            activeCount: 1
-            activeStandby: true
-        storageClass:
-          enabled: true
-          name: ceph-filesystem
-          isDefault: false
-          reclaimPolicy: Delete
-          allowVolumeExpansion: true
-    cephObjectStores:
-      - name: ceph-objectstore
-        spec:
-          metadataPool:
-            failureDomain: host
-            replicated:
-              size: 3
-          dataPools:
-            failureDomain: host
-          preservePoolsOnDelete: true
-          gateway:
-            port: 80
-          healthCheck:
-            bucket:
-              interval: 60s
-        storageClass:
-          enabled: true
-          name: ceph-bucket
-          isDefault: false
-          reclaimPolicy: Delete
-          allowVolumeExpansion: true
           parameters:
-            region: us-east-1
+            imageFormat: "2"
+            imageFeatures: layering
+            csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+            csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
+            csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+            csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+            csi.storage.k8s.io/fstype: ext4
+    cephFileSystems: []
+    cephObjectStores: []
