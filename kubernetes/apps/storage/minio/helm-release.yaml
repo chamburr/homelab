@@ -19,7 +19,7 @@ spec:
       rootPassword: admin
     extraEnvVars:
       - name: MINIO_UPDATE
-        value: false
+        value: "off"
       - name: MINIO_BROWSER_REDIRECT_URL
         value: https://minio.${DOMAIN}
       - name: MINIO_SERVER_URL
@@ -31,7 +31,7 @@ spec:
       tls: true
       extraTls:
         - hosts:
-            - minio.$DOMAIN
+            - minio.${DOMAIN}
     apiIngress:
       enabled: true
       ingressClassName: traefik

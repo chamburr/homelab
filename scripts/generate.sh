@@ -1,15 +1,5 @@
 #!/bin/sh
 
-generateMachine() {
-  echo 'Generating machine files...'
-
-  data="---\n"
-  data+=$(cat ansible/roles/kubernetes/defaults/main.yml \
-    | yq '.vms | to_entries' | sed -e 's/key/name/' -e 's/value/endpoint/')
-
-  echo "$data" > scripts/talos/machines.yaml
-}
-
 generateCilium() {
   echo 'Generating cilium files...'
 
@@ -45,6 +35,5 @@ generateSecret() {
   echo "${data%??}" > scripts/vault/secrets.txt
 }
 
-generateMachine
 generateCilium
 generateSecret

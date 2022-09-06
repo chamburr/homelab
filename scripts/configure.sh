@@ -15,7 +15,7 @@ configureTalos() {
   curl -sO https://raw.githubusercontent.com/chamburr/homelab/master/scripts/talos/machines.yaml
   curl -sO https://raw.githubusercontent.com/chamburr/homelab/master/scripts/talos/patch.yaml
 
-  talosctl gen config cluster https://192.168.122.10:6443 \
+  talosctl gen config cluster https://192.168.123.10:6443 \
     --config-patch-control-plane @patch.yaml --with-docs=false --with-examples=false
 
   nodes=$(cat machines.yaml | sed -e '1d' -e 's/- /{"/' -e 's/: /":"/' \
@@ -59,7 +59,7 @@ configureTalos() {
 configureFlux() {
   echo 'Configuring flux...'
 
-  until talosctl health -n 192.168.122.10 --wait-timeout 30s > /dev/null 2>&1; do
+  until talosctl health -n 192.168.123.10 --wait-timeout 30s > /dev/null 2>&1; do
     sleep 5
   done
 

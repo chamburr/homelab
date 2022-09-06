@@ -6,7 +6,7 @@
 
 - name: Download configure script
   ansible.builtin.get_url:
-    url: "{{ configure_script }}"
+    url: "{{ vm_script }}"
     dest: /home/{{ username }}/configure.sh
     mode: 0755
   when: not cluster_status.stat.exists

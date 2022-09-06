@@ -18,8 +18,8 @@ spec:
     global:
       nameOverride: flame
     image:
-      repository: docker.io/pawelmalak/flame
-      tag: 2.3.0
+      repository: ghcr.io/fdarveau/flame
+      tag: "2022-08-09"
     service:
       main:
         ports:

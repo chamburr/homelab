@@ -27,10 +27,14 @@ spec:
       DB_HOST: kutt-postgresql
       DB_PORT: 5432
       DB_NAME: kutt
-      DB_USER: kutt
+      DB_USER: postgres
       DB_PASSWORD: kutt-pass
       REDIS_HOST: kutt-redis
       REDIS_PORT: 6379
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USER: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
       DISALLOW_REGISTRATION: true
       DISALLOW_ANONYMOUS_LINKS: true
       USER_LIMIT_PER_DAY: 10000
@@ -39,7 +43,7 @@ spec:
     postgresql:
       enabled: true
       fullnameOverride: kutt-postgresql
-      postgresqlUsername: kutt
+      postgresqlUsername: postgres
       postgresqlPassword: kutt-pass
       postgresqlDatabase: kutt
       persistence:
@@ -47,10 +51,12 @@ spec:
         existingClaim: kutt-postgresql
     redis:
       enabled: true
-      nameOverride: kutt-redis
+      fullnameOverride: kutt-redis
       persistence:
         enabled: true
         existingClaim: kutt-redis
+      replica:
+        replicaCount: 0
     service:
       main:
         ports:

@@ -23,7 +23,7 @@ firewall_ports:
   4500/udp: enabled
   51821-51830/udp: enabled
 
-firewall_forward_address: 192.168.122.100
+firewall_forward_address: 192.168.123.100
 firewall_forward_ports:
   - 53/tcp
   - 53/udp

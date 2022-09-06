@@ -22,13 +22,13 @@ spec:
       tag: 3.5.1
     env:
       SECURE: false
-      DATABASE_URL: postgresql://zipline:zipline-pass@zipline-postgresql/zipline
+      DATABASE_URL: postgresql://postgres:zipline-pass@zipline-postgresql/zipline
       UPLOADER_ROUTE: /
       UPLOADER_LENGTH: 6
     postgresql:
       enabled: true
       fullnameOverride: zipline-postgresql
-      postgresqlUsername: zipline
+      postgresqlUsername: postgres
       postgresqlPassword: zipline-pass
       postgresqlDatabase: zipline
       persistence:

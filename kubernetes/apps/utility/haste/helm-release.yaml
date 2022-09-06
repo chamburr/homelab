@@ -26,7 +26,7 @@ spec:
       STORAGE_PORT: 5432
       STORAGE_EXPIRE_SECONDS: 604800
       STORAGE_DB: haste
-      STORAGE_USERNAME: haste
+      STORAGE_USERNAME: postgres
       STORAGE_PASSWORD: haste-pass
       KEY_LENGTH: 6
       KEY_GENERATOR_TYPE: random
@@ -40,7 +40,7 @@ spec:
     postgresql:
       enabled: true
       fullnameOverride: haste-postgresql
-      postgresqlUsername: haste
+      postgresqlUsername: postgres
       postgresqlPassword: haste-pass
       postgresqlDatabase: haste
       persistence:
