@@ -26,20 +26,29 @@ spec:
       password: admin
     postgresql:
       enabled: true
+      url: postgresql://plausible:plausible-pass@plausible-postgresql:5432/plausible
       auth:
         username: plausible
         password: plausible-pass
         database: plausible
-      persistence:
-        enabled: true
-        existingClaim: plausible-postgresql
+      primary:
+        persistence:
+          enabled: true
+          existingClaim: plausible-postgresql
     clickhouse:
       enabled: true
-      persistentVolumeClaim:
-        enabled: true
-        dataPersistentVolume:
-          enabled: true
-          existingClaim: plausible-clickhouse
+      clickhouse:
+        replicas: 1
+        configmap:
+          remote_servers:
+            internal_replication: true
+            replica:
+              backup:
+                enabled: false
+        persistentVolumeClaim:
+          enabled: false
+          dataPersistentVolume:
+            enabled: true
     smtp:
       enabled: true
       mailer:

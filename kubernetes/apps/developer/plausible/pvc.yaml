@@ -15,7 +15,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: plausible-clickhouse
+  name: plausible-clickhouse-data
   namespace: developer
 spec:
   accessModes:

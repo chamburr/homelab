@@ -15,20 +15,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: sentry-clickhouse
-  namespace: developer
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: ceph-block
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: sentry-zookeeper
+  name: sentry-clickhouse-data
   namespace: developer
 spec:
   accessModes:
@@ -42,6 +29,32 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: sentry-kafka
+  namespace: developer
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ceph-block
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sentry-zookeeper-clickhouse
+  namespace: developer
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ceph-block
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sentry-zookeeper-kafka
   namespace: developer
 spec:
   accessModes:

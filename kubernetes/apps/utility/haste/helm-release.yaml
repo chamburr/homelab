@@ -32,15 +32,14 @@ spec:
       KEY_GENERATOR_TYPE: random
       RATELIMITS_NORMAL_TOTAL_REQUESTS: 50
       RATELIMITS_NORMAL_EVERY_MILLISECONDS: 60000
-    lifecycle:
-      postStart:
-        exec:
-          command:
-            - /bin/sh
-            - -c
-            - npm uninstall pg@4.1.1 && npm install pg@8.0.1
+    command:
+      - /bin/sh
+      - -c
+      - export HOME=/app && npm uninstall pg@4.1.1 --no-audit --no-fund &&
+        npm install pg@8.0.1 --no-audit --no-fund && /entrypoint.sh
     postgresql:
       enabled: true
+      fullnameOverride: haste-postgresql
       postgresqlUsername: haste
       postgresqlPassword: haste-pass
       postgresqlDatabase: haste
@@ -49,6 +48,7 @@ spec:
         existingClaim: haste-postgresql
     service:
       main:
+        enabled: true
         ports:
           http:
             port: 7777

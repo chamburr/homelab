@@ -38,6 +38,7 @@ spec:
       CUSTOM_DOMAIN_USE_HTTPS: true
     postgresql:
       enabled: true
+      fullnameOverride: kutt-postgresql
       postgresqlUsername: kutt
       postgresqlPassword: kutt-pass
       postgresqlDatabase: kutt
@@ -46,6 +47,7 @@ spec:
         existingClaim: kutt-postgresql
     redis:
       enabled: true
+      nameOverride: kutt-redis
       persistence:
         enabled: true
         existingClaim: kutt-redis

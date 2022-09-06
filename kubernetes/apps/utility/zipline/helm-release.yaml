@@ -27,6 +27,7 @@ spec:
       UPLOADER_LENGTH: 6
     postgresql:
       enabled: true
+      fullnameOverride: zipline-postgresql
       postgresqlUsername: zipline
       postgresqlPassword: zipline-pass
       postgresqlDatabase: zipline

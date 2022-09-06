@@ -45,6 +45,7 @@ spec:
         ui: ""
         rest: api.
         broker: mq.
+    RWXStorageClassName: no-op
   postRenderers:
     - kustomize:
         patchesJson6902:
@@ -165,8 +166,8 @@ spec:
               - op: replace
                 path: /spec/template/spec/containers/0/env/0
                 value:
-                  - name: SERVER_NAME
-                    value: mq.netmaker.${DOMAIN}
+                  name: SERVER_NAME
+                  value: mq.netmaker.${DOMAIN}
               - op: add
                 path: /spec/template/spec/containers/0/ports
                 value:

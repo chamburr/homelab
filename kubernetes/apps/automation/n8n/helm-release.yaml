@@ -21,8 +21,10 @@ spec:
       repository: docker.io/n8nio/n8n
       tag: 0.192.2
     env:
-      N8N_EDITOR_BASE_URL: https://n8n.${DOMAIN}
+      N8N_PORT: 5678
+      N8N_PROTOCOL: https
       WEBHOOK_URL: https://n8n.${DOMAIN}
+      N8N_EDITOR_BASE_URL: https://n8n.${DOMAIN}
       N8N_TEMPLATES_ENABLED: false
       N8N_PERSONALIZATION_ENABLED: false
       N8N_VERSION_NOTIFICATIONS_ENABLED: false

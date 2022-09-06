@@ -41,6 +41,7 @@
   path: /machine/install/extraKernelArgs
   value:
     - talos.logging.kernel=udp://192.168.122.100:6050/
+    - sysctl.kernel.kexec_load_disabled=1
 
 - op: add
   path: /machine/logging

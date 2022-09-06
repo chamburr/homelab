@@ -30,7 +30,7 @@ spec:
                   value: ${CLOUDFLARE_DOMAIN}
               envFrom:
                 - secretRef:
-                    name: cloudflare-ddns-secret
+                    name: cloudflare-ddns-secret # TODO: remove this
               command:
                 - /bin/bash
                 - /app/cloudflare-ddns.sh

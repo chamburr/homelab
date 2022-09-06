@@ -17,6 +17,8 @@ spec:
   values:
     kind: Deployment
     replicas: 1
+    podSecurityPolicy:
+      create: false
     deschedulerPolicy:
       strategies:
         RemoveDuplicates:

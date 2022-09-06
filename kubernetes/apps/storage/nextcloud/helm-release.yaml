@@ -56,6 +56,8 @@ spec:
         persistence:
           enabled: true
           existingClaim: nextcloud-redis
+      replica:
+        replicaCount: 0
     persistence:
       enabled: true
       exisitngClaim: nextcloud-config

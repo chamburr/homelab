@@ -24,7 +24,25 @@ spec:
       VPN_DNS_NAME: vpn.${DOMAIN}
       VPN_DNS_SRV1: 1.1.1.1
       VPN_DNS_SRV2: 8.8.8.8
+    securityContext:
+      privileged: true
+    probes:
+      liveness:
+        enabled: true
+        custom: true
+        spec:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - if [ "$(wget -qO- https://icanhazip.com)" ]; then exit 0; else exit $?; fi
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
     service:
+      main:
+        enabled: false
       ipsec-udp:
         enabled: true
         type: LoadBalancer
@@ -37,7 +55,7 @@ spec:
             port: 500
             protocol: UDP
             targetPort: 500
-        externalTrafficPolicy: Local
+        externalTrafficPolicy: Cluster
       ikev2-udp:
         enabled: true
         type: LoadBalancer
@@ -50,7 +68,7 @@ spec:
             port: 4500
             protocol: UDP
             targetPort: 4500
-        externalTrafficPolicy: Local
+        externalTrafficPolicy: Cluster
     persistence:
       config:
         enabled: true
