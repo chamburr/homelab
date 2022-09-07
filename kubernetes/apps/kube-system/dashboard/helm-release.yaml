@@ -24,7 +24,7 @@ spec:
       paths:
         - /
       hosts:
-        - kuberenetes.${DOMAIN}
+        - kubernetes.${DOMAIN}
       tls:
         - hosts:
             - kubernetes.${DOMAIN}

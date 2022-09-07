@@ -18,3 +18,9 @@
     group: root
     mode: 0644
   notify: Reload nfs
+
+- name: Create nfs directories
+  ansible.builtin.file:
+    path: "{{ array_mountpoint }}/{{ item }}"
+    state: directory
+  loop: "{{ nfs_directories }}"

@@ -25,7 +25,8 @@ spec:
         enabled: false
     providers:
       kubernetesCRD:
-        enabled: false
+        enabled: true
+        allowCrossNamespace: true
     logs:
       general:
         level: INFO
@@ -34,23 +35,27 @@ spec:
     globalArguments:
       - --api.insecure=true
       - --serverstransport.insecureskipverify=true
+      - --providers.kubernetesingress.ingressclass=traefik
       - --metrics.prometheus=true
       - --metrics.prometheus.entryPoint=metrics
-      - --entrypoints.websecure.http.middlewares=networking-global@kubernetescrd"
+      - --entrypoints.websecure.http.middlewares=networking-global@kubernetescrd
       - --global.checknewversion=false
     additionalArguments:
       - --providers.kubernetesingress.ingressendpoint.ip=${METALLB_IP}
     ports:
+      traefik:
+        expose: true
       web:
         redirectTo: websecure
       websecure:
         tls:
           enabled: true
+          options: default
     tlsOptions:
       default:
         minVersion: VersionTLS12
         maxVersion: VersionTLS13
-        sniStrict: true
+        sniStrict: false
     service:
       enabled: true
       type: LoadBalancer

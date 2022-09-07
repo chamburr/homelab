@@ -45,6 +45,10 @@ spec:
         enabled: true
       network:
         provider: host
+      priorityClassNames:
+        mon: system-node-critical
+        osd: system-node-critical
+        mgr: system-cluster-critical
       storage:
         useAllNodes: false
         useAllDevices: false

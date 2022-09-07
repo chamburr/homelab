@@ -5,7 +5,7 @@ metadata:
   name: certificate
   namespace: networking
 spec:
-  secretName: certificate-secret
+  secretName: certificate-tls
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer

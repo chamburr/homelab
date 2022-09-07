@@ -113,4 +113,4 @@
 - op: add
   path: /cluster/extraManifests
   value:
-    - https://raw.githubusercontent.com/Didstopia/kubelet-serving-cert-approver/2407299/deploy/ha-install.yaml
+    - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.6.0/deploy/ha-install.yaml

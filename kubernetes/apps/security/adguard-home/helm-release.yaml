@@ -20,10 +20,6 @@ spec:
     image:
       repository: docker.io/adguard/adguardhome
       tag: v0.107.11
-    command:
-      - /bin/sh
-      - -c
-      - sleep 1d
     args:
       - --no-check-update
       - --config
@@ -65,8 +61,12 @@ spec:
     persistence:
       config:
         enabled: true
+        existingClaim: adguard-home-config
+        mountPath: /opt/adguardhome/conf
+      data:
+        enabled: true
         existingClaim: adguard-home-data
-        mountPath: /opt/adguardhome
+        mountPath: /opt/adguardhome/work
     ingress:
       main:
         enabled: true

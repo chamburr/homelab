@@ -29,7 +29,7 @@ spec:
       DB_NAME: kutt
       DB_USER: postgres
       DB_PASSWORD: kutt-pass
-      REDIS_HOST: kutt-redis
+      REDIS_HOST: kutt-redis-master
       REDIS_PORT: 6379
       MAIL_HOST: ${MAIL_HOST}
       MAIL_PORT: ${MAIL_PORT}

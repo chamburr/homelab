@@ -20,15 +20,15 @@
         --cdrom=/var/lib/libvirt/images/install.iso \
         --disk=pool=default,size={{ vm_disk }} \
         --disk=vol=default/{{ volume_name }},cache=none,io=native,perms=sh \
-        --network=network={{ network_name }} \
+        --network=network={{ network_name }},model=virtio \
         --graphics=none --noautoconsole --autostart
-  with_dict: "{{ vms }}"
+  loop: "{{ vms }}"
   when: all_vms.list_vms | length == 0
 
 - name: Detach vm image
   ansible.builtin.command:
     cmd: virsh detach-disk {{ item }} hdc --config
-  with_dict: "{{ vms }}"
+  loop: "{{ vms }}"
   when: all_vms.list_vms | length == 0
 
 - name: Delete vm image

@@ -28,6 +28,9 @@ spec:
       middlewares:
         - name: homepage-redirect
           namespace: networking
+      services:
+        - name: noop@internal
+          kind: TraefikService
   tls:
     domains:
       - main: ${DOMAIN}

@@ -25,14 +25,17 @@
 
 - name: Create libvirt network
   community.libvirt.virt_net:
-    autostart: true
     command: define
     name: kubernetes
-    xml: "{{ lookup("template", "network.xml.j2") }}"
+    xml: "{{ lookup('template', 'network.xml.j2') }}"
+
+- name: Enable libvirt network autostart
+  community.libvirt.virt_net:
+    autostart: yes
+    name: kubernetes
 
 - name: Start libvirt network
   community.libvirt.virt_net:
-    autostart: true
     name: kubernetes
     state: active
 

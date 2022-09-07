@@ -46,6 +46,8 @@ configureTalos() {
     sleep 5
   done
 
+  sleep 10
+
   talosctl bootstrap -n $(echo $endpoints | cut -f 1 -d ' ')
   talosctl kubeconfig ../.kube/config -n $(echo $endpoints | cut -f 1 -d ' ')
 
@@ -78,17 +80,30 @@ configureFlux() {
   flux reconcile -n flux-system source git flux-cluster
   flux reconcile -n flux-system kustomization flux-cluster
 
-  flux reconcile kustomization charts
-  flux reconcile kustomization crds
-  flux reconcile kustomization config
-  flux reconcile kustomization core
+  until kubectl -n flux-system wait --for condition=Ready ks/core > /dev/null 2>&1; do
+    sleep 5
+  done
+
+  flux -n vault suspend helmrelease vault
+  flux -n vault suspend helmrelease vault-secrets-operator
+
   flux suspend kustomization apps
+}
+
+configureCeph() {
+  echo 'Configuring ceph...'
+
+  until kubectl -n rook-ceph wait --for condition=Available deploy/rook-ceph-osd-0 > /dev/null 2>&1; do
+    sleep 5
+  done
 }
 
 configureVault() {
   echo 'Configuring vault...'
 
-  until kubectl -n vault wait --for condition=Initialized pod/vault-0 > /dev/null 2>&1; do
+  flux -n vault resume helmrelease vault
+
+  until kubectl -n vault wait --for condition=Ready pod/vault-0 > /dev/null 2>&1; do
     sleep 5
   done
 
@@ -132,11 +147,15 @@ configureVault() {
 
   kubectl -n vault exec vault-0 -- rm /home/vault/.vault-token
 
-  flux -n vault reconcile helmrelease vault-secrets-operator
+  flux -n vault resume helmrelease vault-secrets-operator
+
+  sleep 5
+
   flux resume kustomization apps
 }
 
 prepare
 configureTalos
 configureFlux
+configureCeph
 configureVault

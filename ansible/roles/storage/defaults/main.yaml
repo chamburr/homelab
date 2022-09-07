@@ -11,5 +11,13 @@ nfs_path: /mnt/md0
 nfs_options:
   - rw
   - sync
-  - no_root_squash
   - no_subtree_check
+  - no_root_squash
+  - anonuid=0
+  - anongid=0
+
+nfs_directories:
+  - minio
+  - nextcloud
+  - photoprism
+  - samba
