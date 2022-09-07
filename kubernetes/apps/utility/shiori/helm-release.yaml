@@ -18,8 +18,10 @@ spec:
     global:
       nameOverride: shiori
     image:
-      repository: ghcr.io/go-shiori/shiori
+      repository: docker.io/newargus/shiori
       tag: v1.5.3
+    env:
+      SHIORI_DIR: /data
     service:
       main:
         ports:
@@ -29,7 +31,7 @@ spec:
       config:
         enabled: true
         existingClaim: shiori-data
-        mountPath: /shiori
+        mountPath: /data
     ingress:
       main:
         enabled: true

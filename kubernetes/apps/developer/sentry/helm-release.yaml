@@ -83,7 +83,8 @@ spec:
           existingClaim: sentry-data
     ingress:
       enabled: true
-      rehexPathStyle: traefik
+      regexPathStyle: traefik
+      ingressClassName: traefik
       hostname: sentry.${DOMAIN}
       tls:
         - hosts:

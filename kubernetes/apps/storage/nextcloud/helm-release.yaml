@@ -60,7 +60,7 @@ spec:
         replicaCount: 0
     persistence:
       enabled: true
-      exisitngClaim: nextcloud-config
+      existingClaim: nextcloud-config
       nextcloudData:
         enabled: true
         existingClaim: nextcloud-data

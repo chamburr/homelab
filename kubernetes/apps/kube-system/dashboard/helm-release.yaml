@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kubernetes-dashboard
-      version: 5.7.0
+      version: 5.10.0
       sourceRef:
         kind: HelmRepository
         name: kubernetes-dashboard-charts
@@ -21,8 +21,7 @@ spec:
       enabled: true
     ingress:
       enabled: true
-      paths:
-        - /
+      className: traefik
       hosts:
         - kubernetes.${DOMAIN}
       tls:

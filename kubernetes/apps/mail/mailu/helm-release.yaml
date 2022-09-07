@@ -39,10 +39,24 @@ spec:
           smtp: false
           smtps: false
           submission: false
+    rspamd:
+      resources:
+        requests:
+          cpu: 500m
+          memory: 500Mi
+        limits:
+          cpu: 600m
+          memory: 600Mi
+    clamav:
+      enabled: false
+    roundcube:
+      enabled: false
     webdav:
       enabled: true
+    fetchmail:
+      enabled: false
     persistence:
-      single_pvc: false
+      single_pvc: true
       existingClaim: mailu-data
     ingress:
       externalIngress: true
@@ -64,3 +78,48 @@ spec:
       name: mailu-secret
       valuesKey: secret_key
       targetPath: secretKey
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: Deployment
+              name: mailu-redis
+            patch:
+              - op: add
+                path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
+                value: mailu-redis
+          - target:
+              kind: Deployment
+              name: mailu-admin
+            patch:
+              - op: add
+                path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
+                value: mailu-admin
+          - target:
+              kind: Deployment
+              name: mailu-dovecot
+            patch:
+              - op: add
+                path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
+                value: mailu-dovecot
+          - target:
+              kind: Deployment
+              name: mailu-postfix
+            patch:
+              - op: add
+                path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
+                value: mailu-postfix
+          - target:
+              kind: Deployment
+              name: mailu-rspamd
+            patch:
+              - op: add
+                path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
+                value: mailu-rspamd
+          - target:
+              kind: Deployment
+              name: mailu-webdav
+            patch:
+              - op: add
+                path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
+                value: mailu-webdav
