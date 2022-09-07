@@ -20,9 +20,8 @@ spec:
       - imap.${DOMAIN}
     subnet: ${K8S_CLUSTER_CIDR}
     postmaster: postmaster
-    domain: ${MAIL_DOMAIN}
     initialAccount:
-      password: admin
+      password: admin123
     mail:
       messageSizeLimitInMegabytes: 100
     certmanager:

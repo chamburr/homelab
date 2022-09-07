@@ -34,6 +34,8 @@ spec:
         enabled: true
         existingClaim: samba-data
         mountPath: /share/samba
+    podAnnotations:
+      secret.reloader.stakater.com/reload: samba-secret
   valuesFrom:
     - kind: Secret
       name: samba-secret

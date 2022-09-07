@@ -21,8 +21,8 @@ spec:
       repository: ghcr.io/diced/zipline
       tag: 3.5.1
     env:
-      SECURE: false
-      DATABASE_URL: postgresql://postgres:zipline-pass@zipline-postgresql/zipline
+      CORE_HTTPS: true
+      CORE_DATABASE_URL: postgresql://postgres:zipline-pass@zipline-postgresql/zipline
       UPLOADER_ROUTE: /
       UPLOADER_LENGTH: 6
     postgresql:
@@ -56,8 +56,10 @@ spec:
         tls:
           - hosts:
               - u.${DOMAIN}
+    podAnnotations:
+      secret.reloader.stakater.com/reload: zipline-secret
   valuesFrom:
     - kind: Secret
       name: zipline-secret
       valuesKey: secret
-      targetPath: env.SECRET
+      targetPath: env.CORE_SECRET

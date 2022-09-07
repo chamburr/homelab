@@ -16,6 +16,9 @@ spec:
         namespace: flux-system
   values:
     externalURL: https://registry.${DOMAIN}
+    core:
+      podAnnotations:
+        secret.reloader.stakater.com/reload: harbor-secret
     notary:
       enabled: false
     trivy:
@@ -42,6 +45,8 @@ spec:
         hosts:
           core: registry.${DOMAIN}
         className: traefik
+    updateStrategy:
+      type: Recreate
   valuesFrom:
     - kind: Secret
       name: harbor-secret

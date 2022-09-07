@@ -74,6 +74,8 @@ spec:
         enabled: true
         existingClaim: ipsec-vpn-data
         mountPath: /etc/ipsec.d
+    podAnnotations:
+      secret.reloader.stakater.com/reload: ipsec-vpn-secret
   valuesFrom:
     - kind: Secret
       name: ipsec-vpn-secret

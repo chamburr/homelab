@@ -46,8 +46,10 @@ spec:
         tls:
           - hosts:
               - bitwarden.${DOMAIN}
+    podAnnotations:
+      secret.reloader.stakater.com/reload: vaultwarden-secret
   valuesFrom:
     - kind: Secret
       name: vaultwarden-secret
-      valuesKey: admin_token
+      valuesKey: token
       targetPath: env.ADMIN_TOKEN

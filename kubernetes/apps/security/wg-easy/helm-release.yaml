@@ -68,6 +68,8 @@ spec:
         tls:
           - hosts:
               - wireguard.${DOMAIN}
+    podAnnotations:
+      secret.reloader.stakater.com/reload: wg-easy-secret
   valuesFrom:
     - kind: Secret
       name: wg-easy-secret

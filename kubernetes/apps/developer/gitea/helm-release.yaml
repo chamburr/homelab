@@ -22,7 +22,7 @@ spec:
           DEFAULT_PRIVATE: public
         server:
           DOMAIN: gitea.${DOMAIN}
-          ROOT_URL: https://git.${DOMAIN}
+          ROOT_URL: https://gitea.${DOMAIN}
           DISABLE_SSH: true
           ENABLE_GZIP: true
           LFS_START_SERVER: true

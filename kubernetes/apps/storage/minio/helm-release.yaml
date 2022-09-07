@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
   values:
     auth:
-      rootPassword: admin
+      rootPassword: admin123
     extraEnvVars:
       - name: MINIO_UPDATE
         value: "off"
@@ -46,6 +46,8 @@ spec:
     metrics:
       serviceMonitor:
         enabled: true
+    podAnnotations:
+      secret.reloader.stakater.com/reload: minio-secret
   valuesFrom:
     - kind: Secret
       name: minio-secret

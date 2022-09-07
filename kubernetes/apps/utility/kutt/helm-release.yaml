@@ -74,6 +74,8 @@ spec:
         tls:
           - hosts:
               - s.${DOMAIN}
+    podAnnotations:
+      secret.reloader.stakater.com/reload: kutt-secret
   valuesFrom:
     - kind: Secret
       name: kutt-secret

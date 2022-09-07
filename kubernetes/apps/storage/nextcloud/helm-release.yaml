@@ -20,7 +20,7 @@ spec:
       tag: 24.0.4
     nextcloud:
       host: cloud.${DOMAIN}
-      password: admin
+      password: admin123
       mail:
         enabled: true
         fromAddress: ${MAIL_SENDER/@*/}
@@ -72,6 +72,8 @@ spec:
       tls:
         - hosts:
             - cloud.${DOMAIN}
+    podAnnotations:
+      secret.reloader.stakater.com/reload: nextcloud-secret
   valuesFrom:
     - kind: Secret
       name: nextcloud-secret
