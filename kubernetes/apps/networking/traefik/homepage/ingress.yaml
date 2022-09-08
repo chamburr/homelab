@@ -29,8 +29,8 @@ spec:
         - name: homepage-redirect
           namespace: networking
       services:
-        - name: noop@internal
-          kind: TraefikService
+        - kind: TraefikService
+          name: noop@internal
   tls:
     domains:
       - main: ${DOMAIN}

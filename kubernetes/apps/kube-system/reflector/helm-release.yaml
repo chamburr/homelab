@@ -5,7 +5,7 @@ metadata:
   name: reflector
   namespace: kube-system
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: reflector
@@ -14,6 +14,12 @@ spec:
         kind: HelmRepository
         name: emberstack-charts
         namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     replicaCount: 1
     configuration:

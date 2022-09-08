@@ -15,7 +15,7 @@ vms:
   - talos-3
 
 vm_cpu: 8
-vm_ram: 16384
+vm_ram: 12288
 vm_disk: 30
 vm_image: https://github.com/siderolabs/talos/releases/latest/download/talos-amd64.iso
 vm_script: https://raw.githubusercontent.com/chamburr/homelab/master/scripts/configure.sh

@@ -38,5 +38,4 @@ firewall_forward_ports:
 
 ssh_password: "no"
 ssh_root: "no"
-ssh_whitelist_ip:
-  - 10.0.0.0/8
+ssh_whitelist_ip: []

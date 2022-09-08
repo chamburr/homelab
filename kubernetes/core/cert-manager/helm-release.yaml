@@ -5,7 +5,7 @@ metadata:
   name: cert-manager
   namespace: cert-manager
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: cert-manager
@@ -14,6 +14,12 @@ spec:
         kind: HelmRepository
         name: jetstack-charts
         namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     installCRDs: false
     webhook:

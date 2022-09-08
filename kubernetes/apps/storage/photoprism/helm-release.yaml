@@ -5,7 +5,7 @@ metadata:
   name: photoprism
   namespace: storage
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: photoprism
@@ -14,6 +14,12 @@ spec:
         kind: HelmRepository
         name: k8s-at-home-charts
         namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     image:
       tag: 220730-jammy

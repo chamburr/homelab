@@ -5,22 +5,27 @@ metadata:
   name: nextcloud
   namespace: storage
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: nextcloud
-      version: 2.14.4
+      version: 3.1.1
       sourceRef:
         kind: HelmRepository
         name: nextcloud-charts
         namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     image:
       repository: docker.io/nextcloud
       tag: 24.0.4
     nextcloud:
       host: cloud.${DOMAIN}
-      password: admin123
       mail:
         enabled: true
         fromAddress: ${MAIL_SENDER/@*/}
@@ -32,6 +37,35 @@ spec:
           name: ${MAIL_USERNAME}
           password: ${MAIL_PASSWORD}
           secure: ssl
+      phpConfigs:
+        uploadLimit.ini: |
+          post_max_size = 32G
+          upload_max_filesize = 32G
+          max_input_time = 3600
+          max_execution_time = 3600
+      configs:
+        custom.config.php: |
+          <?php
+          $CONFIG = array (
+            'loglevel' => 2,
+            'overwrite.cli.url' => 'https://cloud.${DOMAIN}',
+            'overwriteprotocol' => 'https',
+            'filelocking.enabled' => 'true',
+            'trusted_domains' =>
+            array (
+              0 => 'cloud.${DOMAIN}',
+              1 => 'localhost',
+            ),
+            'trusted_proxies' =>
+            array (
+              0 => '${K8S_CLUSTER_CIDR}',
+            ),
+            'forwarded_for_headers' =>
+            array (
+              0 => 'HTTP_X_FORWARDED_FOR',
+            ),
+            'default_phone_region' => 'SG',
+          );
     cronjob:
       enabled: true
     internalDatabase:
@@ -74,8 +108,14 @@ spec:
             - cloud.${DOMAIN}
     podAnnotations:
       secret.reloader.stakater.com/reload: nextcloud-secret
+    startupProbe:
+      enabled: true
   valuesFrom:
     - kind: Secret
       name: nextcloud-secret
       valuesKey: admin_username
       targetPath: nextcloud.username
+    - kind: Secret
+      name: nextcloud-secret
+      valuesKey: admin_password
+      targetPath: nextcloud.password

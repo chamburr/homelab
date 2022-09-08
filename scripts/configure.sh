@@ -67,7 +67,6 @@ configureFlux() {
 
   kubectl apply -k 'github.com/fluxcd/flux2/manifests/install?ref=v0.33.0'
 
-  kubectl -n flux-system create secret generic global-vault-secret
   kubectl -n flux-system create secret generic global-secret $(echo $CONFIGURE_VARS \
     | sed -E 's/(\S+)=/\U\1=/g' | xargs -d ' ' -n1 printf ' --from-literal=%s')
 
@@ -114,8 +113,7 @@ configureVault() {
   echo "Vault unseal key is $unseal_key"
   echo "Vault root token is $root_token"
 
-  kubectl -n flux-system delete secret global-vault-secret
-  kubectl -n flux-system create secret generic global-vault-secret \
+  kubectl -n vault create secret generic vault-secret \
     --from-literal "VAULT_KEY=$unseal_key" --from-literal "VAULT_TOKEN=$root_token"
 
   kubectl -n vault exec vault-0 -- vault operator unseal "$unseal_key"

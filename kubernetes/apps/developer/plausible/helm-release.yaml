@@ -5,7 +5,7 @@ metadata:
   name: plausible
   namespace: developer
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: plausible-analytics
@@ -14,6 +14,12 @@ spec:
         kind: HelmRepository
         name: varac-plausible-charts
         namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     nameOverride: plausible
     image:
@@ -23,7 +29,6 @@ spec:
     baseURL: https://plausible.${DOMAIN}
     adminUser:
       name: Admin
-      password: admin123
     postgresql:
       enabled: true
       url: postgresql://plausible:plausible-pass@plausible-postgresql:5432/plausible
@@ -76,3 +81,7 @@ spec:
       name: plausible-secret
       valuesKey: admin_email
       targetPath: adminUser.email
+    - kind: Secret
+      name: plausible-secret
+      valuesKey: admin_password
+      targetPath: adminUser.password

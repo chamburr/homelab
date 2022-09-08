@@ -5,7 +5,7 @@ metadata:
   name: mailu
   namespace: mail
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: mailu
@@ -14,14 +14,18 @@ spec:
         kind: HelmRepository
         name: mailu-charts
         namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     hostnames:
       - mail.${DOMAIN}
       - imap.${DOMAIN}
     subnet: ${K8S_CLUSTER_CIDR}
     postmaster: postmaster
-    initialAccount:
-      password: admin123
     mail:
       messageSizeLimitInMegabytes: 100
     certmanager:
@@ -70,6 +74,10 @@ spec:
       name: mailu-secret
       valuesKey: admin_domain
       targetPath: initialAccount.domain
+    - kind: Secret
+      name: mailu-secret
+      valuesKey: admin_password
+      targetPath: initialAccount.password
     - kind: Secret
       name: mailu-secret
       valuesKey: mail_domain

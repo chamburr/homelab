@@ -5,7 +5,7 @@ metadata:
   name: minio
   namespace: storage
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: minio
@@ -14,9 +14,13 @@ spec:
         kind: HelmRepository
         name: bitnami-charts
         namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
-    auth:
-      rootPassword: admin123
     extraEnvVars:
       - name: MINIO_UPDATE
         value: "off"
@@ -53,3 +57,7 @@ spec:
       name: minio-secret
       valuesKey: admin_username
       targetPath: auth.rootUsername
+    - kind: Secret
+      name: minio-secret
+      valuesKey: admin_password
+      targetPath: auth.rootPassword

@@ -5,7 +5,7 @@ metadata:
   name: drone
   namespace: developer
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: drone
@@ -14,6 +14,12 @@ spec:
         kind: HelmRepository
         name: drone-charts
         namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     env:
       DRONE_SERVER_HOST: drone.${DOMAIN}

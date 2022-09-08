@@ -5,7 +5,7 @@ metadata:
   name: vector
   namespace: monitoring
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: vector
@@ -14,6 +14,12 @@ spec:
         kind: HelmRepository
         name: vector-charts
         namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     role: Stateless-Aggregator
     podMonitor:

@@ -5,7 +5,7 @@ metadata:
   name: vault-secrets-operator
   namespace: vault
 spec:
-  interval: 30m
+  interval: 15m
   chart:
     spec:
       chart: vault-secrets-operator
@@ -14,6 +14,12 @@ spec:
         kind: HelmRepository
         name: ricoberger-charts
         namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   dependsOn:
     - name: vault
       namespace: vault

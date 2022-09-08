@@ -28,4 +28,5 @@
       	PermitRootLogin yes
     validate: sshd -T -f %s
     state: present
+  when: ssh_whitelist_ip | length != 0
   notify: Restart ssh service
