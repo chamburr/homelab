@@ -31,7 +31,7 @@
 
 - name: Enable libvirt network autostart
   community.libvirt.virt_net:
-    autostart: yes
+    autostart: true
     name: kubernetes
 
 - name: Start libvirt network

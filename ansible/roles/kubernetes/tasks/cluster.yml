@@ -25,6 +25,18 @@
     var: result.stdout_lines
   when: not cluster_status.stat.exists
 
+- name: Run configure post script
+  ansible.builtin.command:
+    chdir: /home/{{ username }}
+    cmd: /home/{{ username }}/configure.sh --post
+  register: result_post
+  when: not cluster_status.stat.exists
+
+- name: Print configure script post output
+  ansible.builtin.debug:
+    var: result_post.stdout_lines
+  when: not cluster_status.stat.exists
+
 - name: Delete configure script
   ansible.builtin.file:
     path: /home/{{ username }}/configure.sh

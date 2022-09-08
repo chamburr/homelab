@@ -5,6 +5,7 @@ metadata:
   name: cloudflare-ddns
   namespace: networking
 data:
+  # TODO: Replace *.$CLOUDFLARE_DOMAIN with $CLOUDFLARE_DOMAIN
   cloudflare-ddns.sh: |
     #!/usr/bin/env bash
 
@@ -12,7 +13,7 @@ data:
     set -o errexit
 
     record=$(curl -s -X GET \
-      "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/dns_records?name=$CLOUDFLARE_DOMAIN&type=A" \
+      "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/dns_records?name=*.$CLOUDFLARE_DOMAIN&type=A" \
       -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
       -H "X-Auth-Key: $CLOUDFLARE_API_KEY" \
     )

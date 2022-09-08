@@ -143,7 +143,24 @@ configureVault() {
   kubectl -n vault exec vault-0 -- sh -c \
     "$(curl -s https://raw.githubusercontent.com/chamburr/homelab/master/scripts/vault/secrets.txt)"
 
-  kubectl -n vault exec vault-0 -- rm /home/vault/.vault-token
+  echo "Login to vault at port 8200 to complete installation"
+}
+
+postInstall() {
+  echo 'Running post install...'
+
+  kubectl -n vault port-forward svc/vault --address=0.0.0.0 8200:8200 &
+
+  firewall-cmd --zone public --add-port 8200/tcp
+
+  kubectl -n vault exec vault-0 -- sh -c \
+    "vault kv put secret/INSTALL message='Delete this secret to complete installation'"
+
+  until ! kubectl -n vault exec vault-0 -- sh -c "vault kv get secret/INSTALL" > /dev/null 2>&1; do
+    sleep 5
+  done
+
+  firewall-cmd --zone public --remove-port 8200/tcp
 
   flux -n vault resume helmrelease vault-secrets-operator
 
@@ -153,7 +170,12 @@ configureVault() {
 }
 
 prepare
-configureTalos
-configureFlux
-configureCeph
-configureVault
+
+if [ "$1" = '' ]; then
+  configureTalos
+  configureFlux
+  configureCeph
+  configureVault
+elif [ "$1" = '--post' ]; then
+  postInstall
+fi

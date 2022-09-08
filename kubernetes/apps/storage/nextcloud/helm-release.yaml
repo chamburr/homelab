@@ -85,7 +85,8 @@ spec:
     redis:
       enabled: true
       auth:
-        enabled: false
+        enabled: true
+        password: nextcloud-pass
       master:
         persistence:
           enabled: true

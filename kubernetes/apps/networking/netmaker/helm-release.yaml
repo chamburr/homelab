@@ -24,7 +24,7 @@ spec:
     image:
       repository: docker.io/gravitl/netmaker
       tag: v0.14.5
-    baseDomain: netmaker.${DOMAIN}
+    baseDomain: ${DOMAIN}
     replicas: 1
     ui:
       replicas: 1
@@ -48,9 +48,9 @@ spec:
       tls:
         enabled: false
       hostPrefix:
-        ui: ""
-        rest: api.
-        broker: mq.
+        ui: netmaker.
+        rest: netmaker-api.
+        broker: netmaker-mq.
     RWXStorageClassName: noop
   postRenderers:
     - kustomize:
@@ -165,15 +165,25 @@ spec:
               name: netmaker
             patch:
               - op: add
-                path: /spec/template/spec/containers/0/env
+                path: /spec/template/spec/containers/0/env/-
                 value:
-                  - name: TELEMETRY
-                    value: "off"
+                  name: TELEMETRY
+                  value: "off"
               - op: replace
                 path: /spec/template/spec/containers/0/env/0
                 value:
                   name: SERVER_NAME
-                  value: mq.netmaker.${DOMAIN}
+                  value: netmaker-mq.${DOMAIN}
+              - op: replace
+                path: /spec/template/spec/containers/0/env/1
+                value:
+                  name: SERVER_API_CONN_STRING
+                  value: netmaker-api.${DOMAIN}
+              - op: replace
+                path: /spec/template/spec/containers/0/env/2
+                value:
+                  name: SERVER_HTTP_HOST
+                  value: netmaker-api.${DOMAIN}
               - op: add
                 path: /spec/template/spec/containers/0/ports
                 value:

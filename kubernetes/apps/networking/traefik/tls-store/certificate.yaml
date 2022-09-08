@@ -16,3 +16,4 @@ spec:
   dnsNames:
     - ${DOMAIN}
     - "*.${DOMAIN}"
+    - "*.test.${DOMAIN}" # TODO: Remove this domain
