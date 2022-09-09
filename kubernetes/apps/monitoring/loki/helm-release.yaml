@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: loki
-      version: 2.16.0
+      version: 3.0.1
       sourceRef:
         kind: HelmRepository
         name: grafana-charts
@@ -21,6 +21,90 @@ spec:
     remediation:
       retries: 3
   values:
+    loki:
+      structuredConfig:
+        auth_enabled: false
+        server:
+          log_level: info
+          http_listen_port: 3100
+          grpc_listen_port: 9095
+        memberlist:
+          join_members:
+            - loki-memberlist
+        limits_config:
+          retention_period: 14d
+          enforce_metric_name: false
+          reject_old_samples: true
+          reject_old_samples_max_age: 168h
+          max_cache_freshness_per_query: 10m
+          split_queries_by_interval: 15m
+          ingestion_rate_mb: 8
+          ingestion_burst_size_mb: 16
+        schema_config:
+          configs:
+            - from: "2022-06-01"
+              store: boltdb-shipper
+              object_store: s3
+              schema: v12
+              index:
+                prefix: loki_index_
+                period: 24h
+        common:
+          path_prefix: /var/loki
+          replication_factor: 1
+          storage:
+            s3:
+              s3: null
+              insecure: true
+              s3forcepathstyle: true
+          ring:
+            kvstore:
+              store: memberlist
+        ruler:
+          enable_api: true
+          storage:
+            type: local
+            local:
+              directory: /rules
+        distributor:
+          ring:
+            kvstore:
+              store: memberlist
+        compactor:
+          working_directory: /var/loki/boltdb-shipper-compactor
+          shared_store: s3
+          compaction_interval: 10m
+          retention_enabled: true
+          retention_delete_delay: 2h
+          retention_delete_worker_count: 150
+        ingester:
+          max_chunk_age: 1h
+          max_transfer_retries: 0
+          chunk_block_size: 262144
+        analytics:
+          reporting_enabled: false
+    gateway:
+      enabled: true
+      replicas: 1
+      deploymentStrategy:
+        type: Recreate
+    read:
+      replicas: 1
+      extraVolumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: loki-read
+    write:
+      replicas: 1
+      extraVolumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: loki-read
+    monitoring:
+      selfMonitoring:
+        enabled: false
+        grafanaAgent:
+          installOperator: false
     config:
       limits_config:
         max_entries_limit_per_query: 5000
@@ -33,3 +117,39 @@ spec:
       existingClaim: loki-data
     ingress:
       enabled: false
+  valuesFrom:
+    - kind: Secret
+      name: loki-secret
+      valuesKey: bucket_name
+      targetPath: loki.structuredConfig.common.storage.s3.bucketnames
+    - kind: Secret
+      name: loki-secret
+      valuesKey: bucket_host
+      targetPath: loki.structuredConfig.common.storage.s3.endpoint
+    - kind: Secret
+      name: loki-secret
+      valuesKey: bucket_region
+      targetPath: loki.structuredConfig.common.storage.s3.region
+    - kind: Secret
+      name: loki-secret
+      valuesKey: access_key
+      targetPath: loki.structuredConfig.common.storage.s3.access_key_id
+    - kind: Secret
+      name: loki-secret
+      valuesKey: secret_key
+      targetPath: loki.structuredConfig.common.storage.s3.secret_access_key
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: StatefulSet
+              name: loki-read
+            patch:
+              - op: remove
+                path: /spec/volumeClaimTemplates
+          - target:
+              kind: StatefulSet
+              name: loki-write
+            patch:
+              - op: remove
+                path: /spec/volumeClaimTemplates
