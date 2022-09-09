@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kah-common-chart
-      version: 1.1.2
+      version: 1.2.2
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
@@ -25,7 +25,7 @@ spec:
       nameOverride: adguard-home
     image:
       repository: docker.io/adguard/adguardhome
-      tag: v0.107.11
+      tag: v0.107.12
     args:
       - --no-check-update
       - --config
