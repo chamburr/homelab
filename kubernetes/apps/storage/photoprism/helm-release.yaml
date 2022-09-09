@@ -22,6 +22,7 @@ spec:
       retries: 3
   values:
     image:
+      repository: docker.io/photoprism/photoprism
       tag: 220730-jammy
     env:
       PHOTOPRISM_ADMIN_PASSWORD: photoprism

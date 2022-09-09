@@ -22,6 +22,7 @@ spec:
       retries: 3
   values:
     image:
+      repository: ghcr.io/crazy-max/samba
       tag: 4.15.7
     env:
       SAMBA_HOSTS_ALLOW: 0.0.0.0/0

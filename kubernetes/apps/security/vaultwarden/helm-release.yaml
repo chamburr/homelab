@@ -22,6 +22,7 @@ spec:
       retries: 3
   values:
     image:
+      repository: docker.io/vaultwarden/server
       tag: 1.25.2
     env:
       SIGNUPS_ALLOWED: false
