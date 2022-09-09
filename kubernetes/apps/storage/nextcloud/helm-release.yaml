@@ -23,7 +23,7 @@ spec:
   values:
     image:
       repository: docker.io/nextcloud
-      tag: 24.0.4
+      tag: 24.0.5
     nextcloud:
       host: cloud.${DOMAIN}
       mail:
