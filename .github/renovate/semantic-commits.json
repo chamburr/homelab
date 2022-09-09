@@ -1,11 +1,9 @@
 {
-  "extends": [
-    ":semanticCommits"
-  ],
+  "extends": [":semanticCommits"],
   "packageRules": [
     {
       "matchUpdateTypes": ["major", "minor"],
-      "semanticCommitType": "feat",
+      "semanticCommitType": "feat"
     },
     {
       "matchUpdateTypes": ["patch", "digest"],
