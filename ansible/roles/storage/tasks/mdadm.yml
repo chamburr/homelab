@@ -10,7 +10,6 @@
   register: array_check
   changed_when: false
   failed_when: false
-  check_mode: false
 
 - name: Create array
   ansible.builtin.shell:
@@ -41,7 +40,6 @@
     cmd: mdadm --detail --scan
   register: array_details
   changed_when: false
-  when: array_create is changed
 
 - name: Update mdadm config
   ansible.builtin.lineinfile:
@@ -54,9 +52,9 @@
     mode: 0644
     state: present
   loop: "{{ array_details.stdout_lines }}"
-  when: array_create is changed
+  register: mdadm_update
 
 - name: Update initramfs
   ansible.builtin.command:
     cmd: dracut -f
-  when: array_create is changed
+  when: mdadm_update is changed
