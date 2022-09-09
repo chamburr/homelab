@@ -23,20 +23,30 @@
     - virtsecretd.socket
     - virtstoraged.socket
 
+- name: Disable libvirt default network autostart
+  community.libvirt.virt_net:
+    name: default
+    autostart: false
+
+- name: Stop libvirt default network
+  community.libvirt.virt_net:
+    name: default
+    state: inactive
+
 - name: Create libvirt network
   community.libvirt.virt_net:
+    name: "{{ network_name }}"
     command: define
-    name: kubernetes
     xml: "{{ lookup('template', 'network.xml.j2') }}"
 
 - name: Enable libvirt network autostart
   community.libvirt.virt_net:
+    name: "{{ network_name }}"
     autostart: true
-    name: kubernetes
 
 - name: Start libvirt network
   community.libvirt.virt_net:
-    name: kubernetes
+    name: "{{ network_name }}"
     state: active
 
 - name: Create libvirt pool
