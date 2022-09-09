@@ -35,6 +35,7 @@ spec:
         enabled: true
         type: LoadBalancer
         loadBalancerIP: ${METALLB_IP}
+        externalTrafficPolicy: Cluster
         annotations:
           metallb.universe.tf/allow-shared-ip: global
         pop3:
