@@ -37,7 +37,10 @@ spec:
         chartmuseum:
           existingClaim: harbor-chartmuseum
         jobservice:
-          existingClaim: harbor-jobservice
+          jobLog:
+            existingClaim: harbor-jobservice-log
+          scanDataExports:
+            existingClaim: harbor-jobservice-scan
         database:
           existingClaim: harbor-database
         redis:
