@@ -39,9 +39,25 @@
     name: kubernetes
     state: active
 
+- name: Create libvirt pool
+  community.libvirt.virt_pool:
+    name: "{{ pool_name }}"
+    command: define
+    xml: "{{ lookup('template', 'pool.xml.j2') }}"
+
+- name: Enable libvirt pool autostart
+  community.libvirt.virt_pool:
+    name: "{{ pool_name }}"
+    autostart: true
+
+- name: Start libvirt pool
+  community.libvirt.virt_pool:
+    name: "{{ pool_name }}"
+    state: active
+
 - name: Create libvirt disk
   ansible.builtin.shell:
     cmd: |
-      virsh vol-create-as default {{ volume_name }} {{ volume_size }} \
+      virsh vol-create-as {{ pool_name }} {{ volume_name }} {{ volume_size }} \
         --format {{ volume_format }}
-    creates: /var/lib/libvirt/images/{{ volume_name }}
+    creates: "{{ pool_path }}/{{ volume_name }}"

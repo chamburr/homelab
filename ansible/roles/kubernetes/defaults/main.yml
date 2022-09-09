@@ -5,6 +5,9 @@ network_mask: 255.255.255.0
 network_start: 192.168.123.200
 network_end: 192.168.123.254
 
+pool_name: default
+pool_path: /var/lib/libvirt/images
+
 volume_name: kubernetes
 volume_size: 200G
 volume_format: raw
