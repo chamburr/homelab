@@ -18,11 +18,11 @@ spec:
       namespace: flux-system
     - apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
       kind: Kustomization
-      name: apps
+      name: charts
       namespace: flux-system
     - apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
       kind: Kustomization
-      name: charts
+      name: crds
       namespace: flux-system
     - apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
       kind: Kustomization
@@ -34,5 +34,5 @@ spec:
       namespace: flux-system
     - apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
       kind: Kustomization
-      name: crds
+      name: apps
       namespace: flux-system
