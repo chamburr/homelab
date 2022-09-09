@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: wallabag
-      version: 6.2.2
+      version: 7.1.2
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
@@ -28,18 +28,20 @@ spec:
       tag: 3.5.1
     env:
       CORE_HTTPS: true
-      CORE_DATABASE_URL: postgresql://postgres:zipline-pass@zipline-postgresql/zipline
+      CORE_DATABASE_URL: postgresql://zipline:zipline-pass@zipline-postgresql/zipline
       UPLOADER_ROUTE: /
       UPLOADER_LENGTH: 6
     postgresql:
       enabled: true
       fullnameOverride: zipline-postgresql
-      postgresqlUsername: postgres
-      postgresqlPassword: zipline-pass
-      postgresqlDatabase: zipline
-      persistence:
-        enabled: true
-        existingClaim: zipline-postgresql
+      auth:
+        username: zipline
+        password: zipline-pass
+        database: zipline
+      primary:
+        persistence:
+          enabled: true
+          existingClaim: zipline-postgresql
     service:
       main:
         ports:

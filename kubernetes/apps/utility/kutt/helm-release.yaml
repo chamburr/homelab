@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: wallabag
-      version: 6.2.2
+      version: 7.1.2
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
@@ -49,12 +49,14 @@ spec:
     postgresql:
       enabled: true
       fullnameOverride: kutt-postgresql
-      postgresqlUsername: postgres
-      postgresqlPassword: kutt-pass
-      postgresqlDatabase: kutt
-      persistence:
-        enabled: true
-        existingClaim: kutt-postgresql
+      auth:
+        enablePostgresUser: true
+        postgresPassword: kutt-pass
+        database: kutt
+      primary:
+        persistence:
+          enabled: true
+          existingClaim: kutt-postgresql
     redis:
       enabled: true
       fullnameOverride: kutt-redis

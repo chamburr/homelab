@@ -15,7 +15,7 @@
   "requireConfig": "optional",
   "timezone": "Asia/Singapore",
   "suppressNotifications": ["prIgnoreNotification"],
-  "prBodyTemplate": "{{{table}}}{{{notes}}}{{{changelogs}}}",
+  "prBodyTemplate": "{{{table}}}{{{notes}}}{{{changelogs}}}{{{controls}}}",
   "rebaseWhen": "conflicted",
   "platform": "github",
   "username": "chamburr-bot[bot]",
