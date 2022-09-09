@@ -10,6 +10,13 @@
     enabled: true
     state: started
 
+- name: Set firewall default zone
+  ansible.builtin.command:
+    cmd: firewall-cmd --set-default-zone=trusted
+  register: zone_set
+  changed_when:
+    - "'ZONE_ALREADY_SET' not in zone_set.stderr"
+
 - name: Set firewall zone
   ansible.posix.firewalld:
     zone: public
@@ -17,13 +24,6 @@
     immediate: true
     permanent: true
     state: enabled
-
-- name: Set firewall default zone
-  ansible.builtin.command:
-    cmd: firewall-cmd --set-default-zone=trusted
-  register: zone_set
-  changed_when:
-    - "'ZONE_ALREADY_SET' not in zone_set.stderr"
 
 - name: Allow firewall masquerade
   ansible.posix.firewalld:
