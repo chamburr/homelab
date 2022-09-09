@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kah-common-chart
-      version: 1.1.2
+      version: 1.2.2
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
@@ -25,7 +25,7 @@ spec:
       nameOverride: uptime-kuma
     image:
       repository: docker.io/louislam/uptime-kuma
-      tag: 1.17.1
+      tag: 1.18.0
     service:
       main:
         ports:
