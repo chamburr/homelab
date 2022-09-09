@@ -5,7 +5,7 @@ timezone: Asia/Singapore
 username: chamburr
 password:
   "$6$r6tkCgwMdm9vnoT/$ltpTR2m3sM23t5TTdI4V1pk2UfJH1NZnOd23xGEnfBTqIG2NCukcetthkS8ZCch.qCsH0EWhH3h\
-  ".U657lE9ce/"
+  .U657lE9ce/"
 ssh_keys:
   - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUXll5ke2Ccj3I54kGOIIunQow3wpkcoGa37zbR7VgIYChEWt+2wr48\
     kX8yC14TSqIzVUMqwY53M5wI+sZeDYy5bpxmvhzhQ/nAR1Qv+EY0CcKkkjzSbJ49SJA86q/gn/5hgBGzXcEtyEb/DP8Eau\

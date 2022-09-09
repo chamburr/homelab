@@ -1,0 +1,52 @@
+{
+  "extends": [
+    "config:base",
+    "docker:enableMajor",
+    ":disableRateLimiting",
+    ":disableDependencyDashboard",
+    ":automergeDigest",
+    "github>chamburr/homelab//.github/renovate/allowed-versions",
+    "github>chamburr/homelab//.github/renovate/auto-merge",
+    "github>chamburr/homelab//.github/renovate/commit-message",
+    "github>chamburr/homelab//.github/renovate/labels",
+    "github>chamburr/homelab//.github/renovate/semantic-commits"
+  ],
+  "onboarding": false,
+  "requireConfig": "optional",
+  "timezone": "Asia/Singapore",
+  "suppressNotifications": ["prIgnoreNotification"],
+  "prBodyTemplate": "{{{table}}}{{{notes}}}{{{changelogs}}}",
+  "rebaseWhen": "conflicted",
+  "platform": "github",
+  "username": "chamburr-bot[bot]",
+  "gitAuthor": "chamburr-bot <113156419+chamburr-bot[bot]@users.noreply.github.com>",
+  "repositories": ["chamburr/homelab"],
+  "flux": {
+    "fileMatch": ["kubernetes/.+\\.yaml$"]
+  },
+  "helm-values": {
+    "fileMatch": ["kubernetes/.+\\.yaml$"]
+  },
+  "kubernetes": {
+    "fileMatch": ["kubernetes/.+\\.yaml$"]
+  },
+  "regexManagers": [
+    {
+      "description": "Process CRD dependencies",
+      "fileMatch": ["kubernetes/.+\\.yaml$"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
+        "# renovate: registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
+    },
+    {
+      "description": "Process raw GitHub URLs",
+      "fileMatch": ["kubernetes/.+\\.yaml$", "scripts/.+\\.yaml$"],
+      "matchStrings": [
+        "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
+      ],
+      "datasourceTemplate": "github-releases"
+    }
+  ]
+}
