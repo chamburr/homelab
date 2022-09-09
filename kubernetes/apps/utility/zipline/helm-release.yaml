@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: wallabag
-      version: 6.2.2
+      version: 7.1.2
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
