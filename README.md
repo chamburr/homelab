@@ -14,7 +14,12 @@ First, configure a bare metal Rocky Linux machine with reference to [kickstart.k
 
 <table>
   <tr>
-    <td><img height="32" src="https://www.vectorlogo.zone/logos/ansible/ansible-icon.svg"></td>
+    <th>Logo</th>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><img width="32" src="https://www.vectorlogo.zone/logos/ansible/ansible-icon.svg"></td>
     <td><a href="https://www.ansible.com">Ansible</a></td>
     <td>Bare metal provisioning and configuration</td>
   </tr>
