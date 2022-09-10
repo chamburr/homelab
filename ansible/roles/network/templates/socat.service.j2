@@ -8,10 +8,10 @@ StandardOutput=null
 StandardError=null
 ExecStart=sh -c ' \
 {% for port in socat_tcp_ports %}
-  /usr/bin/socat -u tcp-listen:{{ port }},reuseaddr,fork tcp:{{ socat_address }}:{{ port }}; \
+  /usr/bin/socat tcp-listen:{{ port }},reuseaddr,fork tcp:{{ socat_address }}:{{ port }} & \
 {% endfor %}
 {% for port in socat_udp_ports %}
-  /usr/bin/socat -u udp-listen:{{ port }},reuseaddr,fork udp:{{ socat_address }}:{{ port }}; \
+  /usr/bin/socat udp-listen:{{ port }},reuseaddr,fork udp:{{ socat_address }}:{{ port }} & \
 {% endfor %}
   wait \
 '

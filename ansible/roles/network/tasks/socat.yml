@@ -13,6 +13,9 @@
     mode: 0644
   notify: Reload systemctl
 
+- name: Flush socat handlers
+  ansible.builtin.meta: flush_handlers
+
 - name: Enable socat service
   ansible.builtin.service:
     name: socat
