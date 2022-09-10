@@ -34,3 +34,22 @@ spec:
   tls:
     domains:
       - main: ${DOMAIN}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: catch-all
+  namespace: networking
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`${DOMAIN}`) || HostRegexp(`{subhost:.+}.${DOMAIN}`)
+      priority: 1
+      services:
+        - kind: TraefikService
+          name: noop@internal
+  tls:
+    domains:
+      - main: "*.${DOMAIN}"
