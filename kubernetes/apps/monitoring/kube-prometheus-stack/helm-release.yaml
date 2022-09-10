@@ -33,6 +33,17 @@ spec:
           name: thanos-objstore-secret
           key: objstore.yml
     prometheus:
+      ingress:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: networking-basic-auth@kubernetescrd
+        pathType: Prefix
+        ingressClassName: traefik
+        hosts:
+          - prometheus.${DOMAIN}
+        tls:
+          - hosts:
+              - prometheus.${DOMAIN}
       thanosService:
         enabled: true
       thanosServiceMonitor:
