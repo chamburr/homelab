@@ -33,6 +33,9 @@ spec:
       username: ${MAIL_USERNAME}
       password: ${MAIL_PASSWORD}
       from: ${MAIL_SENDER}
+    config:
+      sentryConfPy: |
+        CSRF_TRUSTED_ORIGINS = ['sentry.${DOMAIN}']
     sentry:
       web:
         strategyType: Recreate
