@@ -56,6 +56,8 @@ spec:
       main:
         enabled: true
         ingressClassName: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: utility-zipline-redirect@kubernetescrd
         hosts:
           - host: u.${DOMAIN}
             paths:
