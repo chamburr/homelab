@@ -48,3 +48,13 @@ spec:
         tls:
           - hosts:
               - shiori.${DOMAIN}
+    podSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/sh
+            - -c
+            - /usr/bin/shiori migrate
