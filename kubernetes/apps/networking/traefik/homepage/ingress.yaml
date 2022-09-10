@@ -15,7 +15,7 @@ spec:
           namespace: networking
       services:
         - kind: Service
-          name: zipline-main
+          name: zipline
           namespace: utility
     - kind: Rule
       match: Host(`${DOMAIN}`) && Path(`/.well-known/(?:carddav|caldav)`)
