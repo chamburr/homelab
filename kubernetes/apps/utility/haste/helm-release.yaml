@@ -56,7 +56,6 @@ spec:
           existingClaim: haste-postgresql
     service:
       main:
-        enabled: true
         ports:
           http:
             port: 7777

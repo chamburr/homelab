@@ -47,9 +47,13 @@ spec:
     - kind: Rule
       match: Host(`${DOMAIN}`) || HostRegexp(`{subhost:.+}.${DOMAIN}`)
       priority: 1
+      middlewares:
+        - name: replace-path
+          namespace: networking
       services:
-        - kind: TraefikService
-          name: noop@internal
+        - kind: Service
+          name: error-pages
+          namespace: networking
   tls:
     domains:
       - main: "*.${DOMAIN}"
