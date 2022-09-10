@@ -55,4 +55,4 @@ spec:
     - kind: Secret
       name: drone-secret
       valuesKey: github_client_secret
-      targetPath: env.DRONE_GITHUB_CLIENT_SECRETSS
+      targetPath: env.DRONE_GITHUB_CLIENT_SECRET
