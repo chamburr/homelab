@@ -97,6 +97,10 @@ spec:
               - op: add
                 path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
                 value: mailu-redis
+              - op: replace
+                path: /spec/strategy
+                value:
+                  type: Recreate
           - target:
               kind: Deployment
               name: mailu-admin
@@ -104,6 +108,10 @@ spec:
               - op: add
                 path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
                 value: mailu-admin
+              - op: replace
+                path: /spec/strategy
+                value:
+                  type: Recreate
           - target:
               kind: Deployment
               name: mailu-dovecot
@@ -111,6 +119,10 @@ spec:
               - op: add
                 path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
                 value: mailu-dovecot
+              - op: replace
+                path: /spec/strategy
+                value:
+                  type: Recreate
           - target:
               kind: Deployment
               name: mailu-postfix
@@ -118,6 +130,10 @@ spec:
               - op: add
                 path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
                 value: mailu-postfix
+              - op: replace
+                path: /spec/strategy
+                value:
+                  type: Recreate
           - target:
               kind: Deployment
               name: mailu-rspamd
@@ -125,6 +141,10 @@ spec:
               - op: add
                 path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
                 value: mailu-rspamd
+              - op: replace
+                path: /spec/strategy
+                value:
+                  type: Recreate
           - target:
               kind: Deployment
               name: mailu-webdav
@@ -132,3 +152,7 @@ spec:
               - op: add
                 path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
                 value: mailu-webdav
+              - op: replace
+                path: /spec/strategy
+                value:
+                  type: Recreate
