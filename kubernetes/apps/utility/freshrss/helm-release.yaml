@@ -28,11 +28,6 @@ spec:
       tag: 1.19.2
     env:
       CRON_MIN: 0,30
-      FRESHRSS_INSTALL: >
-        --api_enabled
-        --base_url https://freshrss.${DOMAIN}
-        --default_user admin
-        --disable_update
     service:
       main:
         ports:
