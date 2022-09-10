@@ -49,8 +49,6 @@ spec:
     additionalArguments:
       - --providers.kubernetesingress.ingressendpoint.ip=${METALLB_IP}
     ports:
-      traefik:
-        expose: true
       web:
         redirectTo: websecure
       websecure:
