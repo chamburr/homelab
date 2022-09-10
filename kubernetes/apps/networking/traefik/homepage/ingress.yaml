@@ -17,12 +17,14 @@ spec:
         - kind: Service
           name: zipline
           namespace: utility
+          port: 3000
     - kind: Rule
       match: Host(`${DOMAIN}`) && Path(`/.well-known/(?:carddav|caldav)`)
       services:
         - kind: Service
           name: mailu-front
           namespace: mail
+          port: 80
     - kind: Rule
       match: Host(`${DOMAIN}`)
       middlewares:
@@ -54,6 +56,7 @@ spec:
         - kind: Service
           name: error-pages
           namespace: networking
+          port: 8080
   tls:
     domains:
       - main: "*.${DOMAIN}"
