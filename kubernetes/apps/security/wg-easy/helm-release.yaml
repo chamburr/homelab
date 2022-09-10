@@ -27,7 +27,7 @@ spec:
       repository: docker.io/weejewel/wg-easy
       tag: "7"
     env:
-      WG_HOST: vpn.${DOMAIN}
+      WG_HOST: wireguard.${DOMAIN}
       WG_PORT: 51820
       WG_MTU: null
       WG_PERSISTENT_KEEPALIVE: 0

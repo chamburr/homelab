@@ -41,10 +41,10 @@ spec:
         enabled: true
         ingressClassName: traefik
         hosts:
-          - host: status.${DOMAIN}
+          - host: uptime.${DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - status.${DOMAIN}
+              - uptime.${DOMAIN}

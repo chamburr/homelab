@@ -43,7 +43,7 @@ spec:
       tls: true
       extraTls:
         - hosts:
-            - minio.${DOMAIN}
+            - s3.${DOMAIN}
     persistence:
       enabled: true
       existingClaim: minio-data
