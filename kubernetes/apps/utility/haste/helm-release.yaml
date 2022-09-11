@@ -47,3 +47,5 @@ spec:
         tls:
           - hosts:
               - p.${DOMAIN}
+    podSecurityContext:
+      fsGroup: 568

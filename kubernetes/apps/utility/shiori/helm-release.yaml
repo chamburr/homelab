@@ -49,8 +49,7 @@ spec:
           - hosts:
               - shiori.${DOMAIN}
     podSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
+      fsGroup: 1000
     lifecycle:
       postStart:
         exec:
