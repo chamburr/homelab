@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: haste-postgresql
+  name: haste-data
   namespace: utility
 spec:
   accessModes:
