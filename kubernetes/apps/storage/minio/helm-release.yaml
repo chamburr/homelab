@@ -56,7 +56,7 @@ spec:
     - kind: Secret
       name: minio-secret
       valuesKey: admin_username
-      targetPath: auth.rootUsername
+      targetPath: auth.rootUser
     - kind: Secret
       name: minio-secret
       valuesKey: admin_password
