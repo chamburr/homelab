@@ -7,12 +7,9 @@ metadata:
 spec:
   schedule: "*/5 * * * *"
   concurrencyPolicy: Forbid
-  successfulJobsHistoryLimit: 3
-  failedJobsHistoryLimit: 5
   jobTemplate:
     spec:
       backoffLimit: 3
-      ttlSecondsAfterFinished: 300
       template:
         spec:
           restartPolicy: Never
