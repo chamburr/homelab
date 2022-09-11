@@ -7,6 +7,5 @@ metadata:
 spec:
   chain:
     middlewares:
-      - name: ip-whitelist
       - name: redirect
       - name: errors

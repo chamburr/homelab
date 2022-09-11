@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - basic-auth.yaml
   - strip-prefix.yaml
-  - ip-whitelist.yaml
   - redirect.yaml
   - replace-path.yaml
   - errors.yaml
