@@ -69,7 +69,7 @@ spec:
     - kustomize:
         patchesJson6902:
           - target:
-              kind: Statefulset
+              kind: StatefulSet
               name: vault
             patch:
               - op: add
