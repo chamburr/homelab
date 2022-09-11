@@ -50,3 +50,16 @@
     immediate: true
     state: "{{ item.value }}"
   with_dict: "{{ firewall_ports }}"
+
+- name: Configure firewall forward ports
+  ansible.posix.firewalld:
+    zone: public
+    port_forward:
+      - port: "{{ item.split('/')[0] }}"
+        proto: "{{ item.split('/')[1] }}"
+        toaddr: "{{ forward_address }}"
+        toport: "{{ item.split('/')[0] }}"
+    permanent: true
+    immediate: true
+    state: enabled
+  loop: "{{ forward_ports }}"

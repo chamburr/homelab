@@ -1,5 +1,4 @@
 ---
 - include_tasks: fail2ban.yml
 - include_tasks: firewall.yml
-- include_tasks: socat.yml
 - include_tasks: ssh.yml

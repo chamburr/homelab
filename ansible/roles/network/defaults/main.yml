@@ -23,28 +23,17 @@ firewall_ports:
   4500/udp: enabled
   51821-51830/udp: enabled
 
-socat_address: 192.168.123.100
-socat_tcp_ports:
-  - 53
-  - 80
-  - 443
-  - 445
-  - 1883
-socat_udp_ports:
-  - 53
-  - 500
-  - 4500
-  - 51820
-  - 51821
-  - 51822
-  - 51823
-  - 51824
-  - 51825
-  - 51826
-  - 51827
-  - 51828
-  - 51829
-  - 51830
+forward_address: 192.168.123.100
+forward_ports:
+  - 53/tcp
+  - 80/tcp
+  - 443/tcp
+  - 445/tcp
+  - 1883/tcp
+  - 53/udp
+  - 500/udp
+  - 4500/udp
+  - 51820-52830/udp
 
 ssh_password: "no"
 ssh_root: "no"
