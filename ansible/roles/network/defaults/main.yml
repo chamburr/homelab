@@ -33,7 +33,7 @@ forward_ports:
   - 53/udp
   - 500/udp
   - 4500/udp
-  - 51820-52830/udp
+  - 51820:52830/udp
 
 ssh_password: "no"
 ssh_root: "no"

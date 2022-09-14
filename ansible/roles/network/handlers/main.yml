@@ -4,6 +4,10 @@
     name: fail2ban
     state: restarted
 
+- name: Reload firewalld
+  ansible.builtin.command:
+    cmd: firewall-cmd --reload
+
 - name: Restart ssh service
   ansible.builtin.service:
     name: sshd
