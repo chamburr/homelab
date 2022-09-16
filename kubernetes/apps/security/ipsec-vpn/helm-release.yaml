@@ -28,8 +28,8 @@ spec:
       tag: latest@sha256:2ae45fcdcee3deeab3785535a07142add0014dcbd6fabe64633bff7d1f492787
     env:
       VPN_DNS_NAME: vpn.${DOMAIN}
-      VPN_DNS_SRV1: 1.1.1.1
-      VPN_DNS_SRV2: 8.8.8.8
+      VPN_DNS_SRV1: ${DNS_SERVER}
+      VPN_DNS_SRV2: ""
     securityContext:
       privileged: true
     probes:
