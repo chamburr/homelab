@@ -52,6 +52,23 @@ spec:
         enabled: true
     podAnnotations:
       secret.reloader.stakater.com/reload: minio-secret
+    podSecurityContext:
+      fsGroup: 0
+    containerSecurityContext:
+      runAsUser: 0
+      runAsNonRoot: false
+    extraVolumes:
+      - name: minio
+        configMap:
+          name: minio
+          defaultMode: 0775
+    extraVolumeMounts:
+      - name: minio
+        mountPath: /opt/bitnami/scripts/minio/run-new.sh
+        subPath: run-new.sh
+        readOnly: true
+    args:
+      - /opt/bitnami/scripts/minio/run-new.sh
   valuesFrom:
     - kind: Secret
       name: minio-secret
