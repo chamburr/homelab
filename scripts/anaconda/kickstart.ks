@@ -16,7 +16,7 @@ keyboard --xlayouts='us'
 lang en_US.UTF-8
 
 # Network information
-network  --bootproto=dhcp --device=enp5s0 --ipv6=auto --activate
+network  --bootproto=dhcp --device=enp6s0 --ipv6=auto --activate
 
 # Use CDROM installation media
 cdrom

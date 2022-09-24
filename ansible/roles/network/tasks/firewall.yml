@@ -20,7 +20,7 @@
 - name: Set firewall zone
   ansible.posix.firewalld:
     zone: public
-    interface: enp5s0
+    interface: "{{ firewall_interface }}"
     immediate: true
     permanent: true
     state: enabled

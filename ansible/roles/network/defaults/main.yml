@@ -6,6 +6,7 @@ fail2ban_ban_time: 86400
 fail2ban_ignore_ip:
   - 127.0.0.1/8
 
+firewall_interface: enp6s0
 firewall_services:
   ssh: enabled
   dns: enabled
