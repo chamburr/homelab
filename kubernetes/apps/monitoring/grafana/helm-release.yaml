@@ -35,6 +35,8 @@ spec:
         username: ${MAIL_USERNAME}
         password: ${MAIL_PASSWORD}
         from_address: ${MAIL_SENDER}
+    deploymentStrategy:
+      type: Recreate
     serviceMonitor:
       enabled: true
     persistence:
