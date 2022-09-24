@@ -80,6 +80,13 @@ spec:
         enabled: true
         existingClaim: ipsec-vpn-data
         mountPath: /etc/ipsec.d
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/sh
+            - -c
+            - sed -i 's/mobike=yes/mobike=no/g' /etc/ipsec.d/ikev2.conf
     podAnnotations:
       secret.reloader.stakater.com/reload: ipsec-vpn-secret
   valuesFrom:
