@@ -12,6 +12,16 @@ spec:
       backoffLimit: 3
       template:
         spec:
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values:
+                          - haste
+                  topologyKey: kubernetes.io/hostname
           restartPolicy: Never
           containers:
             - name: haste-clean
