@@ -55,8 +55,8 @@
   ansible.builtin.command:
     cmd: >
       firewall-cmd --direct --permanent --add-rule ipv4 nat PREROUTING 0
-      -d {{ forward_address }} -p {{ item.split('/')[1] }} --dport {{ item.split('/')[0] }}
-      -j DNAT --to-destination {{ forward_destination }}
+      -d {{ forward_address }} -p {{ item.split('/')[2] }} --dport {{ item.split('/')[1] }}
+      -j DNAT --to-destination {{ item.split('/')[0] }}
   loop: "{{ forward_ports }}"
   register: forward_set
   changed_when:
