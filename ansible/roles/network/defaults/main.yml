@@ -4,7 +4,9 @@ fail2ban_max_retry: 3
 fail2ban_find_time: 600
 fail2ban_ban_time: 86400
 fail2ban_ignore_ip:
-  - 127.0.0.1/8
+  - 10.0.0.0/8
+  - 127.0.0.0/8
+  - 192.168.0.0/16
 
 firewall_interface: enp6s0
 firewall_services:
