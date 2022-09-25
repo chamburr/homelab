@@ -34,10 +34,8 @@ spec:
       externalService:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: ${METALLB_IP}
-        externalTrafficPolicy: Cluster
-        annotations:
-          metallb.universe.tf/allow-shared-ip: global
+        loadBalancerIP: ${LB_MAILU}
+        externalTrafficPolicy: Local
         pop3:
           pop3s: false
         smtp:

@@ -47,7 +47,7 @@ spec:
       - --entrypoints.websecure.http.middlewares=networking-global@kubernetescrd
       - --global.checknewversion=false
     additionalArguments:
-      - --providers.kubernetesingress.ingressendpoint.ip=${METALLB_IP}
+      - --providers.kubernetesingress.ingressendpoint.ip=${LB_TRAEFIK}
     ports:
       web:
         redirectTo: websecure
@@ -63,7 +63,6 @@ spec:
     service:
       enabled: true
       type: LoadBalancer
-      annotations:
-        metallb.universe.tf/allow-shared-ip: global
       spec:
-        loadBalancerIP: ${METALLB_IP}
+        externalTrafficPolicy: Local
+        loadBalancerIP: ${LB_TRAEFIK}

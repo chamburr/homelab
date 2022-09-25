@@ -47,16 +47,14 @@ spec:
       wireguard-udp:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: ${METALLB_IP}
-        annotations:
-          metallb.universe.tf/allow-shared-ip: global
+        loadBalancerIP: ${LB_WIREGUARD}
         ports:
           wireguard-udp:
             enabled: true
             port: 51820
             protocol: UDP
             targetPort: 51820
-        externalTrafficPolicy: Cluster
+        externalTrafficPolicy: Local
     persistence:
       config:
         enabled: true

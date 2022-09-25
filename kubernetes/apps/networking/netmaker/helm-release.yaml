@@ -60,17 +60,11 @@ spec:
               name: netmaker-wireguard
             patch:
               - op: add
-                path: /metadata/annotations
-                value:
-                  metallb.universe.tf/allow-shared-ip: global
-              - op: add
                 path: /spec/loadBalancerIP
-                value: ${METALLB_IP}
+                value: ${LB_NETMAKER}
               - op: add
                 path: /spec/type
                 value: LoadBalancer
-              - op: remove
-                path: /spec/externalTrafficPolicy
               - op: replace
                 path: /spec/ports
                 value:
@@ -119,15 +113,14 @@ spec:
               name: netmaker-mqtt-nodeport
             patch:
               - op: add
-                path: /metadata/annotations
-                value:
-                  metallb.universe.tf/allow-shared-ip: global
-              - op: add
                 path: /spec/loadBalancerIP
-                value: ${METALLB_IP}
+                value: ${LB_NETMAKER_MQ}
               - op: add
                 path: /spec/type
                 value: LoadBalancer
+              - op: add
+                path: /spec/externalTrafficPolicy
+                value: Local
           - target:
               kind: Deployment
               name: netmaker-mqtt

@@ -30,8 +30,6 @@ spec:
     service:
       enabled: true
       type: LoadBalancer
-      annotations:
-        metallb.universe.tf/allow-shared-ip: global
     customConfig:
       data_dir: /vector-data-dir
       api:
@@ -128,4 +126,7 @@ spec:
             patch:
               - op: add
                 path: /spec/loadBalancerIP
-                value: ${METALLB_IP}
+                value: ${LB_VECTOR}
+              - op: add
+                path: /spec/externalTrafficPolicy
+                value: Local

@@ -30,9 +30,11 @@ spec:
       main:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: ${METALLB_IP}
-        annotations:
-          metallb.universe.tf/allow-shared-ip: global
+        loadBalancerIP: ${LB_SAMBA}
+        ports:
+          netbios:
+            enabled: false
+        externalTrafficPolicy: Local
     configmap:
       config:
         enabled: true

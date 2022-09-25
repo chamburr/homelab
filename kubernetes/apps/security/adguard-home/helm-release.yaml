@@ -40,29 +40,25 @@ spec:
       dns-tcp:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: ${METALLB_IP}
-        annotations:
-          metallb.universe.tf/allow-shared-ip: global
+        loadBalancerIP: ${LB_ADGUARD_TCP}
         ports:
           dns-tcp:
             enabled: true
             port: 53
             protocol: TCP
             targetPort: 53
-        externalTrafficPolicy: Cluster
+        externalTrafficPolicy: Local
       dns-udp:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: ${METALLB_IP}
-        annotations:
-          metallb.universe.tf/allow-shared-ip: global
+        loadBalancerIP: ${LB_ADGUARD_UDP}
         ports:
           dns-udp:
             enabled: true
             port: 53
             protocol: UDP
             targetPort: 53
-        externalTrafficPolicy: Cluster
+        externalTrafficPolicy: Local
     persistence:
       config:
         enabled: true
