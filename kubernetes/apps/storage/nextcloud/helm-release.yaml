@@ -28,8 +28,8 @@ spec:
       host: cloud.${DOMAIN}
       mail:
         enabled: true
-        fromAddress: ${MAIL_SENDER/@*/}
-        domain: ${MAIL_SENDER/*@/}
+        fromAddress: ${MAIL_SENDER%@*}
+        domain: ${MAIL_SENDER#*@}
         smtp:
           authtype: LOGIN
           host: ${MAIL_HOST}
