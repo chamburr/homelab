@@ -1,23 +1,12 @@
 ---
 apiVersion: notification.toolkit.fluxcd.io/v1beta1
-kind: Provider
-metadata:
-  name: github
-  namespace: flux-system
-spec:
-  type: github
-  address: https://github.com/chamburr/homelab
-  secretRef:
-    name: notification-secret
----
-apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Alert
 metadata:
-  name: github
+  name: notification
   namespace: flux-system
 spec:
   providerRef:
-    name: github
+    name: notification
   eventSeverity: info
   eventSources:
     - kind: Kustomization
