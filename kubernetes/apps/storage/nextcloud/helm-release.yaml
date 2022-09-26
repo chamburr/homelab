@@ -26,6 +26,8 @@ spec:
       tag: 24.0.5
     nextcloud:
       host: cloud.${DOMAIN}
+      username: admin
+      password: nextcloud
       mail:
         enabled: true
         fromAddress: ${MAIL_SENDER%@*}
@@ -109,12 +111,3 @@ spec:
       secret.reloader.stakater.com/reload: nextcloud-secret
     startupProbe:
       enabled: true
-  valuesFrom:
-    - kind: Secret
-      name: nextcloud-secret
-      valuesKey: admin_username
-      targetPath: nextcloud.username
-    - kind: Secret
-      name: nextcloud-secret
-      valuesKey: admin_password
-      targetPath: nextcloud.password

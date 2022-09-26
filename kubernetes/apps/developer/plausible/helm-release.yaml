@@ -29,6 +29,8 @@ spec:
     baseURL: https://plausible.${DOMAIN}
     adminUser:
       name: Admin
+      email: admin@plausible.local
+      password: plausible
     postgresql:
       enabled: true
       url: postgresql://plausible:plausible-pass@plausible-postgresql:5432/plausible
@@ -74,14 +76,3 @@ spec:
       tls:
         - hosts:
             - plausible.${DOMAIN}
-    podAnnotations:
-      secret.reloader.stakater.com/reload: plausible-secret
-  valuesFrom:
-    - kind: Secret
-      name: plausible-secret
-      valuesKey: admin_email
-      targetPath: adminUser.email
-    - kind: Secret
-      name: plausible-secret
-      valuesKey: admin_password
-      targetPath: adminUser.password

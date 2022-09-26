@@ -72,9 +72,9 @@ spec:
   valuesFrom:
     - kind: Secret
       name: minio-secret
-      valuesKey: admin_username
+      valuesKey: username
       targetPath: auth.rootUser
     - kind: Secret
       name: minio-secret
-      valuesKey: admin_password
+      valuesKey: password
       targetPath: auth.rootPassword
