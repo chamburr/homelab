@@ -9,10 +9,10 @@ spec:
   chart:
     spec:
       chart: minio
-      version: 11.10.3
+      version: 4.0.15
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: minio-charts
         namespace: flux-system
   install:
     remediation:
@@ -21,60 +21,48 @@ spec:
     remediation:
       retries: 3
   values:
-    extraEnvVars:
-      - name: MINIO_UPDATE
-        value: "off"
-      - name: MINIO_BROWSER_REDIRECT_URL
-        value: https://minio.${DOMAIN}
-      - name: MINIO_SERVER_URL
-        value: https://s3.${DOMAIN}
-    ingress:
-      enabled: true
-      ingressClassName: traefik
-      hostname: minio.${DOMAIN}
-      tls: true
-      extraTls:
-        - hosts:
-            - minio.${DOMAIN}
-    apiIngress:
-      enabled: true
-      ingressClassName: traefik
-      hostname: s3.${DOMAIN}
-      tls: true
-      extraTls:
-        - hosts:
-            - s3.${DOMAIN}
+    mode: standalone
+    replicas: 1
     persistence:
       enabled: true
       existingClaim: minio-data
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      hosts:
+        - s3.${DOMAIN}
+      tls:
+        - hosts:
+            - s3.${DOMAIN}
+    consoleIngress:
+      enabled: true
+      ingressClassName: traefik
+      hosts:
+        - minio.${DOMAIN}
+      tls:
+        - hosts:
+            - minio.${DOMAIN}
+    users: []
+    environment:
+      MINIO_UPDATE: "off"
+      MINIO_BROWSER_REDIRECT_URL: https://minio.${DOMAIN}
+      MINIO_SERVER_URL: https://s3.${DOMAIN}
     metrics:
       serviceMonitor:
         enabled: true
     podAnnotations:
       secret.reloader.stakater.com/reload: minio-secret
-    podSecurityContext:
-      fsGroup: 0
-    containerSecurityContext:
+    securityContext:
       runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
       runAsNonRoot: false
-    extraVolumes:
-      - name: minio
-        configMap:
-          name: minio
-          defaultMode: 0775
-    extraVolumeMounts:
-      - name: minio
-        mountPath: /opt/bitnami/scripts/minio/run-new.sh
-        subPath: run-new.sh
-        readOnly: true
-    args:
-      - /opt/bitnami/scripts/minio/run-new.sh
   valuesFrom:
     - kind: Secret
       name: minio-secret
       valuesKey: username
-      targetPath: auth.rootUser
+      targetPath: rootUser
     - kind: Secret
       name: minio-secret
       valuesKey: password
-      targetPath: auth.rootPassword
+      targetPath: rootPassword
