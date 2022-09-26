@@ -12,20 +12,10 @@ spec:
       backoffLimit: 3
       template:
         spec:
-          affinity:
-            podAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchExpressions:
-                      - key: app.kubernetes.io/name
-                        operator: In
-                        values:
-                          - haste
-                  topologyKey: kubernetes.io/hostname
           restartPolicy: Never
           containers:
             - name: haste-clean
-              image: docker.io/busybox:1.35.0
+              image: ghcr.io/onedr0p/alpine:3.16.2
               command:
                 - /bin/sh
                 - -c
@@ -37,3 +27,13 @@ spec:
             - name: data
               persistentVolumeClaim:
                 claimName: haste-data
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values:
+                          - haste
+                  topologyKey: kubernetes.io/hostname
