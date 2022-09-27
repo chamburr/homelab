@@ -42,6 +42,10 @@ spec:
               - ceph.${DOMAIN}
     configOverride: |
       [global]
+      osd_pool_default_size = 1
+      mon_warn_on_pool_no_redundancy = false
+      mon_data_avail_warn = 10
+      mon_clock_drift_allowed = 0.1
       bdev_enable_discard = true
       bdev_async_discard = true
     cephClusterSpec:
