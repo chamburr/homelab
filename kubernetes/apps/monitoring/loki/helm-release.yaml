@@ -31,6 +31,14 @@ spec:
         memberlist:
           join_members:
             - loki-memberlist
+        common:
+          path_prefix: /var/loki
+          replication_factor: 1
+          storage:
+            type: filsystem
+            filesystem:
+              chunks_directory: /var/loki/chunks
+              rules_directory: /var/loki/rules
         limits_config:
           retention_period: 14d
           enforce_metric_name: false
@@ -38,68 +46,31 @@ spec:
           reject_old_samples_max_age: 168h
           max_cache_freshness_per_query: 10m
           split_queries_by_interval: 15m
-          ingestion_rate_mb: 8
-          ingestion_burst_size_mb: 16
         schema_config:
           configs:
-            - from: "2022-06-01"
+            - from: "2022-01-11"
               store: boltdb-shipper
-              object_store: s3
+              object_store: filesystem
               schema: v12
               index:
                 prefix: loki_index_
                 period: 24h
-        common:
-          path_prefix: /var/loki
-          replication_factor: 1
-          storage:
-            s3:
-              s3: null
-              insecure: true
-              s3forcepathstyle: true
-          ring:
-            kvstore:
-              store: memberlist
+        storage_config:
+          hedging:
+            at: 250ms
+            max_per_second: 20
+            up_to: 3
         ruler:
           enable_api: true
-          storage:
-            type: local
-            local:
-              directory: /rules
-        distributor:
-          ring:
-            kvstore:
-              store: memberlist
-        compactor:
-          working_directory: /var/loki/boltdb-shipper-compactor
-          shared_store: s3
-          compaction_interval: 10m
-          retention_enabled: true
-          retention_delete_delay: 2h
-          retention_delete_worker_count: 150
-        ingester:
-          max_chunk_age: 1h
-          max_transfer_retries: 0
-          chunk_block_size: 262144
         analytics:
           reporting_enabled: false
-    gateway:
-      enabled: true
-      replicas: 1
-      deploymentStrategy:
-        type: Recreate
-    read:
-      replicas: 1
+    singleBinary:
       extraVolumes:
-        - name: data
+        - name: storage
           persistentVolumeClaim:
-            claimName: loki-read
-    write:
-      replicas: 1
-      extraVolumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: loki-read
+            claimName: loki-data
+    ingress:
+      enabled: false
     monitoring:
       dashboards:
         enabled: false
@@ -113,41 +84,12 @@ spec:
         enabled: false
         grafanaAgent:
           installOperator: false
-    ingress:
-      enabled: false
-  valuesFrom:
-    - kind: Secret
-      name: loki-secret
-      valuesKey: bucket_name
-      targetPath: loki.structuredConfig.common.storage.s3.bucketnames
-    - kind: Secret
-      name: loki-secret
-      valuesKey: bucket_host
-      targetPath: loki.structuredConfig.common.storage.s3.endpoint
-    - kind: Secret
-      name: loki-secret
-      valuesKey: bucket_region
-      targetPath: loki.structuredConfig.common.storage.s3.region
-    - kind: Secret
-      name: loki-secret
-      valuesKey: access_key
-      targetPath: loki.structuredConfig.common.storage.s3.access_key_id
-    - kind: Secret
-      name: loki-secret
-      valuesKey: secret_key
-      targetPath: loki.structuredConfig.common.storage.s3.secret_access_key
   postRenderers:
     - kustomize:
         patchesJson6902:
           - target:
               kind: StatefulSet
-              name: loki-read
-            patch:
-              - op: remove
-                path: /spec/volumeClaimTemplates
-          - target:
-              kind: StatefulSet
-              name: loki-write
+              name: loki
             patch:
               - op: remove
                 path: /spec/volumeClaimTemplates
