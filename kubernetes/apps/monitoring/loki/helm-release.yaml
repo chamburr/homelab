@@ -101,20 +101,18 @@ spec:
           persistentVolumeClaim:
             claimName: loki-read
     monitoring:
+      dashboards:
+        enabled: false
+      rules:
+        enabled: false
+      alerts:
+        enabled: false
+      serviceMonitor:
+        enabled: false
       selfMonitoring:
         enabled: false
         grafanaAgent:
           installOperator: false
-    config:
-      limits_config:
-        max_entries_limit_per_query: 5000
-      compactor:
-        retention_enabled: true
-    serviceMonitor:
-      enabled: true
-    persistence:
-      enabled: true
-      existingClaim: loki-data
     ingress:
       enabled: false
   valuesFrom:

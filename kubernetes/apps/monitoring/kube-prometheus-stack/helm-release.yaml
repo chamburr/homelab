@@ -23,16 +23,35 @@ spec:
   values:
     alertmanager:
       enabled: false
+    defaultRules:
+      create: false
     grafana:
       enabled: false
-    prometheusSpec:
-      scrapeInterval: 15s
-      scrapeTimeout: 30s
-      thanos:
-        objectStorageConfig:
-          name: thanos-objstore-secret
-          key: objstore.yml
+    kubeProxy:
+      enabled: false
     prometheus:
+      prometheusSpec:
+        enableAdminAPI: true
+        walCompression: true
+        replicas: 1
+        replicaExternalLabelName: replica
+        retention: 6h
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 5Gi
+              storageClassName: ceph-block
+        thanos:
+          objectStorageConfig:
+            name: thanos-objstore-secret
+            key: objstore.yml
       ingress:
         enabled: true
         annotations:
@@ -47,4 +66,4 @@ spec:
       thanosService:
         enabled: true
       thanosServiceMonitor:
-        enable: true
+        enabled: false

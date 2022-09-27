@@ -37,8 +37,6 @@ spec:
         from_address: ${MAIL_SENDER}
     deploymentStrategy:
       type: Recreate
-    serviceMonitor:
-      enabled: true
     persistence:
       enabled: true
       existingClaim: grafana-data

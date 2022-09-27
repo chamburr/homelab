@@ -47,9 +47,6 @@ spec:
       MINIO_UPDATE: "off"
       MINIO_BROWSER_REDIRECT_URL: https://minio.${DOMAIN}
       MINIO_SERVER_URL: https://s3.${DOMAIN}
-    metrics:
-      serviceMonitor:
-        enabled: true
     resources:
       requests:
         memory: 500Mi
