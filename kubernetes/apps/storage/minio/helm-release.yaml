@@ -50,13 +50,18 @@ spec:
     metrics:
       serviceMonitor:
         enabled: true
+    resources:
+      requests:
+        memory: 500Mi
+      limits:
+        memory: 1000Mi
     podAnnotations:
       secret.reloader.stakater.com/reload: minio-secret
     securityContext:
+      enabled: true
       runAsUser: 0
       runAsGroup: 0
       fsGroup: 0
-      runAsNonRoot: false
   valuesFrom:
     - kind: Secret
       name: minio-secret
