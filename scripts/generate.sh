@@ -5,6 +5,8 @@ generateCilium() {
 
   helm template cilium cilium/cilium --version 1.11.2 \
     -n kube-system -f scripts/cilium/values.yaml > scripts/cilium/install.yaml
+
+  prettier -w scripts/cilium/install.yaml > /dev/null
 }
 
 generateSecret() {
