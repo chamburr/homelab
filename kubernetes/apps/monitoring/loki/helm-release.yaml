@@ -22,6 +22,8 @@ spec:
       retries: 3
   values:
     loki:
+      storage:
+        type: filesystem
       structuredConfig:
         auth_enabled: false
         server:
