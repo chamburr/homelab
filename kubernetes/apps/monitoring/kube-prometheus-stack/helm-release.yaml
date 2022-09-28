@@ -39,19 +39,17 @@ spec:
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              accessModes:
-                - ReadWriteOnce
-              resources:
-                requests:
-                  storage: 5Gi
-              storageClassName: ceph-block
         thanos:
           objectStorageConfig:
             name: thanos-objstore-secret
             key: objstore.yml
+        volumes:
+          - name: data
+            persistentVolumeClaim:
+              claimName: prometheus-data
+        volumeMounts:
+          - name: data
+            mountPath: /prometheus
       ingress:
         enabled: true
         annotations:
