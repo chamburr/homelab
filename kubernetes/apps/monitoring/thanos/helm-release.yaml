@@ -52,8 +52,6 @@ spec:
           mountPath: /storage
     storegateway:
       enabled: true
-      updateStrategy:
-        type: Recreate
       persistence:
         enabled: true
         existingClaim: thanos-storegateway
@@ -67,8 +65,6 @@ spec:
     receive:
       enabled: true
       tsdbRetention: 1d
-      updateStrategy:
-        type: Recreate
       persistence:
         enabled: true
         existingClaim: thanos-receive
