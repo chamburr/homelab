@@ -41,10 +41,8 @@ spec:
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
-        thanos:
-          objectStorageConfig:
-            name: thanos-objstore-secret
-            key: objstore.yml
+        remoteWrite:
+          - url: http://thanos-receive.monitoring:19291/api/v1/receive
         volumes:
           - name: data
             persistentVolumeClaim:
@@ -63,7 +61,3 @@ spec:
         tls:
           - hosts:
               - prometheus.${DOMAIN}
-      thanosService:
-        enabled: true
-      thanosServiceMonitor:
-        enabled: false

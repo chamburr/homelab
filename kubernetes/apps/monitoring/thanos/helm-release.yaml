@@ -22,59 +22,53 @@ spec:
       retries: 3
   values:
     objstoreConfig:
-      type: s3
+      type: filesystem
       config:
-        insecure: true
+        directory: /data
     query:
       enabled: true
-      dnsDiscovery:
-        sidecarsService: kube-prometheus-stack-thanos-discovery
-        sidecarsNamespace: monitoring
     queryFrontend:
-      enabled: false
-    bucketweb:
       enabled: false
     compactor:
       enabled: true
-      retentionResolutionRaw: 14d
-      retentionResolution5m: 30d
-      retentionResolution1h: 1y
+      updateStrategy:
+        type: Recreate
       persistence:
         enabled: true
         existingClaim: thanos-compactor
-      podAnnotations:
-        secret.reloader.stakater.com/reload: thanos-secret
+      extraVolumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: thanos-data
+      extraVolumeMounts:
+        - name: storage
+          mountPath: /data
     storegateway:
       enabled: true
+      updateStrategy:
+        type: Recreate
       persistence:
         enabled: true
         existingClaim: thanos-storegateway
-      podAnnotations:
-        secret.reloader.stakater.com/reload: thanos-secret
-    ruler:
-      enabled: false
+      extraVolumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: thanos-data
+      extraVolumeMounts:
+        - name: storage
+          mountPath: /data
     receive:
-      enabled: false
-    receiveDistributor:
-      enabled: false
-  valuesFrom:
-    - kind: Secret
-      name: thanos-secret
-      valuesKey: bucket_name
-      targetPath: objstoreConfig.config.bucket
-    - kind: Secret
-      name: thanos-secret
-      valuesKey: bucket_host
-      targetPath: objstoreConfig.config.endpoint
-    - kind: Secret
-      name: thanos-secret
-      valuesKey: bucket_region
-      targetPath: objstoreConfig.config.region
-    - kind: Secret
-      name: thanos-secret
-      valuesKey: access_key
-      targetPath: objstoreConfig.config.access_key
-    - kind: Secret
-      name: thanos-secret
-      valuesKey: secret_key
-      targetPath: objstoreConfig.config.secret_key
+      enabled: true
+      tsdbRetention: 1d
+      updateStrategy:
+        type: Recreate
+      persistence:
+        enabled: true
+        existingClaim: thanos-receive
+      extraVolumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: thanos-data
+      extraVolumeMounts:
+        - name: storage
+          mountPath: /data

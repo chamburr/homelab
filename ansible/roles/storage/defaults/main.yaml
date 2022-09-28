@@ -21,3 +21,4 @@ nfs_directories:
   - nextcloud
   - photoprism
   - samba
+  - thanos

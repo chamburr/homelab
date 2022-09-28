@@ -1,5 +1,38 @@
 ---
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: thanos-nfs
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: thanos-nfs
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${GATEWAY_IP}
+    path: /mnt/md0/thanos
+  mountOptions:
+    - nfsvers=4.2
+    - nconnect=8
+    - hard
+    - noatime
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: thanos-data
+  namespace: monitoring
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
+  storageClassName: thanos-nfs
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: thanos-compactor
@@ -16,6 +49,19 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: thanos-storegateway
+  namespace: monitoring
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ceph-block
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: thanos-receive
   namespace: monitoring
 spec:
   accessModes:
