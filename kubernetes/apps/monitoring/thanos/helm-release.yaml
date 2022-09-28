@@ -21,6 +21,8 @@ spec:
     remediation:
       retries: 3
   values:
+    auth:
+      basicAuthUsers: true
     objstoreConfig:
       type: filesystem
       config:
@@ -73,8 +75,10 @@ spec:
       extraVolumeMounts:
         - name: storage
           mountPath: /storage
-  valuesFrom:
-    - kind: Secret
-      name: thanos-secret
-      valuesKey: config
-      targetPath: httpConfig
+    existingHttpConfigSecret: thanos-secret
+  # TODO: Revert to below
+  # valuesFrom:
+  #   - kind: Secret
+  #     name: thanos-secret
+  #     valuesKey: config
+  #     targetPath: httpConfig
