@@ -27,6 +27,13 @@ spec:
         directory: /data
     query:
       enabled: true
+      ingress:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: networking-basic-auth@kubernetescrd
+        ingressClassName: traefik
+        hostname: thanos.${DOMAIN}
+        tls: true
     queryFrontend:
       enabled: false
     compactor:
