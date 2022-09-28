@@ -23,10 +23,5 @@ spec:
   values:
     crds:
       enabled: false
-    prometheus:
-      namespace: monitoring
-      podMonitor:
-        enabled: true
-      serviceAccount: kube-prometheus-stack-prometheus
     speaker:
       tolerateMaster: true
