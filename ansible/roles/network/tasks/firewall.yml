@@ -17,14 +17,6 @@
   changed_when:
     - "'ZONE_ALREADY_SET' not in zone_set.stderr"
 
-- name: Set firewall zone
-  ansible.posix.firewalld:
-    zone: public
-    interface: "{{ firewall_interface }}"
-    immediate: true
-    permanent: true
-    state: enabled
-
 - name: Allow firewall masquerade
   ansible.posix.firewalld:
     zone: public
@@ -41,15 +33,6 @@
     immediate: true
     state: "{{ item.value }}"
   with_dict: "{{ firewall_services }}"
-
-- name: Configure firewall ports
-  ansible.posix.firewalld:
-    zone: public
-    port: "{{ item.key }}"
-    permanent: true
-    immediate: true
-    state: "{{ item.value }}"
-  with_dict: "{{ firewall_ports }}"
 
 - name: Configure firewall forward ports
   ansible.builtin.command:

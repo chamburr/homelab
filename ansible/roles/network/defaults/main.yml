@@ -15,20 +15,9 @@ fail2ban_ignore_ip:
 firewall_interface: enp6s0
 firewall_services:
   ssh: enabled
-  dns: enabled
   dhcpv6-client: enabled
-  http: enabled
-  https: enabled
-  imaps: enabled
-  mqtt-tls: enabled
-  wireguard: enabled
   cockpit: disabled
   nfs: disabled
-firewall_ports:
-  445/tcp: enabled
-  500/udp: enabled
-  4500/udp: enabled
-  51821-51830/udp: enabled
 
 forward_ports:
   - 192.168.123.105/53/tcp
