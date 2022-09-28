@@ -24,7 +24,7 @@ spec:
     objstoreConfig:
       type: filesystem
       config:
-        directory: /data
+        directory: /storage
     query:
       enabled: true
       ingress:
@@ -49,7 +49,7 @@ spec:
             claimName: thanos-data
       extraVolumeMounts:
         - name: storage
-          mountPath: /data
+          mountPath: /storage
     storegateway:
       enabled: true
       updateStrategy:
@@ -63,7 +63,7 @@ spec:
             claimName: thanos-data
       extraVolumeMounts:
         - name: storage
-          mountPath: /data
+          mountPath: /storage
     receive:
       enabled: true
       tsdbRetention: 1d
@@ -78,4 +78,4 @@ spec:
             claimName: thanos-data
       extraVolumeMounts:
         - name: storage
-          mountPath: /data
+          mountPath: /storage
