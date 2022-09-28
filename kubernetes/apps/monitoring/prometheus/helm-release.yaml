@@ -43,6 +43,9 @@ spec:
         podMonitorSelectorNilUsesHelmValues: false
         remoteWrite:
           - url: http://thanos-receive.monitoring:19291/api/v1/receive
+            basicAuth:
+              username: ""
+              password: ""
         volumes:
           - name: data
             persistentVolumeClaim:
@@ -61,3 +64,12 @@ spec:
         tls:
           - hosts:
               - prometheus.${DOMAIN}
+  valuesFrom:
+    - kind: Secret
+      name: thanos-secret
+      valuesKey: username
+      targetPath: prometheus.prometheusSpec.remoteWrite.0.basicAuth.username
+    - kind: Secret
+      name: thanos-secret
+      valuesKey: password
+      targetPath: prometheus.prometheusSpec.remoteWrite.0.basicAuth.password

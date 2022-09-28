@@ -29,8 +29,6 @@ spec:
       enabled: true
       ingress:
         enabled: true
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: networking-basic-auth@kubernetescrd
         ingressClassName: traefik
         hostname: thanos.${DOMAIN}
         tls: true
@@ -75,3 +73,8 @@ spec:
       extraVolumeMounts:
         - name: storage
           mountPath: /storage
+  valuesFrom:
+    - kind: Secret
+      name: thanos-secret
+      valuesKey: config
+      targetPath: httpConfig
