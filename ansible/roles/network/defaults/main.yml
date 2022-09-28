@@ -12,14 +12,13 @@ fail2ban_ignore_ip:
   - 127.0.0.0/8
   - 192.168.0.0/16
 
-firewall_interface: enp6s0
+firewall_name: Wired connection 1
 firewall_services:
   ssh: enabled
   dhcpv6-client: enabled
   cockpit: disabled
   nfs: disabled
-
-forward_ports:
+firewall_forwards:
   - 192.168.123.105/53/tcp
   - 192.168.123.101/80/tcp
   - 192.168.123.101/443/tcp

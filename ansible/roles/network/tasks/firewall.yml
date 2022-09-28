@@ -10,6 +10,12 @@
     enabled: true
     state: started
 
+- name: Set firewall zone
+  community.general.nmcli:
+    conn_name: "{{ firewall_name }}"
+    zone: public
+    state: present
+
 - name: Set firewall default zone
   ansible.builtin.command:
     cmd: firewall-cmd --set-default-zone=trusted
@@ -34,13 +40,13 @@
     state: "{{ item.value }}"
   with_dict: "{{ firewall_services }}"
 
-- name: Configure firewall forward ports
+- name: Configure firewall forwards
   ansible.builtin.command:
     cmd: >
       firewall-cmd --direct --permanent --add-rule ipv4 nat PREROUTING 0
       -m addrtype --dst-type LOCAL -p {{ item.split('/')[2] }} --dport {{ item.split('/')[1] }}
       -j DNAT --to-destination {{ item.split('/')[0] }}
-  loop: "{{ forward_ports }}"
+  loop: "{{ firewall_forwards }}"
   register: forward_set
   changed_when:
     - "'ALREADY_ENABLED' not in forward_set.stderr"
