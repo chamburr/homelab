@@ -1,4 +1,8 @@
 ---
+dns_servers:
+  - 1.1.1.1
+  - 1.0.0.1
+
 fail2ban_ban_action: iptables-allports
 fail2ban_max_retry: 3
 fail2ban_find_time: 600

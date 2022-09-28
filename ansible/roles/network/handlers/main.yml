@@ -1,4 +1,9 @@
 ---
+- name: Restart networkmanager service
+  ansible.builtin.service:
+    name: NetworkManager
+    state: restarted
+
 - name: Restart fail2ban service
   ansible.builtin.service:
     name: fail2ban
