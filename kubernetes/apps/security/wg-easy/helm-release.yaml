@@ -35,6 +35,11 @@ spec:
       WG_DEFAULT_DNS: ${DNS_SERVER}
       WG_ALLOWED_IPS: 0.0.0.0/0, ::/0
     securityContext:
+      sysctls:
+        - name: net.ipv4.ip_forward
+          value: "1"
+        - name: net.ipv4.conf.all.src_valid_mark
+          value: "1"
       capabilities:
         add:
           - NET_ADMIN
