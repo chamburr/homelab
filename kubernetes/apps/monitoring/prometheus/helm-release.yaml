@@ -34,6 +34,9 @@ spec:
       enabled: false
     kubeProxy:
       enabled: false
+    prometheus-node-exporter:
+      nameOverride: prometheus-node-exporter
+      fullnameOverride: prometheus-node-exporter
     prometheus:
       prometheusSpec:
         enableAdminAPI: true
@@ -67,6 +70,7 @@ spec:
         tls:
           - hosts:
               - prometheus.${DOMAIN}
+    cleanPrometheusOperatorObjectNames: true
   valuesFrom:
     - kind: Secret
       name: thanos-secret
