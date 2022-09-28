@@ -50,8 +50,12 @@ spec:
         remoteWrite:
           - url: http://thanos-receive.monitoring:19291/api/v1/receive
             basicAuth:
-              username: ""
-              password: ""
+              username:
+                name: thanos-secret
+                key: username
+              password:
+                name: thanos-secret
+                key: password
         volumes:
           - name: data
             persistentVolumeClaim:
@@ -71,12 +75,3 @@ spec:
           - hosts:
               - prometheus.${DOMAIN}
     cleanPrometheusOperatorObjectNames: true
-  valuesFrom:
-    - kind: Secret
-      name: thanos-secret
-      valuesKey: username
-      targetPath: prometheus.prometheusSpec.remoteWrite.0.basicAuth.username
-    - kind: Secret
-      name: thanos-secret
-      valuesKey: password
-      targetPath: prometheus.prometheusSpec.remoteWrite.0.basicAuth.password
