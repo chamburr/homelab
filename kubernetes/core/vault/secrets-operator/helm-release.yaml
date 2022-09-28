@@ -26,7 +26,7 @@ spec:
   values:
     replicaCount: 1
     vault:
-      address: http://vault:8200
+      address: http://vault.vault:8200
       authMethod: kubernetes
       kubernetesPath: auth/kubernetes
       kubernetesRole: vault-secrets-operator
