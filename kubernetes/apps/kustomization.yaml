@@ -8,7 +8,6 @@ resources:
   - kube-system
   - automation
   - developer
-  - mail
   - monitoring
   - security
   - storage

@@ -23,7 +23,7 @@ spec:
       services:
         - kind: Service
           name: mailu-front
-          namespace: mail
+          namespace: storage
           port: 80
     - kind: Rule
       match: Host(`${DOMAIN}`)

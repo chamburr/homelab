@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mailu-data
-  namespace: mail
+  namespace: storage
 spec:
   accessModes:
     - ReadWriteOnce
@@ -16,7 +16,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mailu-redis
-  namespace: mail
+  namespace: storage
 spec:
   accessModes:
     - ReadWriteOnce
@@ -29,7 +29,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mailu-admin
-  namespace: mail
+  namespace: storage
 spec:
   accessModes:
     - ReadWriteOnce
@@ -42,7 +42,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mailu-dovecot
-  namespace: mail
+  namespace: storage
 spec:
   accessModes:
     - ReadWriteOnce
@@ -55,7 +55,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mailu-postfix
-  namespace: mail
+  namespace: storage
 spec:
   accessModes:
     - ReadWriteOnce
@@ -68,7 +68,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mailu-rspamd
-  namespace: mail
+  namespace: storage
 spec:
   accessModes:
     - ReadWriteOnce
@@ -81,7 +81,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mailu-webdav
-  namespace: mail
+  namespace: storage
 spec:
   accessModes:
     - ReadWriteOnce
