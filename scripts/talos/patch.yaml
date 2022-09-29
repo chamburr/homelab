@@ -7,7 +7,6 @@
 - op: add
   path: /machine/kubelet/extraArgs
   value:
-    feature-gates: MixedProtocolLBService=true,GracefulNodeShutdown=true
     rotate-server-certificates: "true"
 
 - op: add
@@ -82,28 +81,8 @@
     - 192.168.123.10
 
 - op: add
-  path: /cluster/apiServer/extraArgs
-  value:
-    feature-gates: MixedProtocolLBService=true
-
-- op: add
-  path: /cluster/controllerManager/extraArgs
-  value:
-    feature-gates: MixedProtocolLBService=true
-
-- op: add
   path: /cluster/proxy/disabled
   value: true
-
-- op: add
-  path: /cluster/proxy/extraArgs
-  value:
-    feature-gates: MixedProtocolLBService=true
-
-- op: add
-  path: /cluster/scheduler/extraArgs
-  value:
-    feature-gates: MixedProtocolLBService=true
 
 - op: add
   path: /cluster/discovery/registries
