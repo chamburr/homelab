@@ -49,6 +49,8 @@ spec:
         podMonitorSelectorNilUsesHelmValues: false
         storageSpec:
           volumeClaimTemplate:
+            metadata:
+              name: prometheus
             spec:
               accessModes:
                 - ReadWriteOnce
