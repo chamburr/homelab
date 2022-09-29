@@ -67,9 +67,7 @@
 - op: add
   path: /cluster/network/cni
   value:
-    name: custom
-    urls:
-      - https://raw.githubusercontent.com/chamburr/homelab/master/scripts/cilium/install.yaml
+    name: none
 
 - op: replace
   path: /cluster/apiServer/admissionControl

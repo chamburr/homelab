@@ -1,6 +1,4 @@
 ---
-ignore: |
-  scripts/cilium/install.yaml
 extends: default
 rules:
   braces:
