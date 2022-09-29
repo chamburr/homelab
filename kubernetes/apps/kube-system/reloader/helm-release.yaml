@@ -21,6 +21,8 @@ spec:
     remediation:
       retries: 3
   values:
+    nameOverride: reloader
+    fullnameOverride: reloader
     reloader:
       deployment:
         replicas: 1
