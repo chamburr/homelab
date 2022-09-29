@@ -24,8 +24,6 @@ spec:
     - name: rook-ceph
       namespace: rook-ceph
   values:
-    monitoring:
-      enabled: true
     dashboard:
       enabled: true
     toolbox:
