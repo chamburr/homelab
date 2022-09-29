@@ -4,13 +4,10 @@ kind: ServiceMonitor
 metadata:
   name: traefik
   namespace: networking
-  labels:
-    app.kubernetes.io/name: traefik
 spec:
   endpoints:
     - path: /metrics
-      targetPort: metrics
-  jobLabel: traefik
+      port: metrics
   namespaceSelector:
     matchNames:
       - networking

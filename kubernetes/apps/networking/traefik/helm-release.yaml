@@ -55,6 +55,8 @@ spec:
         tls:
           enabled: true
           options: default
+      metrics:
+        expose: true
     tlsOptions:
       default:
         minVersion: VersionTLS12
