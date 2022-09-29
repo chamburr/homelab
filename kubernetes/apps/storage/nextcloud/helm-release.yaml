@@ -60,7 +60,7 @@ spec:
             ),
             'trusted_proxies' =>
             array (
-              0 => '${K8S_CLUSTER_CIDR}',
+              0 => '${K8S_POD_CIDR}',
             ),
             'forwarded_for_headers' =>
             array (

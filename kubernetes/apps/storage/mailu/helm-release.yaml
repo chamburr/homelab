@@ -27,7 +27,7 @@ spec:
     initialAccount:
       username: admin
       password: mailu
-    subnet: ${K8S_CLUSTER_CIDR}
+    subnet: ${K8S_POD_CIDR}
     postmaster: postmaster
     mail:
       messageSizeLimitInMegabytes: 100
