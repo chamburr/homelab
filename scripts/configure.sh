@@ -65,7 +65,9 @@ configureFlux() {
     sleep 5
   done
 
-  kubectl apply -k 'github.com/fluxcd/flux2/manifests/install?ref=v0.33.0'
+  version=$(curl -s https://api.github.com/repos/fluxcd/flux2/releases/latest | jq -r '.tag_name')
+
+  kubectl apply -k 'github.com/fluxcd/flux2/manifests/install?ref=$version'
 
   kubectl -n flux-system create secret generic global-secret $(echo $CONFIGURE_VARS \
     | sed -E 's/(\S+)=/\U\1=/g' | xargs -d ' ' -n1 printf ' --from-literal=%s')
