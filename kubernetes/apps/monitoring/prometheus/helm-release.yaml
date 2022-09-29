@@ -47,6 +47,15 @@ spec:
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 1Gi
+              storageClassName: ceph-block
         remoteWrite:
           - url: http://thanos-receive.monitoring:19291/api/v1/receive
             basicAuth:
@@ -56,13 +65,6 @@ spec:
               password:
                 name: thanos-secret
                 key: password
-        volumes:
-          - name: data
-            persistentVolumeClaim:
-              claimName: prometheus-data
-        volumeMounts:
-          - name: data
-            mountPath: /prometheus
       ingress:
         enabled: true
         annotations:
