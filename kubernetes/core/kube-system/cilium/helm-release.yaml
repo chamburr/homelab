@@ -26,6 +26,21 @@ spec:
       integration: containerd
     endpointRoutes:
       enabled: true
+    hubble:
+      enabled: true
+      metrics:
+        enabled:
+          - dns:query;ignoreAAAA
+          - drop
+          - tcp
+          - flow
+          - port-distribution
+          - icmp
+          - http
+        serviceMonitor:
+          enabled: true
+      relay:
+        enabled: true
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: ${K8S_POD_CIDR}
@@ -36,6 +51,36 @@ spec:
     loadBalancer:
       mode: dsr
     localRedirectPolicy: true
+    operator:
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
     securityContext:
       privileged: true
     tunnel: disabled
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: ServiceMonitor
+              name: cilium-agent
+            patch:
+              - op: remove
+                path: /spec/endpoints/0/interval
+          - target:
+              kind: ServiceMonitor
+              name: cilium-operator
+            patch:
+              - op: remove
+                path: /spec/endpoints/0/interval
+          - target:
+              kind: ServiceMonitor
+              name: hubble
+            patch:
+              - op: remove
+                path: /spec/endpoints/0/interval
