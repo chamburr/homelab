@@ -86,5 +86,5 @@ spec:
   valuesFrom:
     - kind: Secret
       name: thanos-secret
-      valuesKey: config
+      valuesKey: http-config.yml
       targetPath: httpConfig

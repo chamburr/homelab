@@ -48,5 +48,5 @@ spec:
   valuesFrom:
     - kind: Secret
       name: samba-secret
-      valuesKey: config
+      valuesKey: config.yml
       targetPath: configmap.config.data.config\.yml
