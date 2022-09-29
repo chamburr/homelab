@@ -69,10 +69,21 @@ spec:
                 key: password
         web:
           pageTitle: Prometheus
+        volumes:
+          - name: web-config
+            secret:
+              defaultMode: 0644
+              secretName: prometheus-secret
+        volumeMounts:
+          - name: web-config
+            mountPath: /etc/prometheus/web_config/web-config.yaml
+            readOnly: true
+            subPath: web-config.yaml
+        podMetadata:
+          annotations:
+            secret.reloader.stakater.com/reload: prometheus-secret
       ingress:
         enabled: true
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: networking-basic-auth@kubernetescrd
         pathType: Prefix
         ingressClassName: traefik
         hosts:
@@ -81,3 +92,18 @@ spec:
           - hosts:
               - prometheus.${DOMAIN}
     cleanPrometheusOperatorObjectNames: true
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: Prometheus
+              name: prometheus
+            patch:
+              - op: add
+                path: /spec/version
+                value: v2.23.0
+              - op: add
+                path: /spec/additionalArgs
+                value:
+                  - name: web.config.file
+                    value: /etc/prometheus/web_config/web-config.yaml
