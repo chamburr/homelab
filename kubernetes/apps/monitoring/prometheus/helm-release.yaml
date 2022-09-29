@@ -67,6 +67,8 @@ spec:
               password:
                 name: thanos-secret
                 key: password
+        web:
+          pageTitle: Prometheus
       ingress:
         enabled: true
         annotations:
