@@ -78,8 +78,10 @@ configureFlux() {
     sleep 5
   done
 
-  flux reconcile -n flux-system source git flux-cluster
-  flux reconcile -n flux-system kustomization flux-cluster
+  kubectl -n flux-system delete NetworkPolicy --all
+
+  flux -n flux-system reconcile source git flux-cluster
+  flux -n flux-system reconcile kustomization flux-cluster
 
   until kubectl -n flux-system wait --for condition=Ready ks/core > /dev/null 2>&1; do
     sleep 5
