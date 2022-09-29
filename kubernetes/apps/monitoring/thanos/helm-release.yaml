@@ -34,6 +34,8 @@ spec:
         ingressClassName: traefik
         hostname: thanos.${DOMAIN}
         tls: true
+      podAnnotations:
+        secret.reloader.stakater.com/reload: thanos-secret
     queryFrontend:
       enabled: false
     compactor:
@@ -50,6 +52,8 @@ spec:
       extraVolumeMounts:
         - name: storage
           mountPath: /storage
+      podAnnotations:
+        secret.reloader.stakater.com/reload: thanos-secret
     storegateway:
       enabled: true
       persistence:
@@ -62,6 +66,8 @@ spec:
       extraVolumeMounts:
         - name: storage
           mountPath: /storage
+      podAnnotations:
+        secret.reloader.stakater.com/reload: thanos-secret
     receive:
       enabled: true
       tsdbRetention: 1d
@@ -75,10 +81,10 @@ spec:
       extraVolumeMounts:
         - name: storage
           mountPath: /storage
-    existingHttpConfigSecret: thanos-secret
-  # TODO: Revert to below
-  # valuesFrom:
-  #   - kind: Secret
-  #     name: thanos-secret
-  #     valuesKey: config
-  #     targetPath: httpConfig
+      podAnnotations:
+        secret.reloader.stakater.com/reload: thanos-secret
+  valuesFrom:
+    - kind: Secret
+      name: thanos-secret
+      valuesKey: config
+      targetPath: httpConfig
