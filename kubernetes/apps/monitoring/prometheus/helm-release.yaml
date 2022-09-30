@@ -26,11 +26,17 @@ spec:
   values:
     nameOverride: prometheus
     fullnameOverride: prometheus
-    alertmanager:
-      enabled: false
     defaultRules:
       create: false
+    alertmanager:
+      enabled: false
     grafana:
+      enabled: false
+    kubeControllerManager:
+      enabled: false
+    kubeEtcd:
+      enabled: false
+    kubeScheduler:
       enabled: false
     kubeProxy:
       enabled: false
