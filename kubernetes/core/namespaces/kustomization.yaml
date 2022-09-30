@@ -5,6 +5,7 @@ resources:
   - automation.yaml
   - cert-manager.yaml
   - developer.yaml
+  - drone.yaml
   - flux-system.yaml
   - kube-system.yaml
   - monitoring.yaml

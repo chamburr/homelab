@@ -31,6 +31,10 @@ spec:
       DRONE_RPC_PROTO: https
       DRONE_RUNNER_CAPACITY: 5
       DRONE_UI_DISABLED: true
+      DRONE_NAMESPACE_DEFAULT: drone
+    rbac:
+      buildNamespaces:
+        - drone
     persistentVolume:
       enabled: true
       existingClaim: drone-data
