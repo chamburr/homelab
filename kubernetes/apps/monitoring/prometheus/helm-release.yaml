@@ -47,17 +47,6 @@ spec:
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
-        storageSpec:
-          volumeClaimTemplate:
-            metadata:
-              name: prometheus
-            spec:
-              accessModes:
-                - ReadWriteOnce
-              resources:
-                requests:
-                  storage: 5Gi
-              storageClassName: ceph-block
         remoteWrite:
           - url: http://thanos-receive.monitoring:19291/api/v1/receive
             basicAuth:
@@ -67,18 +56,35 @@ spec:
               password:
                 name: thanos-secret
                 key: password
-        web:
-          pageTitle: Prometheus
+        containers:
+          - name: prometheus
+            startupProbe:
+              httpGet:
+                httpHeaders:
+                  - name: Authorization
+            livenessProbe:
+              httpGet:
+                httpHeaders:
+                  - name: Authorization
+            readinessProbe:
+              httpGet:
+                httpHeaders:
+                  - name: Authorization
+            volumeMounts:
+              - name: prometheus-2
+                mountPath: /prometheus
+                subPath: prometheus-db
+              - name: web-config-2
+                mountPath: /etc/prometheus/web_config/web-config.yaml
+                subPath: web-config.yaml
         volumes:
-          - name: web-config
+          - name: prometheus-2
+            persistentVolumeClaim:
+              claimName: prometheus-data
+          - name: web-config-2
             secret:
               defaultMode: 0644
               secretName: prometheus-secret
-        volumeMounts:
-          - name: web-config
-            mountPath: /etc/prometheus/web_config/web-config.yaml
-            readOnly: true
-            subPath: web-config.yaml
         podMetadata:
           annotations:
             secret.reloader.stakater.com/reload: prometheus-secret
@@ -92,18 +98,16 @@ spec:
           - hosts:
               - prometheus.${DOMAIN}
     cleanPrometheusOperatorObjectNames: true
-  postRenderers:
-    - kustomize:
-        patchesJson6902:
-          - target:
-              kind: Prometheus
-              name: prometheus
-            patch:
-              - op: add
-                path: /spec/version
-                value: v2.23.0
-              - op: add
-                path: /spec/additionalArgs
-                value:
-                  - name: web.config.file
-                    value: /etc/prometheus/web_config/web-config.yaml
+  valuesFrom:
+    - kind: Secret
+      name: prometheus-secret
+      valuesKey: header
+      targetPath: prometheus.prometheusSpec.containers.0.startupProbe.httpGet.httpHeaders.0.value
+    - kind: Secret
+      name: prometheus-secret
+      valuesKey: header
+      targetPath: prometheus.prometheusSpec.containers.0.livenessProbe.httpGet.httpHeaders.0.value
+    - kind: Secret
+      name: prometheus-secret
+      valuesKey: header
+      targetPath: prometheus.prometheusSpec.containers.0.readinessProbe.httpGet.httpHeaders.0.value
