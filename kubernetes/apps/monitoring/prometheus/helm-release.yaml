@@ -94,6 +94,19 @@ spec:
     - kustomize:
         patchesJson6902:
           - target:
+              kind: ServiceMonitor
+              name: prometheus-prometheus
+            patch:
+              - op: add
+                path: /spec/endpoints/0/basicAuth
+                value:
+                  username:
+                    name: prometheus-secret
+                    key: username
+                  password:
+                    name: prometheus-secret
+                    key: password
+          - target:
               kind: Prometheus
               name: prometheus
             patch:
