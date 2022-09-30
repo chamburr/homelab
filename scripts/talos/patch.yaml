@@ -10,6 +10,11 @@
     rotate-server-certificates: "true"
 
 - op: add
+  path: /machine/kubelet/extraConfig
+  value:
+    serverTLSBootstrap: true
+
+- op: add
   path: /machine/network/interfaces
   value:
     - interface: eth0
@@ -87,8 +92,3 @@
   value:
     service:
       disabled: true
-
-- op: add
-  path: /cluster/extraManifests
-  value:
-    - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.6.2/deploy/ha-install.yaml
