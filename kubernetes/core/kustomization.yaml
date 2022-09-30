@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - namespaces
   - kube-system
-  - kubelet-serving-cert-approver
   - rook-ceph
   - vault
   - cert-manager

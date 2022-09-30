@@ -22,6 +22,8 @@ spec:
       retries: 3
   values:
     replicas: 1
+    args:
+      - --kubelet-insecure-tls
     metrics:
       enabled: true
     serviceMonitor:

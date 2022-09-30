@@ -5,16 +5,6 @@
     - 192.168.123.10
 
 - op: add
-  path: /machine/kubelet/extraArgs
-  value:
-    rotate-server-certificates: "true"
-
-- op: add
-  path: /machine/kubelet/extraConfig
-  value:
-    serverTLSBootstrap: true
-
-- op: add
   path: /machine/network/interfaces
   value:
     - interface: eth0
@@ -77,11 +67,6 @@
 - op: replace
   path: /cluster/apiServer/admissionControl
   value: []
-
-- op: add
-  path: /cluster/apiServer/certSANs
-  value:
-    - 192.168.123.10
 
 - op: add
   path: /cluster/proxy/disabled
