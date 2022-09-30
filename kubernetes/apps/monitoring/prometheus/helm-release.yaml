@@ -56,27 +56,6 @@ spec:
               password:
                 name: thanos-secret
                 key: password
-        containers:
-          - name: prometheus
-            startupProbe:
-              httpGet:
-                httpHeaders:
-                  - name: Authorization
-            livenessProbe:
-              httpGet:
-                httpHeaders:
-                  - name: Authorization
-            readinessProbe:
-              httpGet:
-                httpHeaders:
-                  - name: Authorization
-            volumeMounts:
-              - name: prometheus-2
-                mountPath: /prometheus
-                subPath: prometheus-db
-              - name: web-config-2
-                mountPath: /etc/prometheus/web_config/web-config.yaml
-                subPath: web-config.yaml
         volumes:
           - name: prometheus-2
             persistentVolumeClaim:
@@ -102,12 +81,49 @@ spec:
     - kind: Secret
       name: prometheus-secret
       valuesKey: header
-      targetPath: prometheus.prometheusSpec.containers.0.startupProbe.httpGet.httpHeaders.0.value
+      targetPath: prometheus.prometheusSpec.containers[0].startupProbe.httpGet.httpHeaders[0].value
     - kind: Secret
       name: prometheus-secret
       valuesKey: header
-      targetPath: prometheus.prometheusSpec.containers.0.livenessProbe.httpGet.httpHeaders.0.value
+      targetPath: prometheus.prometheusSpec.containers[0].livenessProbe.httpGet.httpHeaders[0].value
     - kind: Secret
       name: prometheus-secret
       valuesKey: header
-      targetPath: prometheus.prometheusSpec.containers.0.readinessProbe.httpGet.httpHeaders.0.value
+      targetPath: prometheus.prometheusSpec.containers[0].readinessProbe.httpGet.httpHeaders[0].value
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: Prometheus
+              name: prometheus
+            patch:
+              - op: add
+                path: /spec/containers/0/name
+                value: prometheus
+              - op: add
+                path: /spec/containers/0/startupProbe/httpGet/port
+                value: http-web
+              - op: add
+                path: /spec/containers/0/startupProbe/httpGet/httpHeaders/0/name
+                value: Authorization
+              - op: add
+                path: /spec/containers/0/livenessProbe/httpGet/port
+                value: http-web
+              - op: add
+                path: /spec/containers/0/livenessProbe/httpGet/httpHeaders/0/name
+                value: Authorization
+              - op: add
+                path: /spec/containers/0/readinessProbe/httpGet/port
+                value: http-web
+              - op: add
+                path: /spec/containers/0/readinessProbe/httpGet/httpHeaders/0/name
+                value: Authorization
+              - op: add
+                path: /spec/containers/0/volumeMounts
+                value:
+                  - name: prometheus-2
+                    mountPath: /prometheus
+                    subPath: prometheus-db
+                  - name: web-config-2
+                    mountPath: /etc/prometheus/web_config/web-config.yaml
+                    subPath: web-config.yaml
