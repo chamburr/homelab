@@ -22,6 +22,9 @@ spec:
       retries: 3
   values:
     gitea:
+      admin:
+        username: ""
+        password: ""
       config:
         repository:
           DEFAULT_BRANCH: master
