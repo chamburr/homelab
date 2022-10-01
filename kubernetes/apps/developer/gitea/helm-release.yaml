@@ -54,9 +54,6 @@ spec:
       enabled: true
     postgresql:
       enabled: false
-    signing:
-      enabled: true
-      gpgHome: /data/git/.gnupg
     persistence:
       enabled: true
       existingClaim: gitea-data
