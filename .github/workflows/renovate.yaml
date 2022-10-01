@@ -5,9 +5,9 @@ on: # yamllint disable-line rule:truthy
     inputs:
       dryRun:
         description: Dry Run
-        default: false
+        default: "false"
         required: false
-        type: boolean
+        type: string
       logLevel:
         description: Log Level
         default: debug
@@ -33,8 +33,8 @@ jobs:
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
       - name: Override config
         run: |
-          echo "RENOVATE_DRY_RUN=${{ github.event.inputs.dryRun || 'false' }}" >> $GITHUB_ENV
-          echo "LOG_LEVEL=${{ github.event.inputs.logLevel || 'info' }}" >> $GITHUB_ENV
+          echo "RENOVATE_DRY_RUN=${{ inputs.dryRun || 'false' }}" >> $GITHUB_ENV
+          echo "LOG_LEVEL=${{ inputs.logLevel || 'info' }}" >> $GITHUB_ENV
       - name: Run renovate
         uses: renovatebot/github-action@v32.211.0
         with:
