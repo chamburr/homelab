@@ -46,7 +46,7 @@ spec:
       bdev_async_discard = true
     cephClusterSpec:
       crashCollector:
-        disable: false
+        disable: true
       dashboard:
         enabled: true
       network:
