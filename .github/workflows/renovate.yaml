@@ -17,8 +17,8 @@ on: # yamllint disable-line rule:truthy
     - cron: 0 * * * *
   push:
     paths:
-      - .github/renovate.json5
-      - .github/renovate/**.json5
+      - .github/renovate.json
+      - .github/renovate/**.json
 jobs:
   renovate:
     runs-on: ubuntu-latest
