@@ -21,7 +21,7 @@
       "addLabels": ["renovate/docker"]
     },
     {
-      "matchDatasources": ["github-releases", "github-tags", "github-actions"],
+      "matchDatasources": ["github-releases", "github-tags"],
       "addLabels": ["renovate/github"]
     },
     {
