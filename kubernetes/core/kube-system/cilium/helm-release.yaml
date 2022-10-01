@@ -39,8 +39,6 @@ spec:
           - http
         serviceMonitor:
           enabled: true
-      relay:
-        enabled: true
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: ${K8S_POD_CIDR}

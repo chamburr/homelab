@@ -25,7 +25,7 @@ spec:
       namespace: developer
   values:
     nameOverride: drone-runner
-    replicaCount: 3
+    replicaCount: 2
     env:
       DRONE_RPC_HOST: drone.developer
       DRONE_RPC_PROTO: http

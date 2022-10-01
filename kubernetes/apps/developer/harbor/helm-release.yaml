@@ -25,6 +25,8 @@ spec:
     core:
       podAnnotations:
         secret.reloader.stakater.com/reload: harbor-secret
+    chartmuseum:
+      enabled: false
     notary:
       enabled: false
     trivy:
@@ -34,8 +36,6 @@ spec:
       persistentVolumeClaim:
         registry:
           existingClaim: harbor-registry
-        chartmuseum:
-          existingClaim: harbor-chartmuseum
         jobservice:
           jobLog:
             existingClaim: harbor-jobservice-log

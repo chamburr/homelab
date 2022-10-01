@@ -63,7 +63,6 @@ spec:
       enabled: false
     persistence:
       single_pvc: true
-      existingClaim: mailu-data
     ingress:
       externalIngress: true
       className: traefik
@@ -82,6 +81,19 @@ spec:
       targetPath: secretKey
   postRenderers:
     - kustomize:
+        patchesStrategicMerge:
+          - $patch: delete
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: mailu-postfix
+              namespace: storage
+          - $patch: delete
+            apiVersion: v1
+            kind: Service
+            metadata:
+              name: mailu-postfix
+              namespace: storage
         patchesJson6902:
           - target:
               kind: Deployment
@@ -112,17 +124,6 @@ spec:
               - op: add
                 path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
                 value: mailu-dovecot
-              - op: replace
-                path: /spec/strategy
-                value:
-                  type: Recreate
-          - target:
-              kind: Deployment
-              name: mailu-postfix
-            patch:
-              - op: add
-                path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
-                value: mailu-postfix
               - op: replace
                 path: /spec/strategy
                 value:

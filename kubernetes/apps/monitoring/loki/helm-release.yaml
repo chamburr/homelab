@@ -87,6 +87,8 @@ spec:
         enabled: false
         grafanaAgent:
           installOperator: false
+        lokiCanary:
+          enabled: false
   postRenderers:
     - kustomize:
         patchesJson6902:

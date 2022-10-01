@@ -23,3 +23,8 @@ spec:
   values:
     crds:
       enabled: false
+    csi:
+      enableCephfsDriver: false
+      enableCephfsSnapshotter: false
+      enableNFSSnapshotter: false
+      enableRBDSnapshotter: false

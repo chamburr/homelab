@@ -24,10 +24,8 @@ spec:
     - name: rook-ceph
       namespace: rook-ceph
   values:
-    dashboard:
-      enabled: true
-    toolbox:
-      enabled: true
+    crashCollector:
+      disable: true
     ingress:
       dashboard:
         enabled: true

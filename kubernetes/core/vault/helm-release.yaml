@@ -27,13 +27,6 @@ spec:
     server:
       dataStorage:
         enabled: false
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: vault-data
-      volumeMounts:
-        - name: data
-          mountPath: /vault/data
       standalone:
         enabled: true
         config: |
@@ -46,6 +39,13 @@ spec:
           storage "file" {
             path = "/vault/data"
           }
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: vault-data
+      volumeMounts:
+        - name: data
+          mountPath: /vault/data
       ingress:
         enabled: true
         ingressClassName: traefik

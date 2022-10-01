@@ -35,6 +35,9 @@ spec:
           DISABLE_SSH: true
           ENABLE_GZIP: true
           LFS_START_SERVER: true
+        cache:
+          ENABLED: true
+          ADAPTER: memory
         database:
           DB_TYPE: sqlite3
         indexer:
@@ -51,7 +54,7 @@ spec:
         cron:
           ENABLED: true
     memcached:
-      enabled: true
+      enabled: false
     postgresql:
       enabled: false
     persistence:
