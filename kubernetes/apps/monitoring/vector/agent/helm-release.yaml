@@ -49,14 +49,12 @@ spec:
             - kubernetes_logs
           address: vector.monitoring:6000
           version: "2"
-
         talos_kernel_sink:
           type: vector
           inputs:
             - talos_kernel_logs
           address: vector.monitoring:6050
           version: "2"
-
         talos_service_sink:
           type: vector
           inputs:
