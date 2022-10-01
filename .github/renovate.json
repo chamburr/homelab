@@ -5,10 +5,10 @@
     ":disableRateLimiting",
     ":disableDependencyDashboard",
     ":automergeDigest",
-    "github>chamburr/homelab//.github/renovate/allowed-versions",
     "github>chamburr/homelab//.github/renovate/auto-merge",
     "github>chamburr/homelab//.github/renovate/commit-message",
-    "github>chamburr/homelab//.github/renovate/labels"
+    "github>chamburr/homelab//.github/renovate/labels",
+    "github>chamburr/homelab//.github/renovate/overrides"
   ],
   "onboarding": false,
   "requireConfig": "optional",

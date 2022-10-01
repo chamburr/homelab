@@ -8,7 +8,7 @@ spec:
   interval: 30m
   url: https://github.com/traefik/traefik-helm-chart.git
   ref:
-    # renovate: source=github-tags name=traefik/traefik-helm-chart
+    # renovate: registry=https://helm.traefik.io/traefik chart=traefik
     tag: v10.29.0
   ignore: |
     /*
