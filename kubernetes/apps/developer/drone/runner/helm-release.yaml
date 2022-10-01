@@ -27,8 +27,8 @@ spec:
     nameOverride: drone-runner
     replicaCount: 3
     env:
-      DRONE_RPC_HOST: drone.${DOMAIN}
-      DRONE_RPC_PROTO: https
+      DRONE_RPC_HOST: drone.developer
+      DRONE_RPC_PROTO: http
       DRONE_RUNNER_CAPACITY: 5
       DRONE_UI_DISABLED: true
       DRONE_NAMESPACE_DEFAULT: drone
@@ -41,7 +41,7 @@ spec:
     ingress:
       enabled: false
     podAnnotations:
-      secret.reloader.stakater.com/reload: thanos-secret
+      secret.reloader.stakater.com/reload: drone-secret
   valuesFrom:
     - kind: Secret
       name: drone-secret
