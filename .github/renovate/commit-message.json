@@ -1,26 +1,33 @@
 {
+  "extends": [":semanticCommits"],
+  "semanticCommitType": "build",
   "commitMessageTopic": "{{depName}}",
   "commitMessageExtra": "to {{newVersion}}",
   "commitMessageSuffix": "",
   "packageRules": [
     {
       "matchDatasources": ["galaxy", "galaxy-collection"],
+      "semanticCommitScope": "ansible",
       "commitMessageTopic": "{{depName}}"
     },
     {
       "matchDatasources": ["docker"],
+      "semanticCommitScope": "docker",
       "commitMessageTopic": "{{{replace 'ghcr.io/' '' (replace 'docker.io/' '' depName)}}}"
     },
     {
-      "matchDatasources": ["github-releases", "github-tags", "github-actions"],
+      "matchDatasources": ["github-releases", "github-tags"],
+      "semanticCommitScope": "github",
       "commitMessageTopic": "{{depName}}"
     },
     {
       "matchDatasources": ["helm"],
+      "semanticCommitScope": "helm",
       "commitMessageTopic": "{{depName}}"
     },
     {
       "matchDatasources": ["terraform-provider"],
+      "semanticCommitScope": "terraform",
       "commitMessageTopic": "{{depName}}"
     }
   ]
