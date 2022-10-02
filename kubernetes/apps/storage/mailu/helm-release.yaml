@@ -21,27 +21,35 @@ spec:
     remediation:
       retries: 3
   values:
+    # renovate: source=github-releases name=Mailu/Mailu
+    mailuVersion: 1.9.35
     hostnames:
-      - mailu.${DOMAIN}
-      - imap.${DOMAIN}
+      - mail.${DOMAIN}
     subnet: ${K8S_POD_CIDR}
     postmaster: postmaster
     mail:
       messageSizeLimitInMegabytes: 100
+      messageRatelimit: 200/hour
     certmanager:
       enabled: false
     front:
+      hostPort:
+        enabled: false
       externalService:
         enabled: true
         type: LoadBalancer
         loadBalancerIP: ${LB_MAILU}
         externalTrafficPolicy: Local
         pop3:
+          pop3: false
           pop3s: false
+        imap:
+          imap: false
+          imaps: true
         smtp:
           smtp: false
           smtps: false
-          submission: false
+          submission: true
     rspamd:
       resources:
         requests:
@@ -80,16 +88,6 @@ spec:
             kind: PersistentVolumeClaim
             metadata:
               name: mailu-storage
-          - $patch: delete
-            apiVersion: apps/v1
-            kind: Deployment
-            metadata:
-              name: mailu-postfix
-          - $patch: delete
-            apiVersion: v1
-            kind: Service
-            metadata:
-              name: mailu-postfix
         patchesJson6902:
           - target:
               kind: Deployment
@@ -120,6 +118,17 @@ spec:
               - op: add
                 path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
                 value: mailu-dovecot
+              - op: replace
+                path: /spec/strategy
+                value:
+                  type: Recreate
+          - target:
+              kind: Deployment
+              name: mailu-postfix
+            patch:
+              - op: add
+                path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
+                value: mailu-postfix
               - op: replace
                 path: /spec/strategy
                 value:
