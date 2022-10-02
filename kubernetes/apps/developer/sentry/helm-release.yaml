@@ -35,7 +35,21 @@ spec:
       from: ${MAIL_SENDER}
     config:
       sentryConfPy: |
-        CSRF_TRUSTED_ORIGINS = ['sentry.${DOMAIN}']
+        CSRF_TRUSTED_ORIGINS = ["sentry.${DOMAIN}"]
+        SENTRY_BEACON = False
+        SENTRY_FEATURES = {
+            "auth:register": False,
+            "organizations:create": False,
+            "organizations:performance-view": False,
+            "organizations:data-forwarding": False,
+            "organizations:relay": False,
+            "organizations:sso-basic": False,
+            "organizations:sso-saml2": False,
+            "organizations:team-insights": False,
+            "projects:data-forwarding": False,
+            "projects:plugins": False,
+            "projects:sample-events": False,
+        }
     sentry:
       web:
         strategyType: Recreate
@@ -44,15 +58,17 @@ spec:
     clickhouse:
       clickhouse:
         replicas: 1
+        configmap:
+          remote_servers:
+            internal_replication: false
+          zookeeper_servers:
+            enabled: false
         persistentVolumeClaim:
           enabled: false
           dataPersistentVolume:
             enabled: true
     zookeeper:
-      replicaCount: 1
-      persistence:
-        enabled: true
-        existingClaim: sentry-zookeeper-clickhouse
+      enabled: false
     kafka:
       replicaCount: 1
       defaultReplicationFactor: 1
@@ -60,11 +76,12 @@ spec:
         enabled: true
         existingClaim: sentry-kafka
       zookeeper:
-        nameOverride: zookeeper-kafka
+        nameOverride: zookeeper
         persistence:
           enabled: true
-          existingClaim: sentry-zookeeper-kafka
+          existingClaim: sentry-zookeeper
     redis:
+      nameOverride: redis
       master:
         persistence:
           enabled: true
@@ -72,16 +89,14 @@ spec:
       replica:
         replicaCount: 0
     postgresql:
+      nameOverride: postgresql
       postgresqlPassword: sentry-pass
       postgresqlPostgresPassword: sentry-pass
       persistence:
         enabled: true
         existingClaim: sentry-postgresql
     rabbitmq:
-      replicaCount: 1
-      persistence:
-        enabled: true
-        existingClaim: sentry-rabbitmq
+      enabled: false
     nginx:
       enabled: false
     filestore:
@@ -98,3 +113,11 @@ spec:
       tls:
         - hosts:
             - sentry.${DOMAIN}
+  postRenderers:
+    - kustomize:
+        patchesStrategicMerge:
+          - $patch: delete
+            apiVersion: v1
+            kind: ConfigMap
+            metadata:
+              name: sentry-memcached
