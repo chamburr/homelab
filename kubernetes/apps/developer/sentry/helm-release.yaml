@@ -25,6 +25,8 @@ spec:
       url: https://sentry.${DOMAIN}
     auth:
       register: false
+    user:
+      create: false
     mail:
       backend: smtp
       useTls: true
