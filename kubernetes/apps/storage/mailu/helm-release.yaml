@@ -24,9 +24,6 @@ spec:
     hostnames:
       - mailu.${DOMAIN}
       - imap.${DOMAIN}
-    initialAccount:
-      username: admin
-      password: mailu
     subnet: ${K8S_POD_CIDR}
     postmaster: postmaster
     mail:
@@ -67,10 +64,6 @@ spec:
       externalIngress: true
       className: traefik
   valuesFrom:
-    - kind: Secret
-      name: mailu-secret
-      valuesKey: mail_domain
-      targetPath: initialAccount.domain
     - kind: Secret
       name: mailu-secret
       valuesKey: mail_domain
