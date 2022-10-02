@@ -82,6 +82,7 @@ spec:
           existingClaim: sentry-zookeeper
     redis:
       nameOverride: redis
+      fullnameOverride: sentry-redis
       master:
         persistence:
           enabled: true
@@ -90,6 +91,7 @@ spec:
         replicaCount: 0
     postgresql:
       nameOverride: postgresql
+      fullnameOverride: sentry-postgresql
       postgresqlPassword: sentry-pass
       postgresqlPostgresPassword: sentry-pass
       persistence:
