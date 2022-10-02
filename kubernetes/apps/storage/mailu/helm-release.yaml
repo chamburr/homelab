@@ -83,6 +83,11 @@ spec:
     - kustomize:
         patchesStrategicMerge:
           - $patch: delete
+            apiVersion: v1
+            kind: PersistentVolumeClaim
+            metadata:
+              name: mailu-storage
+          - $patch: delete
             apiVersion: apps/v1
             kind: Deployment
             metadata:
