@@ -1,8 +1,8 @@
 ---
 - name: Add netmaker repository
   ansible.builtin.yum_repository:
-    name: netclient
-    description: Netclient
+    name: netmaker
+    description: Netmaker
     baseurl: https://rpm.netmaker.org/packages
     gpgkey: https://rpm.netmaker.org/gpg.key
     gpgcheck: true
