@@ -61,6 +61,13 @@ configureTalos() {
 configureFlux() {
   echo 'Configuring flux...'
 
+  helm repo add cilium https://helm.cilium.io/
+  helm repo update
+
+  until helm install cilium cilium/cilium -n kube-system --set ipam.mode=kubernetes > /dev/null 2>&1; do
+    sleep 5
+  done
+
   until talosctl health -n 192.168.123.10 --wait-timeout 30s > /dev/null 2>&1; do
     sleep 5
   done
