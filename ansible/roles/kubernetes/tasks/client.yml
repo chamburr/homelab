@@ -10,28 +10,20 @@
     gpgcheck: true
     state: present
 
-- name: Add talos repository
+- name: Add kubernetes extras repository
   ansible.builtin.yum_repository:
-    name: talos
-    description: Talos
-    baseurl: https://download.copr.fedorainfracloud.org/results/talosdev/Talos/epel-8-x86_64
-    gpgkey: https://download.copr.fedorainfracloud.org/results/talosdev/Talos/pubkey.gpg
-    gpgcheck: true
-    state: present
-
-- name: Add flux repository
-  ansible.builtin.yum_repository:
-    name: flux
-    description: Flux
-    baseurl: https://download.copr.fedorainfracloud.org/results/talosdev/Flux/epel-8-x86_64
-    gpgkey: https://download.copr.fedorainfracloud.org/results/talosdev/Flux/pubkey.gpg
+    name: kubernetes-extras
+    description: Kubernetes Extras
+    baseurl: https://download.copr.fedorainfracloud.org/results/talosdev/kubernetes-extras/epel-9-x86_64
+    gpgkey: https://download.copr.fedorainfracloud.org/results/talosdev/kubernetes-extras/pubkey.gpg
     gpgcheck: true
     state: present
 
 - name: Install client packages
   ansible.builtin.dnf:
     name:
-      - kubectl
-      - talosctl
       - flux
+      - helm
+      - kubectl
+      - talos
     state: present
