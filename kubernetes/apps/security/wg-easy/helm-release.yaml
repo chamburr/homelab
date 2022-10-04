@@ -29,8 +29,8 @@ spec:
     env:
       WG_HOST: vpn.${DOMAIN}
       WG_PORT: 51820
-      WG_MTU: null
-      WG_PERSISTENT_KEEPALIVE: 0
+      WG_MTU: 1420
+      WG_PERSISTENT_KEEPALIVE: 25
       WG_DEFAULT_ADDRESS: 10.8.0.x
       WG_DEFAULT_DNS: ${DNS_SERVER}
       WG_ALLOWED_IPS: 0.0.0.0/0, ::/0
