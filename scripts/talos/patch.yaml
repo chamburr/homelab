@@ -69,8 +69,9 @@
   value: []
 
 - op: add
-  path: /cluster/proxy/disabled
-  value: true
+  path: /cluster/proxy/extraArgs
+  value:
+    masquerade-all: true
 
 - op: add
   path: /cluster/discovery/registries
