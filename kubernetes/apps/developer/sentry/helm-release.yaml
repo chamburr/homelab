@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: sentry
-      version: 15.2.2
+      version: 16.0.1
       sourceRef:
         kind: HelmRepository
         name: sentry-charts
