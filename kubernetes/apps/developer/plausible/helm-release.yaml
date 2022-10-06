@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: plausible-analytics
-      version: 0.3.57
+      version: 0.3.58
       sourceRef:
         kind: HelmRepository
         name: varac-plausible-charts
