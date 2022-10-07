@@ -31,7 +31,7 @@ spec:
       WG_PORT: 51820
       WG_PERSISTENT_KEEPALIVE: 25
       WG_DEFAULT_ADDRESS: 10.8.0.x
-      WG_DEFAULT_DNS: ""
+      WG_DEFAULT_DNS: ${DNS_SERVER}
       WG_ALLOWED_IPS: 0.0.0.0/0
       WG_POST_UP: >
         iptables -A INPUT -m udp -p udp --dport 51820 -j ACCEPT;
@@ -43,8 +43,6 @@ spec:
         iptables -D FORWARD -i wg0 -o eth0 -j ACCEPT;
         iptables -D FORWARD -i eth0 -o wg0 -j ACCEPT;
         iptables -t nat -D POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
-
-        DNS = ${DNS_SERVER}
 
         MTU = 1420
     securityContext:
