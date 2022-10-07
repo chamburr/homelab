@@ -40,14 +40,24 @@
     state: "{{ item.value }}"
   with_dict: "{{ firewall_services }}"
 
-- name: Configure firewall forwards
+- name: Configure firewall prerouting
   ansible.builtin.command:
     cmd: >
       firewall-cmd --direct --permanent --add-rule ipv4 nat PREROUTING 0
       -m addrtype --dst-type LOCAL -p {{ item.split('/')[2] }} --dport {{ item.split('/')[1] }}
       -j DNAT --to-destination {{ item.split('/')[0] }}
   loop: "{{ firewall_forwards }}"
-  register: forward_set
+  register: prerouting_set
   changed_when:
-    - "'ALREADY_ENABLED' not in forward_set.stderr"
+    - "'ALREADY_ENABLED' not in prerouting_set.stderr"
+  notify: Reload firewalld
+
+- name: Configure firewall postrouting
+  ansible.builtin.command:
+    cmd: >
+      firewall-cmd --direct --permanent --add-rule ipv4 nat POSTROUTING 0
+      -s {{ firewall_cidr }} -o virbr1 -j MASQUERADE
+  register: postrouting_set
+  changed_when:
+    - "'ALREADY_ENABLED' not in postrouting_set.stderr"
   notify: Reload firewalld

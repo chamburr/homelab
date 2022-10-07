@@ -13,6 +13,7 @@ fail2ban_ignore_ip:
   - 192.168.0.0/16
 
 firewall_name: Wired connection 1
+firewall_cidr: 192.168.123.0/24
 firewall_services:
   ssh: enabled
   dhcpv6-client: enabled
