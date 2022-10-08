@@ -52,9 +52,4 @@
     mode: 0644
     state: present
   loop: "{{ array_details.stdout_lines }}"
-  register: mdadm_update
-
-- name: Update initramfs
-  ansible.builtin.command:
-    cmd: dracut -f
-  when: mdadm_update is changed
+  notify: Update initramfs

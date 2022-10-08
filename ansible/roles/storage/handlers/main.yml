@@ -2,3 +2,7 @@
 - name: Reload nfs
   ansible.builtin.command:
     cmd: exportfs -ra
+
+- name: Update initramfs
+  ansible.builtin.command:
+    cmd: dracut -f
