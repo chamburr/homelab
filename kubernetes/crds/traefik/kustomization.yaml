@@ -3,4 +3,20 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   # renovate registry=https://helm.traefik.io/traefik chart=traefik
-  - github.com/traefik/traefik-helm-chart/traefik/crds?ref=v12.0.2
+  - github.com/traefik/traefik-helm-chart/traefik/crds/ingressroute.yaml?ref=v12.0.2
+  # renovate registry=https://helm.traefik.io/traefik chart=traefik
+  - github.com/traefik/traefik-helm-chart/traefik/crds/ingressroutetcp.yaml?ref=v12.0.2
+  # renovate registry=https://helm.traefik.io/traefik chart=traefik
+  - github.com/traefik/traefik-helm-chart/traefik/crds/ingressrouteudp.yaml?ref=v12.0.2
+  # renovate registry=https://helm.traefik.io/traefik chart=traefik
+  - github.com/traefik/traefik-helm-chart/traefik/crds/middlewares.yaml?ref=v12.0.2
+  # renovate registry=https://helm.traefik.io/traefik chart=traefik
+  - github.com/traefik/traefik-helm-chart/traefik/crds/middlewarestcp.yaml?ref=v12.0.2
+  # renovate registry=https://helm.traefik.io/traefik chart=traefik
+  - github.com/traefik/traefik-helm-chart/traefik/crds/serverstransports.yaml?ref=v12.0.2
+  # renovate registry=https://helm.traefik.io/traefik chart=traefik
+  - github.com/traefik/traefik-helm-chart/traefik/crds/tlsoptions.yaml?ref=v12.0.2
+  # renovate registry=https://helm.traefik.io/traefik chart=traefik
+  - github.com/traefik/traefik-helm-chart/traefik/crds/tlsstores.yaml?ref=v12.0.2
+  # renovate registry=https://helm.traefik.io/traefik chart=traefik
+  - github.com/traefik/traefik-helm-chart/traefik/crds/traefikservices.yaml?ref=v12.0.2
