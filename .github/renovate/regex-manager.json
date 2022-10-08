@@ -12,7 +12,7 @@
       "description": "Process helm dependencies",
       "fileMatch": ["kubernetes/.+\\.yaml$"],
       "matchStrings": [
-        "# renovate registry=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-=\\s]*)\n"
+        "# renovate registry=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?v?(?<currentValue>[^-=\\s]*)\n"
       ],
       "datasourceTemplate": "helm"
     },
@@ -28,15 +28,7 @@
       "description": "Cert-manager override",
       "fileMatch": ["kubernetes/crds/cert-manager\\.yaml$"],
       "matchStrings": [
-        "# renovate registry=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?/(?<currentValue>v[^-=\\s]*)/"
-      ],
-      "datasourceTemplate": "helm"
-    },
-    {
-      "description": "Traefik override",
-      "fileMatch": ["kubernetes/crds/traefik\\.yaml$"],
-      "matchStrings": [
-        "# renovate registry=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?v(?<currentValue>[^-=\\s]*)\n"
+        "# renovate registry=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?/v(?<currentValue>[^-=\\s]*)/"
       ],
       "datasourceTemplate": "helm"
     }
