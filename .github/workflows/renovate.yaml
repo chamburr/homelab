@@ -35,6 +35,7 @@ jobs:
         run: |
           echo "RENOVATE_DRY_RUN=${{ inputs.dryRun || 'false' }}" >> $GITHUB_ENV
           echo "LOG_LEVEL=${{ inputs.logLevel || 'info' }}" >> $GITHUB_ENV
+          echo "RENOVATE_RECREATE_CLOSED=true" >> $GITHUB_ENV
       - name: Run renovate
         uses: renovatebot/github-action@v32.224.0
         with:

@@ -3,4 +3,4 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   # renovate registry=https://prometheus-community.github.io/helm-charts chart=kube-prometheus-stack
-  - github.com/prometheus-community/helm-charts/charts/kube-prometheus-stack/crds?ref=kube-prometheus-stack-40.5.0
+  - github.com/prometheus-community/helm-charts/charts/kube-prometheus-stack/crds?ref=kube-prometheus-stack-40.4.0
