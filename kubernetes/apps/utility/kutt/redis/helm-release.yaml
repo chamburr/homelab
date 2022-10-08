@@ -22,9 +22,9 @@ spec:
       retries: 3
   values:
     fullnameOverride: kutt-redis
-      master:
-        persistence:
-          enabled: true
-          existingClaim: kutt-redis
-      replica:
-        replicaCount: 0
+    master:
+      persistence:
+        enabled: true
+        existingClaim: kutt-redis
+    replica:
+      replicaCount: 0
