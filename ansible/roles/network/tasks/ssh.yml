@@ -20,7 +20,7 @@
   notify: Restart ssh service
 
 - name: Override ssh configuration
-  ansible.builtin.blockinfile:
+  ansible.builtin.blockinfile: # noqa: no-tabs
     path: /etc/ssh/sshd_config
     block: |
       Match Address {{ ssh_whitelist_ip | join(',') }}

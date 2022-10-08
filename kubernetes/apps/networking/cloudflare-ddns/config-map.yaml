@@ -13,7 +13,8 @@ data:
     set -o errexit
 
     record=$(curl -s -X GET \
-      "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/dns_records?name=*.$CLOUDFLARE_DOMAIN&type=A" \
+      "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/dns_records" \
+      -G -d "name=*.$CLOUDFLARE_DOMAIN&type=A" \
       -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
       -H "X-Auth-Key: $CLOUDFLARE_API_KEY" \
     )

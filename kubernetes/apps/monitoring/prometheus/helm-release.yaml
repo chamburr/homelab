@@ -87,15 +87,18 @@ spec:
     - kind: Secret
       name: prometheus-secret
       valuesKey: header
-      targetPath: prometheus.prometheusSpec.containers[0].startupProbe.httpGet.httpHeaders[0].value
+      targetPath: >-
+        prometheus.prometheusSpec.containers[0].startupProbe.httpGet.httpHeaders[0].value
     - kind: Secret
       name: prometheus-secret
       valuesKey: header
-      targetPath: prometheus.prometheusSpec.containers[0].livenessProbe.httpGet.httpHeaders[0].value
+      targetPath: >-
+        prometheus.prometheusSpec.containers[0].livenessProbe.httpGet.httpHeaders[0].value
     - kind: Secret
       name: prometheus-secret
       valuesKey: header
-      targetPath: prometheus.prometheusSpec.containers[0].readinessProbe.httpGet.httpHeaders[0].value
+      targetPath: >-
+        prometheus.prometheusSpec.containers[0].readinessProbe.httpGet.httpHeaders[0].value
   postRenderers:
     - kustomize:
         patchesJson6902:

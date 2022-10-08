@@ -14,13 +14,13 @@
     state: file
 
 - name: Make swap file
-  ansible.builtin.command:
+  ansible.builtin.command: # noqa: no-handler
     cmd: mkswap {{ swap_path }}
   when: swapfile_create is changed
   register: mkswap_result
 
 - name: Turn on swap file
-  ansible.builtin.command:
+  ansible.builtin.command: # noqa: no-handler
     cmd: swapon "{{ swap_path }}"
   when: mkswap_result is changed
 

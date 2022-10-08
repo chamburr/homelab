@@ -22,7 +22,7 @@
   loop: "{{ kernel_modules }}"
 
 - name: Enable kernel modules on boot
-  ansible.builtin.copy:
+  ansible.builtin.copy: # noqa: template-instead-of-copy
     content: "{{ item }}"
     dest: /etc/modules-load.d/{{ item }}.conf
     owner: root

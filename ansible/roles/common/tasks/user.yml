@@ -1,6 +1,6 @@
 ---
 - name: Allow passwordless sudo
-  ansible.builtin.lineinfile:
+  ansible.builtin.lineinfile: # noqa: no-tabs
     path: /etc/sudoers
     regexp: ^# %wheel
     line: "%wheel	ALL=(ALL)	NOPASSWD: ALL"
