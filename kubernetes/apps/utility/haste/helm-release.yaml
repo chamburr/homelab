@@ -29,14 +29,14 @@ spec:
     args:
       - /bin/sh
       - -c
-      - sed -i -e 's/8290/7777/' -e 's/10/6/' -e 's/phonetic/random/' -e 's/500/50/'
-        -e 's/about.*//' src/backend/lib/config.js && sed -i 's/.\\/data/\\/config/'
+      - sed -i -e 's/10/6/' -e 's/phonetic/random/' -e 's/500/50/' -e 's/about.*//'
+        src/backend/lib/config.js && sed -i 's/.\\/data/\\/config/'
         src/backend/document_stores/file.js && yarn run start
     service:
       main:
         ports:
           http:
-            port: 7777
+            port: 8290
     persistence:
       config:
         enabled: true
