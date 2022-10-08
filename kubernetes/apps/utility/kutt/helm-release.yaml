@@ -8,11 +8,11 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: wallabag
-      version: 7.1.2
+      chart: app-template
+      version: 0.2.2
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
   install:
     remediation:
@@ -46,26 +46,6 @@ spec:
       USER_LIMIT_PER_DAY: 10000
       DEFAULT_MAX_STATS_PER_LINK: 10000
       CUSTOM_DOMAIN_USE_HTTPS: true
-    postgresql:
-      enabled: true
-      fullnameOverride: kutt-postgresql
-      auth:
-        enablePostgresUser: true
-        postgresPassword: kutt-pass
-        database: kutt
-      primary:
-        persistence:
-          enabled: true
-          existingClaim: kutt-postgresql
-    redis:
-      enabled: true
-      fullnameOverride: kutt-redis
-      master:
-        persistence:
-          enabled: true
-          existingClaim: kutt-redis
-      replica:
-        replicaCount: 0
     service:
       main:
         ports:

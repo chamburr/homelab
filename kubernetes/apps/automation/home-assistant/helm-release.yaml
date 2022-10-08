@@ -8,11 +8,11 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: home-assistant
-      version: 13.4.2
+      chart: app-template
+      version: 0.2.2
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
   install:
     remediation:
@@ -21,9 +21,16 @@ spec:
     remediation:
       retries: 3
   values:
+    global:
+      nameOverride: home-assistant
     image:
       repository: ghcr.io/home-assistant/home-assistant
       tag: 2022.10.1
+    service:
+      main:
+        ports:
+          http:
+            port: 8123
     persistence:
       config:
         enabled: true

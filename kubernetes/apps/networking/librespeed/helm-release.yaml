@@ -8,11 +8,11 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: librespeed
-      version: 5.4.2
+      chart: app-template
+      version: 0.2.2
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
   install:
     remediation:
@@ -21,12 +21,16 @@ spec:
     remediation:
       retries: 3
   values:
+    global:
+      nameOverride: librespeed
     image:
       repository: ghcr.io/linuxserver/librespeed
       tag: 5.2.5
-    persistence:
-      config:
-        enabled: false
+    service:
+      main:
+        ports:
+          http:
+            port: 80
     ingress:
       main:
         enabled: true
@@ -46,4 +50,5 @@ spec:
             - /bin/sh
             - -c
             - mv /app/www/public/example-singleServer-gauges.html /app/www/public/index.html &&
-              rm /app/www/public/example-* && rm -rf /app/www/public/results
+              rm /app/www/public/example-* && rm -rf /app/www/public/results &&
+              sed -i 's/ Example//g' /app/www/public/index.html

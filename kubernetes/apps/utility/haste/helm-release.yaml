@@ -8,11 +8,11 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: haste-server
-      version: 3.4.2
+      chart: app-template
+      version: 0.2.2
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
   install:
     remediation:
@@ -24,13 +24,19 @@ spec:
     global:
       nameOverride: haste
     image:
-      repository: ghcr.io/k8s-at-home/haste-server
-      tag: latest@sha256:827aa2f2389d94a522e333080fa8cbc0e0a487c5681173caca785b3b6b9e5b01
-    env:
-      KEY_LENGTH: 6
-      KEY_GENERATOR_TYPE: random
-      RATELIMITS_NORMAL_TOTAL_REQUESTS: 50
-      RATELIMITS_NORMAL_EVERY_MILLISECONDS: 60000
+      repository: ghcr.io/skyra-project/haste-server
+      tag: latest@sha256:cb55f41c73356d0bb916a3348ed17f012ece2cff7bf092e7732a8d5a4f1862e1
+    args:
+      - /bin/sh
+      - -c
+      - sed -i -e 's/8290/7777/' -e 's/10/6/' -e 's/phonetic/random/' -e 's/500/50/'
+        -e 's/about.*//' src/backend/lib/config.js && sed -i 's/.\/data/\/config/'
+        src/backend/document_stores/file.js && yarn run start
+    service:
+      main:
+        ports:
+          http:
+            port: 7777
     persistence:
       config:
         enabled: true
@@ -47,5 +53,3 @@ spec:
         tls:
           - hosts:
               - p.${DOMAIN}
-    podSecurityContext:
-      fsGroup: 568

@@ -8,11 +8,11 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: samba
-      version: 6.2.2
+      chart: app-template
+      version: 0.2.2
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
   install:
     remediation:
@@ -21,6 +21,8 @@ spec:
     remediation:
       retries: 3
   values:
+    global:
+      nameOverride: samba
     image:
       repository: ghcr.io/crazy-max/samba
       tag: 4.15.7
@@ -32,21 +34,19 @@ spec:
         type: LoadBalancer
         loadBalancerIP: ${LB_SAMBA}
         ports:
-          netbios:
-            enabled: false
+          tcp:
+            enabled: true
+            protocol: TCP
+            port: 445
         externalTrafficPolicy: Local
-    configmap:
-      config:
-        enabled: true
     persistence:
       config:
         enabled: true
         existingClaim: samba-data
         mountPath: /share/samba
+      data:
+        enabled: true
+        type: secret
+        name: samba-secret
     podAnnotations:
       secret.reloader.stakater.com/reload: samba-secret
-  valuesFrom:
-    - kind: Secret
-      name: samba-secret
-      valuesKey: config.yml
-      targetPath: configmap.config.data.config\.yml

@@ -8,11 +8,11 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: vaultwarden
-      version: 5.3.2
+      chart: app-template
+      version: 0.2.2
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
   install:
     remediation:
@@ -21,10 +21,13 @@ spec:
     remediation:
       retries: 3
   values:
+    global:
+      nameOverride: vaultwarden
     image:
       repository: docker.io/vaultwarden/server
       tag: 1.25.2
     env:
+      DATA_FOLDER: config
       SIGNUPS_ALLOWED: false
       DOMAIN: https://bitwarden.${DOMAIN}
       SMTP_HOST: ${MAIL_HOST}
@@ -35,6 +38,8 @@ spec:
     service:
       main:
         ports:
+          http:
+            port: 80
           websocket:
             enabled: false
     persistence:

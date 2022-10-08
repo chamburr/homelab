@@ -8,11 +8,11 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: wallabag
-      version: 7.1.2
+      chart: app-template
+      version: 0.2.2
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
   install:
     remediation:
@@ -26,22 +26,16 @@ spec:
     image:
       repository: ghcr.io/diced/zipline
       tag: 3.5.1
+    args:
+      - /bin/sh
+      - -c
+      - sed -i 's/if (params.id ===.*/if (!params.id) return await handle(req, res);/g'
+        /zipline/src/server/index.ts && node_modules/.bin/tsx src/server
     env:
       CORE_HTTPS: true
       CORE_DATABASE_URL: postgresql://zipline:zipline-pass@zipline-postgresql/zipline
       UPLOADER_ROUTE: /
       UPLOADER_LENGTH: 6
-    postgresql:
-      enabled: true
-      fullnameOverride: zipline-postgresql
-      auth:
-        username: zipline
-        password: zipline-pass
-        database: zipline
-      primary:
-        persistence:
-          enabled: true
-          existingClaim: zipline-postgresql
     service:
       main:
         ports:
@@ -56,8 +50,6 @@ spec:
       main:
         enabled: true
         ingressClassName: traefik
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: utility-zipline-redirect@kubernetescrd
         hosts:
           - host: u.${DOMAIN}
             paths:
