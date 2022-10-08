@@ -6,7 +6,7 @@
   "packageRules": [
     {
       "matchPackagePatterns": ["*"],
-      "semanticCommitType": "build",
+      "semanticCommitType": "build"
     },
     {
       "matchDatasources": ["galaxy", "galaxy-collection"],
