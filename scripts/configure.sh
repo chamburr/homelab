@@ -64,7 +64,8 @@ configureFlux() {
   helm repo add cilium https://helm.cilium.io/
   helm repo update
 
-  until helm install cilium cilium/cilium -n kube-system --set ipam.mode=kubernetes > /dev/null 2>&1; do
+  until helm install cilium cilium/cilium -n kube-system --set ipam.mode=kubernetes > /dev/null 2>&1
+  do
     sleep 5
   done
 
@@ -103,7 +104,8 @@ configureFlux() {
 configureCeph() {
   echo 'Configuring ceph...'
 
-  until kubectl -n rook-ceph wait --for condition=Available deploy/rook-ceph-osd-0 > /dev/null 2>&1; do
+  until kubectl -n rook-ceph wait --for condition=Available deploy/rook-ceph-osd-0 > /dev/null 2>&1
+  do
     sleep 5
   done
 }
