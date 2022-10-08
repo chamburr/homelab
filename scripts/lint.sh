@@ -9,7 +9,7 @@ lintYaml() {
 lintAnsible() {
   echo 'Linting ansible...'
 
-  ansible-lint -c .ansible-lint.yaml ansible 2>&1 | grep -v 'WARNING'
+  ansible-lint ansible
 }
 
 lintTerraform() {
