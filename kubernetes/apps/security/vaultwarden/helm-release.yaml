@@ -28,6 +28,7 @@ spec:
       tag: 1.25.2
     env:
       DATA_FOLDER: config
+      WEBSOCKET_ENABLED: true
       SIGNUPS_ALLOWED: false
       DOMAIN: https://bitwarden.${DOMAIN}
       SMTP_HOST: ${MAIL_HOST}
@@ -41,7 +42,8 @@ spec:
           http:
             port: 80
           websocket:
-            enabled: false
+            enabled: true
+            port: 3012
     persistence:
       config:
         enabled: true
@@ -55,6 +57,16 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  port: http
+              - path: /notifications/hub/negotiate
+                pathType: Prefix
+                service:
+                  port: http
+              - path: /notifications/hub
+                pathType: Prefix
+                service:
+                  port: websocket
         tls:
           - hosts:
               - bitwarden.${DOMAIN}
