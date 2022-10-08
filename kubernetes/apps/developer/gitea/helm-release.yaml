@@ -12,7 +12,7 @@ spec:
       version: 6.0.1
       sourceRef:
         kind: HelmRepository
-        name: gitea-charts
+        name: gitea
         namespace: flux-system
   install:
     remediation:

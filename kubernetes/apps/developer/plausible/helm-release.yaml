@@ -12,7 +12,7 @@ spec:
       version: 0.3.59
       sourceRef:
         kind: HelmRepository
-        name: varac-plausible-charts
+        name: varac-plausible
         namespace: flux-system
   install:
     remediation:

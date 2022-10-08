@@ -12,7 +12,7 @@ spec:
       version: 0.16.0
       sourceRef:
         kind: HelmRepository
-        name: vector-charts
+        name: vector
         namespace: flux-system
   install:
     remediation:

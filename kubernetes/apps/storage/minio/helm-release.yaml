@@ -12,7 +12,7 @@ spec:
       version: 4.0.15
       sourceRef:
         kind: HelmRepository
-        name: minio-charts
+        name: minio
         namespace: flux-system
   install:
     remediation:
