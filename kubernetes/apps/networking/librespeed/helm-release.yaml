@@ -22,7 +22,7 @@ spec:
       retries: 3
   values:
     image:
-      repository: docker.io/linuxserver/librespeed
+      repository: ghcr.io/linuxserver/librespeed
       tag: 5.2.5
     persistence:
       config:
