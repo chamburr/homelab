@@ -25,6 +25,14 @@
       "datasourceTemplate": "github-releases"
     },
     {
+      "description": "Cert-manager override",
+      "fileMatch": ["kubernetes/crds/cert-manager\\.yaml$"],
+      "matchStrings": [
+        "# renovate registry=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?/(?<currentValue>[^-\\s]*)/"
+      ],
+      "datasourceTemplate": "helm"
+    },
+    {
       "description": "Traefik override",
       "fileMatch": ["kubernetes/crds/traefik\\.yaml$"],
       "matchStrings": [
