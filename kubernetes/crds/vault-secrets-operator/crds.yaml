@@ -8,7 +8,7 @@ spec:
   interval: 30m
   url: https://github.com/ricoberger/vault-secrets-operator.git
   ref:
-    # renovate: registry=https://ricoberger.github.io/helm-charts chart=vault-secrets-operator
+    # renovate registry=https://ricoberger.github.io/helm-charts chart=vault-secrets-operator
     tag: 1.19.6
   ignore: |
     /*

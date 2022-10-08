@@ -21,7 +21,7 @@ spec:
     remediation:
       retries: 3
   values:
-    # renovate: source=github-releases name=Mailu/Mailu
+    # renovate source=github-releases name=Mailu/Mailu
     mailuVersion: 1.9.36
     hostnames:
       - mail.${DOMAIN}

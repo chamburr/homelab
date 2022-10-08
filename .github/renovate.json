@@ -6,8 +6,8 @@
     ":disableDependencyDashboard",
     "github>chamburr/homelab//.github/renovate/auto-merge",
     "github>chamburr/homelab//.github/renovate/commit-message",
-    "github>chamburr/homelab//.github/renovate/labels",
-    "github>chamburr/homelab//.github/renovate/overrides"
+    "github>chamburr/homelab//.github/renovate/pr-label",
+    "github>chamburr/homelab//.github/renovate/regex-manager"
   ],
   "onboarding": false,
   "requireConfig": "optional",
@@ -27,24 +27,5 @@
   },
   "kubernetes": {
     "fileMatch": ["kubernetes/.+\\.yaml$"]
-  },
-  "regexManagers": [
-    {
-      "description": "Process CRD dependencies",
-      "fileMatch": ["kubernetes/.+\\.yaml$"],
-      "matchStrings": [
-        "# renovate: source=(?<datasource>\\S+) name=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
-        "# renovate: registry=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n"
-      ],
-      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
-    },
-    {
-      "description": "Process raw GitHub URLs",
-      "fileMatch": ["kubernetes/.+\\.yaml$", "scripts/.+\\.yaml$"],
-      "matchStrings": [
-        "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
-      ],
-      "datasourceTemplate": "github-releases"
-    }
-  ]
+  }
 }

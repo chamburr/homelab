@@ -1,0 +1,36 @@
+{
+  "regexManagers": [
+    {
+      "description": "Process github dependencies",
+      "fileMatch": ["kubernetes/.+\\.yaml$"],
+      "matchStrings": [
+        "# renovate github=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n"
+      ],
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "description": "Process helm dependencies",
+      "fileMatch": ["kubernetes/.+\\.yaml$"],
+      "matchStrings": [
+        "# renovate registry=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    },
+    {
+      "descrption": "Process raw github urls",
+      "fileMatch": ["kubernetes/.+\\.yaml$", "scripts/.+\\.yaml$"],
+      "matchStrings": [
+        "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
+      ],
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "description": "Traefik override",
+      "fileMatch": ["kubernetes/crds/traefik\\.yaml$"],
+      "matchStrings": [
+        "# renovate registry=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?v(?<currentValue>[^-\\s]*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    }
+  ]
+}
