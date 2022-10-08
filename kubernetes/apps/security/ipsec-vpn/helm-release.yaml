@@ -27,7 +27,7 @@ spec:
       repository: docker.io/hwdsl2/ipsec-vpn-server
       tag: latest@sha256:33c4fac710ea47937fca460601a0a870628152f4fc0ee46052967386c1d68d47
     env:
-      VPN_DISABLE_IPSEC_L2TP: yes
+      VPN_DISABLE_IPSEC_L2TP: true
       VPN_DNS_NAME: vpn.${DOMAIN}
       VPN_DNS_SRV1: ${DNS_SERVER}
       VPN_DNS_SRV2: ""
