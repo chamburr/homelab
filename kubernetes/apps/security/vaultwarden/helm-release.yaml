@@ -58,5 +58,5 @@ spec:
   valuesFrom:
     - kind: Secret
       name: vaultwarden-secret
-      valuesKey: admin_token
+      valuesKey: password
       targetPath: env.ADMIN_TOKEN

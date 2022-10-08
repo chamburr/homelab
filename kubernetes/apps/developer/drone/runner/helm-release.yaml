@@ -45,5 +45,5 @@ spec:
   valuesFrom:
     - kind: Secret
       name: drone-secret
-      valuesKey: rpc_secret
+      valuesKey: secret
       targetPath: env.DRONE_RPC_SECRET

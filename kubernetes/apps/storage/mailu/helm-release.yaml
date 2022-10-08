@@ -74,12 +74,12 @@ spec:
   valuesFrom:
     - kind: Secret
       name: mailu-secret
-      valuesKey: mail_domain
-      targetPath: domain
+      valuesKey: secret
+      targetPath: secretKey
     - kind: Secret
       name: mailu-secret
-      valuesKey: secret_key
-      targetPath: secretKey
+      valuesKey: domain
+      targetPath: domain
   postRenderers:
     - kustomize:
         patchesStrategicMerge:

@@ -88,9 +88,9 @@ spec:
   valuesFrom:
     - kind: Secret
       name: kutt-secret
-      valuesKey: admin_emails
-      targetPath: env.ADMIN_EMAILS
+      valuesKey: secret
+      targetPath: env.JWT_SECRET
     - kind: Secret
       name: kutt-secret
-      valuesKey: jwt_secret
-      targetPath: env.JWT_SECRET
+      valuesKey: email
+      targetPath: env.ADMIN_EMAILS

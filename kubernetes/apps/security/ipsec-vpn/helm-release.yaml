@@ -91,7 +91,7 @@ spec:
   valuesFrom:
     - kind: Secret
       name: ipsec-vpn-secret
-      valuesKey: ipsec_psk
+      valuesKey: psk
       targetPath: env.VPN_IPSEC_PSK
     - kind: Secret
       name: ipsec-vpn-secret

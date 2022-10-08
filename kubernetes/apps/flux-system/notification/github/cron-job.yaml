@@ -27,7 +27,7 @@ spec:
                   valueFrom:
                     secretKeyRef:
                       name: notification-secret
-                      key: github_private_key
+                      key: github_key
               command:
                 - /bin/bash
                 - /app/github.sh
