@@ -96,7 +96,7 @@ configureFlux() {
   done
 
   flux -n vault suspend helmrelease vault
-  flux -n vault suspend helmrelease vault-secrets-operator
+  flux -n vault suspend helmrelease vault-secrets
 
   flux suspend kustomization apps
 }
@@ -137,15 +137,15 @@ configureVault() {
 
   kubectl -n vault exec vault-0 -- sh -c \
     'echo -e "path \"secret/data/*\" {\n  capabilities = [\"read\"]\n}" \
-      | vault policy write vault-secrets-operator -'
+      | vault policy write vault-secrets -'
   kubectl -n vault exec vault-0 -- sh -c \
     'vault write auth/kubernetes/config \
       kubernetes_host=https://${KUBERNETES_PORT_443_TCP_ADDR}:443'
   kubectl -n vault exec vault-0 -- sh -c \
-    'vault write auth/kubernetes/role/vault-secrets-operator \
-      bound_service_account_names=vault-secrets-operator \
+    'vault write auth/kubernetes/role/vault-secrets \
+      bound_service_account_names=vault-secrets \
       bound_service_account_namespaces=vault \
-      policies=vault-secrets-operator \
+      policies=vault-secrets \
       ttl=24h'
 
   kubectl -n vault exec vault-0 -- sh -c \
@@ -172,7 +172,7 @@ postInstall() {
 
   firewall-cmd --zone public --remove-port 8200/tcp
 
-  flux -n vault resume helmrelease vault-secrets-operator
+  flux -n vault resume helmrelease vault-secrets
 
   sleep 5
 
