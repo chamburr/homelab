@@ -12,7 +12,7 @@ spec:
       version: 0.3.42
       sourceRef:
         kind: HelmRepository
-        name: varac-plausible
+        name: plausible
         namespace: flux-system
   install:
     remediation:

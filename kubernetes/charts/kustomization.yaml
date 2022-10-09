@@ -5,6 +5,7 @@ resources:
   - bitnami.yaml
   - bjw-s.yaml
   - cilium.yaml
+  - dashboard.yaml
   - descheduler.yaml
   - drone.yaml
   - emberstack.yaml
@@ -13,7 +14,6 @@ resources:
   - harbor.yaml
   - hashicorp.yaml
   - jetstack.yaml
-  - kubernetes-dashboard.yaml
   - lwolf.yaml
   - mailu.yaml
   - metallb.yaml
@@ -21,11 +21,11 @@ resources:
   - minio.yaml
   - netmaker.yaml
   - nextcloud.yaml
-  - prometheus-community.yaml
+  - plausible.yaml
+  - prometheus.yaml
   - ricoberger.yaml
   - rook-ceph.yaml
   - sentry.yaml
   - stakater.yaml
   - traefik.yaml
-  - varac-plausible.yaml
   - vector.yaml
