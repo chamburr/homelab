@@ -7,7 +7,6 @@ resources:
   - developer.yaml
   - drone.yaml
   - flux-system.yaml
-  - kube-system.yaml
   - monitoring.yaml
   - networking.yaml
   - rook-ceph.yaml
