@@ -33,6 +33,7 @@ spec:
       PHOTOPRISM_PUBLIC: false
       PHOTOPRISM_DATABASE_DRIVER: sqlite
       PHOTOPRISM_SITE_URL: https://photos.${DOMAIN}
+      PHOTOPRISM_SPONSOR: true
     service:
       main:
         ports:
