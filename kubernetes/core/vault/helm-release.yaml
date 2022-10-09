@@ -63,6 +63,8 @@ spec:
         - -c
         - if [ "$VAULT_KEY" ]; then until vault operator unseal $VAULT_KEY > /dev/null 2>&1;
           do sleep 5; done; fi
+    injector:
+      enabled: false
     ui:
       enabled: true
       serviceType: ClusterIP
