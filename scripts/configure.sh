@@ -64,7 +64,8 @@ configureFlux() {
   helm repo add cilium https://helm.cilium.io/
   helm repo update
 
-  until helm install cilium cilium/cilium -n kube-system --set ipam.mode=kubernetes > /dev/null 2>&1
+  until helm install cilium cilium/cilium -n cilium --create-namespace --set ipam.mode=kubernetes \
+    > /dev/null 2>&1
   do
     sleep 5
   done

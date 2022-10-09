@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - automation.yaml
   - cert-manager.yaml
+  - cilium.yaml
   - developer.yaml
   - drone.yaml
   - flux-system.yaml
