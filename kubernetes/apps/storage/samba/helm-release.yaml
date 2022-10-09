@@ -57,5 +57,7 @@ spec:
         enabled: true
         type: secret
         name: samba-secret
+        mountPath: /data/config.yml
+        subPath: config.yml
     podAnnotations:
       secret.reloader.stakater.com/reload: samba-secret
