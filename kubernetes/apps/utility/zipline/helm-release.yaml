@@ -14,6 +14,9 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  dependsOn:
+    - name: zipline-postgresql
+      namespace: utility
   install:
     remediation:
       retries: 3
