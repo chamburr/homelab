@@ -5,10 +5,10 @@ resources:
   - rook-ceph
   - networking
   - flux-system
-  - kube-system
   - automation
   - developer
   - monitoring
   - security
   - storage
+  - system
   - utility

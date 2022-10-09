@@ -2,17 +2,17 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: reflector
-  namespace: kube-system
+  name: reloader
+  namespace: system
 spec:
   interval: 15m
   chart:
     spec:
-      chart: reflector
-      version: 6.1.47
+      chart: reloader
+      version: 0.0.122
       sourceRef:
         kind: HelmRepository
-        name: emberstack
+        name: stakater
         namespace: flux-system
   install:
     remediation:
@@ -21,7 +21,8 @@ spec:
     remediation:
       retries: 3
   values:
-    replicaCount: 1
-    configuration:
-      logging:
-        minimumLevel: Debug
+    nameOverride: reloader
+    fullnameOverride: reloader
+    reloader:
+      deployment:
+        replicas: 1
