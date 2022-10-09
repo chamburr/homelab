@@ -21,6 +21,7 @@ spec:
     remediation:
       retries: 3
   values:
+    nameOverride: zipline-postgresql
     fullnameOverride: zipline-postgresql
     auth:
       username: zipline

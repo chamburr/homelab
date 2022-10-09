@@ -22,6 +22,7 @@ spec:
       retries: 3
   values:
     nameOverride: plausible
+    fullnameOverride: plausible
     image:
       repository: docker.io/plausible/analytics
       tag: v1.4.4

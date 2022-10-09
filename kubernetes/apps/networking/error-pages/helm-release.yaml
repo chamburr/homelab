@@ -21,7 +21,8 @@ spec:
     remediation:
       retries: 3
   values:
-    nameOverride: error-pages
+    global:
+      nameOverride: error-pages
     image:
       repository: ghcr.io/tarampampam/error-pages
       tag: 2.18.0

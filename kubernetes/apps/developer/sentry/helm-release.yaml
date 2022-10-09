@@ -83,6 +83,7 @@ spec:
         existingClaim: sentry-kafka
       zookeeper:
         nameOverride: zookeeper
+        fullnameOverride: sentry-zookeeper
         persistence:
           enabled: true
           existingClaim: sentry-zookeeper

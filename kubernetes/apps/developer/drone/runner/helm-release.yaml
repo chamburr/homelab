@@ -25,6 +25,7 @@ spec:
       namespace: developer
   values:
     nameOverride: drone-runner
+    fullnameOverride: drone-runner
     replicaCount: 2
     env:
       DRONE_RPC_HOST: drone.developer
