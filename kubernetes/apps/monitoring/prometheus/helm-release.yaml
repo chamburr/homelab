@@ -90,7 +90,7 @@ spec:
               secretName: prometheus-secret
           - name: etcd-client-cert
             hostPath:
-              path: /system/secrets/kubernetes
+              path: /system/secrets/kubernetes/kube-apiserver
         volumeMounts:
           - name: etcd-client-cert
             mountPath: /etc/prometheus/secrets/etcd-client-cert
