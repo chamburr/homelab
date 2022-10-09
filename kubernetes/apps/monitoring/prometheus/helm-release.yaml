@@ -44,10 +44,9 @@ spec:
           k8s-app: kube-apiserver
       serviceMonitor:
         scheme: https
-        insecureSkipVerify: true
-        caFile: /etc/prometheus/secrets/etcd-client-cert/etcd-client-ca.crt
-        certFile: /etc/prometheus/secrets/etcd-client-cert/etcd-client.crt
-        keyFile: /etc/prometheus/secrets/etcd-client-cert/etcd-client.key
+        caFile: /etc/prometheus/secrets/etcd-client-cert/ca.crt
+        certFile: /etc/prometheus/secrets/etcd-client-cert/admin.crt
+        keyFile: /etc/prometheus/secrets/etcd-client-cert/admin.key
     kubeScheduler:
       service:
         selector:
@@ -90,11 +89,15 @@ spec:
               secretName: prometheus-secret
           - name: etcd-client-cert
             hostPath:
-              path: /system/secrets/kubernetes/kube-apiserver
+              path: /system/secrets/etcd
         volumeMounts:
           - name: etcd-client-cert
             mountPath: /etc/prometheus/secrets/etcd-client-cert
             readOnly: true
+        securityContext:
+          runAsGroup: 60
+          runAsUser: 60
+          fsGroup: 60
         podMetadata:
           annotations:
             secret.reloader.stakater.com/reload: prometheus-secret
