@@ -69,9 +69,20 @@
   value: []
 
 - op: add
+  path: /cluster/controllerManager/extraArgs
+  value:
+    bind-address: 0.0.0.0
+
+- op: add
   path: /cluster/proxy/extraArgs
   value:
     masquerade-all: true
+    metrics-bind-address: 0.0.0.0:10249
+
+- op: add
+  path: /cluster/scheduler/extraArgs
+  value:
+    bind-address: 0.0.0.0
 
 - op: add
   path: /cluster/discovery/registries

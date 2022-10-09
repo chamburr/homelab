@@ -33,13 +33,25 @@ spec:
     grafana:
       enabled: false
     kubeControllerManager:
-      enabled: false
+      service:
+        selector:
+          k8s-app: kube-controller-manager
     kubeEtcd:
-      enabled: false
+      service:
+        port: 2379
+        targetPort: 2379
+        selector:
+          k8s-app: kube-apiserver
+      serviceMonitor:
+        scheme: https
+        insecureSkipVerify: true
+        caFile: /etc/prometheus/secrets/etcd-client-cert/etcd-client-ca.crt
+        certFile: /etc/prometheus/secrets/etcd-client-cert/etcd-client.crt
+        keyFile: /etc/prometheus/secrets/etcd-client-cert/etcd-client.key
     kubeScheduler:
-      enabled: false
-    kubeProxy:
-      enabled: false
+      service:
+        selector:
+          k8s-app: kube-scheduler
     kube-state-metrics:
       nameOverride: prometheus-state-metrics
       fullnameOverride: prometheus-state-metrics
@@ -76,6 +88,13 @@ spec:
             secret:
               defaultMode: 0644
               secretName: prometheus-secret
+          - name: etcd-client-cert
+            hostPath:
+              path: /system/secrets/kubernetes
+        volumeMounts:
+          - name: etcd-client-cert
+            mountPath: /etc/prometheus/secrets/etcd-client-cert
+            readOnly: true
         podMetadata:
           annotations:
             secret.reloader.stakater.com/reload: prometheus-secret
