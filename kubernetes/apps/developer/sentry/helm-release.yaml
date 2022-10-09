@@ -52,6 +52,10 @@ spec:
             "projects:plugins": False,
             "projects:sample-events": False,
         }
+      snubaSettingsPy: |
+        CLUSTERS[0]["single_node"] = False
+        CLUSTERS[0]["cluster_name"].pop()
+        CLUSTERS[0]["distributed_cluster_name"].pop()
     sentry:
       web:
         strategyType: Recreate
