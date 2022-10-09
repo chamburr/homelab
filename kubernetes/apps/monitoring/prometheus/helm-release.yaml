@@ -40,6 +40,9 @@ spec:
       enabled: false
     kubeProxy:
       enabled: false
+    kube-state-metrics:
+      nameOverride: prometheus-state-metrics
+      fullnameOverride: prometheus-state-metrics
     prometheus-node-exporter:
       nameOverride: prometheus-node-exporter
       fullnameOverride: prometheus-node-exporter

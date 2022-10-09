@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: kubernetes-dashboard
+  name: dashboard
   namespace: system
 spec:
   interval: 15m
@@ -21,6 +21,8 @@ spec:
     remediation:
       retries: 3
   values:
+    nameOverride: dashboard
+    fullnameOverride: dashboard
     extraArgs:
       - --token-ttl=0
     metricsScraper:

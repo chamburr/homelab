@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: kube-cleanup-operator
+  name: cleanup
   namespace: system
 spec:
   interval: 15m
@@ -21,6 +21,8 @@ spec:
     remediation:
       retries: 3
   values:
+    nameOverride: cleanup
+    fullnameOverride: cleanup
     rbac:
       create: true
       global: true
