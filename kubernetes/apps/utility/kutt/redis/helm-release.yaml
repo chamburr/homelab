@@ -27,5 +27,4 @@ spec:
       persistence:
         enabled: true
         existingClaim: kutt-redis
-    replica:
-      replicaCount: 0
+    architecture: standalone

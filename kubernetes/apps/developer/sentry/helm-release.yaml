@@ -94,8 +94,7 @@ spec:
         persistence:
           enabled: true
           existingClaim: sentry-redis
-      replica:
-        replicaCount: 0
+      architecture: standalone
     postgresql:
       nameOverride: postgresql
       fullnameOverride: sentry-postgresql
