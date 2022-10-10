@@ -2,11 +2,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-40.5.0/charts/kube-prometheus-stack/crds/crd-alertmanagerconfigs.yaml
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-40.5.0/charts/kube-prometheus-stack/crds/crd-alertmanagers.yaml
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-40.5.0/charts/kube-prometheus-stack/crds/crd-podmonitors.yaml
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-40.5.0/charts/kube-prometheus-stack/crds/crd-probes.yaml
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-40.5.0/charts/kube-prometheus-stack/crds/crd-prometheuses.yaml
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-40.5.0/charts/kube-prometheus-stack/crds/crd-prometheusrules.yaml
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-40.5.0/charts/kube-prometheus-stack/crds/crd-servicemonitors.yaml
-  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-40.5.0/charts/kube-prometheus-stack/crds/crd-thanosrulers.yaml
+  - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.59.2/bundle.yaml
+patches:
+  - target:
+      labelSelector: app.kubernetes.io/name=prometheus-operator
+    patch: |
+      $patch: delete
+      apiVersion: not-used
+      kind: not-used
+      metadata:
+        name: not-used
