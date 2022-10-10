@@ -25,25 +25,20 @@ spec:
       flags:
         on-by-default: true
         exclude-namespaces: default,kube-node-lease,kube-public,kube-system
-      rbac:
-        extraRules:
-          - apiGroups:
-              - batch
-            resources:
-              - "*"
-            verbs:
-              - get
-              - list
-              - watch
       resources:
         requests:
-          memory: 128M
+          memory: 64M
         limits:
-          memory: 128M
+          memory: 64M
     dashboard:
       replicaCount: 1
       flags:
         on-by-default: true
+      resources:
+        requests:
+          memory: 64M
+        limits:
+          memory: 64M
       ingress:
         enabled: true
         ingressClassName: traefik
