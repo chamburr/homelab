@@ -25,6 +25,21 @@ spec:
       flags:
         on-by-default: true
         exclude-namespaces: default,kube-node-lease,kube-public,kube-system
+      rbac:
+        extraRules:
+          - apiGroups:
+              - batch
+            resources:
+              - "*"
+            verbs:
+              - get
+              - list
+              - watch
+      resources:
+        requests:
+          memory: 128M
+        limits:
+          memory: 128M
     dashboard:
       replicaCount: 1
       ingress:
