@@ -9,6 +9,7 @@ resources:
   - descheduler.yaml
   - drone.yaml
   - emberstack.yaml
+  - fairwinds.yaml
   - gitea.yaml
   - grafana.yaml
   - harbor.yaml
