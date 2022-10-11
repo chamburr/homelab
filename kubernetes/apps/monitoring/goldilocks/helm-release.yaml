@@ -31,22 +31,4 @@ spec:
         limits:
           memory: 64M
     dashboard:
-      replicaCount: 1
-      flags:
-        on-by-default: true
-      resources:
-        requests:
-          memory: 64M
-        limits:
-          memory: 64M
-      ingress:
-        enabled: true
-        ingressClassName: traefik
-        hosts:
-          - host: goldilocks.${DOMAIN}
-            paths:
-              - path: /
-                type: Prefix
-        tls:
-          - hosts:
-            - goldilocks.${DOMAIN}
+      enabled: false
