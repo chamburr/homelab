@@ -23,6 +23,8 @@ spec:
   values:
     nameOverride: kutt-redis
     fullnameOverride: kutt-redis
+    auth:
+      enabled: false
     master:
       persistence:
         enabled: true
