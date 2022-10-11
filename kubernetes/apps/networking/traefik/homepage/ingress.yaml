@@ -9,16 +9,6 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`${DOMAIN}`) && Path(`/u/[^\/]+`)
-      middlewares:
-        - name: strip-prefix
-          namespace: networking
-      services:
-        - kind: Service
-          name: zipline
-          namespace: utility
-          port: 3000
-    - kind: Rule
       match: Host(`${DOMAIN}`) && Path(`/.well-known/(?:carddav|caldav)`)
       services:
         - kind: Service
