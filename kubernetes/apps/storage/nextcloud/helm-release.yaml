@@ -70,6 +70,12 @@ spec:
             ),
             'default_phone_region' => 'SG',
           );
+    lifecycle:
+      postStartCommand:
+        - /bin/sh
+        - -c
+        - "sed -i -z 's/\"alwaysEnabled\": \\[.*\\]/\"alwaysEnabled\": []/'
+          /var/www/html/core/shipped.json"
     cronjob:
       enabled: true
     internalDatabase:
