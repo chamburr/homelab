@@ -40,11 +40,13 @@ spec:
           password: ${MAIL_PASSWORD}
           secure: ssl
       phpConfigs:
-        uploadLimit.ini: |
+        zcustom.ini: |
+          apc.enable_cli=1
           post_max_size = 32G
           upload_max_filesize = 32G
           max_input_time = 3600
           max_execution_time = 3600
+          memory_limit=1024M
       configs:
         custom.config.php: |
           <?php
