@@ -63,7 +63,7 @@ spec:
     roundcube:
       enabled: false
     webdav:
-      enabled: true
+      enabled: false
     fetchmail:
       enabled: false
     persistence:
@@ -140,17 +140,6 @@ spec:
               - op: add
                 path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
                 value: mailu-rspamd
-              - op: replace
-                path: /spec/strategy
-                value:
-                  type: Recreate
-          - target:
-              kind: Deployment
-              name: mailu-webdav
-            patch:
-              - op: add
-                path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
-                value: mailu-webdav
               - op: replace
                 path: /spec/strategy
                 value:

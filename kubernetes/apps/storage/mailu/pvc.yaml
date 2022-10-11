@@ -63,16 +63,3 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: ceph-block
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mailu-webdav
-  namespace: storage
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: ceph-block
