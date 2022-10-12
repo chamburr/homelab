@@ -51,31 +51,25 @@ spec:
         custom.config.php: |
           <?php
           $CONFIG = array (
-            'loglevel' => 2,
-            'overwrite.cli.url' => 'https://cloud.${DOMAIN}',
-            'overwriteprotocol' => 'https',
-            'filelocking.enabled' => 'true',
-            'trusted_domains' =>
-            array (
-              0 => 'cloud.${DOMAIN}',
-              1 => 'localhost',
-            ),
-            'trusted_proxies' =>
-            array (
-              0 => '${K8S_POD_CIDR}',
-            ),
-            'forwarded_for_headers' =>
-            array (
-              0 => 'HTTP_X_FORWARDED_FOR',
-            ),
+            'trusted_domains' => array('cloud.${DOMAIN}'),
+            'default_language' => 'en',
+            'default_locale' => 'en_SG',
             'default_phone_region' => 'SG',
+            'knowledgebaseenabled' => false,
+            'auth.webauthn.enabled' => false,
+            'skeletondirectory' => '',
+            'templateddirectory' => '',
+            'overwritehost' => 'cloud.${DOMAIN}',
+            'overwriteprotocol' => 'https',
+            'overwrite.cli.url' => 'https://cloud.${DOMAIN}',
+            'trashbin_retention_obligation' => 'auto, 30',
+            'versions_retention_obligation' => 'auto, 30',
+            'updatechecker' => false,
+            'trusted_proxies' => array('${K8S_POD_CIDR}'),
+            'upgrade.disable-web' => true,
+            'simpleSignUpLink.shown' => false,
+            'profile.enabled' => false,
           );
-    lifecycle:
-      postStartCommand:
-        - /bin/sh
-        - -c
-        - "sed -i -z 's/\"alwaysEnabled\": \\[.*\\]/\"alwaysEnabled\": []/'
-          /var/www/html/core/shipped.json"
     cronjob:
       enabled: true
     internalDatabase:
