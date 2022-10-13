@@ -16,7 +16,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: github
-              image: ghcr.io/onedr0p/kubernetes-kubectl:1.25.2
+              image: ghcr.io/onedr0p/kubernetes-kubectl:1.25.3
               env:
                 - name: APP_ID
                   valueFrom:
