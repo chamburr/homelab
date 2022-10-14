@@ -9,7 +9,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`${DOMAIN}`) && Path(`/.well-known/(?:carddav|caldav)`)
+      match: Host(`${DOMAIN}`) && Path(`/.well-known/{path:(?:carddav|caldav)}`)
       services:
         - kind: Service
           name: nextcloud
@@ -37,7 +37,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`${DOMAIN}`) || HostRegexp(`{subhost:.+}.${DOMAIN}`)
+      match: Host(`${DOMAIN}`) || HostRegexp(`{subdomain:.+}.${DOMAIN}`)
       priority: 1
       middlewares:
         - name: replace-path
