@@ -17,6 +17,7 @@ nfs_options:
   - anongid=0
 
 nfs_directories:
+  - harbor
   - minio
   - nextcloud
   - photoprism
