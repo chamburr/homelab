@@ -49,10 +49,18 @@ spec:
         replicas: 1
         configmap:
           remote_servers:
-            internal_replication: true
             replica:
               backup:
                 enabled: false
+          logger:
+            level: warning
+          profiles:
+            enabled: true
+            profile:
+              - name: default
+                config:
+                  log_queries: 0
+                  log_query_threads: 0
         persistentVolumeClaim:
           enabled: false
           dataPersistentVolume:
@@ -77,3 +85,22 @@ spec:
       tls:
         - hosts:
             - plausible.${DOMAIN}
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: ConfigMap
+              name: plausible-config
+            patch:
+              - op: add
+                path: /data/zcustom.xml
+                value: |
+                  <?xml version="1.0"?>
+                  <yandex>
+                      <query_thread_log remove="remove"/>
+                      <query_log remove="remove"/>
+                      <text_log remove="remove"/>
+                      <trace_log remove="remove"/>
+                      <metric_log remove="remove"/>
+                      <asynchronous_metric_log remove="remove"/>
+                  </yandex>
