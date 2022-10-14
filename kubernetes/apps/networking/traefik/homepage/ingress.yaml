@@ -9,13 +9,6 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`${DOMAIN}`) && Path(`/.well-known/{path:(?:carddav|caldav)}`)
-      services:
-        - kind: Service
-          name: nextcloud
-          namespace: storage
-          port: 8080
-    - kind: Rule
       match: Host(`${DOMAIN}`)
       middlewares:
         - name: homepage-redirect
@@ -26,27 +19,3 @@ spec:
   tls:
     domains:
       - main: ${DOMAIN}
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: catch-all
-  namespace: networking
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - kind: Rule
-      match: Host(`${DOMAIN}`) || HostRegexp(`{subdomain:.+}.${DOMAIN}`)
-      priority: 1
-      middlewares:
-        - name: replace-path
-          namespace: networking
-      services:
-        - kind: Service
-          name: error-pages
-          namespace: networking
-          port: 8080
-  tls:
-    domains:
-      - main: "*.${DOMAIN}"
