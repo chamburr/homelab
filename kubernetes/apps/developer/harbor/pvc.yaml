@@ -15,20 +15,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: harbor-jobservice-log
-  namespace: developer
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: ceph-block
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: harbor-jobservice-scan
+  name: harbor-jobservice
   namespace: developer
 spec:
   accessModes:

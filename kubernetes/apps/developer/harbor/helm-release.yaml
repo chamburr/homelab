@@ -25,11 +25,14 @@ spec:
     core:
       podAnnotations:
         secret.reloader.stakater.com/reload: harbor-secret
+    jobservice:
+      jobLoggers:
+        - stdout
     chartmuseum:
       enabled: false
-    notary:
-      enabled: false
     trivy:
+      enabled: false
+    notary:
       enabled: false
     persistence:
       enabled: true
@@ -37,10 +40,8 @@ spec:
         registry:
           existingClaim: harbor-registry
         jobservice:
-          jobLog:
-            existingClaim: harbor-jobservice-log
           scanDataExports:
-            existingClaim: harbor-jobservice-scan
+            existingClaim: harbor-jobservice
         database:
           existingClaim: harbor-database
         redis:
