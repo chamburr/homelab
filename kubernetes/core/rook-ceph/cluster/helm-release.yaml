@@ -47,6 +47,10 @@ spec:
     cephClusterSpec:
       crashCollector:
         disable: true
+      mon:
+        count: 1
+      mgr:
+        count: 1
       dashboard:
         enabled: true
       network:
