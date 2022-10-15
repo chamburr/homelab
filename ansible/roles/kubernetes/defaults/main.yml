@@ -14,11 +14,9 @@ volume_format: raw
 
 vms:
   - talos-1
-  - talos-2
-  - talos-3
 
-vm_cpu: 8
-vm_ram: 12288
-vm_disk: 35
+vm_cpu: 32
+vm_ram: 32768
+vm_disk: 100
 vm_image: https://github.com/siderolabs/talos/releases/latest/download/talos-amd64.iso
 vm_script: https://raw.githubusercontent.com/chamburr/homelab/master/scripts/configure.sh
