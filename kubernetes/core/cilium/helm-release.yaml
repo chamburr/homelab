@@ -25,6 +25,7 @@ spec:
       mode: kubernetes
     rollOutCiliumPods: true
     operator:
+      replicas: 1
       rollOutPods: true
       prometheus:
         enabled: true

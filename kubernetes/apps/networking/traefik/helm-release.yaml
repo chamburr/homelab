@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     deployment:
-      replicas: 3
+      replicas: 2
     ingressClass:
       enabled: true
       isDefaultClass: true

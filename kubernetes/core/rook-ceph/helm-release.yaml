@@ -28,3 +28,4 @@ spec:
       enableCephfsSnapshotter: false
       enableNFSSnapshotter: false
       enableRBDSnapshotter: false
+      provisionerReplicas: 1
