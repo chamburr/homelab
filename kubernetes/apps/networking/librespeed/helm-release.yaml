@@ -36,13 +36,13 @@ spec:
         enabled: true
         ingressClassName: traefik
         hosts:
-          - host: librespeed.${DOMAIN}
+          - host: speedtest.${DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - librespeed.${DOMAIN}
+              - speedtest.${DOMAIN}
     lifecycle:
       postStart:
         exec:
