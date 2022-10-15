@@ -1,0 +1,163 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mailu-zpush
+  namespace: storage
+data:
+  autodiscover.conf.php: |
+    <?php
+    define('ZPUSH_HOST', 'mail.${DOMAIN}');
+    define('TIMEZONE', '');
+    define('BASE_PATH', dirname($_SERVER['SCRIPT_FILENAME']). '/');
+    define('USE_FULLEMAIL_FOR_LOGIN', true);
+    define('AUTODISCOVER_LOGIN_TYPE', AUTODISCOVER_LOGIN_EMAIL);
+    define('LOGBACKEND', 'filelog');
+    define('LOGFILEDIR', '/var/log/z-push/');
+    define('LOGFILE', LOGFILEDIR . 'autodiscover.log');
+    define('LOGERRORFILE', LOGFILEDIR . 'autodiscover-error.log');
+    define('LOGLEVEL', LOGLEVEL_INFO);
+    define('LOGUSERLEVEL', LOGLEVEL);
+    $specialLogUsers = array();
+    define('LOG_SYSLOG_HOST', false);
+    define('LOG_SYSLOG_PORT', 514);
+    define('LOG_SYSLOG_PROGRAM', 'z-push-autodiscover');
+    define('LOG_SYSLOG_FACILITY', LOG_LOCAL0);
+    define('BACKEND_PROVIDER', 'BackendCombined');
+  caldav.conf.php: |
+    <?php
+    define('CALDAV_PROTOCOL', 'https');
+    define('CALDAV_SERVER', 'cloud.${DOMAIN}');
+    define('CALDAV_PORT', '443');
+    define('CALDAV_PATH', '/remote.php/dav/calendars/chamburr/');
+    define('CALDAV_PERSONAL', 'personal');
+    define('CALDAV_SUPPORTS_SYNC', false);
+    define('CALDAV_MAX_SYNC_PERIOD', 2147483647);
+  carddav.conf.php: |
+    <?php
+    define('CARDDAV_PROTOCOL', 'https');
+    define('CARDDAV_SERVER', 'cloud.${DOMAIN}');
+    define('CARDDAV_PORT', '443');
+    define('CARDDAV_PATH', '/remote.php/dav/addressbooks/users/chamburr/');
+    define('CARDDAV_DEFAULT_PATH', '/remote.php/dav/addressbooks/users/chamburr/contacts/');
+    define('CARDDAV_CONTACTS_FOLDER_NAME', 'Contacts');
+    define('CARDDAV_SUPPORTS_SYNC', false);
+    define('CARDDAV_SUPPORTS_FN_SEARCH', false);
+    define('CARDDAV_URL_VCARD_EXTENSION', '.vcf');
+  imap.conf.php: |
+    <?php
+    define('IMAP_SERVER', 'mail.${DOMAIN}');
+    define('IMAP_PORT', 993);
+    define('IMAP_OPTIONS', '/norsh');
+    define('IMAP_AUTOSEEN_ON_DELETE', false);
+    define('IMAP_FOLDER_CONFIGURED', true);
+    define('IMAP_FOLDER_PREFIX', '');
+    define('IMAP_FOLDER_PREFIX_IN_INBOX', false);
+    define('IMAP_FOLDER_INBOX', 'INBOX');
+    define('IMAP_FOLDER_SENT', 'Sent');
+    define('IMAP_FOLDER_DRAFT', 'Drafts');
+    define('IMAP_FOLDER_TRASH', 'Trash');
+    define('IMAP_FOLDER_SPAM', 'Spam');
+    define('IMAP_FOLDER_ARCHIVE', 'Archive');
+    define('IMAP_INLINE_FORWARD', true);
+    define('IMAP_EXCLUDED_FOLDERS', '');
+    define('IMAP_DEFAULTFROM', '');
+    define('IMAP_SMTP_METHOD', 'smtp');
+    global $imap_smtp_params;
+    $imap_smtp_params = array(
+      'host' => 'mail.${DOMAIN}',
+      'port' => 587,
+      'auth' => true,
+      'username' => 'imap_username',
+      'password' => 'imap_password',
+      'persist' => true,
+    );
+    define('MAIL_MIMEPART_CRLF', "\r\n");
+    define('SYSTEM_MIME_TYPES_MAPPING', '/etc/mime.types');
+    define('IMAP_MEETING_USE_CALDAV', false);
+    define('IMAP_SEARCH_CHARSET', 'UTF-8');
+  combined.conf.php: |
+    <?php
+    class BackendCombinedConfig {
+      public static function GetBackendCombinedConfig() {
+        return array(
+          'backends' => array(
+            'i' => array(
+              'name' => 'BackendIMAP',
+            ),
+            'd' => array(
+              'name' => 'BackendCardDAV',
+            ),
+            'c' => array(
+              'name' => 'BackendCalDAV',
+            ),
+          ),
+          'delimiter' => '/',
+          'folderbackend' => array(
+            SYNC_FOLDER_TYPE_INBOX => 'i',
+            SYNC_FOLDER_TYPE_DRAFTS => 'i',
+            SYNC_FOLDER_TYPE_WASTEBASKET => 'i',
+            SYNC_FOLDER_TYPE_SENTMAIL => 'i',
+            SYNC_FOLDER_TYPE_OUTBOX => 'i',
+            SYNC_FOLDER_TYPE_TASK => 'c',
+            SYNC_FOLDER_TYPE_APPOINTMENT => 'c',
+            SYNC_FOLDER_TYPE_CONTACT => 'd',
+            SYNC_FOLDER_TYPE_NOTE => 'i',
+            SYNC_FOLDER_TYPE_JOURNAL => 'i',
+            SYNC_FOLDER_TYPE_OTHER => 'i',
+            SYNC_FOLDER_TYPE_USER_MAIL => 'i',
+            SYNC_FOLDER_TYPE_USER_TASK => 'c',
+            SYNC_FOLDER_TYPE_USER_APPOINTMENT => 'c',
+            SYNC_FOLDER_TYPE_USER_CONTACT => 'd',
+            SYNC_FOLDER_TYPE_USER_NOTE => 'i',
+            SYNC_FOLDER_TYPE_USER_JOURNAL => 'i',
+            SYNC_FOLDER_TYPE_UNKNOWN => 'i',
+          ),
+          'rootcreatefolderbackend' => 'i',
+        );
+      }
+    }
+  z-push.conf.php: |
+    <?php
+    define('TIMEZONE', '');
+    define('BASE_PATH', dirname($_SERVER['SCRIPT_FILENAME']). '/');
+    define('SCRIPT_TIMEOUT', 0);
+    define('USE_CUSTOM_REMOTE_IP_HEADER', 'HTTP_X_REAL_IP');
+    define("CERTIFICATE_OWNER_PARAMETER", "SSL_CLIENT_S_DN_CN");
+    define('USE_FULLEMAIL_FOR_LOGIN', true);
+    define('STATE_MACHINE', 'FILE');
+    define('STATE_DIR', '/var/lib/z-push/');
+    define('IPC_PROVIDER', '');
+    define('LOGBACKEND', 'filelog');
+    define('LOGLEVEL', LOGLEVEL_INFO);
+    define('LOGAUTHFAIL', false);
+    define('LOGUSERLEVEL', LOGLEVEL_DEVICEID);
+    $specialLogUsers = array();
+    define('LOGFILEDIR', '/var/log/z-push/');
+    define('LOGFILE', LOGFILEDIR . 'z-push.log');
+    define('LOGERRORFILE', LOGFILEDIR . 'z-push-error.log');
+    define('LOG_SYSLOG_HOST', false);
+    define('LOG_SYSLOG_PORT', 514);
+    define('LOG_SYSLOG_PROGRAM', 'z-push');
+    define('LOG_SYSLOG_FACILITY', LOG_LOCAL0);
+    define('PROVISIONING', true);
+    define('LOOSE_PROVISIONING', false);
+    define('PROVISIONING_POLICYFILE', 'policies.ini');
+    define('SYNC_CONFLICT_DEFAULT', SYNC_CONFLICT_OVERWRITE_PIM);
+    define('SYNC_FILTERTIME_MAX', SYNC_FILTERTYPE_ALL);
+    define('PING_INTERVAL', 30);
+    define('FILEAS_ORDER', SYNC_FILEAS_LASTFIRST);
+    define('SYNC_MAX_ITEMS', 512);
+    define('UNSET_UNDEFINED_PROPERTIES', false);
+    define('SYNC_CONTACTS_MAXPICTURESIZE', 5242880);
+    define('ALLOW_WEBSERVICE_USERS_ACCESS', false);
+    define('USE_PARTIAL_FOLDERSYNC', false);
+    define('PING_LOWER_BOUND_LIFETIME', false);
+    define('PING_HIGHER_BOUND_LIFETIME', false);
+    define('SYNC_TIMEOUT_MEDIUM_DEVICETYPES', "SAMSUNGGTI");
+    define('SYNC_TIMEOUT_LONG_DEVICETYPES', "iPod, iPad, iPhone, WP, WindowsOutlook, WindowsMail");
+    define('RETRY_AFTER_DELAY', 300);
+    define('BACKEND_PROVIDER', 'BackendCombined');
+    define('SEARCH_WAIT', 10);
+    define('SEARCH_MAXRESULTS', 10);
+    $additionalFolders = array();
