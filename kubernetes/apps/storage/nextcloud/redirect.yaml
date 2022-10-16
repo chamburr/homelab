@@ -1,0 +1,10 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: nextcloud-redirect
+  namespace: storage
+spec:
+  redirectRegex:
+    regex: ^https://cloud.${DOMAIN}/(.*)$
+    replacement: https://cloud.${DOMAIN}/remote.php/dav/

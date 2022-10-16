@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nextcloud
+  namespace: storage
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`cloud.${DOMAIN}`) && Path(`/.well-known/{path:(?:carddav|caldav)}`)
+      middlewares:
+        - name: nextcloud-redirect
+          namespace: storage
+      services:
+        - kind: TraefikService
+          name: noop@internal
+  tls:
+    domains:
+      - main: cloud.${DOMAIN}
