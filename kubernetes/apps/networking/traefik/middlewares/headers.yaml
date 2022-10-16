@@ -1,0 +1,10 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: headers
+  namespace: networking
+spec:
+  headers:
+    customResponseHeaders:
+      strict-transport-security: max-age=15552000; includeSubDomains; preload
