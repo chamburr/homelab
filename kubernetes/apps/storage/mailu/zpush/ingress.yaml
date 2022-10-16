@@ -9,7 +9,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`mail.${DOMAIN}`) && PathPrefix(`/{path:(?i:Microsoft-Server-ActiveSync)}`)
+      match: Host(`mail.${DOMAIN}`) && PathPrefix(`/Microsoft-Server-ActiveSync`)
       services:
         - kind: Service
           name: mailu-zpush
