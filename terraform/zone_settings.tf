@@ -23,7 +23,7 @@ resource "cloudflare_zone_settings_override" "settings" {
     ipv6                = "on"
     opportunistic_onion = "on"
     websockets          = "on"
-    zero_rtt            = "on"
+    zero_rtt            = "off"
 
     email_obfuscation   = "off"
     server_side_exclude = "off"
