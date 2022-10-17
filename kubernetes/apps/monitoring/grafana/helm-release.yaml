@@ -21,6 +21,8 @@ spec:
     remediation:
       retries: 3
   values:
+    env:
+      GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: true
     grafana.ini:
       server:
         root_url: https://grafana.${DOMAIN}
