@@ -29,8 +29,18 @@ spec:
       analytics:
         reporting_enabled: false
         check_for_updates: false
+        check_for_plugin_updates: false
+        enable_feedback_links: false
+      help:
+        enabled: false
+      query_history:
+        enabled: false
+      metrics:
+        enabled: false
       security:
         allow_embedding: true
+      snapshots:
+        external_enabled: false
       smtp:
         enabled: true
         host: ${MAIL_HOST}:${MAIL_PORT}
