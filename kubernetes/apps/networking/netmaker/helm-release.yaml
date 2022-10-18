@@ -23,7 +23,7 @@ spec:
   values:
     image:
       repository: docker.io/gravitl/netmaker
-      tag: v0.16.1
+      tag: v0.16.2
     baseDomain: ${DOMAIN}
     replicas: 1
     ui:
