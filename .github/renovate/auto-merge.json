@@ -1,4 +1,6 @@
 {
+  "automergeType": "branch",
+  "ignoreTests": true,
   "packageRules": [
     {
       "matchDatasources": ["galaxy", "galaxy-collection"],
