@@ -54,7 +54,7 @@ spec:
             codec: json
           host_key: __host
       sinks:
-        loki_kubernetes:
+        kubernetes_sink:
           type: loki
           inputs:
             - kubernetes_logs
@@ -64,24 +64,13 @@ spec:
           batch:
             max_bytes: 400000
           out_of_order_action: rewrite_timestamp
-          remove_label_fields: true
-          remove_timestamp: true
           labels:
-            k8s_app: >-
-              {{`{{ "kubernetes.pod_labels.app\.kubernetes\.io/name" }}`}}
-            k8s_container: >-
-              {{`{{ "kubernetes.container_name" }}`}}
-            k8s_filename: >-
-              {{`{{ "kubernetes.file" }}`}}
-            k8s_instance: >-
-              {{`{{ "kubernetes.pod_labels.app\.kubernetes\.io/instance" }}`}}
-            k8s_namespace: >-
+            _job: kubernetes
+            namespace: >-
               {{`{{ "kubernetes.pod_namespace" }}`}}
-            k8s_node: >-
-              {{`{{ "kubernetes.pod_node_name" }}`}}
-            k8s_pod: >-
-              {{`{{ "kubernetes.pod_name" }}`}}
-        talos_kernel:
+            app: >-
+              {{`{{ "kubernetes.pod_labels.app\.kubernetes\.io/name" }}`}}
+        talos_kernel_sink:
           type: loki
           inputs:
             - talos_kernel_logs
@@ -94,11 +83,12 @@ spec:
             max_bytes: 400000
           out_of_order_action: rewrite_timestamp
           labels:
+            _job: talos_kernel
             hostname: >-
               {{`{{ __host }}`}}
             service: >-
               {{`{{ facility }}`}}
-        talos_service:
+        talos_service_sink:
           type: loki
           inputs:
             - talos_service_logs
@@ -111,6 +101,7 @@ spec:
             max_bytes: 400000
           out_of_order_action: rewrite_timestamp
           labels:
+            _job: talos_service
             hostname: >-
               {{`{{ __host }}`}}
             service: >-
