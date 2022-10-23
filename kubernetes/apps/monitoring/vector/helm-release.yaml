@@ -53,11 +53,19 @@ spec:
           decoding:
             codec: json
           host_key: __host
+      transforms:
+        kubernetes_transform:
+          type: remap
+          inputs:
+            - kubernetes_logs
+          source: >-
+            .pod_app_name = .kubernetes.pod_labels."app.kubernetes.io/name"
+            || .kubernetes.pod_labels.app || .kubernetes.pod_labels."k8s-app" || "unknown"
       sinks:
         kubernetes_sink:
           type: loki
           inputs:
-            - kubernetes_logs
+            - kubernetes_transform
           endpoint: http://loki.monitoring:3100
           encoding:
             codec: json
@@ -69,7 +77,7 @@ spec:
             namespace: >-
               {{`{{ kubernetes.pod_namespace }}`}}
             app: >-
-              {{`{{ kubernetes.pod_labels."app.kubernetes.io/name" }}`}}
+              {{`{{ pod_app_name }}`}}
         talos_kernel_sink:
           type: loki
           inputs:
