@@ -92,3 +92,58 @@ spec:
       name: thanos-secret
       valuesKey: http-config.yml
       targetPath: httpConfig
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: ServiceMonitor
+              name: thanos-compactor
+            patch:
+              - op: add
+                path: /spec/endpoints/0/basicAuth
+                value:
+                  username:
+                    name: thanos-secret
+                    key: username
+                  password:
+                    name: thanos-secret
+                    key: password
+          - target:
+              kind: ServiceMonitor
+              name: thanos-query
+            patch:
+              - op: add
+                path: /spec/endpoints/0/basicAuth
+                value:
+                  username:
+                    name: thanos-secret
+                    key: username
+                  password:
+                    name: thanos-secret
+                    key: password
+          - target:
+              kind: ServiceMonitor
+              name: thanos-receive
+            patch:
+              - op: add
+                path: /spec/endpoints/0/basicAuth
+                value:
+                  username:
+                    name: thanos-secret
+                    key: username
+                  password:
+                    name: thanos-secret
+                    key: password
+          - target:
+              kind: ServiceMonitor
+              name: thanos-storegateway
+            patch:
+              - op: add
+                path: /spec/endpoints/0/basicAuth
+                value:
+                  username:
+                    name: thanos-secret
+                    key: username
+                  password:
+                    name: thanos-secret
+                    key: password
