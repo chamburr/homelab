@@ -78,6 +78,9 @@ spec:
     kafka:
       replicaCount: 1
       defaultReplicationFactor: 1
+      offsetsTopicReplicationFactor: 1
+      transactionStateLogReplicationFactor: 1
+      transactionStateLogMinIsr: 1
       persistence:
         enabled: true
         existingClaim: sentry-kafka
