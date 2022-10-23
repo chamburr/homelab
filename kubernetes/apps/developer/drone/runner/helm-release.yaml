@@ -28,7 +28,7 @@ spec:
     fullnameOverride: drone-runner
     replicaCount: 2
     env:
-      DRONE_RPC_HOST: drone.developer
+      DRONE_RPC_HOST: drone.developer:8080
       DRONE_RPC_PROTO: http
       DRONE_RUNNER_CAPACITY: 5
       DRONE_UI_DISABLED: true
