@@ -22,7 +22,7 @@ spec:
       retries: 3
   values:
     # renovate source=github-releases name=Mailu/Mailu
-    mailuVersion: 1.9.37
+    mailuVersion: 1.9.38
     hostnames:
       - mail.${DOMAIN}
     subnet: ${K8S_POD_CIDR}
