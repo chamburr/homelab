@@ -91,6 +91,8 @@ spec:
             claimName: loki-data
     ingress:
       enabled: false
+    test:
+      enabled: false
     monitoring:
       dashboards:
         enabled: false
