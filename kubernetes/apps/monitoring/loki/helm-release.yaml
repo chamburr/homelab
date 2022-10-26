@@ -15,9 +15,11 @@ spec:
         name: grafana
         namespace: flux-system
   install:
+    crds: Skip
     remediation:
       retries: 3
   upgrade:
+    crds: Skip
     remediation:
       retries: 3
   values:
@@ -102,6 +104,7 @@ spec:
         enabled: false
       serviceMonitor:
         enabled: true
+        metricsInstance: null
       selfMonitoring:
         enabled: false
         grafanaAgent:
