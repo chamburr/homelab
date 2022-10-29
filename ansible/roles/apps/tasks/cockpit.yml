@@ -1,13 +1,4 @@
 ---
-- name: Add cockpit repository
-  ansible.builtin.yum_repository:
-    name: 45drives
-    description: 45Drives
-    baseurl: https://repo.45drives.com/rhel/el8/stable
-    gpgkey: https://repo.45drives.com/key/gpg.asc
-    gpgcheck: true
-    state: present
-
 - name: Install cockpit packages
   ansible.builtin.dnf:
     name: "{{ ['cockpit'] + cockpit_plugins }}"

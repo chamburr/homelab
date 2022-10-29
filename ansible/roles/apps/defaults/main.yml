@@ -4,7 +4,6 @@ cockpit_plugins:
   - cockpit-networkmanager
   - cockpit-packagekit
   - cockpit-machines
-  - cockpit-navigator
 
 cockpit_title: Homelab
 cockpit_unencrypted: "true"
