@@ -73,8 +73,6 @@ spec:
       port: ${MAIL_PORT}
       username: ${MAIL_USERNAME}
       password: ${MAIL_PASSWORD}
-      ssl:
-        enabled: true
     ingress:
       enabled: true
       className: traefik
