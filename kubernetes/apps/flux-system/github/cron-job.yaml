@@ -19,15 +19,9 @@ spec:
               image: ghcr.io/onedr0p/kubernetes-kubectl:1.25.3
               env:
                 - name: APP_ID
-                  valueFrom:
-                    secretKeyRef:
-                      name: notification-secret
-                      key: github_id
+                  value: ${GITHUB_ID}
                 - name: APP_PRIVATE_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: notification-secret
-                      key: github_key
+                  value: ${GITHUB_PRIVATE_KEY}
               command:
                 - /bin/bash
                 - /app/github.sh
