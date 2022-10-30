@@ -36,7 +36,7 @@ spec:
         /zipline/src/server/index.ts && node_modules/.bin/tsx src/server
     env:
       CORE_HTTPS: true
-      CORE_DATABASE_URL: postgresql://zipline:zipline-pass@zipline-postgresql/zipline
+      CORE_DATABASE_URL: postgresql://postgres:zipline-pass@zipline-postgresql/zipline
       UPLOADER_ROUTE: /
       UPLOADER_LENGTH: 6
     service:
