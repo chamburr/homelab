@@ -23,20 +23,12 @@ data:
       | openssl base64 | tr -d '=' | tr '/+' '_-' | tr -d '\n')
     jwt="$header.$payload.$sig"
 
+    token=$(curl -s -X POST \
+      "https://api.github.com/app/installations/$APP_INSTALLATION/access_tokens" \
+      -H "Authorization: Bearer $jwt" \
+      -H "Accept: application/vnd.github+json" \
+        | jq -j '.token'
+    )
+
     kubectl patch secret -n flux-system github-secret \
-      --patch='{"stringData":{"jwt":"'"$jwt"'"}}'
-
-    updated=$(kubectl get secret -n flux-system github-secret --template='{{.data.updated}}')
-    elapsed=$(($now - $(echo "$updated" | openssl base64 -d) + 0))
-
-    if [ "$elapsed" -gt "3300" ]; then
-      token=$(curl -s -X POST \
-        "https://api.github.com/app/installations/$APP_INSTALLATION/access_tokens" \
-        -H "Authorization: Bearer $jwt" \
-        -H "Accept: application/vnd.github+json" \
-          | jq -j '.token'
-      )
-
-      kubectl patch secret -n flux-system github-secret \
-        --patch='{"stringData":{"updated":"'"$now"'","token":"'"$token"'"}}'
-    fi
+      --patch='{"stringData":{"token":"'"$token"'"}}'
