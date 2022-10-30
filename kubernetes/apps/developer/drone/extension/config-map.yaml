@@ -1,0 +1,72 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: drone-extension
+  namespace: networking
+data:
+  index.js: |
+    const http = require('http')
+
+    async function handle(req, res, body) {
+      let opts = {
+        headers: {
+          Accept: 'application/vnd.github+json',
+          Authorization: `Bearer ${process.env.GITHUB_JWT}`
+        }
+      }
+
+      if (req.url === '/yaml') {
+        let data = await fetch(`https://api.github.com/repos/${body.repo.slug}/contents/.drone`, opts)
+        data = await data.json()
+
+        if (data.message === 'Not Found') {
+          res.write('{"data": ""}')
+          return
+        }
+
+        let files = []
+        for (let file of data) {
+          if (file.name.startsWith('_')) continue
+          if (!file.name.endsWith('.yaml') && !file.name.endsWith('.yml')) continue
+
+          file = await fetch(file.url.split('?')[0], opts)
+          file = await file.json()
+          file = Buffer.from(file.content, 'base64').toString('utf-8')
+
+          files.push(file)
+        }
+
+        res.write(`{"data": ${JSON.stringify(files.join('\n'))}}`)
+
+        return
+      }
+
+      res.write('{"status": "success"}')
+    }
+
+    http
+      .createServer((req, res) => {
+        res.writeHead(200, { 'Content-Type': 'application/json' })
+
+        let body = []
+        req
+          .on('data', chunk => body.push(chunk))
+          .on('end', async () => {
+            body = Buffer.concat(body).toString()
+
+            try {
+              body = JSON.parse(body)
+            } catch (err) {
+              body = {}
+            }
+
+            await handle(req, res, body)
+
+            res.end()
+          })
+      })
+      .listen({
+        host: '0.0.0.0',
+        port: 3000
+      })
