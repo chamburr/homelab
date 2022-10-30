@@ -5,7 +5,7 @@ metadata:
   name: github
   namespace: flux-system
 spec:
-  schedule: "*/55 * * * *"
+  schedule: "*/8 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -22,6 +22,8 @@ spec:
                   value: ${GITHUB_ID}
                 - name: APP_PRIVATE_KEY
                   value: ${GITHUB_PRIVATE_KEY}
+                - name: APP_INSTALLATION
+                  value: ${GITHUB_INSTALLATION}
               command:
                 - /bin/bash
                 - /app/github.sh

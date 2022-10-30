@@ -21,16 +21,24 @@ data:
       | openssl base64 | tr -d '=' | tr '/+' '_-' | tr -d '\n')
     sig=$(openssl dgst -sha256 -sign <(echo -n "$APP_PRIVATE_KEY") <(echo -n "$header.$payload") \
       | openssl base64 | tr -d '=' | tr '/+' '_-' | tr -d '\n')
-
     jwt="$header.$payload.$sig"
-    token=$(curl -s -X POST \
-      "https://api.github.com/app/installations/29043878/access_tokens" \
-      -H "Authorization: Bearer $jwt" \
-      -H "Accept: application/vnd.github+json" \
-        | jq -j '.token' \
-        | openssl base64 \
-        | tr -d '\n'
-    )
 
     kubectl patch secret -n flux-system github-secret \
-      --patch='{"data":{"token":"'"$token"'"}}'
+      --patch='{"data":{"jwt":"'"$jwt"'"}}'
+
+    updated=$(kubectl get secret -n flux-system github-secret --template='{{.data.updated}}')
+    elapsed=$(($now - $(echo -n "$updated" | base64 -d || echo "0"))
+
+    if [ "$elapsed" -gt "3300" ]; then
+      token=$(curl -s -X POST \
+        "https://api.github.com/app/installations/$APP_INSTALLATION/access_tokens" \
+        -H "Authorization: Bearer $jwt" \
+        -H "Accept: application/vnd.github+json" \
+          | jq -j '.token' \
+          | openssl base64 \
+          | tr -d '\n'
+      )
+
+      kubectl patch secret -n flux-system github-secret \
+        --patch='{"data":{"updated":"'"$now"'","token":"'"$token"'"}}'
+    fi
