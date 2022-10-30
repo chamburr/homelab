@@ -1,5 +1,12 @@
 ---
-- include_tasks: dns.yml
-- include_tasks: fail2ban.yml
-- include_tasks: firewall.yml
-- include_tasks: ssh.yml
+- name: Include dns tasks
+  ansible.builtin.include_tasks: dns.yml
+
+- name: Include fail2ban tasks
+  ansible.builtin.include_tasks: fail2ban.yml
+
+- name: Include firewall tasks
+  ansible.builtin.include_tasks: firewall.yml
+
+- name: Include ssh tasks
+  ansible.builtin.include_tasks: ssh.yml

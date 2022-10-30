@@ -1,5 +1,12 @@
 ---
-- include_tasks: fstrim.yml
-- include_tasks: mdadm.yml
-- include_tasks: nfs.yml
-- include_tasks: smart.yml
+- name: Include fstrim tasks
+  ansible.builtin.include_tasks: fstrim.yml
+
+- name: Include mdadm tasks
+  ansible.builtin.include_tasks: mdadm.yml
+
+- name: Include nfs tasks
+  ansible.builtin.include_tasks: nfs.yml
+
+- name: Include smart tasks
+  ansible.builtin.include_tasks: smart.yml

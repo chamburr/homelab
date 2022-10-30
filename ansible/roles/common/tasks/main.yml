@@ -1,5 +1,12 @@
 ---
-- include_tasks: basic.yml
-- include_tasks: package.yml
-- include_tasks: swap.yml
-- include_tasks: user.yml
+- name: Include basic tasks
+  ansible.builtin.include_tasks: basic.yml
+
+- name: Include package tasks
+  ansible.builtin.include_tasks: package.yml
+
+- name: Include swap tasks
+  ansible.builtin.include_tasks: swap.yml
+
+- name: Include user tasks
+  ansible.builtin.include_tasks: user.yml

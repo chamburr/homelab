@@ -33,7 +33,7 @@
     state: present
 
 - name: Set swap swappiness
-  ansible.builtin.sysctl:
+  ansible.posix.sysctl:
     name: vm.swappiness
     value: "{{ swap_swappiness }}"
     state: present

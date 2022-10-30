@@ -9,7 +9,7 @@ lintYaml() {
 lintAnsible() {
   echo 'Linting ansible...'
 
-  ansible-lint ansible
+  ansible-lint ansible -q
 }
 
 lintTerraform() {

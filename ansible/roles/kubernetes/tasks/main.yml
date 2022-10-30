@@ -1,5 +1,12 @@
 ---
-- include_tasks: client.yml
-- include_tasks: libvirt.yml
-- include_tasks: vm.yml
-- include_tasks: cluster.yml
+- name: Include client tasks
+  ansible.builtin.include_tasks: client.yml
+
+- name: Include libvirt tasks
+  ansible.builtin.include_tasks: libvirt.yml
+
+- name: Include vm tasks
+  ansible.builtin.include_tasks: vm.yml
+
+- name: Include cluster tasks
+  ansible.builtin.include_tasks: cluster.yml
