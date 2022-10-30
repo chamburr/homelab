@@ -14,7 +14,7 @@ data:
       let opts = {
         headers: {
           Accept: 'application/vnd.github+json',
-          Authorization: `Bearer ${process.env.GITHUB_JWT}`
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`
         }
       }
 

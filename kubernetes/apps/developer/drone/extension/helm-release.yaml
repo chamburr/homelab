@@ -45,5 +45,5 @@ spec:
   valuesFrom:
     - kind: Secret
       name: drone-extension-secret
-      valuesKey: jwt
-      targetPath: env.GITHUB_JWT
+      valuesKey: token
+      targetPath: env.GITHUB_TOKEN
