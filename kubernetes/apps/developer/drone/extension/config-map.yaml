@@ -37,6 +37,11 @@ data:
           file = await file.json()
           file = Buffer.from(file.content, 'base64').toString('utf-8')
 
+          file = file.replaceAll(
+            /\nkind: pipeline\n(?!type)/g,
+            '\nkind: pipeline\ntype: kubernetes\n'
+          )
+
           files.push(file)
         }
 
