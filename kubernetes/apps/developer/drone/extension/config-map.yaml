@@ -4,6 +4,8 @@ kind: ConfigMap
 metadata:
   name: drone-extension
   namespace: networking
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
 data:
   index.js: |
     const http = require('http')
@@ -17,7 +19,8 @@ data:
       }
 
       if (req.url === '/yaml') {
-        let data = await fetch(`https://api.github.com/repos/${body.repo.slug}/contents/.drone`, opts)
+        let slug = body.repo.slug
+        let data = await fetch(`https://api.github.com/repos/${slug}/contents/.drone`, opts)
         data = await data.json()
 
         if (data.message === 'Not Found') {
