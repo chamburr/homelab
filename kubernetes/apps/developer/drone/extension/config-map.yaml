@@ -50,24 +50,34 @@ data:
         return
       }
 
-      res.write('{"status": "success"}')
+      if (req.url === '/validate') {
+        let event = body.build.event
+        let source = body.build.fork.toLowerCase()
+        let target = body.repo.slug.toLowerCase()
+
+        if (event === 'pull_request' && source !== target) {
+          res.statusCode = 499
+        }
+
+        res.write('{"message": "success"}')
+
+        return
+      }
+
+      res.write('{"success": true}')
     }
 
     http
       .createServer((req, res) => {
-        res.writeHead(200, { 'Content-Type': 'application/json' })
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'application/json')
 
         let body = []
         req
           .on('data', chunk => body.push(chunk))
           .on('end', async () => {
-            body = Buffer.concat(body).toString()
-
-            try {
-              body = JSON.parse(body)
-            } catch (err) {
-              body = {}
-            }
+            body = Buffer.concat(body).toString() || '{}'
+            body = JSON.parse(body)
 
             await handle(req, res, body)
 

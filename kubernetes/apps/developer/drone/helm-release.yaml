@@ -25,8 +25,11 @@ spec:
       DRONE_SERVER_HOST: drone.${DOMAIN}
       DRONE_SERVER_PROTO: https
       DRONE_REGISTRATION_CLOSED: true
+      DRONE_CRON_INTERVAL: 5m
       DRONE_YAML_ENDPOINT: http://drone-extension.developer:3000/yaml
       DRONE_YAML_SECRET: secret
+      DRONE_VALIDATE_PLUGIN_ENDPOINT: http://drone-extension.developer:3000/validate
+      DRONE_VALIDATE_PLUGIN_SECRET: secret
     persistentVolume:
       enabled: true
       existingClaim: drone-data
