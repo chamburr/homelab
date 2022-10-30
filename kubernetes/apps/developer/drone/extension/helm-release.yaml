@@ -38,7 +38,8 @@ spec:
       config:
         enabled: true
         type: configMap
-        mountPath: /app
+        mountPath: /app/index.js
+        name: drone-extension
         subPath: index.js
         readOnly: true
   valuesFrom:
