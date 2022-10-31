@@ -36,7 +36,7 @@ jobs:
           echo "RENOVATE_DRY_RUN=${{ inputs.dryRun || 'false' }}" >> $GITHUB_ENV
           echo "LOG_LEVEL=${{ inputs.logLevel || 'info' }}" >> $GITHUB_ENV
       - name: Run renovate
-        uses: renovatebot/github-action@v34.9.1
+        uses: renovatebot/github-action@v34.10.0
         with:
           configurationFile: .github/renovate.json
           token: ${{ steps.generate-token.outputs.token }}
