@@ -16,6 +16,7 @@ packages:
   - iotop
   - iperf3
   - jq
+  - lm_sensors
   - lsof
   - man-pages
   - nano
