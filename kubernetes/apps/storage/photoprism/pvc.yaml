@@ -12,7 +12,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${GATEWAY_IP}
-    path: /mnt/md0/photoprism
+    path: /mnt/md0/nextcloud/chamburr/files/Pictures
   mountOptions:
     - nfsvers=4.2
     - nconnect=8

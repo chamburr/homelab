@@ -20,6 +20,5 @@ nfs_directories:
   - harbor
   - minio
   - nextcloud
-  - photoprism
   - samba
   - thanos
