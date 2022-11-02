@@ -112,3 +112,14 @@ spec:
       secret.reloader.stakater.com/reload: nextcloud-secret
     startupProbe:
       enabled: true
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: Deployment
+              name: nextcloud
+            patch:
+              - op: remove
+                path: /spec/template/spec/containers/0/volumeMounts/2/subPath
+              - op: remove
+                path: /spec/template/spec/containers/1/volumeMounts/2/subPath
