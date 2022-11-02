@@ -25,7 +25,7 @@ spec:
       nameOverride: photoprism
     image:
       repository: docker.io/photoprism/photoprism
-      tag: 220730-jammy
+      tag: 221102-jammy
     env:
       PHOTOPRISM_STORAGE_PATH: /photoprism/storage
       PHOTOPRISM_ORIGINALS_PATH: /photoprism/originals
