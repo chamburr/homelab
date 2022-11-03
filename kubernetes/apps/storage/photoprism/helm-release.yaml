@@ -48,6 +48,13 @@ spec:
         enabled: true
         existingClaim: photoprism-originals
         mountPath: /photoprism/originals
+      template:
+        enabled: true
+        type: configMap
+        mountPath: /opt/photoprism/assets/templates/index.gohtml
+        name: photoprism
+        subPath: index.gohtml
+        readOnly: true
     ingress:
       main:
         enabled: true
