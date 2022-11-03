@@ -62,6 +62,7 @@ spec:
             'overwritehost' => 'cloud.${DOMAIN}',
             'overwriteprotocol' => 'https',
             'overwrite.cli.url' => 'https://cloud.${DOMAIN}',
+            'allow_local_remote_servers' => true,
             'trashbin_retention_obligation' => 'auto, 30',
             'versions_retention_obligation' => 'auto, 30',
             'updatechecker' => false,
