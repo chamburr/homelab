@@ -27,23 +27,31 @@ spec:
         password: ""
       config:
         repository:
-          DEFAULT_BRANCH: master
           DEFAULT_PRIVATE: public
+          DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls,repo.wiki
+          DEFAULT_BRANCH: master
+        repository.pull-request:
+          DEFAULT_MERGE_STYLE: squash
         server:
           DOMAIN: git.${DOMAIN}
           ROOT_URL: https://git.${DOMAIN}
           DISABLE_SSH: true
-          ENABLE_GZIP: true
-          LFS_START_SERVER: true
-        cache:
-          ENABLED: true
-          ADAPTER: memory
         database:
           DB_TYPE: sqlite3
+          LOG_SQL: false
         indexer:
           REPO_INDEXER_ENABLED: true
         service:
           DISABLE_REGISTRATION: true
+          REQUIRE_SIGNIN_VIEW: true
+          ENABLE_NOTIFY_MAIL: true
+          DEFAULT_ALLOW_CREATE_ORGANIZATION: false
+          DEFAULT_ENABLE_DEPENDENCIES: false
+          ENABLE_TIMETRACKING: false
+          DEFAULT_ENABLE_TIMETRACKING: false
+          SHOW_MILESTONES_DASHBOARD_PAGE: false
+        service.explore:
+          REQUIRE_SIGNIN_VIEW: true
         mailer:
           ENABLED: true
           MAILER_TYPE: smtp
@@ -51,8 +59,21 @@ spec:
           USER: ${MAIL_USERNAME}
           PASSWD: ${MAIL_PASSWORD}
           FROM: ${MAIL_SENDER}
+        picture:
+          DISABLE_GRAVATAR: true
+          AVATAR_MAX_FILE_SIZE: 10485760
         cron:
           ENABLED: true
+        git:
+          MAX_GIT_DIFF_LINES: 3000
+          MAX_GIT_DIFF_FILES: 300
+          GC_ARGS: --aggressive --auto
+        api:
+          ENABLE_SWAGGER: false
+        packages:
+          ENABLED: false
+        other:
+          ENABLE_SITEMAP: false
     memcached:
       enabled: false
     postgresql:
