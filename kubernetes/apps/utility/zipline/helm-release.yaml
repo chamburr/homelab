@@ -29,15 +29,10 @@ spec:
     image:
       repository: ghcr.io/diced/zipline
       tag: 3.6.0
-    args:
-      - /bin/sh
-      - -c
-      - sed -i 's/if (params.id ===.*/if (!params.id) return await handle(req, res);/g'
-        /zipline/src/server/index.ts && node_modules/.bin/tsx src/server
     env:
       CORE_HTTPS: true
       CORE_DATABASE_URL: postgresql://postgres:zipline-pass@zipline-postgresql/zipline
-      UPLOADER_ROUTE: /
+      UPLOADER_ROUTE: ""
       UPLOADER_LENGTH: 6
     service:
       main:
