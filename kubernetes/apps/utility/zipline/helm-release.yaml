@@ -29,10 +29,14 @@ spec:
     image:
       repository: ghcr.io/diced/zipline
       tag: 3.6.0
+    args:
+      - /bin/sh
+      - -c
+      - sed -i 's/"\\/u"/""/g' /zipline/dist/lib/config/validateConfig.js &&
+        node --enable-source-maps dist/server
     env:
       CORE_HTTPS: true
       CORE_DATABASE_URL: postgresql://postgres:zipline-pass@zipline-postgresql/zipline
-      UPLOADER_ROUTE: ""
       UPLOADER_LENGTH: 6
     service:
       main:
