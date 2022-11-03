@@ -23,7 +23,7 @@ spec:
   values:
     image:
       repository: docker.io/nextcloud
-      tag: 25.0.0
+      tag: 25.0.1
     nextcloud:
       host: cloud.${DOMAIN}
       username: admin
