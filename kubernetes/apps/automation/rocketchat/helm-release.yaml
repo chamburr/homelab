@@ -23,6 +23,11 @@ spec:
   values:
     host: rocketchat.${DOMAIN}
     mongodb:
+      auth:
+        username: rocketchat
+        password: rocketchat-pass
+        database: rocketchat
+        rootPassword: rocketchat-pass
       persistence:
         enabled: true
         existingClaim: rocketchat-mongodb
