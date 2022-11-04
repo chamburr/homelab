@@ -51,7 +51,7 @@ spec:
       - name: MM_EMAILSETTINGS_SMTPSERVER
         value: ${MAIL_HOST}
       - name: MM_EMAILSETTINGS_SMTPPORT
-        value: ${MAIL_PORT}
+        value: ${a="${MAIL_PORT}"}
       - name: MM_EMAILSETTINGS_ENABLESMTPAUTH
         value: "true"
       - name: MM_EMAILSETTINGS_SMTPUSERNAME
