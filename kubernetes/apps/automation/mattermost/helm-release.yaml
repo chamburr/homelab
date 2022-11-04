@@ -30,9 +30,10 @@ spec:
       type: Recreate
     persistence:
       data:
+        enabled: true
         existingClaim: mattermost-data
       plugins:
-        existingClaim: mattermost-plugins
+        enabled: false
     ingress:
       enabled: true
       hosts:
