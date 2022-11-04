@@ -1,0 +1,37 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rocketchat
+  namespace: automation
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: rocketchat
+      version: 5.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: rocketchat
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    host: rocketchat.${DOMAIN}
+    mongodb:
+      persistence:
+        enabled: true
+        existingClaim: rocketchat-mongodb
+    persistence:
+      enabled: true
+      existingClaim: rocketchat-data
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      tls:
+        - hosts:
+            - rocketchat.${DOMAIN}
