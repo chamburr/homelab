@@ -68,6 +68,8 @@ spec:
           GC_ARGS: --aggressive --auto
         api:
           ENABLE_SWAGGER: false
+        oauth2:
+          ENABLE: false
         packages:
           ENABLED: false
         other:
