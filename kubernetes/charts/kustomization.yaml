@@ -16,6 +16,7 @@ resources:
   - jetstack.yaml
   - lwolf.yaml
   - mailu.yaml
+  - mattermost.yaml
   - metallb.yaml
   - metrics-server.yaml
   - minio.yaml
