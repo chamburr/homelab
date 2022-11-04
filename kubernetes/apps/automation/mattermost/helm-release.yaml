@@ -42,8 +42,9 @@ spec:
             - mattermost.${DOMAIN}
     externalDB:
       enabled: true
-      externalDriverType: postgresql
-      externalConnectionString: postgres:mattermost-pass@mattermost-postgresql/mattermost
+      externalDriverType: postgres
+      externalConnectionString: >-
+        postgres:mattermost-pass@mattermost-postgresql/mattermost?sslmode=disable&connect_timeout=10
     mysql:
       enabled: false
   postRenderers:
