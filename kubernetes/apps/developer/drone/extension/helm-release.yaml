@@ -29,6 +29,8 @@ spec:
     args:
       - node
       - /app/index.js
+    env:
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
     service:
       main:
         ports:
@@ -42,8 +44,3 @@ spec:
         name: drone-extension
         subPath: index.js
         readOnly: true
-  valuesFrom:
-    - kind: Secret
-      name: drone-extension-secret
-      valuesKey: token
-      targetPath: env.GITHUB_TOKEN
