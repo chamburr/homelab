@@ -82,13 +82,13 @@ data:
         })
         function callback() {
           if (!document.querySelector('.nav-browse')) return
-          document.querySelector('.nav-browse').previousElementSibling.firstChild.innerText = 'photo'
+          document.querySelector('.nav-browse').previousSibling.firstChild.innerText = 'photo'
           document.querySelector('.nav-browse span').parentNode.innerText = 'Library'
           document.querySelector('.nav-folders i').innerText = 'bookmark'
           document.querySelector('.nav-folders span').parentNode.innerText = 'Albums'
           document.querySelector('.nav-private i').innerText = 'delete'
           document.querySelector('.nav-archive span').parentNode.innerText = 'Deleted'
-          document.querySelector('.nav-archive').firstElementChild.firstElementChild
+          document.querySelector('.nav-archive a div')
             .insertAdjacentElement('beforeBegin', document.querySelector('div[title="Private"]'))
           document.querySelector('.nav-settings').parentNode.parentNode
             .insertAdjacentElement('beforeBegin', document.querySelector('.nav-archive'))
