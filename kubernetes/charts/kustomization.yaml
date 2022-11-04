@@ -24,7 +24,6 @@ resources:
   - plausible.yaml
   - prometheus.yaml
   - ricoberger.yaml
-  - rocketchat.yaml
   - rook-ceph.yaml
   - sentry.yaml
   - stakater.yaml

@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - home-assistant
   - n8n
-  - rocketchat
