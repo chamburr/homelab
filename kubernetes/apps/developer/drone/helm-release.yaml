@@ -21,6 +21,9 @@ spec:
     remediation:
       retries: 3
   values:
+    image:
+      repository: docker.io/guessi/drone
+      tag: 2.15.0-nolimit
     env:
       DRONE_SERVER_HOST: drone.${DOMAIN}
       DRONE_SERVER_PROTO: https
