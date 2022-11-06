@@ -45,3 +45,6 @@ spec:
         name: drone-extension
         subPath: index.js
         readOnly: true
+    podSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
