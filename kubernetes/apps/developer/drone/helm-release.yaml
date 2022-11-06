@@ -29,10 +29,14 @@ spec:
       DRONE_SERVER_PROTO: https
       DRONE_REGISTRATION_CLOSED: true
       DRONE_CRON_INTERVAL: 5m
+      DRONE_STATUS_DISABLED: true
       DRONE_YAML_ENDPOINT: http://drone-extension.developer:3000/yaml
       DRONE_YAML_SECRET: secret
       DRONE_VALIDATE_PLUGIN_ENDPOINT: http://drone-extension.developer:3000/validate
       DRONE_VALIDATE_PLUGIN_SECRET: secret
+      DRONE_WEBHOOK_ENDPOINT: http://drone-extension.developer:3000/webhook
+      DRONE_WEBHOOK_EVENTS: build:updated,build:completed
+      DRONE_WEBHOOK_SECRET: secret
     persistentVolume:
       enabled: true
       existingClaim: drone-data
@@ -68,3 +72,19 @@ spec:
       name: drone-secret
       valuesKey: github_secret
       targetPath: env.DRONE_GITHUB_CLIENT_SECRET
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: Deployment
+              name: drone
+            patch:
+              - op: add
+                path: /spec/template/spec/containers/0/lifecycle
+                value:
+                  postStart:
+                    exec:
+                      command:
+                        - /bin/sh
+                        - -c
+                        - apk add --no-cache sqlite

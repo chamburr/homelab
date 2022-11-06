@@ -24,13 +24,14 @@ spec:
     global:
       nameOverride: drone-extension
     image:
-      repository: docker.io/node
-      tag: 19.0.0-alpine
+      repository: ghcr.io/onedr0p/kubernetes-kubectl
+      tag: 1.25.3
     args:
-      - node
-      - /app/index.js
+      - /bin/sh
+      - -c
+      - apk add --no-cache nodejs && node /app/index.js
     env:
-      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      DOMAIN: drone.${DOMAIN}
     service:
       main:
         ports:

@@ -9,12 +9,22 @@ metadata:
 data:
   index.js: |
     const http = require('http')
+    const exec = require('child_process').execSync
 
     async function handle(req, res, body) {
+      let pod = exec(
+        `kubectl get pod -n developer -l app.kubernetes.io/name=drone -o name`,
+        { encoding: 'utf-8' }
+      ).trim('\n')
+      let token = exec(
+        `kubectl exec -n developer ${pod} -- \
+          sqlite3 /data/database.sqlite 'select user_oauth_token from users'`
+      ).trim('\n')
+
       let opts = {
         headers: {
           Accept: 'application/vnd.github+json',
-          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`
+          Authorization: `Bearer ${token}`
         }
       }
 
@@ -57,6 +67,74 @@ data:
 
         if (event === 'pull_request' && source !== target) {
           res.statusCode = 499
+        }
+
+        res.write('{"message": "success"}')
+
+        return
+      }
+
+      if (req.url === '/webhook') {
+        let slug = body.repo.slug
+        let sha = body.build.after
+        let event = body.build.event
+        let number = body.build.number
+        let stages = body.build.stages
+
+        for (let stage of body.build.stages) {
+          let state = ''
+          let description = ''
+
+          if (stage.status === 'blocked') {
+            state = 'pending'
+            description = 'Build is pending approval'
+          } else if (stage.status === 'pending') {
+            state = 'pending'
+            description = 'Build is pending'
+          } else if (stage.status === 'waiting_on_dependencies') {
+            state = 'pending'
+            description = 'Build is pending'
+          } else if (stage.status === 'running') {
+            state = 'pending'
+            description = 'Build is running'
+          } else if (stage.status === 'success') {
+            state = 'success'
+            description = 'Build has succeeded'
+          } else if (stage.status === 'skipped') {
+            state = 'success'
+            description = 'Build was skipped'
+          } else if (stage.status === 'declined') {
+            state = 'success'
+            description = 'Build was declined'
+          } else if (stage.status === 'failure') {
+            state = 'failure'
+            description = 'Build has failed'
+          } else if (stage.status === 'error') {
+            state = 'error'
+            description = 'Build has encountered an error'
+          }  else if (stage.status === 'killed') {
+            state = 'error'
+            description = 'Build was killed'
+          }   else {
+            state = 'error'
+            description = 'Unknown'
+          }
+
+          let data = {
+            state,
+            description,
+            context: `ci/${event}/${stage.name}`,
+            target_url: `https://${process.env.DOMAIN}/${slug}/${number}/${stage.number}`
+          }
+
+          await fetch(`https://api.github.com/repos/${slug}/statuses/${sha}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              ...opts.headers
+            },
+            body: JSON.stringify(data)
+          })
         }
 
         res.write('{"message": "success"}')
