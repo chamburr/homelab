@@ -26,7 +26,6 @@ resources:
   - prometheus.yaml
   - ricoberger.yaml
   - rook-ceph.yaml
-  - sentry.yaml
   - stakater.yaml
   - traefik.yaml
   - vector.yaml

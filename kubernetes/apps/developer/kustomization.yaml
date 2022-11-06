@@ -6,4 +6,3 @@ resources:
   - gitea
   - harbor
   - plausible
-  - sentry
