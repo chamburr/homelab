@@ -126,7 +126,7 @@ data:
             state,
             description,
             context: `ci/${event}/${stage.name}`,
-            target_url: `https://${process.env.DOMAIN}/${slug}/${number}/${stage.number}`
+            target_url: `${body.system.link}/${slug}/${number}/${stage.number}`
           }
 
           await fetch(`https://api.github.com/repos/${slug}/statuses/${sha}`, {

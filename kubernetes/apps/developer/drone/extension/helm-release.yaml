@@ -30,8 +30,6 @@ spec:
       - /bin/sh
       - -c
       - apk add --no-cache nodejs-current && node /app/index.js
-    env:
-      DOMAIN: drone.${DOMAIN}
     service:
       main:
         ports:

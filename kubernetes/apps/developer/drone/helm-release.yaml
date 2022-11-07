@@ -43,7 +43,7 @@ spec:
       DRONE_VALIDATE_PLUGIN_ENDPOINT: http://drone-extension.developer:3000/validate
       DRONE_VALIDATE_PLUGIN_SECRET: secret
       DRONE_WEBHOOK_ENDPOINT: http://drone-extension.developer:3000/webhook
-      DRONE_WEBHOOK_EVENTS: build:updated,build:completed
+      DRONE_WEBHOOK_EVENTS: build:updated
       DRONE_WEBHOOK_SECRET: secret
     persistentVolume:
       enabled: true
