@@ -11,6 +11,9 @@ data:
     const http = require('http')
     const exec = require('child_process').execSync
 
+    const yaml = require('yaml')
+    const micromatch = require('micromatch')
+
     async function handle(req, res, body) {
       let pod = exec(
         `kubectl get pod -n developer -l app.kubernetes.io/name=drone -o name`,
@@ -57,17 +60,74 @@ data:
           files.push(file)
         }
 
-        res.write(`{"data": ${JSON.stringify(files.join('\n'))}}`)
+        res.write(`{"data": "${files.join('\n')}"}`)
+
+        return
+      }
+
+      if (req.url === '/convert') {
+        let slug = body.repo.slug
+        let before = body.build.before
+        let after = body.build.after
+        let config = body.config.data
+
+        if (!config.includes('paths:')) {
+          res.write(`{"data": "${config}"}`)
+
+          return
+        }
+
+        let url = `https://api.github.com/repos/${slug}/commits/${after}`
+        if (before && before !== '0000000000000000000000000000000000000000') {
+          url = `https://api.github.com/repos/${slug}/compare/${before}...${after}`
+        }
+
+        let data = await fetch(url, opts)
+        data = await data.json()
+
+        let files = data.files.map(file => file.filename)
+        let documents = yaml.parseAllDocuments(config)
+
+        docments = documents.map(document => {
+          document = document.toJSON()
+
+          if (document.kind === 'pipeline') {
+            if (document.trigger && document.trigger.paths) {
+              let include = document.trigger.paths.include || []
+              let exclude = document.trigger.paths.exclude || []
+              if (micromatch(files, include, { dot: true, ignore: exclude }).length === 0) {
+                document.trigger = { event: { exclude: ['*'] } }
+              }
+            }
+
+            if (document.steps) {
+              document.steps = document.steps.map(step => {
+                if (step.when && step.when.paths) {
+                  let include = step.when.paths.include || []
+                  let exclude = step.when.paths.exclude || []
+                  if (micromatch(files, include, { dot: true, ignore: exclude }).length === 0) {
+                    step.when = { event: { exclude: ['*'] } }
+                  }
+                }
+                return step
+              })
+            }
+          }
+
+          return `---\n${yaml.stringify(document)}`
+        })
+
+        res.write(`{"data": "${documents.join('\n')}"}`)
 
         return
       }
 
       if (req.url === '/validate') {
+        let slug = body.repo.slug
         let event = body.build.event
-        let source = body.build.fork
-        let target = body.repo.slug
+        let source = body.build.source_repo
 
-        if (event === 'pull_request' && source !== target) {
+        if (event === 'pull_request' && source !== slug) {
           res.statusCode = 499
         }
 

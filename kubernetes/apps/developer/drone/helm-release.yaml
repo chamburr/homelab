@@ -40,6 +40,8 @@ spec:
       DRONE_STATUS_DISABLED: true
       DRONE_YAML_ENDPOINT: http://drone-extension.developer:3000/yaml
       DRONE_YAML_SECRET: secret
+      DRONE_CONVERT_PLUGIN_ENDPOINT: http://drone-extension.developer:3000/convert
+      DRONE_CONVERT_PLUGIN_SECRET: secret
       DRONE_VALIDATE_PLUGIN_ENDPOINT: http://drone-extension.developer:3000/validate
       DRONE_VALIDATE_PLUGIN_SECRET: secret
       DRONE_WEBHOOK_ENDPOINT: http://drone-extension.developer:3000/webhook
