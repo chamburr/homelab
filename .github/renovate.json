@@ -20,12 +20,12 @@
   "gitAuthor": "chamburr-bot <113156419+chamburr-bot[bot]@users.noreply.github.com>",
   "repositories": ["chamburr/homelab"],
   "flux": {
-    "fileMatch": ["kubernetes/.+\\.yaml$"]
+    "fileMatch": ["^kubernetes/.+\\.yaml$"]
   },
   "helm-values": {
-    "fileMatch": ["kubernetes/.+\\.yaml$"]
+    "fileMatch": ["^kubernetes/.+\\.yaml$"]
   },
   "kubernetes": {
-    "fileMatch": ["kubernetes/.+\\.yaml$"]
+    "fileMatch": ["^kubernetes/.+\\.yaml$"]
   }
 }

@@ -2,7 +2,7 @@
   "regexManagers": [
     {
       "description": "Process comments",
-      "fileMatch": ["kubernetes/.+\\.yaml$"],
+      "fileMatch": ["^kubernetes/.+\\.yaml$"],
       "matchStrings": [
         "# renovate source=(?<datasource>\\S+) name=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
         "# renovate registry=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n"
@@ -10,8 +10,8 @@
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
     },
     {
-      "descrption": "Process github urls",
-      "fileMatch": ["kubernetes/.+\\.yaml$", "scripts/.+\\.yaml$"],
+      "description": "Process github urls",
+      "fileMatch": ["^kubernetes/.+\\.yaml$", "^scripts/.+\\.yaml$"],
       "matchStrings": [
         "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
       ],
@@ -19,7 +19,7 @@
     },
     {
       "description": "Cert-manager override",
-      "fileMatch": ["kubernetes/crds/cert-manager/.+\\.yaml$"],
+      "fileMatch": ["^kubernetes/crds/cert-manager/.+\\.yaml$"],
       "matchStrings": [
         "# renovate source=(?<datasource>\\S+) name=(?<depName>\\S+)\n.*?/(?<currentValue>v[^-=\\s]*)/"
       ],
