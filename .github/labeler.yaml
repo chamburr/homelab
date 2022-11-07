@@ -1,9 +1,0 @@
----
-area/github:
-  - .github/**/*
-area/ansible:
-  - ansible/**/*
-area/kubernetes:
-  - kubernetes/**/*
-area/terraform:
-  - terraform/**/*

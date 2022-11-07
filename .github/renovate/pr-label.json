@@ -1,16 +1,33 @@
 {
+  "labels": [],
   "packageRules": [
     {
+      "matchPaths": [".github/**"],
+      "addLabels": ["area/github"]
+    },
+    {
+      "matchPaths": ["ansible/**"],
+      "addLabels": ["area/ansible"]
+    },
+    {
+      "matchPaths": ["kubernetes/**"],
+      "addLabels": ["area/kubernetes"]
+    },
+    {
+      "matchPaths": ["terraform/**"],
+      "addLabels": ["area/terraform"]
+    },
+    {
       "matchUpdateTypes": ["major"],
-      "labels": ["version/major"]
+      "addLabels": ["version/major"]
     },
     {
       "matchUpdateTypes": ["minor"],
-      "labels": ["version/minor"]
+      "addLabels": ["version/minor"]
     },
     {
       "matchUpdateTypes": ["patch"],
-      "labels": ["version/patch"]
+      "addLabels": ["version/patch"]
     },
     {
       "matchDatasources": ["galaxy", "galaxy-collection"],
