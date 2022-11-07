@@ -64,8 +64,8 @@ data:
 
       if (req.url === '/validate') {
         let event = body.build.event
-        let source = body.build.fork.toLowerCase()
-        let target = body.repo.slug.toLowerCase()
+        let source = body.build.fork
+        let target = body.repo.slug
 
         if (event === 'pull_request' && source !== target) {
           res.statusCode = 499
