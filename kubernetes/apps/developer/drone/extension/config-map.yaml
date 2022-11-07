@@ -18,7 +18,8 @@ data:
       ).trim('\n')
       let token = exec(
         `kubectl exec -n developer ${pod} -- \
-          sqlite3 /data/database.sqlite 'select user_oauth_token from users'`
+          sqlite3 /data/database.sqlite 'select user_oauth_token from users'`,
+        { encoding: 'utf-8' }
       ).trim('\n')
 
       let opts = {
