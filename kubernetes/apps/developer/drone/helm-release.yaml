@@ -22,7 +22,8 @@ spec:
       retries: 3
   values:
     image:
-      repository: docker.io/guessi/drone
+      registry: docker.io
+      repository: guessi/drone
       tag: 2.15.0-nolimit
     env:
       GODEBUG: netdns=go
