@@ -37,7 +37,7 @@ spec:
       N8N_DIAGONISTICS_ENABLED: false
       N8N_HIRING_BANNER_ENABLED: false
       EXECUTIONS_DATA_PRUNE: true
-      EXECUTIONS_DATA_MAX_AGE: 336
+      EXECUTIONS_DATA_MAX_AGE: 24
       GENERIC_TIMEZONE: Asia/Singapore
     service:
       main:
