@@ -93,8 +93,9 @@ data:
 
           if (document.kind === 'pipeline') {
             if (document.trigger && document.trigger.paths) {
-              let include = document.trigger.paths.include || []
-              let exclude = document.trigger.paths.exclude || []
+              let paths = document.trigger.paths
+              let include = Array.isArray(paths) ? paths : paths.include || []
+              let exclude = Array.isArray(paths) ? [] : paths.exclude || []
               if (micromatch(files, include, { dot: true, ignore: exclude }).length === 0) {
                 document.trigger = { event: { exclude: ['*'] } }
               }
@@ -103,8 +104,9 @@ data:
             if (document.steps) {
               document.steps = document.steps.map(step => {
                 if (step.when && step.when.paths) {
-                  let include = step.when.paths.include || []
-                  let exclude = step.when.paths.exclude || []
+                  let paths = step.when.paths
+                  let include = Array.isArray(paths) ? paths : paths.include || []
+                  let exclude = Array.isArray(paths) ? [] : paths.exclude || []
                   if (micromatch(files, include, { dot: true, ignore: exclude }).length === 0) {
                     step.when = { event: { exclude: ['*'] } }
                   }
