@@ -72,7 +72,7 @@ data:
         let config = body.config.data
 
         if (!config.includes('paths:')) {
-          res.write(`{"data": "${config}"}`)
+          res.write(`{"data": ${JSON.stringify(config)}}`)
 
           return
         }
