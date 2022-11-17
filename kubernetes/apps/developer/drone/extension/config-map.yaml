@@ -60,7 +60,7 @@ data:
           files.push(file)
         }
 
-        res.write(`{"data": "${files.join('\n')}"}`)
+        res.write(`{"data": ${JSON.stringify(files.join('\n'))}}`)
 
         return
       }
@@ -119,7 +119,7 @@ data:
           return `---\n${yaml.stringify(document)}`
         })
 
-        res.write(`{"data": "${documents.join('\n')}"}`)
+        res.write(`{"data": ${JSON.stringify(documents.join('\n'))}}`)
 
         return
       }
