@@ -8,7 +8,7 @@ clone:
 steps:
   - name: Post webhook
     image: plugins/webhook
-    commands:
+    settings:
       method: POST
       urls:
         from_secret: flux_webhook
