@@ -1,0 +1,16 @@
+---
+kind: pipeline
+name: format
+
+steps:
+  - name: Check formatting
+    image: node
+    commands:
+      - npm install -g prettier
+      - prettier -c .
+
+trigger:
+  event:
+    - push
+  branch:
+    - master
