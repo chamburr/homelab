@@ -3,7 +3,7 @@
 lintYaml() {
   echo 'Linting yaml...'
 
-  yamllint -c .yamllint.yaml .
+  yamllint .
 }
 
 lintAnsible() {
