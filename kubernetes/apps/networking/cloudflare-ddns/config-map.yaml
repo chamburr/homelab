@@ -21,7 +21,7 @@ data:
     new_ipv4=$(curl -s https://ipv4.icanhazip.com)
     old_ipv4=$(echo "$record" | jq -r '.result[0] | .content')
 
-    if [[ "$old_ipv4" == "$new_ipv4" ]]; then
+    if [[ "$old_ipv4" = "$new_ipv4" ]]; then
       printf "IP address %s has not changed" "$old_ipv4"
       exit 0
     fi
@@ -35,7 +35,7 @@ data:
       -d "{\"content\":\"$new_ipv4\"}" \
     )
 
-    if [[ "$(echo "$result" | jq -r '.success')" == "true" ]]; then
+    if [[ "$(echo "$result" | jq -r '.success')" = "true" ]]; then
       printf "Success - IP address %s has been updated" "$new_ipv4"
       exit 0
     else
