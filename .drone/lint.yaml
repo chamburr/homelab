@@ -1,0 +1,38 @@
+---
+kind: pipeline
+name: lint
+
+steps:
+  - name: Lint yaml
+    image: python
+    commands:
+      - pip install yamllint
+      - yamllint .
+    when:
+      paths:
+        - "**/*.y?(a)ml"
+  - name: Lint ansible
+    image: python
+    commands:
+      - pip install ansible-lint
+      - ansible-lint ansible -q
+    when:
+      paths:
+        - ansible/**/*
+  - name: Lint terraform
+    image: ubuntu
+    commands:
+      - apt-get -qq update
+      - apt-get install -y curl unzip
+      - curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh |
+        bash
+      - tflint terraform
+    when:
+      paths:
+        - terraform/**/*
+
+trigger:
+  event:
+    - push
+  branch:
+    - master
