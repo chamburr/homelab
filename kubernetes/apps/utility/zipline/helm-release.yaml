@@ -28,7 +28,7 @@ spec:
       nameOverride: zipline
     image:
       repository: ghcr.io/diced/zipline
-      tag: 3.6.0
+      tag: 3.6.1
     args:
       - /bin/sh
       - -c
