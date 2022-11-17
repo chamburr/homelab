@@ -32,7 +32,7 @@ steps:
       THANOS_PASSWORD:
         from_secret: thanos_password
 
-triggers:
+trigger:
   event:
     - push
   branch:
