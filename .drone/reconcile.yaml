@@ -6,13 +6,13 @@ clone:
   disable: true
 
 steps:
-  - name: Post webhook
+  - name: post webhook
     image: plugins/webhook
     settings:
       method: POST
       urls:
         from_secret: flux_webhook
-  - name: Wait for reconciliation
+  - name: wait for reconciliation
     image: ubuntu
     commands:
       - apt-get -qq update

@@ -3,7 +3,7 @@ kind: pipeline
 name: lint
 
 steps:
-  - name: Lint yaml
+  - name: lint yaml
     image: python
     commands:
       - pip install yamllint
@@ -11,7 +11,7 @@ steps:
     when:
       paths:
         - "**/*.y?(a)ml"
-  - name: Lint ansible
+  - name: lint ansible
     image: python
     commands:
       - pip install ansible-lint
@@ -19,7 +19,7 @@ steps:
     when:
       paths:
         - ansible/**/*
-  - name: Lint terraform
+  - name: lint terraform
     image: ubuntu
     commands:
       - apt-get -qq update

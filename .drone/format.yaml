@@ -3,7 +3,7 @@ kind: pipeline
 name: format
 
 steps:
-  - name: Check formatting
+  - name: check formatting
     image: node
     commands:
       - npm install -g prettier
