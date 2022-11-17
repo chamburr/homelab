@@ -88,7 +88,7 @@ data:
         let files = data.files.map(file => file.filename)
         let documents = yaml.parseAllDocuments(config)
 
-        docments = documents.map(document => {
+        documents = documents.map(document => {
           document = document.toJSON()
 
           if (document.kind === 'pipeline') {
