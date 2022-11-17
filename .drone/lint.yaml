@@ -8,28 +8,15 @@ steps:
     commands:
       - pip install yamllint
       - yamllint .
-    when:
-      paths:
-        - "**/*.y?(a)ml"
   - name: lint ansible
     image: python
     commands:
       - pip install ansible-lint
       - ansible-lint ansible -q
-    when:
-      paths:
-        - ansible/**/*
   - name: lint terraform
-    image: ubuntu
+    image: ghcr.io/terraform-linters/tflint
     commands:
-      - apt-get -qq update
-      - apt-get install -y curl unzip
-      - curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh |
-        bash
       - tflint terraform
-    when:
-      paths:
-        - terraform/**/*
 
 trigger:
   event:
