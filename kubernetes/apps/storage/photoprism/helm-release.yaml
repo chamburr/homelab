@@ -67,3 +67,5 @@ spec:
         tls:
           - hosts:
               - photos.${DOMAIN}
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: photoprism

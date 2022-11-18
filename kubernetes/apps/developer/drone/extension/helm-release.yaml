@@ -49,3 +49,5 @@ spec:
     podSecurityContext:
       runAsUser: 0
       runAsGroup: 0
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: drone-extension
