@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - cleanup
   - dashboard
+  - kyverno
   - metrics-server
   - reflector
   - reloader
