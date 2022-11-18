@@ -31,7 +31,9 @@ spec:
     args:
       - /bin/sh
       - -c
-      - kopia server --insecure --address 0.0.0.0:80
+      - if [ ! -f /backups/kopia.repository.f ];
+        then kopia repository create filesystem --path=/backups; fi &&
+        kopia server --insecure --address 0.0.0.0:80
         --server-username $SERVER_USERNAME --server-password $SERVER_PASSWORD
     service:
       main:
