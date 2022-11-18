@@ -24,6 +24,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: samba-data
   namespace: storage
+  labels:
+    app.kubernetes.io/name: samba
+    app.kubernetes.io/instance: samba
 spec:
   accessModes:
     - ReadWriteMany

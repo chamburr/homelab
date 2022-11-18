@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: drone-data
   namespace: developer
+  labels:
+    app.kubernetes.io/name: drone
+    app.kubernetes.io/instance: drone
 spec:
   accessModes:
     - ReadWriteOnce

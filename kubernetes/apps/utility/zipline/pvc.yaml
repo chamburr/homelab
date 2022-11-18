@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: zipline-data
   namespace: utility
+  labels:
+    app.kubernetes.io/name: zipline
+    app.kubernetes.io/instance: zipline
 spec:
   accessModes:
     - ReadWriteOnce
@@ -17,6 +20,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: zipline-postgresql
   namespace: utility
+  labels:
+    app.kubernetes.io/name: zipline-postgresql
+    app.kubernetes.io/instance: zipline-postgresql
 spec:
   accessModes:
     - ReadWriteOnce

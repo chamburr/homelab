@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: adguard-home-config
   namespace: security
+  labels:
+    app.kubernetes.io/name: adguard-home
+    app.kubernetes.io/instance: adguard-home
 spec:
   accessModes:
     - ReadWriteOnce
@@ -17,6 +20,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: adguard-home-data
   namespace: security
+  labels:
+    app.kubernetes.io/name: adguard-home
+    app.kubernetes.io/instance: adguard-home
 spec:
   accessModes:
     - ReadWriteOnce

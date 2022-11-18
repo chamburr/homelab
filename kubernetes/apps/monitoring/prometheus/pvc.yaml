@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: prometheus-data
   namespace: monitoring
+  labels:
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/instance: prometheus
 spec:
   accessModes:
     - ReadWriteOnce

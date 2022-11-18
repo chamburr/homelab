@@ -24,6 +24,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: harbor-registry
   namespace: developer
+  labels:
+    app.kubernetes.io/name: harbor
+    app.kubernetes.io/instance: harbor
 spec:
   accessModes:
     - ReadWriteMany
@@ -37,6 +40,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: harbor-jobservice
   namespace: developer
+  labels:
+    app.kubernetes.io/name: harbor
+    app.kubernetes.io/instance: harbor
 spec:
   accessModes:
     - ReadWriteOnce
@@ -50,6 +56,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: harbor-database
   namespace: developer
+  labels:
+    app.kubernetes.io/name: harbor
+    app.kubernetes.io/instance: harbor
 spec:
   accessModes:
     - ReadWriteOnce
@@ -63,6 +72,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: harbor-redis
   namespace: developer
+  labels:
+    app.kubernetes.io/name: harbor
+    app.kubernetes.io/instance: harbor
 spec:
   accessModes:
     - ReadWriteOnce

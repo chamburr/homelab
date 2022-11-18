@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: ipsec-vpn-data
   namespace: security
+  labels:
+    app.kubernetes.io/name: ipsec-vpn
+    app.kubernetes.io/instance: ipsec-vpn
 spec:
   accessModes:
     - ReadWriteOnce

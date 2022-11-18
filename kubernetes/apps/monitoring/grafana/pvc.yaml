@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: grafana-data
   namespace: monitoring
+  labels:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: grafana
 spec:
   accessModes:
     - ReadWriteOnce

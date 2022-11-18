@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: loki-data
   namespace: monitoring
+  labels:
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/instance: loki
 spec:
   accessModes:
     - ReadWriteOnce

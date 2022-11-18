@@ -24,6 +24,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: nextcloud-config
   namespace: storage
+  labels:
+    app.kubernetes.io/name: nextcloud
+    app.kubernetes.io/instance: nextcloud
 spec:
   accessModes:
     - ReadWriteOnce
@@ -37,6 +40,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: nextcloud-data
   namespace: storage
+  labels:
+    app.kubernetes.io/name: nextcloud
+    app.kubernetes.io/instance: nextcloud
 spec:
   accessModes:
     - ReadWriteMany
@@ -50,6 +56,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: nextcloud-postgresql
   namespace: storage
+  labels:
+    app.kubernetes.io/name: nextcloud
+    app.kubernetes.io/instance: nextcloud
 spec:
   accessModes:
     - ReadWriteOnce
@@ -63,6 +72,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: nextcloud-redis
   namespace: storage
+  labels:
+    app.kubernetes.io/name: nextcloud
+    app.kubernetes.io/instance: nextcloud
 spec:
   accessModes:
     - ReadWriteOnce

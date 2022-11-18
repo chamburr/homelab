@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: n8n-data
   namespace: automation
+  labels:
+    app.kubernetes.io/name: n8n
+    app.kubernetes.io/instance: n8n
 spec:
   accessModes:
     - ReadWriteOnce

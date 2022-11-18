@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: plausible-postgresql
   namespace: developer
+  labels:
+    app.kubernetes.io/name: plausible
+    app.kubernetes.io/instance: plausible
 spec:
   accessModes:
     - ReadWriteOnce
@@ -17,6 +20,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: plausible-clickhouse-data
   namespace: developer
+  labels:
+    app.kubernetes.io/name: plausible
+    app.kubernetes.io/instance: plausible
 spec:
   accessModes:
     - ReadWriteOnce

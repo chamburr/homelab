@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: kutt-postgresql
   namespace: utility
+  labels:
+    app.kubernetes.io/name: kutt-postgresql
+    app.kubernetes.io/instance: kutt-postgresql
 spec:
   accessModes:
     - ReadWriteOnce
@@ -17,6 +20,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: kutt-redis
   namespace: utility
+  labels:
+    app.kubernetes.io/name: kutt-redis
+    app.kubernetes.io/instance: kutt-redis
 spec:
   accessModes:
     - ReadWriteOnce

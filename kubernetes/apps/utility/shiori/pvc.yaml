@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: shiori-data
   namespace: utility
+  labels:
+    app.kubernetes.io/name: shiori
+    app.kubernetes.io/instance: shiori
 spec:
   accessModes:
     - ReadWriteOnce

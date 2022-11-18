@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: flame-data
   namespace: utility
+  labels:
+    app.kubernetes.io/name: flame
+    app.kubernetes.io/instance: flame
 spec:
   accessModes:
     - ReadWriteOnce

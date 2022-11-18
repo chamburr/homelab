@@ -24,6 +24,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: kopia-data
   namespace: storage
+  labels:
+    app.kubernetes.io/name: kopia
+    app.kubernetes.io/instance: kopia
 spec:
   accessModes:
     - ReadWriteMany

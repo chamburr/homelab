@@ -24,6 +24,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: photoprism-data
   namespace: storage
+  labels:
+    app.kubernetes.io/name: photoprism
+    app.kubernetes.io/instance: photoprism
 spec:
   accessModes:
     - ReadWriteOnce
@@ -37,6 +40,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: photoprism-originals
   namespace: storage
+  labels:
+    app.kubernetes.io/name: photoprism
+    app.kubernetes.io/instance: photoprism
 spec:
   accessModes:
     - ReadWriteMany

@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: freshrss-data
   namespace: utility
+  labels:
+    app.kubernetes.io/name: freshrss
+    app.kubernetes.io/instance: freshrss
 spec:
   accessModes:
     - ReadWriteOnce

@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: wg-easy-data
   namespace: security
+  labels:
+    app.kubernetes.io/name: wg-easy
+    app.kubernetes.io/instance: wg-easy
 spec:
   accessModes:
     - ReadWriteOnce

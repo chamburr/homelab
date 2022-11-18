@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: uptime-kuma-data
   namespace: monitoring
+  labels:
+    app.kubernetes.io/name: uptime-kuma
+    app.kubernetes.io/instance: uptime-kuma
 spec:
   accessModes:
     - ReadWriteOnce

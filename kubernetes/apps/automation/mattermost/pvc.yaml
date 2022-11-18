@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: mattermost-data
   namespace: automation
+  labels:
+    app.kubernetes.io/name: mattermost
+    app.kubernetes.io/instance: mattermost
 spec:
   accessModes:
     - ReadWriteOnce
@@ -17,6 +20,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: mattermost-postgresql
   namespace: automation
+  labels:
+    app.kubernetes.io/name: mattermost-postgresql
+    app.kubernetes.io/instance: mattermost-postgresql
 spec:
   accessModes:
     - ReadWriteOnce

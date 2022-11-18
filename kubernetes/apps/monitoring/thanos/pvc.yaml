@@ -24,6 +24,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: thanos-data
   namespace: monitoring
+  labels:
+    app.kubernetes.io/name: thanos
+    app.kubernetes.io/instance: thanos
 spec:
   accessModes:
     - ReadWriteMany
@@ -37,6 +40,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: thanos-compactor
   namespace: monitoring
+  labels:
+    app.kubernetes.io/name: thanos
+    app.kubernetes.io/instance: thanos
 spec:
   accessModes:
     - ReadWriteOnce
@@ -50,6 +56,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: thanos-storegateway
   namespace: monitoring
+  labels:
+    app.kubernetes.io/name: thanos
+    app.kubernetes.io/instance: thanos
 spec:
   accessModes:
     - ReadWriteOnce
@@ -63,6 +72,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: thanos-receive
   namespace: monitoring
+  labels:
+    app.kubernetes.io/name: thanos
+    app.kubernetes.io/instance: thanos
 spec:
   accessModes:
     - ReadWriteOnce

@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: haste-data
   namespace: utility
+  labels:
+    app.kubernetes.io/name: haste
+    app.kubernetes.io/instance: haste
 spec:
   accessModes:
     - ReadWriteOnce

@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: netmaker-postgresql
   namespace: networking
+  labels:
+    app.kubernetes.io/name: netmaker
+    app.kubernetes.io/instance: netmaker
 spec:
   accessModes:
     - ReadWriteOnce
@@ -17,6 +20,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: netmaker-certs
   namespace: networking
+  labels:
+    app.kubernetes.io/name: netmaker
+    app.kubernetes.io/instance: netmaker
 spec:
   accessModes:
     - ReadWriteOnce
