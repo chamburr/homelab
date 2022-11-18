@@ -5,7 +5,7 @@ metadata:
   name: haste-clean
   namespace: utility
 spec:
-  schedule: 0 * * * *
+  schedule: 0 0 * * *
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
