@@ -1,4 +1,7 @@
 ---
+- name: Include backup tasks
+  ansible.builtin.include_tasks: backup.yml
+
 - name: Include cockpit tasks
   ansible.builtin.include_tasks: cockpit.yml
 
