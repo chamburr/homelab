@@ -5,6 +5,11 @@
     - 192.168.123.10
 
 - op: add
+  path: /machine/kubelet/extraArgs
+  value:
+    max-pods: 250
+
+- op: add
   path: /machine/network/interfaces
   value:
     - interface: eth0
