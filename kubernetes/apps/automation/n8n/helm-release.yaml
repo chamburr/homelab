@@ -25,7 +25,7 @@ spec:
       nameOverride: n8n
     image:
       repository: docker.io/n8nio/n8n
-      tag: 0.203.0
+      tag: 0.203.1
     env:
       N8N_PORT: 5678
       N8N_PROTOCOL: https
