@@ -97,7 +97,7 @@ spec:
         walCompression: true
         replicas: 1
         replicaExternalLabelName: replica
-        retention: 3h
+        retention: 1h
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
