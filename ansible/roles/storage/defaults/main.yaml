@@ -18,6 +18,7 @@ nfs_options:
 
 nfs_directories:
   - harbor
+  - kopia
   - minio
   - nextcloud
   - photoprism
