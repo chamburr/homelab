@@ -145,6 +145,12 @@ data:
         let number = body.build.number
         let stages = body.build.stages
 
+        if (event === 'cron') {
+          res.write('{"message": "success"}')
+
+          return
+        }
+
         for (let stage of body.build.stages) {
           let state = ''
           let description = ''
