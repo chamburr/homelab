@@ -48,7 +48,7 @@ spec:
                 name: "{{ request.object.metadata.name }}"
                 uid: "{{ request.object.metadata.uid }}"
           spec:
-            schedule: 0 3 * * *
+            schedule: 0 20 * * *
             suspend: false
             concurrencyPolicy: Forbid
             jobTemplate:
