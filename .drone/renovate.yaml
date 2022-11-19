@@ -35,7 +35,5 @@ steps:
 trigger:
   event:
     - cron
-  branch:
-    - master
   cron:
     - hourly
