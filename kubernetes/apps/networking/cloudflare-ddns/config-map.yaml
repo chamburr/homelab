@@ -26,7 +26,7 @@ data:
       exit 0
     fi
 
-    identifier="$(echo "$record" | jq -r '.result[0] | .id')"
+    identifier=$(echo "$record" | jq -r '.result[0] | .id')
     result=$(curl -s -X PATCH \
       "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/dns_records/$identifier" \
       -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
