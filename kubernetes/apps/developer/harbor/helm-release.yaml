@@ -62,3 +62,42 @@ spec:
       name: harbor-secret
       valuesKey: secret
       targetPath: secretKey
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: Deployment
+              name: harbor-registry
+            patch:
+              - op: add
+                path: /metadata/labels
+                value:
+                  app.kubernetes.io/name: harbor
+                  app.kubernetes.io/instance: harbor
+          - target:
+              kind: Deployment
+              name: harbor-jobservice
+            patch:
+              - op: add
+                path: /metadata/labels
+                value:
+                  app.kubernetes.io/name: harbor
+                  app.kubernetes.io/instance: harbor
+          - target:
+              kind: StatefulSet
+              name: harbor-database
+            patch:
+              - op: add
+                path: /metadata/labels
+                value:
+                  app.kubernetes.io/name: harbor
+                  app.kubernetes.io/instance: harbor
+          - target:
+              kind: StatefulSet
+              name: harbor-redis
+            patch:
+              - op: add
+                path: /metadata/labels
+                value:
+                  app.kubernetes.io/name: harbor
+                  app.kubernetes.io/instance: harbor
