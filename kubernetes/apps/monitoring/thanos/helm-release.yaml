@@ -70,7 +70,7 @@ spec:
         secret.reloader.stakater.com/reload: thanos-secret
     receive:
       enabled: true
-      tsdbRetention: 1h
+      tsdbRetention: 30m
       persistence:
         enabled: true
         existingClaim: thanos-receive
