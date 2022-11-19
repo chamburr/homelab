@@ -14,7 +14,7 @@ steps:
       - url=$(curl -s https://api.github.com/repos/slawekzachcial/gha-token/releases/latest |
         jq -r '.assets[] | select(.name | contains("linux")).browser_download_url')
       - curl -sL $url | tar x -C /tmp
-      - echo $GITHUB_PRIVATE_KEY > /tmp/private-key.pem
+      - echo "$GITHUB_PRIVATE_KEY" > /tmp/private-key.pem
       - /tmp/gha-token -a $GITHUB_ID -k /tmp/private-key.pem -r chamburr/homelab > token.txt
     environment:
       GITHUB_ID:
