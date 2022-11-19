@@ -16,14 +16,6 @@
         "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
       ],
       "datasourceTemplate": "github-releases"
-    },
-    {
-      "description": "Cert-manager override",
-      "fileMatch": ["^kubernetes/crds/cert-manager/.+\\.yaml$"],
-      "matchStrings": [
-        "# renovate source=(?<datasource>\\S+) name=(?<depName>\\S+)\n.*?/(?<currentValue>v[^-=\\s]*)/"
-      ],
-      "datasourceTemplate": "helm"
     }
   ]
 }

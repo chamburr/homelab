@@ -2,10 +2,6 @@
   "labels": [],
   "packageRules": [
     {
-      "matchPaths": [".github/**"],
-      "addLabels": ["area/github"]
-    },
-    {
       "matchPaths": ["ansible/**"],
       "addLabels": ["area/ansible"]
     },

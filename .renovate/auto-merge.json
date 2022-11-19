@@ -26,11 +26,6 @@
       "matchDatasources": ["terraform-provider"],
       "matchUpdateTypes": ["minor", "patch", "digest"],
       "automerge": true
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor", "patch", "digest"],
-      "automerge": true
     }
   ]
 }
