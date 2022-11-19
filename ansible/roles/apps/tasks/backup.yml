@@ -16,3 +16,12 @@
     user: "{{ username }}"
     job: talosctl etcd snapshot /home/{{ username }}/.talos/etcd.snapshot
     state: present
+
+- name: Add cron for talos folder
+  ansible.builtin.cron:
+    name: Backup talos folder
+    minute: "5"
+    hour: "0"
+    user: "{{ username }}"
+    job: sudo cp /home/{{ username }}/.talos /mnt/md0/.talos
+    state: present
