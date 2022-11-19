@@ -25,7 +25,7 @@ steps:
     image: renovate/renovate
     commands:
       - export RENOVATE_TOKEN=$(cat token.txt)
-      - curl -Lo https://raw.githubusercontent.com/chamburr/homelab/master/.renovate/config.json
+      - curl -sO https://raw.githubusercontent.com/chamburr/homelab/master/.renovate/config.json
       - renovate
     environment:
       LOG_LEVEL: info
