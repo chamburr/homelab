@@ -11,6 +11,7 @@
     "github>chamburr/homelab//.renovate/regex-manager"
   ],
   "onboarding": false,
+  "requireConfig": "optional",
   "prBodyTemplate": "{{{table}}}{{{notes}}}{{{changelogs}}}{{{controls}}}",
   "platform": "github",
   "username": "chamburr-bot[bot]",
