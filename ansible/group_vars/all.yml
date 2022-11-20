@@ -10,4 +10,4 @@ ssh_keys:
   - ssh-ed25519
     AAAAC3NzaC1lZDI1NTE5AAAAIF3DDYaYibt/VjeYDR7cO8tZA2iJUhPBh6jFrB1mBxJA hi@chamburr.com
   - ssh-ed25519
-    AAAAC3NzaC1lZDI1NTE5AAAAIBaRjQ7Ce8kGub9ijszEy/ZvwE5Iia8U3NprHSNXZ21l bot@chamburr.com
+    AAAAC3NzaC1lZDI1NTE5AAAAIATtJkIOcc1Rx5tUQvY2INgvXfSGBRYPuODbMC8O1L7y bot@chamburr.com
