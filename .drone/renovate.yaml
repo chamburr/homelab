@@ -25,12 +25,14 @@ steps:
     image: renovate/renovate
     commands:
       - export RENOVATE_TOKEN=$(cat token.txt)
-      - curl -sO https://raw.githubusercontent.com/chamburr/homelab/master/.renovate/config.json
+      - curl -so /tmp/config.json
+        https://raw.githubusercontent.com/chamburr/homelab/master/.renovate/config.json
+      - cd /usr/src/app
       - renovate
     environment:
       LOG_LEVEL: info
       RENOVATE_DRY_RUN: false
-      RENOVATE_CONFIG_FILE: config.json
+      RENOVATE_CONFIG_FILE: /tmp/config.json
 
 trigger:
   event:
