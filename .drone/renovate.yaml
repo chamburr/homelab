@@ -25,6 +25,7 @@ steps:
     image: renovate/renovate
     commands:
       - export RENOVATE_TOKEN=$(cat token.txt)
+      - unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL
       - curl -sO https://raw.githubusercontent.com/chamburr/homelab/master/.renovate/config.json
       - renovate
     environment:
