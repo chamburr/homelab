@@ -1,6 +1,6 @@
 ---
 kind: pipeline
-name: reconcile
+name: kubernetes
 
 clone:
   disable: true
