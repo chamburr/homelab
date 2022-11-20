@@ -20,9 +20,9 @@ generateSecret() {
 
     path=$(echo "$secret" | yq '.spec.path')
     keys=$(echo "$secret" | yq '.spec.keys | join("= ")')
-    keys+='='
+    keys="$keys="
 
-    data+="vault kv put $path $keys\n"
+    data="${data}vault kv put $path $keys\n"
   done
 
   echo "${data%??}" > scripts/vault/secrets.txt

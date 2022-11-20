@@ -6,10 +6,10 @@ password=$(grep PASSWORD= .env | cut -d '=' -f2-)
 args='-i ansible/hosts.yml'
 
 if [ "$user" != '' ]; then
-  args+=" -u '$user'"
+  args="$args -u '$user'"
 
   if [ "$password" != '' ]; then
-    args+=" -e 'ansible_password=$password'"
+    args="$args -e 'ansible_password=$password'"
   fi
 fi
 
