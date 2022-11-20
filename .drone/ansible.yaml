@@ -1,0 +1,27 @@
+---
+kind: pipeline
+name: ansible
+
+steps:
+  - name: run playbook
+    image: python
+    commands:
+      - pip install ansible
+      - echo "USER=chamburr" > .env
+      - echo "$SSH_PRIVATE_KEY" > /tmp/id_rsa
+      - chmod 400 /tmp/id_rsa
+      - ./scripts/ansible.sh playbook ansible/main.yml
+    environment:
+      ANSIBLE_FORCE_COLOR: true
+      ANSIBLE_HOST_KEY_CHECKING: false
+      ANSIBLE_PRIVATE_KEY_FILE: /tmp/id_rsa
+      SSH_PRIVATE_KEY:
+        from_secret: ssh_private_key
+
+trigger:
+  event:
+    - push
+  branch:
+    - master
+  paths:
+    - ansible/**/*
