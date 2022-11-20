@@ -97,7 +97,7 @@ spec:
         walCompression: true
         replicas: 1
         replicaExternalLabelName: replica
-        retention: 30m
+        retention: 3h
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
@@ -111,9 +111,6 @@ spec:
                 name: thanos-secret
                 key: password
         volumes:
-          - name: prometheus-2
-            persistentVolumeClaim:
-              claimName: prometheus-data
           - name: web-config-2
             secret:
               defaultMode: 0644
@@ -202,9 +199,6 @@ spec:
               - op: add
                 path: /spec/containers/0/volumeMounts
                 value:
-                  - name: prometheus-2
-                    mountPath: /prometheus
-                    subPath: prometheus-db
                   - name: web-config-2
                     mountPath: /etc/prometheus/web_config/web-config.yaml
                     subPath: web-config.yaml
