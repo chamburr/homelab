@@ -18,7 +18,6 @@ resource "cloudflare_zone_settings_override" "settings" {
     always_online    = "off"
     development_mode = "off"
 
-    http2               = "on"
     http3               = "on"
     ipv6                = "on"
     opportunistic_onion = "on"
