@@ -66,6 +66,7 @@ spec:
             'trashbin_retention_obligation' => 'auto, 30',
             'versions_retention_obligation' => 'auto, 30',
             'updatechecker' => false,
+            'check_data_directory_permissions' => false,
             'trusted_proxies' => array('${K8S_POD_CIDR}'),
             'upgrade.disable-web' => true,
             'simpleSignUpLink.shown' => false,
