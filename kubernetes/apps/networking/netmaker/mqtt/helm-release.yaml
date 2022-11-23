@@ -47,7 +47,7 @@ spec:
     persistence:
       config:
         enabled: true
-        type: configmap
+        type: configMap
         mountPath: /mosquitto/config/mosquitto.conf
         name: netmaker-mqtt
         subPath: mosquitto.conf
