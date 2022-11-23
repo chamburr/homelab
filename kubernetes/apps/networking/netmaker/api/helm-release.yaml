@@ -44,9 +44,9 @@ spec:
     securityContext:
       capabilities:
         add:
-        - NET_ADMIN
-        - NET_RAW
-        - SYS_MODULE
+          - NET_ADMIN
+          - NET_RAW
+          - SYS_MODULE
     service:
       main:
         ports:
