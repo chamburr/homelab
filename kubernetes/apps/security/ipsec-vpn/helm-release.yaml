@@ -53,23 +53,19 @@ spec:
       main:
         enabled: false
       ipsec-udp:
-        enabled: true
         type: LoadBalancer
         loadBalancerIP: ${LB_VPN_IPSEC}
         ports:
           ipsec-udp:
-            enabled: true
             port: 500
             protocol: UDP
             targetPort: 500
         externalTrafficPolicy: Local
       ikev2-udp:
-        enabled: true
         type: LoadBalancer
         loadBalancerIP: ${LB_VPN_IKEV2}
         ports:
           ikev2-udp:
-            enabled: true
             port: 4500
             protocol: UDP
             targetPort: 4500
