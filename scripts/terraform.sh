@@ -12,4 +12,4 @@ run() {
 }
 
 prepare
-run
+run $@
