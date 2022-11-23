@@ -1,0 +1,68 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: netmaker-mqtt
+  namespace: networking
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.1.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    global:
+      nameOverride: netmaker-mqtt
+    image:
+      repository: docker.io/eclipse-mosquitto
+      tag: 2.0.11-openssl
+    service:
+      main:
+        enabled: false
+      mqtt:
+        ports:
+          mqtt:
+            port: 1883
+            protocol: TCP
+            targetPort: 1883
+      mqtt-tls:
+        type: LoadBalancer
+        loadBalancerIP: ${LB_NETMAKER}
+        ports:
+          mqtt-tls:
+            port: 8883
+            protocol: TCP
+            targetPort: 8883
+        externalTrafficPolicy: Local
+    persistence:
+      config:
+        enabled: true
+        type: configmap
+        mountPath: /mosquitto/config/mosquitto.conf
+        name: netmaker-mqtt
+        subPath: mosquitto.conf
+        readOnly: true
+      certs:
+        enabled: true
+        existingClaim: netmaker-certs
+        mountPath: /mosquitto/certs
+    affinity:
+      podAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - netmaker
+            topologyKey: kubernetes.io/hostname
