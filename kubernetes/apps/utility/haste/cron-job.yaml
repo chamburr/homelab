@@ -16,7 +16,7 @@ spec:
           containers:
             - name: haste-clean
               image: ghcr.io/onedr0p/alpine:3.16.3
-              command:
+              args:
                 - /bin/sh
                 - -c
                 - find /config -type f -mtime +7 -exec rm {} \;

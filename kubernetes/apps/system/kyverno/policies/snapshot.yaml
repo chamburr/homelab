@@ -61,8 +61,8 @@ spec:
                     initContainers:
                       - name: wait
                         image: ghcr.io/onedr0p/alpine:3.16.3
-                        command:
-                          - sh
+                        args:
+                          - /bin/sh
                           - -c
                           - /scripts/sleep.sh 1 900
                     containers:
@@ -75,7 +75,7 @@ spec:
                             value: /backups/{{ namespace }}/{{ name }}/logs
                           - name: KOPIA_PASSWORD
                             value: none
-                        command:
+                        args:
                           - /bin/sh
                           - -c
                           - kopia repo connect filesystem --path=/backups
