@@ -32,7 +32,6 @@ packages:
   - unzip
   - usbutils
   - wget
-  - zip
 
 swap_path: /swapfile
 swap_size: 32768

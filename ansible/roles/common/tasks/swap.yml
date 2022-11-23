@@ -21,7 +21,7 @@
 
 - name: Turn on swap file
   ansible.builtin.command: # noqa: no-handler
-    cmd: swapon "{{ swap_path }}"
+    cmd: swapon {{ swap_path }}
   when: mkswap_result is changed
 
 - name: Add swap file to fstab

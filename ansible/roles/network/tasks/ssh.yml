@@ -18,15 +18,3 @@
     - regexp: ^#?PermitRootLogin
       line: PermitRootLogin {{ ssh_root }}
   notify: Restart ssh service
-
-- name: Override ssh configuration
-  ansible.builtin.blockinfile: # noqa: no-tabs
-    path: /etc/ssh/sshd_config
-    block: |
-      Match Address {{ ssh_whitelist_ip | join(',') }}
-      	PasswordAuthentication yes
-      	PermitRootLogin yes
-    validate: sshd -T -f %s
-    state: present
-  when: ssh_whitelist_ip | length != 0
-  notify: Restart ssh service

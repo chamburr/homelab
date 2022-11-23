@@ -33,4 +33,3 @@ firewall_forwards:
 
 ssh_password: "no"
 ssh_root: "no"
-ssh_whitelist_ip: []
