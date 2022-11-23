@@ -26,24 +26,19 @@ spec:
     image:
       repository: docker.io/eclipse-mosquitto
       tag: 2.0.15-openssl
+    args:
+      - /bin/ash
+      - -c
+      - apk add --no-cache curl && until curl -I -sfLo /dev/null
+        http://netmaker-api.networking/api/server/health; do sleep 1; done &&
+        /usr/sbin/mosquitto -c /mosquitto/config/mosquitto.conf
     service:
       main:
-        enabled: false
-      mqtt:
         ports:
+          http:
+            port: 8883
           mqtt:
             port: 1883
-            protocol: TCP
-            targetPort: 1883
-      mqtt-tls:
-        type: LoadBalancer
-        loadBalancerIP: ${LB_NETMAKER}
-        ports:
-          mqtt-tls:
-            port: 8883
-            protocol: TCP
-            targetPort: 8883
-        externalTrafficPolicy: Local
     persistence:
       config:
         enabled: true
@@ -52,10 +47,22 @@ spec:
         name: netmaker-mqtt
         subPath: mosquitto.conf
         readOnly: true
-      certs:
+      mosquitto:
         enabled: true
-        existingClaim: netmaker-certs
-        mountPath: /mosquitto/certs
+        existingClaim: netmaker-mosquitto
+        mountPath: /mosquitto/data
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - host: netmaker-mqtt.${DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - netmaker-mqtt.${DOMAIN}
     affinity:
       podAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:

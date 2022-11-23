@@ -6,5 +6,5 @@ resources:
   - error-pages
   - librespeed
   - metallb
-#  - netmaker
+  - netmaker
   - traefik
