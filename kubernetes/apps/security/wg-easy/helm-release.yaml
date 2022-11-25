@@ -55,13 +55,11 @@ spec:
         ports:
           http:
             port: 51821
-      wireguard-udp:
-        enabled: true
+      wireguard:
         type: LoadBalancer
         loadBalancerIP: ${LB_WIREGUARD}
         ports:
-          wireguard-udp:
-            enabled: true
+          wireguard:
             port: 51820
             protocol: UDP
             targetPort: 51820

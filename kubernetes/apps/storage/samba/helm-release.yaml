@@ -37,11 +37,11 @@ spec:
         enabled: false
     service:
       main:
-        enabled: false
-      samba:
         type: LoadBalancer
         loadBalancerIP: ${LB_SAMBA}
         ports:
+          http:
+            enabled: false
           samba:
             port: 445
             protocol: TCP

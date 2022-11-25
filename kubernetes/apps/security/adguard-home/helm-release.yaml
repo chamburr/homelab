@@ -37,19 +37,14 @@ spec:
         ports:
           http:
             port: 3000
-      dns-tcp:
+      dns:
         type: LoadBalancer
-        loadBalancerIP: ${LB_ADGUARD_TCP}
+        loadBalancerIP: ${LB_ADGUARD}
         ports:
           dns-tcp:
             port: 53
             protocol: TCP
             targetPort: 53
-        externalTrafficPolicy: Local
-      dns-udp:
-        type: LoadBalancer
-        loadBalancerIP: ${LB_ADGUARD_UDP}
-        ports:
           dns-udp:
             port: 53
             protocol: UDP
