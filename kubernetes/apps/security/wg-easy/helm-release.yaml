@@ -31,7 +31,7 @@ spec:
       WG_PORT: 51820
       WG_PERSISTENT_KEEPALIVE: 25
       WG_DEFAULT_ADDRESS: 10.8.0.x
-      WG_DEFAULT_DNS: ${DNS_SERVER}
+      WG_DEFAULT_DNS: 10.8.0.1
       WG_ALLOWED_IPS: 0.0.0.0/0
       WG_POST_UP: >
         iptables -A INPUT -m udp -p udp --dport 51820 -j ACCEPT;
@@ -81,6 +81,15 @@ spec:
         tls:
           - hosts:
               - wireguard.${DOMAIN}
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/sh
+            - -c
+            - apk add --no-cache socat &&
+              socat udp-listen:53,reuseaddr,fork udp:adguard-home-dns.security:53 &
+              socat tcp-listen:53,reuseaddr,fork tcp:adguard-home-dns.security:53 &
     podAnnotations:
       secret.reloader.stakater.com/reload: wg-easy-secret
   valuesFrom:

@@ -6,7 +6,6 @@ metadata:
   namespace: flux-system
 data:
   DOMAIN: chamburr.xyz
-  DNS_SERVER: 192.168.123.1
 
   K8S_POD_CIDR: 10.244.0.0/16
   K8S_SERVICE_CIDR: 10.96.0.0/12
