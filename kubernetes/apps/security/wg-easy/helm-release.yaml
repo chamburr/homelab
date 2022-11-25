@@ -26,6 +26,13 @@ spec:
     image:
       repository: docker.io/weejewel/wg-easy
       tag: "7"
+    args:
+      - /bin/sh
+      - -c
+      - apk add --no-cache socat &&
+        /bin/sh -c 'socat udp-listen:53,reuseaddr,fork udp:adguard-home-dns.security:53 &
+        socat tcp-listen:53,reuseaddr,fork tcp:adguard-home-dns.security:53 &' &&
+        /usr/bin/dumb-init node server.js
     env:
       WG_HOST: ${DOMAIN}
       WG_PORT: 51820
@@ -81,15 +88,6 @@ spec:
         tls:
           - hosts:
               - wireguard.${DOMAIN}
-    lifecycle:
-      postStart:
-        exec:
-          command:
-            - /bin/sh
-            - -c
-            - apk add --no-cache socat &&
-              socat udp-listen:53,reuseaddr,fork udp:adguard-home-dns.security:53 &
-              socat tcp-listen:53,reuseaddr,fork tcp:adguard-home-dns.security:53 &
     podAnnotations:
       secret.reloader.stakater.com/reload: wg-easy-secret
   valuesFrom:
