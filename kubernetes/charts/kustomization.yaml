@@ -20,7 +20,6 @@ resources:
   - metallb.yaml
   - metrics-server.yaml
   - minio.yaml
-  - netmaker.yaml
   - nextcloud.yaml
   - plausible.yaml
   - prometheus.yaml
