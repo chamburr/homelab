@@ -4,6 +4,3 @@
 
 - name: Include cockpit tasks
   ansible.builtin.include_tasks: cockpit.yml
-
-- name: Include netmaker tasks
-  ansible.builtin.include_tasks: netmaker.yml
