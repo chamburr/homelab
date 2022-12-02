@@ -17,12 +17,11 @@
   ansible.builtin.command: # noqa: no-handler
     cmd: mkswap {{ swap_path }}
   when: swapfile_create is changed
-  register: mkswap_result
 
 - name: Turn on swap file
   ansible.builtin.command: # noqa: no-handler
     cmd: swapon {{ swap_path }}
-  when: mkswap_result is changed
+  when: swapfile_create is changed
 
 - name: Add swap file to fstab
   ansible.posix.mount:
