@@ -12,5 +12,6 @@ brew "sshpass"
 brew "terraform"
 brew "tflint"
 brew "yamllint"
+brew "yq"
 
 cask "talosctl"
