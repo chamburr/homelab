@@ -16,7 +16,7 @@
     {
       "matchDatasources": ["docker"],
       "semanticCommitScope": "docker",
-      "commitMessageTopic": "{{{replace 'ghcr.io/' '' (replace 'docker.io/' '' depName)}}}"
+      "commitMessageTopic": "{{{replace '.+/' '' depName}}}"
     },
     {
       "matchDatasources": ["github-releases", "github-tags"],
