@@ -6,5 +6,5 @@ metadata:
   namespace: networking
 spec:
   redirectRegex:
-    regex: ^https://www.([^/]+)(/.*)?$
+    regex: ^https://www\.([^/]+)(/.*)?$
     replacement: https://$${1}$${2}
