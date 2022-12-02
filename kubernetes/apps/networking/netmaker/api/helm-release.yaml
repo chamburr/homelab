@@ -52,6 +52,15 @@ spec:
         ports:
           http:
             port: 8081
+      wireguard:
+        type: LoadBalancer
+        loadBalancerIP: ${LB_NETMAKER}
+        ports:
+          wireguard:
+            port: 31821
+            protocol: UDP
+            targetPort: 31821
+        externalTrafficPolicy: Local
     persistence:
       config:
         enabled: true
