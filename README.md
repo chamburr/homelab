@@ -1,6 +1,6 @@
-# CHamburr's Homelab
+# Homelab
 
-My personal infrastructure and Kubernetes cluster written as code, adhering to GitOps practices.
+My personal infrastructure and Kubernetes cluster written as code.
 
 This project utilises Infrastructure as Code and GitOps to automate the provisioning, operating and
 updating of self-hosted services in my homelab. These services are essential for my everyday life.
