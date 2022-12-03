@@ -21,7 +21,7 @@
     {
       "matchDatasources": ["github-releases", "github-tags"],
       "semanticCommitScope": "github",
-      "commitMessageTopic": "{{depName}}"
+      "commitMessageTopic": "{{{replace '.+/' '' depName}}}"
     },
     {
       "matchDatasources": ["helm"],
