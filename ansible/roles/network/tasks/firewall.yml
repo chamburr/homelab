@@ -25,11 +25,14 @@
 
 - name: Allow firewall masquerade
   ansible.posix.firewalld:
-    zone: public
+    zone: "{{ item }}"
     masquerade: true
     permanent: true
     immediate: true
     state: enabled
+  loop:
+    - public
+    - trusted
 
 - name: Configure firewall services
   ansible.posix.firewalld:
@@ -50,14 +53,4 @@
   register: prerouting_set
   changed_when:
     - "'ALREADY_ENABLED' not in prerouting_set.stderr"
-  notify: Reload firewalld
-
-- name: Configure firewall postrouting
-  ansible.builtin.command:
-    cmd: >
-      firewall-cmd --direct --permanent --add-rule ipv4 nat POSTROUTING 0
-      -s {{ firewall_cidr }} -o virbr1 -j MASQUERADE
-  register: postrouting_set
-  changed_when:
-    - "'ALREADY_ENABLED' not in postrouting_set.stderr"
   notify: Reload firewalld
