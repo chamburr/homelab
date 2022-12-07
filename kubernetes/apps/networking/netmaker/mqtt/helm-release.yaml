@@ -73,3 +73,5 @@ spec:
                   values:
                     - netmaker
             topologyKey: kubernetes.io/hostname
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: netmaker-mqtt
