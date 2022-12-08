@@ -25,7 +25,7 @@ spec:
       nameOverride: freshrss
     image:
       repository: docker.io/freshrss/freshrss
-      tag: 1.20.1
+      tag: 1.20.2
     env:
       CRON_MIN: 0,30
     service:
