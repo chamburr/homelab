@@ -102,3 +102,12 @@ spec:
                       <metric_log remove="remove"/>
                       <asynchronous_metric_log remove="remove"/>
                   </yandex>
+          - target:
+              kind: StatefulSet
+              name: plausible-clickhouse
+            patch:
+              - op: add
+                path: /spec/template/spec/volumes/2/configMap/items/-
+                value:
+                  key: zcustom.xml
+                  path: zcustom.xml
