@@ -88,7 +88,7 @@ spec:
         patchesJson6902:
           - target:
               kind: ConfigMap
-              name: plausible-config
+              name: plausible-clickhouse-config
             patch:
               - op: add
                 path: /data/zcustom.xml
