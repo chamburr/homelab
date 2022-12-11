@@ -5,7 +5,7 @@ prepare() {
 }
 
 install() {
-  echo "Installing..."
+  echo 'Installing...'
 
   ./scripts/ansible.sh playbook ansible/main.yml --tags common
 
