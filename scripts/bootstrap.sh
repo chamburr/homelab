@@ -1,7 +1,7 @@
 #!/bin/sh
 
 prepare() {
-  ansible-galaxy collection install -r ansible/requirements.yml
+  ansible-galaxy collection install -r ansible/requirements.yml > /dev/null
 }
 
 install() {
