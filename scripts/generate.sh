@@ -1,7 +1,7 @@
 #!/bin/sh
 
 generateSecret() {
-  echo 'Generating secret files...'
+  echo 'Generating secret...'
 
   data=''
 
