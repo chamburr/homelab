@@ -74,10 +74,8 @@ spec:
           out_of_order_action: rewrite_timestamp
           labels:
             _job: kubernetes
-            namespace: >-
-              {{`{{ kubernetes.pod_namespace }}`}}
-            app: >-
-              {{`{{ pod_app_name }}`}}
+            namespace: "{{`{{ kubernetes.pod_namespace }}`}}"
+            app: "{{`{{ pod_app_name }}`}}"
         talos_kernel_sink:
           type: loki
           inputs:
@@ -92,8 +90,7 @@ spec:
           out_of_order_action: rewrite_timestamp
           labels:
             _job: talos_kernel
-            hostname: >-
-              {{`{{ __host }}`}}
+            hostname: "{{`{{ __host }}`}}"
         talos_service_sink:
           type: loki
           inputs:
@@ -108,10 +105,8 @@ spec:
           out_of_order_action: rewrite_timestamp
           labels:
             _job: talos_service
-            hostname: >-
-              {{`{{ __host }}`}}
-            service: >-
-              {{`{{ "talos-service" }}`}}
+            hostname: "{{`{{ __host }}`}}"
+            service: '{{`{{ "talos-service" }}`}}'
   postRenderers:
     - kustomize:
         patchesJson6902:
