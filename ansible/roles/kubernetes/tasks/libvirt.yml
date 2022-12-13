@@ -6,6 +6,7 @@
       - qemu-kvm
       - libvirt
       - virt-install
+      - python3-lxml
     state: present
 
 - name: Enable libvirt service
