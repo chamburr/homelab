@@ -9,4 +9,3 @@ resources:
   - rook-ceph
   - traefik
   - vault-secrets
-  - vpa
