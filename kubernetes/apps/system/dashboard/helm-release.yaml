@@ -35,3 +35,4 @@ spec:
       tls:
         - hosts:
             - kubernetes.${DOMAIN}
+    resources: null

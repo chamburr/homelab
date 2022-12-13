@@ -126,6 +126,7 @@ spec:
           runAsGroup: 60
           runAsUser: 60
           fsGroup: 60
+        resources: null
         podMetadata:
           annotations:
             secret.reloader.stakater.com/reload: prometheus-secret

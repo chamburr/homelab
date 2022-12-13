@@ -43,6 +43,7 @@ spec:
         persistence:
           enabled: true
           existingClaim: plausible-postgresql
+        resources: null
     clickhouse:
       enabled: true
       clickhouse:

@@ -24,18 +24,6 @@ spec:
     - name: rook-ceph
       namespace: rook-ceph
   values:
-    crashCollector:
-      disable: true
-    ingress:
-      dashboard:
-        enabled: true
-        ingressClassName: traefik
-        host:
-          name: ceph.${DOMAIN}
-          path: /
-        tls:
-          - hosts:
-              - ceph.${DOMAIN}
     configOverride: |
       [global]
       osd_pool_default_size = 1
@@ -47,6 +35,8 @@ spec:
     cephClusterSpec:
       crashCollector:
         disable: true
+      logCollector:
+        enabled: false
       mon:
         count: 1
       mgr:
@@ -68,6 +58,10 @@ spec:
           - name: talos-1
             devices:
               - name: sdb
+    resources:
+      mgr: null
+      mon: null
+      osd: null
     cephBlockPools:
       - name: ceph-blockpool
         spec:
@@ -93,3 +87,13 @@ spec:
             csi.storage.k8s.io/fstype: ext4
     cephFileSystems: []
     cephObjectStores: []
+    ingress:
+      dashboard:
+        enabled: true
+        ingressClassName: traefik
+        host:
+          name: ceph.${DOMAIN}
+          path: /
+        tls:
+          - hosts:
+              - ceph.${DOMAIN}

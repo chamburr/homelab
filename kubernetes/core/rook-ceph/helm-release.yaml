@@ -29,3 +29,6 @@ spec:
       enableNFSSnapshotter: false
       enableRBDSnapshotter: false
       provisionerReplicas: 1
+      csiRBDProvisionerResource: "[]"
+      csiRBDPluginResource: "[]"
+    resources: null

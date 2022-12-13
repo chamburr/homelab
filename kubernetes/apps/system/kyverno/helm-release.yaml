@@ -30,3 +30,5 @@ spec:
         labelSelector:
           matchLabels:
             app.kubernetes.io/instance: kyverno
+    resources: null
+    initResources: null

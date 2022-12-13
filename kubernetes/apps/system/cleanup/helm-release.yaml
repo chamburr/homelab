@@ -33,3 +33,4 @@ spec:
       - --delete-evicted-pods-after=60m
       - --delete-orphaned-pods-after=60m
       - --legacy-mode=false
+    resources: null

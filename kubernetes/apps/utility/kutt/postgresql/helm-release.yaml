@@ -31,3 +31,4 @@ spec:
       persistence:
         enabled: true
         existingClaim: kutt-postgresql
+      resources: null

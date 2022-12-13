@@ -49,6 +49,8 @@ spec:
           enabled: true
         dashboards:
           enabled: false
+    nodeinit:
+      resources: null
     securityContext:
       privileged: true
   postRenderers:

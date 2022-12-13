@@ -86,6 +86,7 @@ spec:
         persistence:
           enabled: true
           existingClaim: nextcloud-postgresql
+        resources: null
     redis:
       enabled: true
       auth:
