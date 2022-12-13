@@ -91,6 +91,14 @@ spec:
     prometheusOperator:
       admissionWebhooks:
         enabled: false
+      prometheusConfigReloader:
+        resources:
+          requests:
+            cpu: 0
+            memory: 0
+          limits:
+            cpu: 0
+            memory: 0
     prometheus:
       prometheusSpec:
         enableAdminAPI: true
@@ -126,7 +134,6 @@ spec:
           runAsGroup: 60
           runAsUser: 60
           fsGroup: 60
-        resources: null
         podMetadata:
           annotations:
             secret.reloader.stakater.com/reload: prometheus-secret
