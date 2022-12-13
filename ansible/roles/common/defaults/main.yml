@@ -34,7 +34,7 @@ packages:
   - wget
 
 swap_path: /swapfile
-swap_size: 32768
+swap_size: 8192
 swap_swappiness: 60
 
 username: user
