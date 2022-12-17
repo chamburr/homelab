@@ -1,11 +1,7 @@
 ---
 timezone: Asia/Singapore
 
-# yamllint disable rule:quoted-strings
 username: chamburr
-password:
-  "$6$r6tkCgwMdm9vnoT/$ltpTR2m3sM23t5TTdI4V1pk2UfJH1NZnOd23xGEnfBTqIG2NCukcetthkS8ZCch.qCsH0EWhH3h.\
-  U657lE9ce/"
 ssh_keys:
   - ssh-ed25519
     AAAAC3NzaC1lZDI1NTE5AAAAIF3DDYaYibt/VjeYDR7cO8tZA2iJUhPBh6jFrB1mBxJA hi@chamburr.com
