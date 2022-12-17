@@ -7,6 +7,7 @@ array_devices:
   - /dev/sda
   - /dev/sdb
 
+nfs_host: 192.168.123.0/24
 nfs_path: /mnt/md0
 nfs_options:
   - rw
