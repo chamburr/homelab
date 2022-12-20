@@ -38,7 +38,7 @@ spec:
           port: ${MAIL_PORT}
           name: ${MAIL_USERNAME}
           password: ${MAIL_PASSWORD}
-          secure: ssl
+          secure: tls
       phpConfigs:
         zcustom.ini: |
           apc.enable_cli=1
