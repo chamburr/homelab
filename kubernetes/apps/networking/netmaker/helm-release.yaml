@@ -25,7 +25,7 @@ spec:
       nameOverride: netmaker
     image:
       repository: docker.io/gravitl/netmaker-ui
-      tag: v0.17.0
+      tag: v0.17.1
     env:
       BACKEND_URL: https://netmaker-api.${DOMAIN}
     service:
