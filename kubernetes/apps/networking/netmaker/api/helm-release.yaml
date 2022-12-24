@@ -35,6 +35,7 @@ spec:
       CLIENT_MODE: "on"
       PLATFORM: Kubernetes
       CORS_ALLOWED_ORIGIN: "*"
+      NODE_ID: netmaker
       DATABASE: sqlite
       MQ_HOST: netmaker-mqtt.networking
       MQ_PORT: 443
