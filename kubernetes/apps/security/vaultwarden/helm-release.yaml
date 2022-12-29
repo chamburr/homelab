@@ -25,7 +25,7 @@ spec:
       nameOverride: vaultwarden
     image:
       repository: docker.io/vaultwarden/server
-      tag: 1.26.0
+      tag: 1.27.0
     env:
       DATA_FOLDER: config
       WEBSOCKET_ENABLED: true
