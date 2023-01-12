@@ -28,7 +28,7 @@ steps:
       - export RENOVATE_TOKEN=$(cat token.txt)
       - unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL
       - curl -sO
-        https://raw.githubusercontent.com/chamburr/elements/master/.drone/renovate/config.json
+        https://raw.githubusercontent.com/chamburr/homelab/master/.drone/renovate/config.json
       - sed -i 's/renovateRepository(repoConfig, false)/renovateRepository(repoConfig, true)/'
         /usr/src/app/node_modules/renovate/dist/workers/repository/index.js
       - renovate
