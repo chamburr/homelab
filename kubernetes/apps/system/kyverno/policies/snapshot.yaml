@@ -60,7 +60,7 @@ spec:
                     restartPolicy: OnFailure
                     initContainers:
                       - name: wait
-                        image: ghcr.io/onedr0p/alpine:3.17.0
+                        image: ghcr.io/onedr0p/alpine:3.17.1
                         args:
                           - /bin/sh
                           - -c
