@@ -100,8 +100,6 @@ spec:
         enabled: false
       rules:
         enabled: false
-      alerts:
-        enabled: false
       serviceMonitor:
         enabled: true
         metricsInstance: null
@@ -109,8 +107,8 @@ spec:
         enabled: false
         grafanaAgent:
           installOperator: false
-        lokiCanary:
-          enabled: false
+      lokiCanary:
+        enabled: false
   postRenderers:
     - kustomize:
         patchesJson6902:
