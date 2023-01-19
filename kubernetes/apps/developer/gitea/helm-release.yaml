@@ -52,13 +52,13 @@ spec:
           SHOW_MILESTONES_DASHBOARD_PAGE: false
         mailer:
           ENABLED: true
-          MAILER_TYPE: smtp
-          HOST: ${MAIL_HOST}:${MAIL_PORT}
+          PROTOCOL: smtp+starttls
+          SMTP_ADDR: ${MAIL_HOST}
+          SMTP_PORT: ${MAIL_PORT}
           USER: ${MAIL_USERNAME}
           PASSWD: ${MAIL_PASSWORD}
           FROM: ${MAIL_SENDER}
         picture:
-          DISABLE_GRAVATAR: true
           AVATAR_MAX_FILE_SIZE: "10485760"
         cron:
           ENABLED: true
