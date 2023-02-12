@@ -25,7 +25,7 @@ spec:
       nameOverride: ipsec-vpn
     image:
       repository: docker.io/hwdsl2/ipsec-vpn-server
-      tag: latest@sha256:4ae7e2ff207954c394aed1c77753b1b3a58a03a1ef2cf46fd9f86d9bfa022dca
+      tag: latest@sha256:3363d0a97dcdbe9e735c7ecae2963e23f55fd72f827a2052cb815d50bfa734e6
     env:
       VPN_DISABLE_IPSEC_L2TP: true
       VPN_DNS_NAME: ${DOMAIN}
