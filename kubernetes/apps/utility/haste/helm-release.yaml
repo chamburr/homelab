@@ -25,7 +25,7 @@ spec:
       nameOverride: haste
     image:
       repository: ghcr.io/skyra-project/haste-server
-      tag: latest@sha256:52da4d686255ce3445b49e8ac1c7fe578be097fd1e2bc82e62d64f2e05aacd78
+      tag: latest@sha256:4ec1b1e7f7acb9085fb42e8f3c2111c07594c76f685bb4d9968e0e322ee3891d
     args:
       - /bin/sh
       - -c
