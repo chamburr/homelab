@@ -25,7 +25,7 @@ spec:
       nameOverride: adguard-home
     image:
       repository: docker.io/adguard/adguardhome
-      tag: v0.107.23
+      tag: v0.107.24
     args:
       - --no-check-update
       - --config
