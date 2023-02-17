@@ -29,7 +29,7 @@ spec:
     env:
       VPN_DISABLE_IPSEC_L2TP: true
       VPN_DNS_NAME: ${DOMAIN}
-      VPN_DNS_SRV1: adguard-home-dns.security
+      VPN_DNS_SRV1: adguard-home-dns.security.svc.cluster.local
       VPN_DNS_SRV2: ""
     securityContext:
       capabilities:
