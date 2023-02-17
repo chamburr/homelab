@@ -23,6 +23,8 @@ spec:
   values:
     installCRDs: false
     replicaCount: 1
+    cleanupController:
+      enabled: false
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
