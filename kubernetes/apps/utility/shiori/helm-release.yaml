@@ -50,10 +50,3 @@ spec:
               - shiori.${DOMAIN}
     podSecurityContext:
       fsGroup: 1000
-    lifecycle:
-      postStart:
-        exec:
-          command:
-            - /bin/sh
-            - -c
-            - /usr/bin/shiori migrate
