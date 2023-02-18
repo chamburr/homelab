@@ -12,7 +12,7 @@
   failed_when: false
 
 - name: Create array
-  ansible.builtin.shell:
+  ansible.builtin.shell: # noqa: no-changed-when
     cmd: |
       yes | mdadm \
         --create /dev/{{ array_name }} \

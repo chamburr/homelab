@@ -12,7 +12,7 @@
   when: all_vms.list_vms | length == 0
 
 - name: Create vms
-  ansible.builtin.shell:
+  ansible.builtin.shell: # noqa: no-changed-when
     cmd: |
       virt-install --name={{ item }} \
         --cpu=host --vcpus={{ vm_cpu }} --ram={{ vm_ram }} \
@@ -26,13 +26,13 @@
   when: all_vms.list_vms | length == 0
 
 - name: Detach vm image
-  ansible.builtin.command:
+  ansible.builtin.command: # noqa: no-changed-when
     cmd: virsh detach-disk {{ item }} hdc --config
   loop: "{{ vms }}"
   when: all_vms.list_vms | length == 0
 
 - name: Delete vm image
-  ansible.builtin.command:
+  ansible.builtin.command: # noqa: no-changed-when
     cmd: virsh vol-delete --pool default install.iso
   when: all_vms.list_vms | length == 0
 

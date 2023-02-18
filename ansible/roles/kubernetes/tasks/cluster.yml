@@ -12,7 +12,7 @@
   when: not cluster_status.stat.exists
 
 - name: Run configure script
-  ansible.builtin.command:
+  ansible.builtin.command: # noqa: no-changed-when
     chdir: /home/{{ username }}
     cmd: /home/{{ username }}/configure.sh
   environment:
@@ -26,7 +26,7 @@
   when: not cluster_status.stat.exists
 
 - name: Run configure post script
-  ansible.builtin.command:
+  ansible.builtin.command: # noqa: no-changed-when
     chdir: /home/{{ username }}
     cmd: /home/{{ username }}/configure.sh --post
   register: result_post
