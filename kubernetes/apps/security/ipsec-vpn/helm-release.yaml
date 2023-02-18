@@ -26,6 +26,12 @@ spec:
     image:
       repository: docker.io/hwdsl2/ipsec-vpn-server
       tag: latest@sha256:57a938b37b6cfe7b17758479e65782da32ff7c9f6f5065c33d26bd9c08a93f2b
+    args:
+      - /bin/sh
+      - -c
+      - sed -i -e 's/mobike=yes/mobike=no/g'
+        -e 's/modecfgdns=.*/modecfgdns='$(dig -t A -4 +short "$VPN_DNS_SRV1")'/g'
+        /etc/ipsec.d/ikev2.conf && /opt/src/run.sh
     env:
       VPN_DISABLE_IPSEC_L2TP: true
       VPN_DNS_NAME: ${DOMAIN}
@@ -70,13 +76,6 @@ spec:
         enabled: true
         existingClaim: ipsec-vpn-data
         mountPath: /etc/ipsec.d
-    lifecycle:
-      postStart:
-        exec:
-          command:
-            - /bin/sh
-            - -c
-            - sed -i 's/mobike=yes/mobike=no/g' /etc/ipsec.d/ikev2.conf
     podAnnotations:
       secret.reloader.stakater.com/reload: ipsec-vpn-secret
   valuesFrom:
