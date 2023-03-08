@@ -6,7 +6,7 @@
 
 - name: Check array
   ansible.builtin.shell:
-    cmd: cat /proc/mdstat | grep {{ array_name }}
+    cmd: set -o pipefail && cat /proc/mdstat | grep {{ array_name }}
   register: array_check
   changed_when: false
   failed_when: false
@@ -14,7 +14,7 @@
 - name: Create array
   ansible.builtin.shell: # noqa: no-changed-when
     cmd: |
-      yes | mdadm \
+      set -o pipefail && yes | mdadm \
         --create /dev/{{ array_name }} \
         --level={{ array_level }} \
         --raid-devices={{ array_devices | count }} \
