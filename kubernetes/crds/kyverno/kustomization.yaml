@@ -5,7 +5,7 @@ resources:
   - https://github.com/kyverno/kyverno/releases/download/v1.9.1/install.yaml
 patches:
   - target:
-      labelSelector: app=kyverno
+      kind: Namespace|ServiceAccount|ConfigMap|ClusterRole|ClusterRoleBinding|Role|RoleBinding|Service|Deployment
     patch: |
       $patch: delete
       apiVersion: not-used
