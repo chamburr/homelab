@@ -10,7 +10,7 @@
     state: restarted
 
 - name: Reload firewalld
-  ansible.builtin.command:
+  ansible.builtin.command: # noqa: no-changed-when
     cmd: firewall-cmd --reload
 
 - name: Restart ssh service
