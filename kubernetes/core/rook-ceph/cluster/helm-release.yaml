@@ -32,6 +32,8 @@ spec:
       mon_clock_drift_allowed = 0.1
       bdev_enable_discard = true
       bdev_async_discard = true
+    monitoring:
+      enabled: true
     cephClusterSpec:
       crashCollector:
         disable: true

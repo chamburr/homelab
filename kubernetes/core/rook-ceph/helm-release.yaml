@@ -32,3 +32,5 @@ spec:
       csiRBDProvisionerResource: "[]"
       csiRBDPluginResource: "[]"
     resources: null
+    monitoring:
+      enabled: true
