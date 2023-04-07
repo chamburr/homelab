@@ -25,21 +25,24 @@ spec:
       nameOverride: netmaker-api
     image:
       repository: docker.io/gravitl/netmaker
-      tag: v0.17.1
+      tag: v0.18.5
     env:
-      SERVER_NAME: netmaker-mqtt.${DOMAIN}
+      BROKER_ENDPOINT: wss://netmaker-mqtt.${DOMAIN}
+      SERVER_NAME: ${DOMAIN}
+      STUN_LIST: netmaker-stun.${DOMAIN}:443
       SERVER_API_CONN_STRING: netmaker-api.${DOMAIN}:443
       SERVER_HTTP_HOST: netmaker-api.${DOMAIN}
+      SERVER_BROKER_ENDPOINT: ws://netmaker-mqtt.networking:1883
       API_PORT: 8081
+      STUN_PORT: 3478
       DNS_MODE: "off"
       CLIENT_MODE: "on"
+      DEFAULT_PROXY_MODE: "off"
       PLATFORM: Kubernetes
       CORS_ALLOWED_ORIGIN: "*"
-      NODE_ID: netmaker
+      DISPLAY_KEYS: "on"
       DATABASE: sqlite
-      MQ_HOST: netmaker-mqtt.networking
-      MQ_PORT: 443
-      MQ_SERVER_PORT: 1883
+      NODE_ID: netmaker
       VERBOSITY: 3
       TELEMETRY: "off"
     securityContext:
@@ -53,6 +56,10 @@ spec:
         ports:
           http:
             port: 8081
+      stun:
+        ports:
+          stun:
+            port: 3478
       wireguard:
         type: LoadBalancer
         loadBalancerIP: ${LB_NETMAKER}
@@ -67,10 +74,6 @@ spec:
         enabled: true
         existingClaim: netmaker-data
         mountPath: /root/data
-      mosquitto:
-        enabled: true
-        existingClaim: netmaker-mosquitto
-        mountPath: /etc/netmaker
     ingress:
       main:
         enabled: true
@@ -83,6 +86,17 @@ spec:
         tls:
           - hosts:
               - netmaker-api.${DOMAIN}
+      stun:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - host: netmaker-stun.${DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - netmaker-stun.${DOMAIN}
     affinity:
       podAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -100,5 +114,9 @@ spec:
       targetPath: env.MASTER_KEY
     - kind: Secret
       name: netmaker-secret
+      valuesKey: username
+      targetPath: env.MQ_USERNAME
+    - kind: Secret
+      name: netmaker-secret
       valuesKey: password
-      targetPath: env.MQ_ADMIN_PASSWORD
+      targetPath: env.MQ_PASSWORD

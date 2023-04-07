@@ -14,19 +14,3 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: ceph-block
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: netmaker-mosquitto
-  namespace: networking
-  labels:
-    app.kubernetes.io/name: netmaker
-    app.kubernetes.io/instance: netmaker
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: ceph-block

@@ -26,12 +26,9 @@ spec:
     image:
       repository: docker.io/eclipse-mosquitto
       tag: 2.0.15-openssl
-    args:
+    command:
       - /bin/ash
-      - -c
-      - apk add --no-cache curl && until curl -I -sfLo /dev/null
-        http://netmaker-api.networking:8081/api/server/health; do sleep 1; done &&
-        /usr/sbin/mosquitto -c /mosquitto/config/mosquitto.conf
+      - /mosquitto/config/wait.sh
     service:
       main:
         ports:
@@ -47,10 +44,13 @@ spec:
         name: netmaker-mqtt
         subPath: mosquitto.conf
         readOnly: true
-      mosquitto:
+      wait:
         enabled: true
-        existingClaim: netmaker-mosquitto
-        mountPath: /mosquitto/data
+        type: configMap
+        mountPath: /mosquitto/config/wait.sh
+        name: netmaker-mqtt
+        subPath: wait.sh
+        readOnly: true
     ingress:
       main:
         enabled: true
@@ -75,3 +75,12 @@ spec:
             topologyKey: kubernetes.io/hostname
     podAnnotations:
       configmap.reloader.stakater.com/reload: netmaker-mqtt
+  valuesFrom:
+    - kind: Secret
+      name: netmaker-secret
+      valuesKey: username
+      targetPath: env.MQ_USERNAME
+    - kind: Secret
+      name: netmaker-secret
+      valuesKey: password
+      targetPath: env.MQ_PASSWORD

@@ -15,5 +15,19 @@ data:
     protocol websockets
     allow_anonymous false
 
-    plugin /usr/lib/mosquitto_dynamic_security.so
-    plugin_opt_config_file /mosquitto/data/dynamic-security.json
+    password_file /mosquitto/password.txt
+  wait.sh: |
+    #!/bin/ash
+
+    encrypt_password() {
+      echo "$MQ_USERNAME:$MQ_PASSWORD" > /mosquitto/password.txt
+      mosquitto_passwd -U /mosquitto/password.txt
+    }
+
+    main() {
+      encrypt_password
+      /docker-entrypoint.sh
+      /usr/sbin/mosquitto -c /mosquitto/config/mosquitto.conf
+    }
+
+    main "$@"
