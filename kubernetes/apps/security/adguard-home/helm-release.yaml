@@ -27,6 +27,7 @@ spec:
       repository: docker.io/adguard/adguardhome
       tag: v0.107.28
     args:
+      - /opt/adguardhome/AdGuardHome
       - --no-check-update
       - --config
       - /opt/adguardhome/conf/AdGuardHome.yaml"
