@@ -25,7 +25,7 @@ spec:
       nameOverride: netmaker-api
     image:
       repository: docker.io/gravitl/netmaker
-      tag: v0.18.5
+      tag: v0.18.6
     env:
       BROKER_ENDPOINT: wss://netmaker-mqtt.${DOMAIN}
       SERVER_NAME: ${DOMAIN}
