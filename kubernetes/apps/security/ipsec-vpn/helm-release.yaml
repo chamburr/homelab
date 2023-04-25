@@ -25,7 +25,7 @@ spec:
       nameOverride: ipsec-vpn
     image:
       repository: docker.io/hwdsl2/ipsec-vpn-server
-      tag: latest@sha256:73df18fea65fd3b055e41c99652a66587ddc841715fb58f8021704fef06d9506
+      tag: latest@sha256:d2cf057704b1fd589f8085160139bf8e7c23236a4a0d8a6582002c0e3271b183
     args:
       - /bin/sh
       - -c
