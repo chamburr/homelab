@@ -26,6 +26,14 @@ spec:
     image:
       repository: docker.io/n8nio/n8n
       tag: 0.226.0
+    command:
+      - tini
+      - --
+    args:
+      - /bin/sh
+      - -c
+      - sed -i 's/this.manager.hasFeatureEnabled(feature)/true/'
+        /usr/local/lib/node_modules/n8n/dist/License.js && /docker-entrypoint.sh
     env:
       N8N_PORT: 5678
       N8N_PROTOCOL: https
