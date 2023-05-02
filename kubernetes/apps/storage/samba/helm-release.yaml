@@ -25,7 +25,7 @@ spec:
       nameOverride: samba
     image:
       repository: ghcr.io/crazy-max/samba
-      tag: 4.16.8
+      tag: 4.16.10
     env:
       SAMBA_HOSTS_ALLOW: 0.0.0.0/0
     probes:
