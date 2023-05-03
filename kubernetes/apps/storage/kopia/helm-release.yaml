@@ -33,7 +33,7 @@ spec:
       - -c
       - if [ ! -f /backups/kopia.repository.f ];
         then kopia repository create filesystem --path=/backups; fi &&
-        kopia server --insecure --address 0.0.0.0:80
+        kopia server start --insecure --address 0.0.0.0:80
         --server-username $SERVER_USERNAME --server-password $SERVER_PASSWORD
     service:
       main:
