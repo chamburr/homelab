@@ -15,7 +15,7 @@ lintAnsible() {
 lintTerraform() {
   echo 'Linting terraform...'
 
-  tflint terraform
+  tflint --chdir terraform
 }
 
 lintYaml
