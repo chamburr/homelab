@@ -2,14 +2,14 @@
 - name: Get vms
   community.libvirt.virt:
     command: list_vms
-  register: all_vms
+  register: kubernetes_all_vms
 
 - name: Download vm image
   ansible.builtin.get_url:
     url: "{{ vm_image }}"
     dest: /var/lib/libvirt/images/install.iso
     mode: 0644
-  when: all_vms.list_vms | length == 0
+  when: kubernetes_all_vms.list_vms | length == 0
 
 - name: Create vms
   ansible.builtin.shell: # noqa: no-changed-when
@@ -23,20 +23,20 @@
         --network=network={{ network_name }},model=virtio \
         --graphics=none --noautoconsole --autostart
   loop: "{{ vms }}"
-  when: all_vms.list_vms | length == 0
+  when: kubernetes_all_vms.list_vms | length == 0
 
 - name: Detach vm image
   ansible.builtin.command: # noqa: no-changed-when
     cmd: virsh detach-disk {{ item }} hdc --config
   loop: "{{ vms }}"
-  when: all_vms.list_vms | length == 0
+  when: kubernetes_all_vms.list_vms | length == 0
 
 - name: Delete vm image
   ansible.builtin.command: # noqa: no-changed-when
     cmd: virsh vol-delete --pool default install.iso
-  when: all_vms.list_vms | length == 0
+  when: kubernetes_all_vms.list_vms | length == 0
 
 - name: Wait for vm installation
   ansible.builtin.pause:
     seconds: 30
-  when: all_vms.list_vms | length == 0
+  when: kubernetes_all_vms.list_vms | length == 0

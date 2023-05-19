@@ -2,14 +2,14 @@
 - name: Check cluster status
   ansible.builtin.stat:
     path: /home/{{ username }}/.talos
-  register: cluster_status
+  register: kubernetes_cluster_status
 
 - name: Download configure script
   ansible.builtin.get_url:
     url: "{{ vm_script }}"
     dest: /home/{{ username }}/configure.sh
     mode: 0755
-  when: not cluster_status.stat.exists
+  when: not kubernetes_cluster_status.stat.exists
 
 - name: Run configure script
   ansible.builtin.command: # noqa: no-changed-when
@@ -17,28 +17,28 @@
     cmd: /home/{{ username }}/configure.sh
   environment:
     CONFIGURE_VARS: "{{ lookup('env', 'CONFIGURE_VARS') }}"
-  register: result
-  when: not cluster_status.stat.exists
+  register: kubernetes_result
+  when: not kubernetes_cluster_status.stat.exists
 
 - name: Print configure script output
   ansible.builtin.debug:
-    var: result.stdout_lines
-  when: not cluster_status.stat.exists
+    var: kubernetes_result.stdout_lines
+  when: not kubernetes_cluster_status.stat.exists
 
 - name: Run configure post script
   ansible.builtin.command: # noqa: no-changed-when
     chdir: /home/{{ username }}
     cmd: /home/{{ username }}/configure.sh --post
-  register: result_post
-  when: not cluster_status.stat.exists
+  register: kubernetes_result_post
+  when: not kubernetes_cluster_status.stat.exists
 
 - name: Print configure script post output
   ansible.builtin.debug:
-    var: result_post.stdout_lines
-  when: not cluster_status.stat.exists
+    var: kubernetes_result_post.stdout_lines
+  when: not kubernetes_cluster_status.stat.exists
 
 - name: Delete configure script
   ansible.builtin.file:
     path: /home/{{ username }}/configure.sh
     state: absent
-  when: not cluster_status.stat.exists
+  when: not kubernetes_cluster_status.stat.exists

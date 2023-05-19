@@ -19,9 +19,9 @@
 - name: Set firewall default zone
   ansible.builtin.command:
     cmd: firewall-cmd --set-default-zone=trusted
-  register: zone_set
+  register: network_zone_set
   changed_when:
-    - "'ZONE_ALREADY_SET' not in zone_set.stderr"
+    - "'ZONE_ALREADY_SET' not in network_zone_set.stderr"
 
 - name: Allow firewall masquerade
   ansible.posix.firewalld:
@@ -50,7 +50,7 @@
       -m addrtype --dst-type LOCAL -p {{ item.split('/')[2] }} --dport {{ item.split('/')[1] }}
       -j DNAT --to-destination {{ item.split('/')[0] }}
   loop: "{{ firewall_forwards }}"
-  register: prerouting_set
+  register: network_prerouting_set
   changed_when:
-    - "'ALREADY_ENABLED' not in prerouting_set.stderr"
+    - "'ALREADY_ENABLED' not in network_prerouting_set.stderr"
   notify: Reload firewalld

@@ -3,7 +3,7 @@
   ansible.builtin.command:
     cmd: dd if=/dev/zero of={{ swap_path }} bs=1M count={{ swap_size }}
     creates: "{{ swap_path }}"
-  register: swapfile_create
+  register: common_swapfile_create
 
 - name: Set swap file permissions
   ansible.builtin.file:
@@ -16,12 +16,12 @@
 - name: Make swap file
   ansible.builtin.command: # noqa: no-handler no-changed-when
     cmd: mkswap {{ swap_path }}
-  when: swapfile_create is changed
+  when: common_swapfile_create is changed
 
 - name: Turn on swap file
   ansible.builtin.command: # noqa: no-handler no-changed-when
     cmd: swapon {{ swap_path }}
-  when: swapfile_create is changed
+  when: common_swapfile_create is changed
 
 - name: Add swap file to fstab
   ansible.posix.mount:

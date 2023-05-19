@@ -7,7 +7,7 @@
 - name: Check array
   ansible.builtin.shell:
     cmd: set -o pipefail && cat /proc/mdstat | grep {{ array_name }}
-  register: array_check
+  register: storage_array_check
   changed_when: false
   failed_when: false
 
@@ -19,8 +19,7 @@
         --level={{ array_level }} \
         --raid-devices={{ array_devices | count }} \
         {{ array_devices | join(' ') }}
-  register: array_create
-  when: array_check.rc != 0
+  when: storage_array_check.rc != 0
 
 - name: Create array filesystem
   community.general.filesystem:
@@ -38,7 +37,7 @@
 - name: Get array details
   ansible.builtin.command:
     cmd: mdadm --detail --scan
-  register: array_details
+  register: storage_array_details
   changed_when: false
 
 - name: Update mdadm config
@@ -51,5 +50,5 @@
     group: root
     mode: 0644
     state: present
-  loop: "{{ array_details.stdout_lines }}"
+  loop: "{{ storage_array_details.stdout_lines }}"
   notify: Update initramfs
