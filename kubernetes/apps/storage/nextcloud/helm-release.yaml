@@ -78,10 +78,12 @@ spec:
       enabled: false
     postgresql:
       enabled: true
-      auth:
-        username: nextcloud
-        password: nextcloud-pass
-        databse: nextcloud
+      global:
+        postgresql:
+          auth:
+            username: nextcloud
+            password: nextcloud-pass
+            databse: nextcloud
       primary:
         persistence:
           enabled: true
