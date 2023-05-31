@@ -6,7 +6,7 @@ resources:
 patches:
   - target:
       kind: >-
-        Namespace|ServiceAccount|ConfigMap|ClusterRole|ClusterRoleBinding|Role|RoleBinding|Service|Deployment
+        Namespace|ServiceAccount|ConfigMap|ClusterRole|ClusterRoleBinding|Role|RoleBinding|Service|Deployment|CronJob
     patch: |
       $patch: delete
       apiVersion: not-used
