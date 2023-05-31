@@ -36,5 +36,9 @@ spec:
           labelSelector:
             matchLabels:
               app.kubernetes.io/instance: kyverno
+    backgroundController:
+      resources: null
+    reportsController:
+      resources: null
     cleanupController:
       enabled: false

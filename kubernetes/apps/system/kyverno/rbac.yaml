@@ -25,5 +25,5 @@ roleRef:
   name: kyverno:generate-cronjob
 subjects:
   - kind: ServiceAccount
-    name: kyverno
+    name: kyverno-background-controller
     namespace: system
