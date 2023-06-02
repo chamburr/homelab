@@ -5,7 +5,7 @@ resources:
   - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.65.2/bundle.yaml
 patches:
   - target:
-      labelSelector: app.kubernetes.io/name=prometheus-operator
+      name: "[^\\.]+"
     patch: |
       $patch: delete
       apiVersion: not-used

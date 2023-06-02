@@ -5,8 +5,7 @@ resources:
   - https://github.com/kyverno/kyverno/releases/download/v1.10.0/install.yaml
 patches:
   - target:
-      kind: >-
-        Namespace|ServiceAccount|ConfigMap|ClusterRole|ClusterRoleBinding|Role|RoleBinding|Service|Deployment|CronJob
+      name: "[^\\.]+"
     patch: |
       $patch: delete
       apiVersion: not-used

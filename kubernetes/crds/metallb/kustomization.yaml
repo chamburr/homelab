@@ -5,15 +5,7 @@ resources:
   - https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml
 patches:
   - target:
-      labelSelector: app=metallb
-    patch: |
-      $patch: delete
-      apiVersion: not-used
-      kind: not-used
-      metadata:
-        name: not-used
-  - target:
-      kind: Namespace|Secret|Service|ValidatingWebhookConfiguration
+      name: "[^\\.]+"
     patch: |
       $patch: delete
       apiVersion: not-used
