@@ -40,5 +40,6 @@ data:
       exit 0
     else
       printf "Failure - Updating IP address %s has failed" "$new_ipv4"
+      printf "%s" "$result"
       exit 1
     fi
