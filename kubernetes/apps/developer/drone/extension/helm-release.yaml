@@ -25,7 +25,7 @@ spec:
       nameOverride: drone-extension
     image:
       repository: ghcr.io/onedr0p/kubernetes-kubectl
-      tag: 1.27.2
+      tag: 1.27.3
     args:
       - /bin/sh
       - -c
