@@ -43,6 +43,15 @@
     state: "{{ item.value }}"
   with_dict: "{{ firewall_services }}"
 
+- name: Configure firewall ports
+  ansible.posix.firewalld:
+    zone: public
+    port: "{{ item.key }}"
+    permanent: true
+    immediate: true
+    state: "{{ item.value }}"
+  with_dict: "{{ firewall_ports }}"
+
 - name: Configure firewall prerouting
   ansible.builtin.command:
     cmd: >
