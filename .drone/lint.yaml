@@ -16,7 +16,7 @@ steps:
   - name: lint terraform
     image: ghcr.io/terraform-linters/tflint
     commands:
-      - tflint terraform
+      - tflint --chdir terraform
 
 trigger:
   event:
