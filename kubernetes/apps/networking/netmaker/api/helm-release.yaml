@@ -45,12 +45,6 @@ spec:
       NODE_ID: netmaker
       VERBOSITY: 3
       TELEMETRY: "off"
-    securityContext:
-      capabilities:
-        add:
-          - NET_ADMIN
-          - NET_RAW
-          - SYS_MODULE
     service:
       main:
         ports:
@@ -83,6 +77,12 @@ spec:
                   values:
                     - netmaker
             topologyKey: kubernetes.io/hostname
+    podSecurityContext:
+      capabilities:
+        add:
+          - NET_ADMIN
+          - NET_RAW
+          - SYS_MODULE
   valuesFrom:
     - kind: Secret
       name: netmaker-secret

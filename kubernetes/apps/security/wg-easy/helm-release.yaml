@@ -56,11 +56,6 @@ spec:
         iptables -t nat -D POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 
         MTU = 1420
-    securityContext:
-      capabilities:
-        add:
-          - NET_ADMIN
-          - SYS_MODULE
     service:
       main:
         ports:
@@ -92,6 +87,11 @@ spec:
         tls:
           - hosts:
               - wireguard.${DOMAIN}
+    podSecurityContext:
+      capabilities:
+        add:
+          - NET_ADMIN
+          - SYS_MODULE
     podAnnotations:
       secret.reloader.stakater.com/reload: wg-easy-secret
   valuesFrom:

@@ -37,10 +37,6 @@ spec:
       VPN_DNS_NAME: ${DOMAIN}
       VPN_DNS_SRV1: adguard-home-dns.security.svc.cluster.local
       VPN_DNS_SRV2: ""
-    securityContext:
-      capabilities:
-        add:
-          - NET_ADMIN
     probes:
       liveness:
         enabled: true
@@ -76,6 +72,10 @@ spec:
         enabled: true
         existingClaim: ipsec-vpn-data
         mountPath: /etc/ipsec.d
+    podSecurityContext:
+      capabilities:
+        add:
+          - NET_ADMIN
     podAnnotations:
       secret.reloader.stakater.com/reload: ipsec-vpn-secret
   valuesFrom:

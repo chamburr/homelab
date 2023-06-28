@@ -32,8 +32,8 @@ spec:
     args:
       - /bin/sh
       - -c
-      - sed -i 's/this.manager.hasFeatureEnabled(feature)/true/'
-        /usr/local/lib/node_modules/n8n/dist/License.js && /docker-entrypoint.sh
+      - apk add --no-cache su-exec && sed -i 's/this.manager.hasFeatureEnabled(feature)/true/'
+        /usr/local/lib/node_modules/n8n/dist/License.js && su-exec node /entrypoint.sh
     env:
       N8N_PORT: 5678
       N8N_PROTOCOL: https
@@ -69,3 +69,7 @@ spec:
         tls:
           - hosts:
               - n8n.${DOMAIN}
+    podSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 1000

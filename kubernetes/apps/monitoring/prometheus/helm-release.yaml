@@ -102,8 +102,8 @@ spec:
             mountPath: /etc/prometheus/secrets/etcd-client-cert
             readOnly: true
         securityContext:
-          runAsGroup: 60
           runAsUser: 60
+          runAsGroup: 60
           fsGroup: 60
         podMetadata:
           annotations:
