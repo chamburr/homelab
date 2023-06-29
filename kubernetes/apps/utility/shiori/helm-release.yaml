@@ -26,6 +26,8 @@ spec:
     image:
       repository: ghcr.io/go-shiori/shiori
       tag: v1.5.4
+    securityContext:
+      fsGroup: 1000
     service:
       main:
         ports:
@@ -48,5 +50,3 @@ spec:
         tls:
           - hosts:
               - shiori.${DOMAIN}
-    podSecurityContext:
-      fsGroup: 1000
