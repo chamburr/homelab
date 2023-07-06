@@ -24,7 +24,7 @@ spec:
     image:
       registry: docker.io
       repository: dec0dos/drone
-      tag: 2.17.0
+      tag: 2.18.0
     env:
       DRONE_SERVER_HOST: drone.${DOMAIN}
       DRONE_SERVER_PORT: :80
