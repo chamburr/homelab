@@ -1,5 +1,5 @@
 ---
-apiVersion: notification.toolkit.fluxcd.io/v1beta1
+apiVersion: notification.toolkit.fluxcd.io/v1
 kind: Receiver
 metadata:
   name: webhook-receiver
@@ -9,7 +9,7 @@ spec:
   secretRef:
     name: webhook-secret
   resources:
-    - apiVersion: source.toolkit.fluxcd.io/v1beta2
+    - apiVersion: source.toolkit.fluxcd.io/v1
       kind: GitRepository
       name: flux-cluster
       namespace: flux-system
