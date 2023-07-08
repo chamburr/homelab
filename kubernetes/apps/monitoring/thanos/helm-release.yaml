@@ -33,7 +33,6 @@ spec:
         enabled: true
         ingressClassName: traefik
         hostname: thanos.${DOMAIN}
-        tls: true
       podAnnotations:
         secret.reloader.stakater.com/reload: thanos-secret
     queryFrontend:
@@ -145,3 +144,12 @@ spec:
                   password:
                     name: thanos-secret
                     key: password
+          - target:
+              kind: Ingress
+              name: thanos-query
+            patch:
+              - op: add
+                path: /spec/tls
+                value:
+                  - hosts:
+                      - thanos.chamburr.xyz
