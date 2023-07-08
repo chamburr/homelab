@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kubernetes-dashboard
-      version: 6.0.8
+      version: 7.0.0
       sourceRef:
         kind: HelmRepository
         name: dashboard
@@ -23,16 +23,37 @@ spec:
   values:
     nameOverride: dashboard
     fullnameOverride: dashboard
-    extraArgs:
-      - --token-ttl=0
+    app:
+      ingress:
+        ingressClassName: traefik
+        hosts:
+          - kubernetes.${DOMAIN}
+    api:
+      containers:
+        args:
+          - --token-ttl=0
+        resources: null
+    web:
+      containers:
+        resources: null
     metricsScraper:
-      enabled: true
-    ingress:
-      enabled: true
-      className: traefik
-      hosts:
-        - kubernetes.${DOMAIN}
-      tls:
-        - hosts:
-            - kubernetes.${DOMAIN}
-    resources: null
+      containers:
+        resources: null
+    metrics-server:
+      enabled: false
+    cert-manager:
+      enabled: false
+    nginx-ingress:
+      enabled: false
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: Ingress
+              name: dashboard
+            patch:
+              - op: add
+                path: /spec/ingressClassName
+                value: traefik
+              - op: remove
+                path: /spec/tls/0/secretName
