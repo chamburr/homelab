@@ -43,7 +43,7 @@ spec:
       enabled: false
     cert-manager:
       enabled: false
-    nginx-ingress:
+    nginx:
       enabled: false
   postRenderers:
     - kustomize:
