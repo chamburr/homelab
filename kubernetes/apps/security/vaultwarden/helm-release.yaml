@@ -25,10 +25,9 @@ spec:
       nameOverride: vaultwarden
     image:
       repository: docker.io/vaultwarden/server
-      tag: 1.28.1
+      tag: 1.29.0
     env:
       DATA_FOLDER: config
-      WEBSOCKET_ENABLED: true
       SIGNUPS_ALLOWED: false
       DOMAIN: https://bitwarden.${DOMAIN}
       SMTP_HOST: ${MAIL_HOST}
@@ -41,9 +40,6 @@ spec:
         ports:
           http:
             port: 80
-          websocket:
-            enabled: true
-            port: 3012
     persistence:
       config:
         enabled: true
@@ -59,14 +55,6 @@ spec:
                 pathType: Prefix
                 service:
                   port: 80
-              - path: /notifications/hub/negotiate
-                pathType: Prefix
-                service:
-                  port: 80
-              - path: /notifications/hub
-                pathType: Prefix
-                service:
-                  port: 3012
         tls:
           - hosts:
               - bitwarden.${DOMAIN}
