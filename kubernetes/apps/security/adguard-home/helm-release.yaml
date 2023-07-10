@@ -30,7 +30,7 @@ spec:
       - /opt/adguardhome/AdGuardHome
       - --no-check-update
       - --config
-      - /opt/adguardhome/conf/AdGuardHome.yaml"
+      - /opt/adguardhome/conf/AdGuardHome.yaml
       - --work-dir
       - /opt/adguardhome/work
     service:
