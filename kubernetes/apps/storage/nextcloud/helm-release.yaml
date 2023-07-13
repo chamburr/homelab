@@ -41,12 +41,12 @@ spec:
           secure: tls
       phpConfigs:
         zcustom.ini: |
-          apc.enable_cli=1
+          apc.enable_cli = 1
           post_max_size = 32G
           upload_max_filesize = 32G
           max_input_time = 3600
           max_execution_time = 3600
-          memory_limit=1024M
+          memory_limit = 1024M
       configs:
         custom.config.php: |
           <?php
@@ -72,6 +72,18 @@ spec:
             'simpleSignUpLink.shown' => false,
             'profile.enabled' => false,
           );
+      extraSidecarContainers:
+        - name: nextcloud-push
+          image: docker.io/icewind1991/notify_push:0.6.3
+          env:
+            - name: DATABASE_URL
+              value: postgres://postgres:nextcloud-pass@nextcloud-postgresql/nextcloud
+            - name: DATABASE_PREFIX
+              value: oc_
+            - name: REDIS_URL
+              value: redis://:nextcloud-pass@nextcloud-redis-master
+            - name: NEXTCLOUD_URL
+              value: https://cloud.${DOMAIN}
     cronjob:
       enabled: true
     internalDatabase:
@@ -139,3 +151,28 @@ spec:
               - op: add
                 path: /data/db-password
                 value: bmV4dGNsb3VkLXBhc3M=
+          - target:
+              kind: Service
+              name: nextcloud
+            patch:
+              - op: add
+                path: /spec/ports/-
+                value:
+                  name: push
+                  port: 7867
+                  protocol: TCP
+                  targetPort: 7867
+          - target:
+              kind: Ingress
+              name: nextcloud
+            patch:
+              - op: add
+                path: /spec/rules/0/http/paths/-
+                value:
+                  backend:
+                    service:
+                      name: nextcloud
+                      port:
+                        number: 7867
+                  path: /push
+                  pathType: Prefix
