@@ -81,9 +81,10 @@ spec:
       global:
         postgresql:
           auth:
-            username: nextcloud
-            password: nextcloud-pass
-            databse: nextcloud
+            username: ""
+            password: ""
+            postgresPassword: nextcloud-pass
+            database: nextcloud
       primary:
         persistence:
           enabled: true
@@ -128,3 +129,13 @@ spec:
                 path: /spec/template/spec/containers/0/volumeMounts/2/subPath
               - op: remove
                 path: /spec/template/spec/containers/1/volumeMounts/2/subPath
+          - target:
+              kind: Secret
+              name: nextcloud-db
+            patch:
+              - op: add
+                path: /data/db-username
+                value: cG9zdGdyZXM=
+              - op: add
+                path: /data/db-password
+                value: bmV4dGNsb3VkLXBhc3M=
