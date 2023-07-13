@@ -26,13 +26,6 @@ spec:
     image:
       repository: docker.io/adguard/adguardhome
       tag: v0.107.34
-    args:
-      - /opt/adguardhome/AdGuardHome
-      - --no-check-update
-      - --config
-      - /opt/adguardhome/conf/AdGuardHome.yaml
-      - --work-dir
-      - /opt/adguardhome/work
     service:
       main:
         ports:
