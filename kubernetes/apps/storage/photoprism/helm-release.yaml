@@ -48,6 +48,10 @@ spec:
         enabled: true
         existingClaim: photoprism-originals
         mountPath: /photoprism/originals
+      nextcloud:
+        enabled: true
+        existingClaim: nextcloud-data
+        mountPath: /mnt/md0/nextcloud
       template:
         enabled: true
         type: configMap
