@@ -32,7 +32,8 @@ spec:
     args:
       - /bin/sh
       - -c
-      - apk add --no-cache su-exec && sed -i 's/this.manager.hasFeatureEnabled(feature)/true/'
+      - apk add --no-cache su-exec &&
+        sed -i 's/isFeatureEnabled(feature) {/isFeatureEnabled(feature) {\n        return true;/'
         /usr/local/lib/node_modules/n8n/dist/License.js && su-exec node /docker-entrypoint.sh
     env:
       N8N_PORT: 5678
