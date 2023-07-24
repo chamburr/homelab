@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: gitea
-      version: 8.3.0
+      version: 9.0.4
       sourceRef:
         kind: HelmRepository
         name: gitea
@@ -74,13 +74,17 @@ spec:
           ENABLED: false
         other:
           ENABLE_SITEMAP: false
-    memcached:
+    redis-cluster:
       enabled: false
     postgresql:
       enabled: false
+    postgresql-ha:
+      enabled: false
     persistence:
       enabled: true
-      existingClaim: gitea-data
+      mount: true
+      create: false
+      claimName: gitea-data
     ingress:
       enabled: true
       className: traefik
