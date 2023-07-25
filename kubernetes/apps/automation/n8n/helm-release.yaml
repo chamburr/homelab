@@ -25,7 +25,7 @@ spec:
       nameOverride: n8n
     image:
       repository: docker.io/n8nio/n8n
-      tag: 1.0.4
+      tag: 1.0.5
     command:
       - tini
       - --
