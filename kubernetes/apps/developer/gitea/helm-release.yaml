@@ -86,6 +86,8 @@ spec:
       enabled: false
     postgresql-ha:
       enabled: false
+    strategy:
+      type: Recreate
     persistence:
       enabled: true
       mount: true
