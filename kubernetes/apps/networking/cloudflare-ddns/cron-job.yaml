@@ -15,7 +15,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: cloudflare-ddns
-              image: ghcr.io/onedr0p/alpine:3.18.2
+              image: ghcr.io/onedr0p/alpine:3.18.3
               env:
                 - name: CLOUDFLARE_EMAIL
                   value: ${CLOUDFLARE_EMAIL}
