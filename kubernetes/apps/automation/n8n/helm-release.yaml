@@ -24,7 +24,7 @@ spec:
     global:
       nameOverride: n8n
     image:
-      repository: docker.io/n8nio/n8n
+      repository: ghcr.io/n8n-io/n8n
       tag: 1.2.1
     command:
       - tini

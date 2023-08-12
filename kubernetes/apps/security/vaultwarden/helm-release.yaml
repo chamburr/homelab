@@ -24,7 +24,7 @@ spec:
     global:
       nameOverride: vaultwarden
     image:
-      repository: docker.io/vaultwarden/server
+      repository: ghcr.io/dani-garcia/vaultwarden
       tag: 1.29.1
     env:
       DATA_FOLDER: config
