@@ -25,7 +25,7 @@ spec:
       nameOverride: flame
     image:
       repository: ghcr.io/fdarveau/flame
-      tag: "2022-08-09"
+      tag: "2023-08-04"
     service:
       main:
         ports:
