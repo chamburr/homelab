@@ -25,7 +25,7 @@ spec:
       nameOverride: n8n
     image:
       repository: ghcr.io/n8n-io/n8n
-      tag: 1.2.2
+      tag: 1.3.0
     command:
       - tini
       - --
