@@ -25,7 +25,7 @@ spec:
       nameOverride: netmaker-mqtt
     image:
       repository: docker.io/eclipse-mosquitto
-      tag: 2.0.16-openssl
+      tag: 2.0.15-openssl
     command:
       - /bin/ash
       - /mosquitto/config/wait.sh
