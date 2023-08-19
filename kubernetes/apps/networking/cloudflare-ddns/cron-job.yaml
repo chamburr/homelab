@@ -25,7 +25,7 @@ spec:
                   value: ${CLOUDFLARE_ZONE_ID}
                 - name: CLOUDFLARE_DOMAIN
                   value: ${CLOUDFLARE_DOMAIN}
-              command:
+              args:
                 - /bin/bash
                 - /app/cloudflare-ddns.sh
               volumeMounts:

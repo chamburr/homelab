@@ -28,6 +28,7 @@ spec:
       tag: 2.0.16-openssl
     command:
       - /bin/ash
+    args:
       - /mosquitto/config/wait.sh
     service:
       main:
