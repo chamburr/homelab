@@ -24,4 +24,5 @@ spec:
     crds:
       enabled: false
     speaker:
-      tolerateMaster: true
+      frr:
+        enabled: false
