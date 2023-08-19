@@ -28,6 +28,7 @@ spec:
       enabled: true
     serviceMonitor:
       enabled: true
+    resources: null
   postRenderers:
     - kustomize:
         patchesJson6902:
