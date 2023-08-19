@@ -67,7 +67,7 @@ spec:
                           - /scripts/sleep.sh 1 900
                     containers:
                       - name: backup
-                        image: ghcr.io/onedr0p/kopia:0.13.0
+                        image: docker.io/kopia/kopia:0.13.0
                         env:
                           - name: KOPIA_CACHE_DIRECTORY
                             value: /backups/{{ namespace }}/{{ name }}/cache
@@ -75,8 +75,9 @@ spec:
                             value: /backups/{{ namespace }}/{{ name }}/logs
                           - name: KOPIA_PASSWORD
                             value: none
-                        args:
+                        command:
                           - /bin/sh
+                        args:
                           - -c
                           - kopia repo connect filesystem --path=/backups
                             --override-hostname=cluster --override-username=root &&

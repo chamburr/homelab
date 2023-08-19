@@ -24,12 +24,13 @@ spec:
     global:
       nameOverride: kopia
     image:
-      repository: ghcr.io/onedr0p/kopia
+      repository: docker.io/kopia/kopia
       tag: 0.13.0
     env:
       KOPIA_PASSWORD: none
-    args:
+    command:
       - /bin/sh
+    args:
       - -c
       - if [ ! -f /backups/kopia.repository.f ];
         then kopia repository create filesystem --path=/backups; fi &&
