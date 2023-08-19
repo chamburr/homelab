@@ -45,7 +45,7 @@ spec:
       config:
         enabled: true
         type: configMap
-        mountPath: /config/repository.config
+        mountPath: /app/config/repository.config
         name: kopia
         subPath: repository.config
         readOnly: true
