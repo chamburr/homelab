@@ -22,14 +22,34 @@ spec:
       retries: 3
   values:
     externalURL: https://registry.${DOMAIN}
+    portal:
+      image:
+        repository: ghcr.io/goharbor/harbor-portal
     core:
+      image:
+        repository: ghcr.io/goharbor/harbor-core
       podAnnotations:
         secret.reloader.stakater.com/reload: harbor-secret
     jobservice:
+      image:
+        repository: ghcr.io/goharbor/harbor-jobservice
       jobLoggers:
         - stdout
-    chartmuseum:
-      enabled: false
+    registry:
+      registry:
+        image:
+          repository: ghcr.io/goharbor/registry-photon
+      controller:
+        image:
+          repository: ghcr.io/goharbor/harbor-registryctl
+    database:
+      internal:
+        image:
+          repository: ghcr.io/goharbor/harbor-db
+    redis:
+      internal:
+        image:
+          repository: ghcr.io/goharbor/redis-photon
     trivy:
       enabled: false
     notary:
