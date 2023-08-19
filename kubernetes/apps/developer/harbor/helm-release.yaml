@@ -45,11 +45,11 @@ spec:
     database:
       internal:
         image:
-          repository: ghcr.io/goharbor/harbor-db
+          repository: docker.io/goharbor/harbor-db
     redis:
       internal:
         image:
-          repository: ghcr.io/goharbor/redis-photon
+          repository: docker.io/goharbor/redis-photon
     trivy:
       enabled: false
     notary:
