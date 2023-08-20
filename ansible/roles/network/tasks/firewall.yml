@@ -25,14 +25,11 @@
 
 - name: Allow firewall masquerade
   ansible.posix.firewalld:
-    zone: "{{ item }}"
+    zone: public
     masquerade: true
     permanent: true
     immediate: true
     state: enabled
-  loop:
-    - public
-    - trusted
 
 - name: Configure firewall services
   ansible.posix.firewalld:
