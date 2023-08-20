@@ -26,6 +26,7 @@ packages:
   - neovim
   - rsync
   - tar
+  - tcpdump
   - telnet
   - tmux
   - tree
