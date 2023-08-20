@@ -35,18 +35,15 @@ spec:
       kubernetesCRD:
         enabled: true
         allowCrossNamespace: true
+      kubernetesIngress:
+        ingressClass: traefik
     logs:
       general:
         level: INFO
       access:
         enabled: true
     globalArguments:
-      - --api.insecure=true
       - --serverstransport.insecureskipverify=true
-      - --providers.kubernetesingress.ingressclass=traefik
-      - --metrics.prometheus=true
-      - --metrics.prometheus.entryPoint=metrics
-      - --entrypoints.websecure.http.middlewares=networking-global@kubernetescrd
       - --global.checknewversion=false
     additionalArguments:
       - --providers.kubernetesingress.ingressendpoint.ip=${LB_TRAEFIK}
@@ -57,11 +54,13 @@ spec:
         tls:
           enabled: true
           options: default
+        middlewares:
+          - networking-global@kubernetescrd
       metrics:
         expose: true
     tlsOptions:
       default:
-        minVersion: VersionTLS12
+        minVersion: VersionTLS10
         maxVersion: VersionTLS13
         sniStrict: false
     service:
