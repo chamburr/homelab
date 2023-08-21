@@ -4,5 +4,3 @@ kind: Kustomization
 resources:
   - headers.yaml
   - redirect.yaml
-  - errors.yaml
-  - global.yaml

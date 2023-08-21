@@ -7,6 +7,5 @@ resources:
   - middlewares
   - service-monitor.yaml
   - helm-release.yaml
-  - catch
   - dashboard
   - homepage
