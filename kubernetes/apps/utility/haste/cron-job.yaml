@@ -19,7 +19,7 @@ spec:
               args:
                 - /bin/sh
                 - -c
-                - find /config -type f -mtime +7 -exec rm {} \;
+                - find /config -type f -mtime +30 -exec rm {} \;
               volumeMounts:
                 - name: data
                   mountPath: /config
