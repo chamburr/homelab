@@ -4,5 +4,5 @@ kind: Kustomization
 resources:
   - pvc.yaml
   - helm-release.yaml
-  - redirect.yaml
+  - middleware.yaml
   - ingress.yaml

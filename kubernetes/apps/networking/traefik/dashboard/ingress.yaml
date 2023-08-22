@@ -9,7 +9,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`traefik.${DOMAIN}`)
+      match: Host(`traefik.${DOMAIN}`) && PathPrefix(`/`)
       middlewares:
         - name: dashboard-basic-auth
           namespace: networking

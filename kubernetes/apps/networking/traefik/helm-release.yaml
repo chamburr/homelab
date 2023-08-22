@@ -56,7 +56,6 @@ spec:
           options: default
         middlewares:
           - networking-headers@kubernetescrd
-          - networking-redirect@kubernetescrd
       metrics:
         expose: true
     tlsOptions:
