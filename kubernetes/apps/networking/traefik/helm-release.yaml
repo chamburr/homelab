@@ -42,6 +42,12 @@ spec:
         level: INFO
       access:
         enabled: true
+    metrics:
+      prometheus:
+        service:
+          enabled: true
+        serviceMonitor:
+          enabled: true
     globalArguments:
       - --serverstransport.insecureskipverify=true
       - --global.checknewversion=false
@@ -56,8 +62,6 @@ spec:
           options: default
         middlewares:
           - networking-headers@kubernetescrd
-      metrics:
-        expose: true
     tlsOptions:
       default:
         minVersion: VersionTLS10

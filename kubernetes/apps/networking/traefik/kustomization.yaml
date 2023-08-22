@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - tls-store
   - secret.yaml
-  - service-monitor.yaml
   - middleware.yaml
   - helm-release.yaml
   - dashboard
