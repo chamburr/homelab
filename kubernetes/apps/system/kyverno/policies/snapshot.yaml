@@ -82,7 +82,7 @@ spec:
                           - kopia repo connect filesystem --path=/backups
                             --override-hostname=cluster --override-username=root &&
                             kopia policy set /data/{{ namespace }}/{{ name }}
-                            --compression=zstd --keep-latest 7 --keep-hourly 0
+                            --compression=zstd --keep-latest 0 --keep-hourly 0
                             --keep-daily 7 --keep-weekly 0 --keep-monthly 0 --keep-annual 0 &&
                             fsfreeze -f /data/{{ namespace }}/{{ name }} &&
                             kopia snap create /data/{{ namespace }}/{{ name }} &&
