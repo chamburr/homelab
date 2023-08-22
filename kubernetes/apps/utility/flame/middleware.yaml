@@ -1,0 +1,10 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: flame-redirect
+  namespace: utility
+spec:
+  redirectRegex:
+    regex: ^https://www\.${DOMAIN}(/.*)?$
+    replacement: https://${DOMAIN}$${1}

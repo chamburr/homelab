@@ -5,3 +5,5 @@ resources:
   - pvc.yaml
   - secret.yaml
   - helm-release.yaml
+  - middleware.yaml
+  - ingress.yaml

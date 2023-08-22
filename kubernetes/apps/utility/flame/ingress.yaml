@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: flame
+  namespace: utility
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`www.${DOMAIN}`) && PathPrefix(`/`)
+      middlewares:
+        - name: flame-redirect
+          namespace: utility
+      services:
+        - kind: TraefikService
+          name: noop@internal
+  tls:
+    domains:
+      - main: www.${DOMAIN}
