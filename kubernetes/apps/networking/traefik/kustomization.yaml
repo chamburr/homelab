@@ -8,4 +8,3 @@ resources:
   - service-monitor.yaml
   - helm-release.yaml
   - dashboard
-  - homepage
