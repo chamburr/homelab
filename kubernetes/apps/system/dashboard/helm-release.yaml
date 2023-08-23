@@ -52,8 +52,5 @@ spec:
               kind: Ingress
               name: dashboard
             patch:
-              - op: add
-                path: /spec/ingressClassName
-                value: traefik
               - op: remove
                 path: /spec/tls/0/secretName

@@ -28,6 +28,8 @@ spec:
     service:
       enabled: true
       type: LoadBalancer
+      loadBalancerIP: ${LB_VECTOR}
+      externalTrafficPolicy: Local
     customConfig:
       data_dir: /vector-data-dir
       api:
@@ -107,16 +109,3 @@ spec:
             _job: talos_service
             hostname: "{{`{{ __host }}`}}"
             service: '{{`{{ "talos-service" }}`}}'
-  postRenderers:
-    - kustomize:
-        patchesJson6902:
-          - target:
-              kind: Service
-              name: vector
-            patch:
-              - op: add
-                path: /spec/loadBalancerIP
-                value: ${LB_VECTOR}
-              - op: add
-                path: /spec/externalTrafficPolicy
-                value: Local

@@ -90,13 +90,11 @@ spec:
       enabled: false
     postgresql:
       enabled: true
-      global:
-        postgresql:
-          auth:
-            username: ""
-            password: ""
-            postgresPassword: nextcloud-pass
-            database: nextcloud
+      global: null
+      auth:
+        enablePostgresUser: true
+        postgresPassword: nextcloud-pass
+        database: nextcloud
       primary:
         persistence:
           enabled: true
@@ -169,10 +167,10 @@ spec:
               - op: add
                 path: /spec/rules/0/http/paths/-
                 value:
+                  path: /push
+                  pathType: Prefix
                   backend:
                     service:
                       name: nextcloud
                       port:
                         number: 7867
-                  path: /push
-                  pathType: Prefix

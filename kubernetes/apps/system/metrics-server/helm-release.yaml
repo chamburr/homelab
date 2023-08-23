@@ -28,15 +28,6 @@ spec:
       enabled: true
     serviceMonitor:
       enabled: true
+      interval: null
+      scrapeTimeout: null
     resources: null
-  postRenderers:
-    - kustomize:
-        patchesJson6902:
-          - target:
-              kind: ServiceMonitor
-              name: metrics-server
-            patch:
-              - op: remove
-                path: /spec/endpoints/0/interval
-              - op: remove
-                path: /spec/endpoints/0/scrapeTimeout

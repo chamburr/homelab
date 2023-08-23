@@ -15,11 +15,9 @@ spec:
         name: grafana
         namespace: flux-system
   install:
-    crds: Skip
     remediation:
       retries: 3
   upgrade:
-    crds: Skip
     remediation:
       retries: 3
   values:
