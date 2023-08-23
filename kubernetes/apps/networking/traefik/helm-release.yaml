@@ -54,6 +54,8 @@ spec:
     additionalArguments:
       - --providers.kubernetesingress.ingressendpoint.ip=${LB_TRAEFIK}
     ports:
+      traefik:
+        expose: true
       web:
         redirectTo: websecure
       websecure:
@@ -73,3 +75,5 @@ spec:
       spec:
         externalTrafficPolicy: Local
         loadBalancerIP: ${LB_TRAEFIK}
+      internal:
+        enabled: true
