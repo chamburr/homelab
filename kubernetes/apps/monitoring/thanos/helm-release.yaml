@@ -33,8 +33,12 @@ spec:
         enabled: true
         ingressClassName: traefik
         hostname: thanos.${DOMAIN}
-      podAnnotations:
-        secret.reloader.stakater.com/reload: thanos-secret
+        extraTls:
+          - hosts:
+              - thanos.chamburr.xyz
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: >-
+            monitoring-thanos-basic-auth@kubernetescrd
     queryFrontend:
       enabled: false
     compactor:
@@ -51,8 +55,6 @@ spec:
       extraVolumeMounts:
         - name: storage
           mountPath: /storage
-      podAnnotations:
-        secret.reloader.stakater.com/reload: thanos-secret
     storegateway:
       enabled: true
       persistence:
@@ -64,8 +66,6 @@ spec:
       extraVolumeMounts:
         - name: storage
           mountPath: /storage
-      podAnnotations:
-        secret.reloader.stakater.com/reload: thanos-secret
     receive:
       enabled: true
       tsdbRetention: 3h
@@ -78,78 +78,7 @@ spec:
       extraVolumeMounts:
         - name: storage
           mountPath: /storage
-      podAnnotations:
-        secret.reloader.stakater.com/reload: thanos-secret
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
-  valuesFrom:
-    - kind: Secret
-      name: thanos-secret
-      valuesKey: http-config.yml
-      targetPath: httpConfig
-  postRenderers:
-    - kustomize:
-        patchesJson6902:
-          - target:
-              kind: ServiceMonitor
-              name: thanos-compactor
-            patch:
-              - op: add
-                path: /spec/endpoints/0/basicAuth
-                value:
-                  username:
-                    name: thanos-secret
-                    key: username
-                  password:
-                    name: thanos-secret
-                    key: password
-          - target:
-              kind: ServiceMonitor
-              name: thanos-query
-            patch:
-              - op: add
-                path: /spec/endpoints/0/basicAuth
-                value:
-                  username:
-                    name: thanos-secret
-                    key: username
-                  password:
-                    name: thanos-secret
-                    key: password
-          - target:
-              kind: ServiceMonitor
-              name: thanos-receive
-            patch:
-              - op: add
-                path: /spec/endpoints/0/basicAuth
-                value:
-                  username:
-                    name: thanos-secret
-                    key: username
-                  password:
-                    name: thanos-secret
-                    key: password
-          - target:
-              kind: ServiceMonitor
-              name: thanos-storegateway
-            patch:
-              - op: add
-                path: /spec/endpoints/0/basicAuth
-                value:
-                  username:
-                    name: thanos-secret
-                    key: username
-                  password:
-                    name: thanos-secret
-                    key: password
-          - target:
-              kind: Ingress
-              name: thanos-query
-            patch:
-              - op: add
-                path: /spec/tls
-                value:
-                  - hosts:
-                      - thanos.chamburr.xyz

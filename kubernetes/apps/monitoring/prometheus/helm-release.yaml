@@ -18,14 +18,14 @@ spec:
     - name: thanos
       namespace: monitoring
   install:
-    crds: Skip
     remediation:
       retries: 3
   upgrade:
-    crds: Skip
     remediation:
       retries: 3
   values:
+    crds:
+      enabled: false
     nameOverride: prometheus
     fullnameOverride: prometheus
     defaultRules:
@@ -82,13 +82,6 @@ spec:
         podMonitorSelectorNilUsesHelmValues: false
         remoteWrite:
           - url: http://thanos-receive.monitoring:19291/api/v1/receive
-            basicAuth:
-              username:
-                name: thanos-secret
-                key: username
-              password:
-                name: thanos-secret
-                key: password
         volumes:
           - name: web-config-2
             secret:
@@ -105,9 +98,6 @@ spec:
           runAsUser: 60
           runAsGroup: 60
           fsGroup: 60
-        podMetadata:
-          annotations:
-            secret.reloader.stakater.com/reload: prometheus-secret
       ingress:
         enabled: true
         pathType: Prefix
@@ -117,67 +107,7 @@ spec:
         tls:
           - hosts:
               - prometheus.${DOMAIN}
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: >-
+            monitoring-prometheus-basic-auth@kubernetescrd
     cleanPrometheusOperatorObjectNames: true
-  valuesFrom:
-    - kind: Secret
-      name: prometheus-secret
-      valuesKey: header
-      targetPath: >-
-        prometheus.prometheusSpec.containers[0].startupProbe.httpGet.httpHeaders[0].value
-    - kind: Secret
-      name: prometheus-secret
-      valuesKey: header
-      targetPath: >-
-        prometheus.prometheusSpec.containers[0].livenessProbe.httpGet.httpHeaders[0].value
-    - kind: Secret
-      name: prometheus-secret
-      valuesKey: header
-      targetPath: >-
-        prometheus.prometheusSpec.containers[0].readinessProbe.httpGet.httpHeaders[0].value
-  postRenderers:
-    - kustomize:
-        patchesJson6902:
-          - target:
-              kind: ServiceMonitor
-              name: prometheus-prometheus
-            patch:
-              - op: add
-                path: /spec/endpoints/0/basicAuth
-                value:
-                  username:
-                    name: prometheus-secret
-                    key: username
-                  password:
-                    name: prometheus-secret
-                    key: password
-          - target:
-              kind: Prometheus
-              name: prometheus
-            patch:
-              - op: add
-                path: /spec/containers/0/name
-                value: prometheus
-              - op: add
-                path: /spec/containers/0/startupProbe/httpGet/port
-                value: http-web
-              - op: add
-                path: /spec/containers/0/startupProbe/httpGet/httpHeaders/0/name
-                value: Authorization
-              - op: add
-                path: /spec/containers/0/livenessProbe/httpGet/port
-                value: http-web
-              - op: add
-                path: /spec/containers/0/livenessProbe/httpGet/httpHeaders/0/name
-                value: Authorization
-              - op: add
-                path: /spec/containers/0/readinessProbe/httpGet/port
-                value: http-web
-              - op: add
-                path: /spec/containers/0/readinessProbe/httpGet/httpHeaders/0/name
-                value: Authorization
-              - op: add
-                path: /spec/containers/0/volumeMounts
-                value:
-                  - name: web-config-2
-                    mountPath: /etc/prometheus/web_config/web-config.yaml
-                    subPath: web-config.yaml
