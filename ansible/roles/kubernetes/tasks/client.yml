@@ -14,9 +14,8 @@
   ansible.builtin.yum_repository:
     name: kubernetes-extras
     description: Kubernetes Extras
-    baseurl: https://download.copr.fedorainfracloud.org/results/talosdev/k8s-extras/epel-9-x86_64
-    gpgkey: https://download.copr.fedorainfracloud.org/results/talosdev/k8s-extras/pubkey.gpg
-    gpgcheck: true
+    baseurl: https://raw.githubusercontent.com/chamburr/kubernetes-extras/master
+    gpgcheck: false
     state: present
 
 - name: Install client packages
