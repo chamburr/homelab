@@ -5,7 +5,8 @@ metadata:
   name: traefik-dashboard
   namespace: networking
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: networking-dashboard-basic-auth@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: >-
+      networking-dashboard-basic-auth@kubernetescrd,networking-dashboard-redirect@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
