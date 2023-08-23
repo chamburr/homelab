@@ -1,21 +1,31 @@
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: nextcloud
+  name: nextcloud-redirect
   namespace: storage
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: storage-nextcloud-redirect@kubernetescrd
 spec:
-  entryPoints:
-    - websecure
-  routes:
-    - kind: Rule
-      match: Host(`cloud.${DOMAIN}`) && Path(`/.well-known/{path:(?:carddav|caldav)}`)
-      middlewares:
-        - name: nextcloud-redirect
-          namespace: storage
-      services:
-        - kind: TraefikService
-          name: noop@internal
+  ingressClassName: traefik
+  rules:
+    - host: cloud.${DOMAIN}
+      http:
+        paths:
+          - path: /.well-known/carddav
+            pathType: Exact
+            backend:
+              service:
+                name: nextcloud
+                port:
+                  number: 8080
+          - path: /.well-known/caldav
+            pathType: Exact
+            backend:
+              service:
+                name: nextcloud
+                port:
+                  number: 8080
   tls:
-    domains:
-      - main: cloud.${DOMAIN}
+    - hosts:
+        - cloud.${DOMAIN}

@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: webhook-ingress
+  name: webhook
   namespace: flux-system
 spec:
   ingressClassName: traefik

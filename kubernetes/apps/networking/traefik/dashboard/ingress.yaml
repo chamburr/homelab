@@ -13,13 +13,13 @@ spec:
     - host: traefik.chamburr.xyz
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Prefix
+            backend:
               service:
                 name: traefik-internal
                 port:
                   number: 9000
-            path: /
-            pathType: Prefix
   tls:
     - hosts:
         - traefik.chamburr.xyz
