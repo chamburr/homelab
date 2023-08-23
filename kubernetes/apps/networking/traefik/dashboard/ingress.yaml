@@ -1,21 +1,24 @@
 ---
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: dashboard
+  name: traefik-dashboard
   namespace: networking
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: networking-dashboard-basic-auth@kubernetescrd
 spec:
-  entryPoints:
-    - websecure
-  routes:
-    - kind: Rule
-      match: Host(`traefik.${DOMAIN}`) && PathPrefix(`/`)
-      middlewares:
-        - name: dashboard-basic-auth
-          namespace: networking
-      services:
-        - kind: TraefikService
-          name: api@internal
+  ingressClassName: traefik
+  rules:
+    - host: traefik.chamburr.xyz
+      http:
+        paths:
+          - backend:
+              service:
+                name: traefik-internal
+                port:
+                  number: 9000
+            path: /
+            pathType: Prefix
   tls:
-    domains:
-      - main: traefik.${DOMAIN}
+    - hosts:
+        - traefik.chamburr.xyz
