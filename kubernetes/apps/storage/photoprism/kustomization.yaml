@@ -5,3 +5,4 @@ resources:
   - config-map.yaml
   - pvc.yaml
   - helm-release.yaml
+  - cron-job.yaml
