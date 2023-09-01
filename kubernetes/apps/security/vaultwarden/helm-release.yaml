@@ -25,7 +25,7 @@ spec:
       nameOverride: vaultwarden
     image:
       repository: ghcr.io/dani-garcia/vaultwarden
-      tag: 1.29.1
+      tag: 1.29.2
     env:
       DATA_FOLDER: config
       SIGNUPS_ALLOWED: false
