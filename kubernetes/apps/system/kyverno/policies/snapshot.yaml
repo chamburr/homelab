@@ -67,7 +67,7 @@ spec:
                           - /scripts/sleep.sh 1 900
                     containers:
                       - name: backup
-                        image: docker.io/kopia/kopia:20230906.0.201439
+                        image: docker.io/kopia/kopia:20230908.0.72032
                         env:
                           - name: KOPIA_CACHE_DIRECTORY
                             value: /backups/{{ namespace }}/{{ name }}/cache
