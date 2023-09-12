@@ -25,7 +25,7 @@ spec:
       nameOverride: kopia
     image:
       repository: docker.io/kopia/kopia
-      tag: 20230909.0.130753
+      tag: 20230910.0.194628
     env:
       KOPIA_PASSWORD: none
     command:
