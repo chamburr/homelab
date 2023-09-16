@@ -31,4 +31,4 @@ spec:
       persistence:
         enabled: true
         existingClaim: mattermost-postgresql
-      resources: ""
+      resources: null
