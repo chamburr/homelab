@@ -8,7 +8,8 @@
     "github>chamburr/homelab//.drone/renovate/commit-message",
     "github>chamburr/homelab//.drone/renovate/manager",
     "github>chamburr/homelab//.drone/renovate/pr-label",
-    "github>chamburr/homelab//.drone/renovate/regex-manager"
+    "github>chamburr/homelab//.drone/renovate/regex-manager",
+    "github>chamburr/homelab//.drone/renovate/overrides"
   ],
   "onboarding": false,
   "requireConfig": "optional",
