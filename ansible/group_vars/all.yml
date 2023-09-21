@@ -1,8 +1,8 @@
 ---
-timezone: Asia/Singapore
+common_timezone: Asia/Singapore
 
-username: chamburr
-ssh_keys:
+common_username: chamburr
+common_ssh_keys:
   - ssh-ed25519
     AAAAC3NzaC1lZDI1NTE5AAAAIF3DDYaYibt/VjeYDR7cO8tZA2iJUhPBh6jFrB1mBxJA hi@chamburr.com
   - ssh-ed25519

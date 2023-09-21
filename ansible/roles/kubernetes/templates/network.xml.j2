@@ -1,10 +1,10 @@
 <network>
-  <name>{{ network_name }}</name>
+  <name>{{ kubernetes_network_name }}</name>
   <forward mode='open'/>
   <dns enable='no'/>
-  <ip address='{{ network_address }}' netmask='{{ network_mask }}'>
+  <ip address='{{ kubernetes_network_address }}' netmask='{{ kubernetes_network_mask }}'>
     <dhcp>
-      <range start='{{ network_start }}' end='{{ network_end }}'/>
+      <range start='{{ kubernetes_network_start }}' end='{{ kubernetes_network_end }}'/>
     </dhcp>
   </ip>
 </network>

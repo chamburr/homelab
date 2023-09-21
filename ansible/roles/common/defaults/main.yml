@@ -1,12 +1,12 @@
 ---
-timezone: Etc/UTC
+common_timezone: Etc/UTC
 
-kernel_modules:
+common_kernel_modules:
   - br_netfilter
   - overlay
   - rbd
 
-packages:
+common_packages:
   - bc
   - bind-utils
   - bridge-utils
@@ -34,10 +34,10 @@ packages:
   - usbutils
   - wget
 
-swap_path: /swapfile
-swap_size: 8192
-swap_swappiness: 60
+common_swap_path: /swapfile
+common_swap_size: 8192
+common_swap_swappiness: 60
 
-username: user
-password: "*"
-ssh_keys: []
+common_username: user
+common_password: "*"
+common_ssh_keys: []

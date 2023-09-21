@@ -12,7 +12,7 @@
 
 - name: Set firewall zone
   community.general.nmcli:
-    conn_name: "{{ firewall_name }}"
+    conn_name: "{{ network_firewall_name }}"
     zone: public
     state: present
 
@@ -38,7 +38,7 @@
     permanent: true
     immediate: true
     state: "{{ item.value }}"
-  with_dict: "{{ firewall_services }}"
+  with_dict: "{{ network_firewall_services }}"
 
 - name: Configure firewall ports
   ansible.posix.firewalld:
@@ -47,7 +47,7 @@
     permanent: true
     immediate: true
     state: "{{ item.value }}"
-  with_dict: "{{ firewall_ports }}"
+  with_dict: "{{ network_firewall_ports }}"
 
 - name: Configure firewall prerouting
   ansible.builtin.command:
@@ -55,7 +55,7 @@
       firewall-cmd --direct --permanent --add-rule ipv4 nat PREROUTING 0
       -m addrtype --dst-type LOCAL -p {{ item.split('/')[2] }} --dport {{ item.split('/')[1] }}
       -j DNAT --to-destination {{ item.split('/')[0] }}
-  loop: "{{ firewall_forwards }}"
+  loop: "{{ network_firewall_forwards }}"
   register: network_prerouting_set
   changed_when:
     - "'ALREADY_ENABLED' not in network_prerouting_set.stderr"
@@ -65,8 +65,8 @@
   ansible.builtin.command:
     cmd: >
       firewall-cmd --direct --permanent --add-rule ipv4 nat POSTROUTING 0
-      -s {{ firewall_cidr }} -o {{ item }} -j MASQUERADE
-  loop: "{{ firewall_interfaces }}"
+      -s {{ network_firewall_cidr }} -o {{ item }} -j MASQUERADE
+  loop: "{{ network_firewall_interfaces }}"
   register: network_postrouting_set
   changed_when:
     - "'ALREADY_ENABLED' not in network_postrouting_set.stderr"

@@ -6,7 +6,7 @@
 
 - name: Check array
   ansible.builtin.shell:
-    cmd: set -o pipefail && cat /proc/mdstat | grep {{ array_name }}
+    cmd: set -o pipefail && cat /proc/mdstat | grep {{ storage_array_name }}
   register: storage_array_check
   changed_when: false
   failed_when: false
@@ -15,23 +15,23 @@
   ansible.builtin.shell: # noqa: no-changed-when
     cmd: |
       set -o pipefail && yes | mdadm \
-        --create /dev/{{ array_name }} \
-        --level={{ array_level }} \
-        --raid-devices={{ array_devices | count }} \
-        {{ array_devices | join(' ') }}
+        --create /dev/{{ storage_array_name }} \
+        --level={{ storage_array_level }} \
+        --raid-devices={{ storage_array_devices | count }} \
+        {{ storage_array_devices | join(' ') }}
   when: storage_array_check.rc != 0
 
 - name: Create array filesystem
   community.general.filesystem:
-    fstype: "{{ array_filesystem }}"
-    dev: /dev/{{ array_name }}
+    fstype: "{{ storage_array_filesystem }}"
+    dev: /dev/{{ storage_array_name }}
     state: present
 
 - name: Mount array filesystem
   ansible.posix.mount:
-    path: "{{ array_mountpoint }}"
-    src: /dev/{{ array_name }}
-    fstype: "{{ array_filesystem }}"
+    path: "{{ storage_array_mountpoint }}"
+    src: /dev/{{ storage_array_name }}
+    fstype: "{{ storage_array_filesystem }}"
     state: mounted
 
 - name: Get array details

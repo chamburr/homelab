@@ -1,27 +1,27 @@
 ---
-dns_servers:
+network_dns_servers:
   - 1.1.1.1
   - 1.0.0.1
 
-fail2ban_ban_action: iptables-allports
-fail2ban_max_retry: 3
-fail2ban_find_time: 600
-fail2ban_ban_time: 86400
-fail2ban_ignore_ip:
+network_fail2ban_ban_action: iptables-allports
+network_fail2ban_max_retry: 3
+network_fail2ban_find_time: 600
+network_fail2ban_ban_time: 86400
+network_fail2ban_ignore_ip:
   - 10.0.0.0/8
   - 127.0.0.0/8
   - 192.168.0.0/16
 
-firewall_name: Wired connection 1
-firewall_cidr: 192.168.123.0/24
-firewall_services:
+network_firewall_name: Wired connection 1
+network_firewall_cidr: 192.168.123.0/24
+network_firewall_services:
   ssh: enabled
   dhcpv6-client: enabled
   cockpit: disabled
   nfs: disabled
-firewall_ports:
+network_firewall_ports:
   51821/udp: enabled
-firewall_forwards:
+network_firewall_forwards:
   - 192.168.123.105/53/tcp
   - 192.168.123.105/53/udp
   - 192.168.123.101/80/tcp
@@ -30,9 +30,9 @@ firewall_forwards:
   - 192.168.123.102/500/udp
   - 192.168.123.102/4500/udp
   - 192.168.123.104/51820/udp
-firewall_interfaces:
+network_firewall_interfaces:
   - virbr1
   - netmaker
 
-ssh_password: "no"
-ssh_root: "no"
+network_ssh_password: "no"
+network_ssh_root: "no"

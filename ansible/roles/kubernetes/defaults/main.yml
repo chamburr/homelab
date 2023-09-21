@@ -1,22 +1,22 @@
 ---
-network_name: kubernetes
-network_address: 192.168.123.1
-network_mask: 255.255.255.0
-network_start: 192.168.123.200
-network_end: 192.168.123.254
+kubernetes_network_name: kubernetes
+kubernetes_network_address: 192.168.123.1
+kubernetes_network_mask: 255.255.255.0
+kubernetes_network_start: 192.168.123.200
+kubernetes_network_end: 192.168.123.254
 
-pool_name: default
-pool_path: /var/lib/libvirt/images
+kubernetes_pool_name: default
+kubernetes_pool_path: /var/lib/libvirt/images
 
-volume_name: kubernetes
-volume_size: 200G
-volume_format: raw
+kubernetes_volume_name: kubernetes
+kubernetes_volume_size: 200G
+kubernetes_volume_format: raw
 
-vms:
+kubernetes_vms:
   - talos-1
 
-vm_cpu: 32
-vm_ram: 32768
-vm_disk: 100
-vm_image: https://github.com/siderolabs/talos/releases/latest/download/talos-amd64.iso
-vm_script: https://raw.githubusercontent.com/chamburr/homelab/master/scripts/configure.sh
+kubernetes_vm_cpu: 32
+kubernetes_vm_ram: 32768
+kubernetes_vm_disk: 100
+kubernetes_vm_image: https://github.com/siderolabs/talos/releases/latest/download/talos-amd64.iso
+kubernetes_vm_script: https://raw.githubusercontent.com/chamburr/homelab/master/scripts/configure.sh

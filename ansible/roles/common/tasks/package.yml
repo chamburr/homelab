@@ -6,7 +6,7 @@
 
 - name: Install packages
   ansible.builtin.dnf:
-    name: "{{ packages }}"
+    name: "{{ common_packages }}"
     state: present
 
 - name: Install auto upgrade package

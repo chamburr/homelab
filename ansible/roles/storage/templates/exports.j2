@@ -9,4 +9,4 @@
 # /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
 #
 
-{{ nfs_path }} {{ nfs_host }}({{ nfs_options | join(',') }})
+{{ storage_nfs_path }} {{ storage_nfs_host }}({{ storage_nfs_options | join(',') }})

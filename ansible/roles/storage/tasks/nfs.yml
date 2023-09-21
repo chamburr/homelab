@@ -21,9 +21,9 @@
 
 - name: Create nfs directories
   ansible.builtin.file:
-    path: "{{ array_mountpoint }}/{{ item }}"
+    path: "{{ storage_array_mountpoint }}/{{ item }}"
     owner: root
     group: root
     mode: 0755
     state: directory
-  loop: "{{ nfs_directories }}"
+  loop: "{{ storage_nfs_directories }}"

@@ -1,13 +1,13 @@
 ---
 - name: Create swap file
   ansible.builtin.command:
-    cmd: dd if=/dev/zero of={{ swap_path }} bs=1M count={{ swap_size }}
-    creates: "{{ swap_path }}"
+    cmd: dd if=/dev/zero of={{ common_swap_path }} bs=1M count={{ common_swap_size }}
+    creates: "{{ common_swap_path }}"
   register: common_swapfile_create
 
 - name: Set swap file permissions
   ansible.builtin.file:
-    path: "{{ swap_path }}"
+    path: "{{ common_swap_path }}"
     owner: root
     group: root
     mode: 0600
@@ -15,18 +15,18 @@
 
 - name: Make swap file
   ansible.builtin.command: # noqa: no-handler no-changed-when
-    cmd: mkswap {{ swap_path }}
+    cmd: mkswap {{ common_swap_path }}
   when: common_swapfile_create is changed
 
 - name: Turn on swap file
   ansible.builtin.command: # noqa: no-handler no-changed-when
-    cmd: swapon {{ swap_path }}
+    cmd: swapon {{ common_swap_path }}
   when: common_swapfile_create is changed
 
 - name: Add swap file to fstab
   ansible.posix.mount:
     name: none
-    src: "{{ swap_path }}"
+    src: "{{ common_swap_path }}"
     fstype: swap
     opts: sw
     state: present
@@ -34,5 +34,5 @@
 - name: Set swap swappiness
   ansible.posix.sysctl:
     name: vm.swappiness
-    value: "{{ swap_swappiness }}"
+    value: "{{ common_swap_swappiness }}"
     state: present

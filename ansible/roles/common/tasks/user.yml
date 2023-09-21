@@ -9,30 +9,30 @@
 
 - name: Create group
   ansible.builtin.group:
-    name: "{{ username }}"
+    name: "{{ common_username }}"
     state: present
 
 - name: Create user
   ansible.builtin.user:
-    name: "{{ username }}"
-    password: "{{ password }}"
-    group: "{{ username }}"
+    name: "{{ common_username }}"
+    password: "{{ common_password }}"
+    group: "{{ common_username }}"
     groups: wheel
     append: true
     state: present
 
 - name: Copy ssh public key
   ansible.posix.authorized_key:
-    user: "{{ username }}"
+    user: "{{ common_username }}"
     key: "{{ item }}"
     state: present
-  loop: "{{ ssh_keys }}"
+  loop: "{{ common_ssh_keys }}"
 
 - name: Suppress login message
   ansible.builtin.file:
-    name: /home/{{ username }}/.hushlogin
-    owner: "{{ username }}"
-    group: "{{ username }}"
+    name: /home/{{ common_username }}/.hushlogin
+    owner: "{{ common_username }}"
+    group: "{{ common_username }}"
     mode: 0644
     access_time: preserve
     modification_time: preserve

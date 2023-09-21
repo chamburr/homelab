@@ -13,13 +13,13 @@
 
 - name: Set timezone
   community.general.timezone:
-    name: "{{ timezone }}"
+    name: "{{ common_timezone }}"
 
 - name: Enable kernel modules
   community.general.modprobe:
     name: "{{ item }}"
     state: present
-  loop: "{{ kernel_modules }}"
+  loop: "{{ common_kernel_modules }}"
 
 - name: Enable kernel modules on boot
   ansible.builtin.copy: # noqa: template-instead-of-copy
@@ -28,7 +28,7 @@
     owner: root
     group: root
     mode: 0644
-  loop: "{{ kernel_modules }}"
+  loop: "{{ common_kernel_modules }}"
 
 - name: Configure sysctl
   ansible.posix.sysctl:

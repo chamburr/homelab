@@ -14,7 +14,7 @@
     state: present
   loop:
     - regexp: ^#?PasswordAuthentication
-      line: PasswordAuthentication {{ ssh_password }}
+      line: PasswordAuthentication {{ network_ssh_password }}
     - regexp: ^#?PermitRootLogin
-      line: PermitRootLogin {{ ssh_root }}
+      line: PermitRootLogin {{ network_ssh_root }}
   notify: Restart ssh service

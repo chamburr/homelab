@@ -1,15 +1,15 @@
 ---
-array_name: md0
-array_filesystem: ext4
-array_level: 1
-array_mountpoint: /mnt/md0
-array_devices:
+storage_array_name: md0
+storage_array_filesystem: ext4
+storage_array_level: 1
+storage_array_mountpoint: /mnt/md0
+storage_array_devices:
   - /dev/sda
   - /dev/sdb
 
-nfs_host: 192.168.123.0/24
-nfs_path: /mnt/md0
-nfs_options:
+storage_nfs_host: 192.168.123.0/24
+storage_nfs_path: /mnt/md0
+storage_nfs_options:
   - rw
   - sync
   - no_subtree_check
@@ -17,7 +17,7 @@ nfs_options:
   - anonuid=0
   - anongid=0
 
-nfs_directories:
+storage_nfs_directories:
   - harbor
   - kopia
   - minio

@@ -4,8 +4,8 @@
     name: Backup talos machine
     minute: "0"
     hour: "0"
-    user: "{{ username }}"
-    job: talosctl get mc -o yaml > /home/{{ username }}/.talos/machine.yaml
+    user: "{{ common_username }}"
+    job: talosctl get mc -o yaml > /home/{{ common_username }}/.talos/machine.yaml
     state: present
 
 - name: Add cron for talos etcd
@@ -13,8 +13,8 @@
     name: Backup talos etcd
     minute: "0"
     hour: "0"
-    user: "{{ username }}"
-    job: talosctl etcd snapshot /home/{{ username }}/.talos/etcd.snapshot
+    user: "{{ common_username }}"
+    job: talosctl etcd snapshot /home/{{ common_username }}/.talos/etcd.snapshot
     state: present
 
 - name: Add cron for talos folder
@@ -22,6 +22,6 @@
     name: Backup talos folder
     minute: "5"
     hour: "0"
-    user: "{{ username }}"
-    job: sudo cp /home/{{ username }}/.talos /mnt/md0/.talos
+    user: "{{ common_username }}"
+    job: sudo cp /home/{{ common_username }}/.talos /mnt/md0/.talos
     state: present

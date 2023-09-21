@@ -36,39 +36,39 @@
 
 - name: Create libvirt network
   community.libvirt.virt_net:
-    name: "{{ network_name }}"
+    name: "{{ kubernetes_network_name }}"
     command: define
     xml: "{{ lookup('template', 'network.xml.j2') }}"
 
 - name: Enable libvirt network autostart
   community.libvirt.virt_net:
-    name: "{{ network_name }}"
+    name: "{{ kubernetes_network_name }}"
     autostart: true
 
 - name: Start libvirt network
   community.libvirt.virt_net:
-    name: "{{ network_name }}"
+    name: "{{ kubernetes_network_name }}"
     state: active
 
 - name: Create libvirt pool
   community.libvirt.virt_pool:
-    name: "{{ pool_name }}"
+    name: "{{ kubernetes_pool_name }}"
     command: define
     xml: "{{ lookup('template', 'pool.xml.j2') }}"
 
 - name: Enable libvirt pool autostart
   community.libvirt.virt_pool:
-    name: "{{ pool_name }}"
+    name: "{{ kubernetes_pool_name }}"
     autostart: true
 
 - name: Start libvirt pool
   community.libvirt.virt_pool:
-    name: "{{ pool_name }}"
+    name: "{{ kubernetes_pool_name }}"
     state: active
 
 - name: Create libvirt disk
   ansible.builtin.shell:
     cmd: |
-      virsh vol-create-as {{ pool_name }} {{ volume_name }} {{ volume_size }} \
-        --format {{ volume_format }}
-    creates: "{{ pool_path }}/{{ volume_name }}"
+      virsh vol-create-as {{ kubernetes_pool_name }} {{ kubernetes_volume_name }} \
+        {{ kubernetes_volume_size }} --format {{ kubernetes_volume_format }}
+    creates: "{{ kubernetes_pool_path }}/{{ kubernetes_volume_name }}"
