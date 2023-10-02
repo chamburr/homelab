@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: chatgpt-data
+  namespace: developer
+  labels:
+    app.kubernetes.io/name: chatgpt
+    app.kubernetes.io/instance: chatgpt
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: ceph-block
