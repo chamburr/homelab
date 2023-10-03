@@ -73,6 +73,7 @@ spec:
           http:
             port: 51821
       wireguard:
+        controller: main
         type: LoadBalancer
         loadBalancerIP: ${LB_WIREGUARD}
         ports:

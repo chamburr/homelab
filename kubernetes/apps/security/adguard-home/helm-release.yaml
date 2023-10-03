@@ -36,6 +36,7 @@ spec:
           http:
             port: 3000
       dns:
+        controller: main
         type: LoadBalancer
         loadBalancerIP: ${LB_ADGUARD}
         ports:
