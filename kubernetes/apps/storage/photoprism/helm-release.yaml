@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -23,53 +23,64 @@ spec:
   values:
     global:
       nameOverride: photoprism
-    image:
-      repository: docker.io/photoprism/photoprism
-      tag: 221118-jammy
-    env:
-      PHOTOPRISM_STORAGE_PATH: /photoprism/storage
-      PHOTOPRISM_ORIGINALS_PATH: /photoprism/originals
-      PHOTOPRISM_ADMIN_PASSWORD: photoprism
-      PHOTOPRISM_PUBLIC: false
-      PHOTOPRISM_DATABASE_DRIVER: sqlite
-      PHOTOPRISM_SITE_URL: https://photos.${DOMAIN}
-      PHOTOPRISM_SPONSOR: true
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: docker.io/photoprism/photoprism
+              tag: 221118-jammy
+            env:
+              PHOTOPRISM_STORAGE_PATH: /photoprism/storage
+              PHOTOPRISM_ORIGINALS_PATH: /photoprism/originals
+              PHOTOPRISM_ADMIN_PASSWORD: photoprism
+              PHOTOPRISM_PUBLIC: false
+              PHOTOPRISM_DATABASE_DRIVER: sqlite
+              PHOTOPRISM_SITE_URL: https://photos.${DOMAIN}
+              PHOTOPRISM_SPONSOR: true
+        annotations:
+          configmap.reloader.stakater.com/reload: photoprism
     service:
       main:
         ports:
           http:
             port: 2342
-    persistence:
-      config:
-        enabled: true
-        existingClaim: photoprism-data
-        mountPath: /photoprism/storage
-      originals:
-        enabled: true
-        existingClaim: photoprism-originals
-        mountPath: /photoprism/originals
-      nextcloud:
-        enabled: true
-        existingClaim: nextcloud-data
-        mountPath: /mnt/md0/nextcloud
-      template:
-        enabled: true
-        type: configMap
-        mountPath: /opt/photoprism/assets/templates/index.gohtml
-        name: photoprism
-        subPath: index.gohtml
-        readOnly: true
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         hosts:
           - host: photos.${DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - photos.${DOMAIN}
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: photoprism
+    persistence:
+      config:
+        enabled: true
+        existingClaim: photoprism-data
+        globalMounts:
+          - path: /photoprism/storage
+      originals:
+        enabled: true
+        existingClaim: photoprism-originals
+        globalMounts:
+          - path: /photoprism/originals
+      nextcloud:
+        enabled: true
+        existingClaim: nextcloud-data
+        globalMounts:
+          - path: /mnt/md0/nextcloud
+      template:
+        enabled: true
+        type: configMap
+        name: photoprism
+        globalMounts:
+          - path: /opt/photoprism/assets/templates/index.gohtml
+            readOnly: true
+            subPath: index.gohtml

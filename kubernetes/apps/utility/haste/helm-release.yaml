@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -23,35 +23,44 @@ spec:
   values:
     global:
       nameOverride: haste
-    image:
-      repository: ghcr.io/skyra-project/haste-server
-      tag: latest@sha256:2041e50f2539433dfd2664150038bbbe2f17e3754e4e0413315cb58388cf25a9
-    args:
-      - /bin/sh
-      - -c
-      - sed -i -e 's/10/6/' -e 's/phonetic/random/' -e 's/500/50/' -e 's/about.*//'
-        src/backend/lib/config.js && sed -i 's/.\\/data/\\/config/'
-        src/backend/document_stores/file.js && yarn run start
-    securityContext:
-      fsGroup: 1000
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/skyra-project/haste-server
+              tag: latest@sha256:2041e50f2539433dfd2664150038bbbe2f17e3754e4e0413315cb58388cf25a9
+            args:
+              - /bin/sh
+              - -c
+              - sed -i -e 's/10/6/' -e 's/phonetic/random/' -e 's/500/50/' -e 's/about.*//'
+                src/backend/lib/config.js && sed -i 's/.\\/data/\\/config/'
+                src/backend/document_stores/file.js && yarn run start
+            securityContext:
+              fsGroup: 1000
     service:
       main:
         ports:
           http:
             port: 8290
-    persistence:
-      config:
-        enabled: true
-        existingClaim: haste-data
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         hosts:
           - host: p.${DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - p.${DOMAIN}
+    persistence:
+      config:
+        enabled: true
+        existingClaim: haste-data
+        globalMounts:
+          - path: /config

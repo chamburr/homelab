@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -28,29 +28,35 @@ spec:
   values:
     global:
       nameOverride: kutt
-    image:
-      repository: docker.io/kutt/kutt
-      tag: v2.7.4
-    env:
-      SITE_NAME: Kutt
-      DEFAULT_DOMAIN: s.${DOMAIN}
-      LINK_LENGTH: 6
-      DB_HOST: kutt-postgresql
-      DB_PORT: 5432
-      DB_NAME: kutt
-      DB_USER: postgres
-      DB_PASSWORD: kutt-pass
-      REDIS_HOST: kutt-redis-master
-      REDIS_PORT: 6379
-      MAIL_HOST: ${MAIL_HOST}
-      MAIL_PORT: ${MAIL_PORT}
-      MAIL_USER: ${MAIL_USERNAME}
-      MAIL_PASSWORD: ${MAIL_PASSWORD}
-      DISALLOW_REGISTRATION: true
-      DISALLOW_ANONYMOUS_LINKS: true
-      USER_LIMIT_PER_DAY: 10000
-      DEFAULT_MAX_STATS_PER_LINK: 10000
-      CUSTOM_DOMAIN_USE_HTTPS: true
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: docker.io/kutt/kutt
+              tag: v2.7.4
+            env:
+              SITE_NAME: Kutt
+              DEFAULT_DOMAIN: s.${DOMAIN}
+              LINK_LENGTH: 6
+              DB_HOST: kutt-postgresql
+              DB_PORT: 5432
+              DB_NAME: kutt
+              DB_USER: postgres
+              DB_PASSWORD: kutt-pass
+              REDIS_HOST: kutt-redis-master
+              REDIS_PORT: 6379
+              MAIL_HOST: ${MAIL_HOST}
+              MAIL_PORT: ${MAIL_PORT}
+              MAIL_USER: ${MAIL_USERNAME}
+              MAIL_PASSWORD: ${MAIL_PASSWORD}
+              DISALLOW_REGISTRATION: true
+              DISALLOW_ANONYMOUS_LINKS: true
+              USER_LIMIT_PER_DAY: 10000
+              DEFAULT_MAX_STATS_PER_LINK: 10000
+              CUSTOM_DOMAIN_USE_HTTPS: true
+        anotations:
+          secret.reloader.stakater.com/reload: kutt-secret
     service:
       main:
         ports:
@@ -59,23 +65,24 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         hosts:
           - host: s.${DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - s.${DOMAIN}
-    podAnnotations:
-      secret.reloader.stakater.com/reload: kutt-secret
   valuesFrom:
     - kind: Secret
       name: kutt-secret
       valuesKey: secret
-      targetPath: env.JWT_SECRET
+      targetPath: controllers.main.containers.main.env.JWT_SECRET
     - kind: Secret
       name: kutt-secret
       valuesKey: email
-      targetPath: env.ADMIN_EMAILS
+      targetPath: controllers.main.containers.main.env.ADMIN_EMAILS

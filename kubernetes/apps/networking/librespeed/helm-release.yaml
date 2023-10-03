@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -23,9 +23,23 @@ spec:
   values:
     global:
       nameOverride: librespeed
-    image:
-      repository: ghcr.io/linuxserver/librespeed
-      tag: 5.2.5
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/linuxserver/librespeed
+              tag: 5.2.5
+            lifecycle:
+              postStart:
+                exec:
+                  command:
+                    - /bin/sh
+                    - -c
+                    - mv /app/www/public/example-singleServer-gauges.html
+                      /app/www/public/index.html && rm /app/www/public/example-* &&
+                      rm -rf /app/www/public/results &&
+                      sed -i 's/ Example//g' /app/www/public/index.html
     service:
       main:
         ports:
@@ -34,21 +48,15 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         hosts:
           - host: speedtest.${DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - speedtest.${DOMAIN}
-    lifecycle:
-      postStart:
-        exec:
-          command:
-            - /bin/sh
-            - -c
-            - mv /app/www/public/example-singleServer-gauges.html /app/www/public/index.html &&
-              rm /app/www/public/example-* && rm -rf /app/www/public/results &&
-              sed -i 's/ Example//g' /app/www/public/index.html

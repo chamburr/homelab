@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -23,56 +23,65 @@ spec:
   values:
     global:
       nameOverride: kopia
-    image:
-      repository: docker.io/kopia/kopia
-      tag: 0.14.1
-    env:
-      KOPIA_PASSWORD: none
-    command:
-      - /bin/sh
-    args:
-      - -c
-      - if [ ! -f /backups/kopia.repository.f ];
-        then kopia repository create filesystem --path=/backups; fi &&
-        kopia server start --insecure --address 0.0.0.0:80
-        --server-username $SERVER_USERNAME --server-password $SERVER_PASSWORD
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: docker.io/kopia/kopia
+              tag: 0.14.1
+            env:
+              KOPIA_PASSWORD: none
+            command:
+              - /bin/sh
+            args:
+              - -c
+              - if [ ! -f /backups/kopia.repository.f ];
+                then kopia repository create filesystem --path=/backups; fi &&
+                kopia server start --insecure --address 0.0.0.0:80
+                --server-username $SERVER_USERNAME --server-password $SERVER_PASSWORD
+        annotations:
+          configmap.reloader.stakater.com/reload: kopia
     service:
       main:
         ports:
           http:
             port: 80
-    persistence:
-      config:
-        enabled: true
-        type: configMap
-        mountPath: /app/config/repository.config
-        name: kopia
-        subPath: repository.config
-        readOnly: true
-      backup:
-        enabled: true
-        existingClaim: kopia-data
-        mountPath: /backups
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         hosts:
           - host: kopia.${DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - kopia.${DOMAIN}
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: kopia
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: kopia
+        globalMounts:
+          - path: /app/config/repository.config
+            readOnly: true
+            subPath: repository.config
+      backup:
+        enabled: true
+        existingClaim: kopia-data
+        globalMounts:
+          - path: /backups
   valuesFrom:
     - kind: Secret
       name: kopia-secret
       valuesKey: username
-      targetPath: env.SERVER_USERNAME
+      targetPath: controllers.main.containers.main.env.SERVER_USERNAME
     - kind: Secret
       name: kopia-secret
       valuesKey: password
-      targetPath: env.SERVER_PASSWORD
+      targetPath: controllers.main.containers.main.env.SERVER_PASSWORD

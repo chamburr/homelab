@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -23,45 +23,52 @@ spec:
   values:
     global:
       nameOverride: vaultwarden
-    image:
-      repository: ghcr.io/dani-garcia/vaultwarden
-      tag: 1.29.2
-    env:
-      DATA_FOLDER: config
-      SIGNUPS_ALLOWED: false
-      DOMAIN: https://bitwarden.${DOMAIN}
-      SMTP_HOST: ${MAIL_HOST}
-      SMTP_PORT: ${MAIL_PORT}
-      SMTP_USERNAME: ${MAIL_USERNAME}
-      SMTP_PASSWORD: ${MAIL_PASSWORD}
-      SMTP_FROM: ${MAIL_SENDER}
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/dani-garcia/vaultwarden
+              tag: 1.29.2
+            env:
+              DATA_FOLDER: config
+              SIGNUPS_ALLOWED: false
+              DOMAIN: https://bitwarden.${DOMAIN}
+              SMTP_HOST: ${MAIL_HOST}
+              SMTP_PORT: ${MAIL_PORT}
+              SMTP_USERNAME: ${MAIL_USERNAME}
+              SMTP_PASSWORD: ${MAIL_PASSWORD}
+              SMTP_FROM: ${MAIL_SENDER}
+        annotations:
+          secret.reloader.stakater.com/reload: vaultwarden-secret
     service:
       main:
         ports:
           http:
             port: 80
-    persistence:
-      config:
-        enabled: true
-        existingClaim: vaultwarden-data
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         hosts:
           - host: bitwarden.${DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
                 service:
-                  port: 80
+                  name: main
+                  port: http
         tls:
           - hosts:
               - bitwarden.${DOMAIN}
-    podAnnotations:
-      secret.reloader.stakater.com/reload: vaultwarden-secret
+    persistence:
+      config:
+        enabled: true
+        existingClaim: vaultwarden-data
+        globalMounts:
+          - path: /config
   valuesFrom:
     - kind: Secret
       name: vaultwarden-secret
       valuesKey: password
-      targetPath: env.ADMIN_TOKEN
+      targetPath: controllers.main.containers.main.env.ADMIN_TOKEN

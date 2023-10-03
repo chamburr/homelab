@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -23,13 +23,29 @@ spec:
   values:
     global:
       nameOverride: netmaker-mqtt
-    image:
-      repository: docker.io/eclipse-mosquitto
-      tag: 2.0.18-openssl
-    command:
-      - /bin/ash
-    args:
-      - /mosquitto/config/wait.sh
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: docker.io/eclipse-mosquitto
+              tag: 2.0.18-openssl
+            command:
+              - /bin/ash
+            args:
+              - /mosquitto/config/wait.sh
+        annotations:
+          configmap.reloader.stakater.com/reload: netmaker-mqtt
+        pod:
+          affinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - netmaker
+                topologyKey: kubernetes.io/hostname
     service:
       main:
         ports:
@@ -37,51 +53,44 @@ spec:
             port: 8883
           mqtt:
             port: 1883
-    persistence:
-      config:
-        enabled: true
-        type: configMap
-        mountPath: /mosquitto/config/mosquitto.conf
-        name: netmaker-mqtt
-        subPath: mosquitto.conf
-        readOnly: true
-      wait:
-        enabled: true
-        type: configMap
-        mountPath: /mosquitto/config/wait.sh
-        name: netmaker-mqtt
-        subPath: wait.sh
-        readOnly: true
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        className: traefik
         hosts:
           - host: netmaker-mqtt.${DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - netmaker-mqtt.${DOMAIN}
-    affinity:
-      podAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: app.kubernetes.io/name
-                  operator: In
-                  values:
-                    - netmaker
-            topologyKey: kubernetes.io/hostname
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: netmaker-mqtt
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: netmaker-mqtt
+        globalMounts:
+          - path: /mosquitto/config/mosquitto.conf
+            readOnly: true
+            subPath: mosquitto.conf
+      wait:
+        enabled: true
+        type: configMap
+        name: netmaker-mqtt
+        globalMounts:
+          - path: /mosquitto/config/wait.sh
+            subPath: wait.sh
+            readOnly: true
   valuesFrom:
     - kind: Secret
       name: netmaker-secret
       valuesKey: username
-      targetPath: env.MQ_USERNAME
+      targetPath: controllers.main.containers.main.env.MQ_USERNAME
     - kind: Secret
       name: netmaker-secret
       valuesKey: password
-      targetPath: env.MQ_PASSWORD
+      targetPath: controllers.main.containers.main.env.MQ_PASSWORD

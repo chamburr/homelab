@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -23,18 +23,24 @@ spec:
   values:
     global:
       nameOverride: samba
-    image:
-      repository: ghcr.io/crazy-max/samba
-      tag: 4.18.5
-    env:
-      SAMBA_HOSTS_ALLOW: 0.0.0.0/0
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
-      startup:
-        enabled: false
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/crazy-max/samba
+              tag: 4.18.5
+            env:
+              SAMBA_HOSTS_ALLOW: 0.0.0.0/0
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+        annotations:
+          secret.reloader.stakater.com/reload: samba-secret
     service:
       main:
         type: LoadBalancer
@@ -56,7 +62,7 @@ spec:
         enabled: true
         type: secret
         name: samba-secret
-        mountPath: /data/config.yml
-        subPath: config.yml
-    podAnnotations:
-      secret.reloader.stakater.com/reload: samba-secret
+        globalMounts:
+          - path: /data/config.yml
+            readOnly: true
+            subPath: config.yml
