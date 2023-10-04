@@ -19,4 +19,4 @@ kubernetes_vm_cpu: 32
 kubernetes_vm_ram: 32768
 kubernetes_vm_disk: 100
 kubernetes_vm_image: https://github.com/siderolabs/talos/releases/latest/download/talos-amd64.iso
-kubernetes_vm_script: https://raw.githubusercontent.com/chamburr/homelab/master/scripts/configure.sh
+kubernetes_vm_script: https://raw.githubusercontent.com/chamburr/homelab/main/scripts/configure.sh

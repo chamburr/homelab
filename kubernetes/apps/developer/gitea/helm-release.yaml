@@ -29,7 +29,7 @@ spec:
         repository:
           DEFAULT_PRIVATE: public
           DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls,repo.wiki
-          DEFAULT_BRANCH: master
+          DEFAULT_BRANCH: main
         repository.pull-request:
           DEFAULT_MERGE_STYLE: squash
         server:

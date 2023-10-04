@@ -8,7 +8,7 @@ spec:
   interval: 10m
   url: https://github.com/chamburr/homelab
   ref:
-    branch: master
+    branch: main
   ignore: |
     /*
     !/kubernetes

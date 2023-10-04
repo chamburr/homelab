@@ -12,7 +12,7 @@ questions!
 ## Installation
 
 First, configure a bare metal Rocky Linux machine with reference to
-[kickstart.ks](https://github.com/chamburr/homelab/blob/master/scripts/anaconda/kickstart.ks). Then,
+[kickstart.ks](https://github.com/chamburr/homelab/blob/main/scripts/anaconda/kickstart.ks). Then,
 install prerequisites in Brewfile and update Ansible and environmental variables. Finally, run
 `./scripts/bootstrap.sh` to install everything on the server!
 

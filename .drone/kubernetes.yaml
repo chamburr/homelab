@@ -36,6 +36,6 @@ trigger:
   event:
     - push
   branch:
-    - master
+    - main
   paths:
     - kubernetes/**/*

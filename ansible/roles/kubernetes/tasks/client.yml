@@ -12,7 +12,7 @@
   ansible.builtin.yum_repository:
     name: kubernetes-extras
     description: Kubernetes Extras
-    baseurl: https://raw.githubusercontent.com/chamburr/kubernetes-extras/master
+    baseurl: https://raw.githubusercontent.com/chamburr/kubernetes-extras/main
     gpgcheck: false
     state: present
 

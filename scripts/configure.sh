@@ -12,8 +12,8 @@ configureTalos() {
   mkdir -p .talos .kube
   cd .talos
 
-  curl -sO https://raw.githubusercontent.com/chamburr/homelab/master/scripts/talos/machines.yaml
-  curl -sO https://raw.githubusercontent.com/chamburr/homelab/master/scripts/talos/patch.yaml
+  curl -sO https://raw.githubusercontent.com/chamburr/homelab/main/scripts/talos/machines.yaml
+  curl -sO https://raw.githubusercontent.com/chamburr/homelab/main/scripts/talos/patch.yaml
 
   talosctl gen config cluster https://192.168.123.10:6443 \
     --config-patch-control-plane @patch.yaml --with-docs=false --with-examples=false
@@ -81,7 +81,7 @@ configureFlux() {
   kubectl -n flux-system create secret generic global-secret $(echo $CONFIGURE_VARS \
     | sed -E 's/(\S+)=/\U\1=/g' | xargs -d ' ' -n1 printf ' --from-literal=%s')
 
-  kubectl apply -k 'github.com/chamburr/homelab/kubernetes/base/flux-system?ref=master'
+  kubectl apply -k 'github.com/chamburr/homelab/kubernetes/base/flux-system?ref=main'
 
   until flux check --timeout 30s > /dev/null 2>&1; do
     sleep 5
@@ -152,7 +152,7 @@ configureVault() {
   kubectl -n vault exec vault-0 -- sh -c \
     "vault kv put secret/flux-system/global $CONFIGURE_VARS"
   kubectl -n vault exec vault-0 -- sh -c \
-    "$(curl -s https://raw.githubusercontent.com/chamburr/homelab/master/scripts/vault/secrets.txt)"
+    "$(curl -s https://raw.githubusercontent.com/chamburr/homelab/main/scripts/vault/secrets.txt)"
 
   echo "Login to vault at port 8200 to complete installation"
 }
