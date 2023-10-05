@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -23,18 +23,26 @@ spec:
   values:
     global:
       nameOverride: drone-extension
-    image:
-      repository: ghcr.io/onedr0p/kubernetes-kubectl
-      tag: 1.28.2
-    args:
-      - /bin/sh
-      - -c
-      - apk add --no-cache nodejs-current npm && cd /app && npm install yaml micromatch &&
-        node /app/index.js
-    securityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 0
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/kubernetes-kubectl
+              tag: 1.28.2
+            args:
+              - /bin/sh
+              - -c
+              - apk add --no-cache nodejs-current npm && cd /app &&
+                npm install yaml micromatch && node /app/index.js
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
+              fsGroup: 0
+        annotations:
+          configmap.reloader.stakater.com/reload: drone-extension
+    serviceAccount:
+      name: drone-extension
     service:
       main:
         ports:
@@ -44,11 +52,8 @@ spec:
       config:
         enabled: true
         type: configMap
-        mountPath: /app/index.js
         name: drone-extension
-        subPath: index.js
-        readOnly: true
-    serviceAccount:
-      name: drone-extension
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: drone-extension
+        globalMounts:
+          - path: /app/index.js
+            readOnly: true
+            subPath: index.js

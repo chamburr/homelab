@@ -182,10 +182,10 @@ data:
           } else if (stage.status === 'error') {
             state = 'error'
             description = 'Build has encountered an error'
-          }  else if (stage.status === 'killed') {
+          } else if (stage.status === 'killed') {
             state = 'error'
             description = 'Build was killed'
-          }   else {
+          } else {
             state = 'error'
             description = 'Unknown'
           }
