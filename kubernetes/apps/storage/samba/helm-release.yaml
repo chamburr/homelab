@@ -57,7 +57,8 @@ spec:
       config:
         enabled: true
         existingClaim: samba-data
-        mountPath: /share/samba
+        globalMounts:
+          - path: /share/samba
       data:
         enabled: true
         type: secret
