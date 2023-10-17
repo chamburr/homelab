@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: docker.io/gravitl/netmaker
-              tag: v0.21.0
+              tag: v0.21.1
             env:
               BROKER_ENDPOINT: wss://netmaker-mqtt.${DOMAIN}
               SERVER_NAME: ${DOMAIN}
