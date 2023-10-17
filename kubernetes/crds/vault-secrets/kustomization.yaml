@@ -2,4 +2,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - https://raw.githubusercontent.com/ricoberger/vault-secrets-operator/v1.22.1/charts/vault-secrets-operator/crds/crd-vaultsecret.yaml
+  - https://raw.githubusercontent.com/ricoberger/vault-secrets-operator/v1.23.0/charts/vault-secrets-operator/crds/crd-vaultsecret.yaml
