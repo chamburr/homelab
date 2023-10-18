@@ -21,7 +21,7 @@ data:
       ).trim('\n')
       let token = exec(
         `kubectl exec -n developer ${pod} -- \
-          sqlite3 /data/database.sqlite 'select user_oauth_token from users'`,
+          sqlite3 file:/data/database.sqlite?immutable=1 'select user_oauth_token from users'`,
         { encoding: 'utf-8' }
       ).trim('\n')
 
