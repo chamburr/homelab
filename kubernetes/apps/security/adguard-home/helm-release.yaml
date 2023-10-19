@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: docker.io/adguard/adguardhome
-              tag: v0.107.39
+              tag: v0.107.40
     service:
       main:
         ports:
