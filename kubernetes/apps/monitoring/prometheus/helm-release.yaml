@@ -111,3 +111,15 @@ spec:
           traefik.ingress.kubernetes.io/router.middlewares: >-
             monitoring-prometheus-basic-auth@kubernetescrd
     cleanPrometheusOperatorObjectNames: true
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Secret
+              name: prometheus-prometheus
+            patch: |
+              $patch: delete
+              apiVersion: not-used
+              kind: not-used
+              metadata:
+                name: not-used
