@@ -40,7 +40,7 @@ spec:
                 sed -i 's/isFeatureEnabled(feature) {/isFeatureEnabled(feature) { return true;/'
                 /usr/local/lib/node_modules/n8n/dist/License.js &&
                 sed -i 's/SHOW_NON_PROD_BANNER)/SHOW_NON_PROD_BANNER) === false/'
-                /usr/local/lib/node_modules/n8n/dist/Server.js &&
+                /usr/local/lib/node_modules/n8n/dist/services/frontend.service.js &&
                 su-exec node /docker-entrypoint.sh
             env:
               N8N_PORT: 5678
