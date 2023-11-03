@@ -18,6 +18,11 @@ data:
       -H "X-Auth-Key: $CLOUDFLARE_API_KEY" \
     )
 
+    if [[ "$(echo "$record" | jq -r '.success')" = "false" ]]; then
+      printf "Internal server error"
+      exit 0
+    fi
+
     new_ipv4=$(curl -s https://ipv4.icanhazip.com)
     old_ipv4=$(echo "$record" | jq -r '.result[0] | .content')
 
