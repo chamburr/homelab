@@ -36,9 +36,10 @@ spec:
                   command:
                     - /bin/sh
                     - -c
-                    - mv /app/www/public/example-singleServer-gauges.html
-                      /app/www/public/index.html && rm /app/www/public/example-* &&
-                      rm -rf /app/www/public/results &&
+                    - rm /app/www/public/index.html &&
+                      mv /app/www/public/examples/example-singleServer-gauges.html
+                      /app/www/public/index.html &&
+                      rm -rf /app/www/public/examples /app/www/public/results &&
                       sed -i 's/ Example//g' /app/www/public/index.html
     service:
       main:
