@@ -28,8 +28,8 @@ spec:
         containers:
           main:
             image:
-              repository: docker.io/weejewel/wg-easy
-              tag: "7"
+              repository: ghcr.io/wg-easy/wg-easy
+              tag: "9"
             args:
               - /bin/sh
               - -c
