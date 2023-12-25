@@ -33,7 +33,8 @@ spec:
             args:
               - /bin/sh
               - -c
-              - apk add --no-cache socat &&
+              - apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.18/main
+                socat=1.7.4.4-r1 &&
                 /bin/sh -c 'socat udp-listen:53,reuseaddr,fork udp:adguard-home-dns.security:53 &
                 socat tcp-listen:53,reuseaddr,fork tcp:adguard-home-dns.security:53 &' &&
                 /usr/bin/dumb-init node server.js
