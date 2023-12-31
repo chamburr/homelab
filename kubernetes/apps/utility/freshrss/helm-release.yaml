@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: docker.io/freshrss/freshrss
-              tag: 1.23.0
+              tag: 1.23.1
             env:
               CRON_MIN: 0,30
     service:
