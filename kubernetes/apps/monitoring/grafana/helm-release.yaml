@@ -45,6 +45,7 @@ spec:
         username: ${MAIL_USERNAME}
         password: ${MAIL_PASSWORD}
         from_address: ${MAIL_SENDER}
+    assertNoLeakedSecrets: false
     deploymentStrategy:
       type: Recreate
     persistence:
