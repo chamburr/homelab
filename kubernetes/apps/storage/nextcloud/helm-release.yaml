@@ -68,6 +68,7 @@ spec:
             'upgrade.disable-web' => true,
             'simpleSignUpLink.shown' => false,
             'profile.enabled' => false,
+            'maintenance_window_start' => 17,
           );
       extraSidecarContainers:
         - name: nextcloud-push
