@@ -71,21 +71,20 @@ data:
         let after = body.build.after
         let config = body.config.data
 
-        if (!config.includes('paths:')) {
-          res.write(`{"data": ${JSON.stringify(config)}}`)
+        let files = []
 
-          return
+        if (config.includes('paths:')) {
+          let url = `https://api.github.com/repos/${slug}/commits/${after}`
+          if (before && before !== '0000000000000000000000000000000000000000') {
+            url = `https://api.github.com/repos/${slug}/compare/${before}...${after}`
+          }
+
+          let data = await fetch(url, opts)
+          data = await data.json()
+
+          files = data.files.map(file => file.filename)
         }
 
-        let url = `https://api.github.com/repos/${slug}/commits/${after}`
-        if (before && before !== '0000000000000000000000000000000000000000') {
-          url = `https://api.github.com/repos/${slug}/compare/${before}...${after}`
-        }
-
-        let data = await fetch(url, opts)
-        data = await data.json()
-
-        let files = data.files.map(file => file.filename)
         let documents = yaml.parseAllDocuments(config)
 
         documents = documents.map(document => {
@@ -110,6 +109,11 @@ data:
                   if (micromatch(files, include, { dot: true, ignore: exclude }).length === 0) {
                     step.when = { event: { exclude: ['*'] } }
                   }
+                }
+                if (step.image === 'plugins/docker') {
+                  let labels = step.settings.label_schema || []
+                  labels.push(`source=https://github.com/${slug}`)
+                  step.settings.label_schema = labels
                 }
                 return step
               })
