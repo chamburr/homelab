@@ -30,7 +30,7 @@ steps:
       - curl -sO
         https://raw.githubusercontent.com/chamburr/homelab/main/.drone/renovate/config.json
       - sed -i 's/renovateRepository(repoConfig, false)/renovateRepository(repoConfig, true)/'
-        /usr/src/app/node_modules/renovate/dist/workers/repository/index.js
+        /usr/local/renovate/dist/workers/repository/index.js
       - renovate
     environment:
       LOG_LEVEL: info
