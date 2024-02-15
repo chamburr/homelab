@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/kubernetes-kubectl
-              tag: 1.29.1
+              tag: 1.29.2
             args:
               - /bin/sh
               - -c
