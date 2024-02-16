@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: ghcr.io/wg-easy/wg-easy
-              tag: "10"
+              tag: "11"
             args:
               - /bin/sh
               - -c
