@@ -10,7 +10,7 @@ install() {
   ./scripts/ansible.sh playbook ansible/main.yml --tags common
 
   sed -i \
-    -e "s/^USER=.*/USER=$(cat ansible/group_vars/all.yml | yq '.username')/" \
+    -e "s/^USER=.*/USER=$(cat ansible/group_vars/all.yml | yq '.common_username')/" \
     -e "s/^PASSWORD=.*/PASSWORD=/" \
     .env
 
