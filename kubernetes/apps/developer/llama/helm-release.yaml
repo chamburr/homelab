@@ -33,6 +33,20 @@ spec:
             env:
               ENABLE_SIGNUP: false
               OLLAMA_API_BASE_URL: http://llama-api.developer:11434/api
+            args:
+              - /bin/bash
+              - -c
+              - >-
+                  sed -i 's/r = None/r = None\n    if body:\n        body = body.decode("utf-8")
+                  \n        if "\\"options\\":{}" in body:\n            body =
+                  body.replace("\\"options\\":{",
+                  "\\"keep_alive\\":-1,\\"options\\":{\\"num_thread\\":12")\n        elif
+                  "\\"options\\":{" in body:\n            body = body.replace("\\"options\\":{",
+                  "\\"keep_alive\\":-1,\\"options\\":{\\"num_thread\\":12,")\n        elif
+                  "\\"model\\":" in body:\n            body = body.replace("\\"model\\":",
+                  "\\"keep_alive\\":-1,\\"options\\":{\\"num_thread\\":12},\\"model\\":")
+                  \n        body = body.encode("utf-8")/' /app/backend/apps/ollama/main.py &&
+                  /app/backend/start.sh
     service:
       main:
         ports:
