@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: ghcr.io/open-webui/open-webui
-              tag: latest@sha256:4313c781bc9402474543cafa5611a1ca5c88dec93f4532581f7928f393d6ec67
+              tag: latest@sha256:2f22bfc692c39483366de229c9049eeca3e9e7e9583f92ff0e02319b89fb47b5
             env:
               ENABLE_SIGNUP: false
               OLLAMA_API_BASE_URL: http://llama-api.developer:11434/api
