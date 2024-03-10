@@ -30,8 +30,6 @@ spec:
         hosts:
           - kubernetes.${DOMAIN}
     api:
-      scaling:
-        replicas: 1
       containers:
         resources: null
     web:
