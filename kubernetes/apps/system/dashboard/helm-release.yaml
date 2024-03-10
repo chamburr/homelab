@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kubernetes-dashboard
-      version: 7.0.0-alpha1
+      version: 7.1.1
       sourceRef:
         kind: HelmRepository
         name: dashboard
@@ -25,13 +25,14 @@ spec:
     fullnameOverride: dashboard
     app:
       ingress:
+        enabled: true
         ingressClassName: traefik
         hosts:
           - kubernetes.${DOMAIN}
     api:
+      scaling:
+        replicas: 1
       containers:
-        args:
-          - --token-ttl=0
         resources: null
     web:
       containers:
@@ -39,12 +40,6 @@ spec:
     metricsScraper:
       containers:
         resources: null
-    metrics-server:
-      enabled: false
-    cert-manager:
-      enabled: false
-    nginx:
-      enabled: false
   postRenderers:
     - kustomize:
         patchesJson6902:
