@@ -25,6 +25,7 @@ common_packages:
   - neofetch
   - neovim
   - rsync
+  - sysstat
   - tar
   - tcpdump
   - telnet
