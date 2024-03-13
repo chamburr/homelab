@@ -61,6 +61,7 @@ spec:
                 iptables -t nat -D POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 
                 MTU = 1420
+              UI_TRAFFIC_STATS: true
             securityContext:
               capabilities:
                 add:
