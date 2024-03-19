@@ -33,10 +33,13 @@ spec:
             args:
               - /bin/sh
               - -c
-              - sed -i -e 's/10/6/' -e 's/rateLimits/rateLimits:null,__rateLimits/' -e 's/about.*//'
-                -e 's/phonetic/random/' /usr/src/app/src/backend/lib/config.js &&
-                sed -i 's/.\\/data/\\/config/' /usr/src/app/src/backend/document_stores/file.js &&
-                yarn run start
+              - sed -i -e 's/aeiou/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/'
+                -e 's/bcd.*xyz/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/'
+                /usr/src/app/dist/backend/lib/keyGenerator.js && sed -i 's/.\\/data/\\/config/'
+                /usr/src/app/dist/backend/stores/FileDocumentStore.js && yarn run start
+            env:
+              KEY_LENGTH: 6
+              RATE_LIMIT_MAX: 1000000000
             securityContext:
               fsGroup: 1000
     service:
