@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: docker.io/photoprism/photoprism
-              tag: 221118-jammy
+              tag: 231128
             env:
               PHOTOPRISM_STORAGE_PATH: /photoprism/storage
               PHOTOPRISM_ORIGINALS_PATH: /photoprism/originals
