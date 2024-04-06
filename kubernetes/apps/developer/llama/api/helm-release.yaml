@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: docker.io/ollama/ollama
-              tag: 0.1.30
+              tag: 0.1.31
     service:
       main:
         ports:
