@@ -79,22 +79,8 @@ spec:
       spec:
         externalTrafficPolicy: Local
         loadBalancerIP: ${LB_TRAEFIK}
-      internal:
-        enabled: true
-  postRenderers:
-    - kustomize:
-        patchesJson6902:
-          - target:
-              kind: Service
-              name: traefik
-            patch:
-              - op: remove
-                path: /spec/ports/0
-          - target:
-              kind: Service
-              name: traefik-internal
-            patch:
-              - op: remove
-                path: /spec/ports/2
-              - op: remove
-                path: /spec/ports/1
+      additionalServices:
+        internal:
+          type: ClusterIP
+          labels:
+            traefik-service-label: internal
