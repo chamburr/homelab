@@ -4,6 +4,11 @@
       "matchDatasources": ["docker"],
       "matchPackageNames": ["docker.io/kopia/kopia"],
       "allowedVersions": "<20000000"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["docker.io/photoprism/photoprism"],
+      "allowedVersions": "<20000000"
     }
   ]
 }
