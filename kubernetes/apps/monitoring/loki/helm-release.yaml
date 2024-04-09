@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: loki
-      version: 6.0.0
+      version: 5.47.2
       sourceRef:
         kind: HelmRepository
         name: grafana
@@ -21,7 +21,6 @@ spec:
     remediation:
       retries: 3
   values:
-    deploymentMode: SingleBinary
     loki:
       storage:
         type: filesystem
@@ -104,11 +103,19 @@ spec:
     test:
       enabled: false
     monitoring:
+      dashboards:
+        enabled: false
+      rules:
+        enabled: false
       serviceMonitor:
         enabled: true
         metricsInstance: null
-    lokiCanary:
-      enabled: false
+      selfMonitoring:
+        enabled: false
+        grafanaAgent:
+          installOperator: false
+      lokiCanary:
+        enabled: false
   postRenderers:
     - kustomize:
         patchesJson6902:
