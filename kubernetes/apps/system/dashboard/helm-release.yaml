@@ -34,6 +34,9 @@ spec:
     api:
       containers:
         resources: null
+    auth:
+      containers:
+        resources: null
     web:
       containers:
         resources: null
