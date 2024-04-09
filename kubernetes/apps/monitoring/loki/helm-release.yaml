@@ -91,6 +91,12 @@ spec:
         - name: storage
           persistentVolumeClaim:
             claimName: loki-data
+    backend:
+      replicas: 0
+    read:
+      replicas: 0
+    write:
+      replicas: 0
     ingress:
       enabled: false
     gateway:
