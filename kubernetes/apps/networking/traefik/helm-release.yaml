@@ -57,7 +57,8 @@ spec:
     ports:
       traefik:
         expose:
-          default: true
+          default: false
+          internal: true
       web:
         redirectTo:
           port: websecure
