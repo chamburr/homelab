@@ -21,6 +21,7 @@ spec:
     remediation:
       retries: 3
   values:
+    deploymentMode: SingleBinary
     loki:
       storage:
         type: filesystem
@@ -97,19 +98,11 @@ spec:
     test:
       enabled: false
     monitoring:
-      dashboards:
-        enabled: false
-      rules:
-        enabled: false
       serviceMonitor:
         enabled: true
         metricsInstance: null
-      selfMonitoring:
-        enabled: false
-        grafanaAgent:
-          installOperator: false
-      lokiCanary:
-        enabled: false
+    lokiCanary:
+      enabled: false
   postRenderers:
     - kustomize:
         patchesJson6902:
