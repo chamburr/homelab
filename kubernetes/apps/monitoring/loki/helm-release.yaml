@@ -83,3 +83,7 @@ spec:
         metricsInstance: null
     lokiCanary:
       enabled: false
+    chunksCache:
+      enabled: false
+    resultsCache:
+      enabled: false
