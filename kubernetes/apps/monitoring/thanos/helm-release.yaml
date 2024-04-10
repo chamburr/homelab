@@ -37,6 +37,7 @@ spec:
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: >-
             monitoring-thanos-basic-auth@kubernetescrd
+      resourcesPreset: none
     queryFrontend:
       enabled: false
     compactor:
@@ -56,6 +57,7 @@ spec:
       extraVolumeMounts:
         - name: storage
           mountPath: /storage
+      resourcesPreset: none
     storegateway:
       enabled: true
       persistence:
@@ -67,6 +69,7 @@ spec:
       extraVolumeMounts:
         - name: storage
           mountPath: /storage
+      resourcesPreset: none
     receive:
       enabled: true
       tsdbRetention: 3h
@@ -79,6 +82,7 @@ spec:
       extraVolumeMounts:
         - name: storage
           mountPath: /storage
+      resourcesPreset: none
     metrics:
       enabled: true
       serviceMonitor:
