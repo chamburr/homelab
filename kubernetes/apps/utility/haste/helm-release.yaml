@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -40,16 +40,26 @@ spec:
             env:
               KEY_LENGTH: 6
               RATE_LIMIT_MAX: 1000000000
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
             securityContext:
               fsGroup: 1000
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8290
     ingress:
       main:
-        enabled: true
         className: traefik
         hosts:
           - host: p.${DOMAIN}
@@ -57,14 +67,13 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
               - p.${DOMAIN}
     persistence:
       config:
-        enabled: true
         existingClaim: haste-data
         globalMounts:
           - path: /config

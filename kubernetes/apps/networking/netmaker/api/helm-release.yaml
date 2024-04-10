@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -49,24 +49,35 @@ spec:
               NODE_ID: netmaker
               VERBOSITY: 3
               TELEMETRY: "off"
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
         pod:
           affinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              - labelSelector:
-                  matchExpressions:
-                    - key: app.kubernetes.io/name
-                      operator: In
-                      values:
-                        - netmaker
-                topologyKey: kubernetes.io/hostname
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values:
+                          - netmaker
+                  topologyKey: kubernetes.io/hostname
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8081
     ingress:
       main:
-        enabled: true
         className: traefik
         hosts:
           - host: netmaker-api.${DOMAIN}
@@ -74,14 +85,13 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
               - netmaker-api.${DOMAIN}
     persistence:
       config:
-        enabled: true
         existingClaim: netmaker-data
         globalMounts:
           - path: /root/data

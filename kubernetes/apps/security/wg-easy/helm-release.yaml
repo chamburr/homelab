@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -62,6 +62,16 @@ spec:
 
                 MTU = 1420
               UI_TRAFFIC_STATS: true
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
             securityContext:
               capabilities:
                 add:
@@ -71,6 +81,7 @@ spec:
           secret.reloader.stakater.com/reload: wg-easy-secret
     service:
       main:
+        controller: main
         ports:
           http:
             port: 51821
@@ -79,8 +90,6 @@ spec:
         type: LoadBalancer
         loadBalancerIP: ${LB_WIREGUARD}
         ports:
-          http:
-            enabled: false
           wireguard:
             port: 51820
             protocol: UDP
@@ -88,7 +97,6 @@ spec:
         externalTrafficPolicy: Local
     ingress:
       main:
-        enabled: true
         className: traefik
         hosts:
           - host: wireguard.${DOMAIN}
@@ -96,14 +104,13 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
               - wireguard.${DOMAIN}
     persistence:
       config:
-        enabled: true
         existingClaim: wg-easy-data
         globalMounts:
           - path: /etc/wireguard

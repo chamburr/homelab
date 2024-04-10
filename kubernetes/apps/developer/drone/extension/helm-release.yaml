@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -35,6 +35,16 @@ spec:
               - -c
               - apk add --no-cache nodejs-current npm && cd /app &&
                 npm install yaml micromatch && node /app/index.js
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
             securityContext:
               runAsUser: 0
               runAsGroup: 0
@@ -45,12 +55,12 @@ spec:
       name: drone-extension
     service:
       main:
+        controller: main
         ports:
           http:
             port: 3000
     persistence:
       config:
-        enabled: true
         type: configMap
         name: drone-extension
         globalMounts:
