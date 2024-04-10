@@ -65,7 +65,7 @@ spec:
                 spec:
                   failureThreshold: 30
                   periodSeconds: 5
-        anotations:
+        annotations:
           secret.reloader.stakater.com/reload: kutt-secret
     service:
       main:
