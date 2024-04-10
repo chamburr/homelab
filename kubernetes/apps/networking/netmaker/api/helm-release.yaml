@@ -61,14 +61,15 @@ spec:
                   periodSeconds: 5
         pod:
           affinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              - labelSelector:
-                  matchExpressions:
-                    - key: app.kubernetes.io/name
-                      operator: In
-                      values:
-                        - netmaker
-                topologyKey: kubernetes.io/hostname
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values:
+                          - netmaker
+                  topologyKey: kubernetes.io/hostname
     service:
       main:
         controller: main
