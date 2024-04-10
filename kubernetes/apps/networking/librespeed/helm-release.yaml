@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -41,14 +41,24 @@ spec:
                       /app/www/public/index.html &&
                       rm -rf /app/www/public/examples /app/www/public/results &&
                       sed -i 's/ Example//g' /app/www/public/index.html
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
     service:
       main:
+        controller: main
         ports:
           http:
             port: 80
     ingress:
       main:
-        enabled: true
         className: traefik
         hosts:
           - host: speedtest.${DOMAIN}
@@ -56,7 +66,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:

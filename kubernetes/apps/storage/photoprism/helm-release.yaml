@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -38,16 +38,26 @@ spec:
               PHOTOPRISM_DATABASE_DRIVER: sqlite
               PHOTOPRISM_SITE_URL: https://photos.${DOMAIN}
               PHOTOPRISM_SPONSOR: true
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
         annotations:
           configmap.reloader.stakater.com/reload: photoprism
     service:
       main:
+        controller: main
         ports:
           http:
             port: 2342
     ingress:
       main:
-        enabled: true
         className: traefik
         hosts:
           - host: photos.${DOMAIN}
@@ -55,29 +65,25 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
               - photos.${DOMAIN}
     persistence:
       config:
-        enabled: true
         existingClaim: photoprism-data
         globalMounts:
           - path: /photoprism/storage
       originals:
-        enabled: true
         existingClaim: photoprism-originals
         globalMounts:
           - path: /photoprism/originals
       nextcloud:
-        enabled: true
         existingClaim: nextcloud-data
         globalMounts:
           - path: /mnt/md0/nextcloud
       template:
-        enabled: true
         type: configMap
         name: photoprism
         globalMounts:

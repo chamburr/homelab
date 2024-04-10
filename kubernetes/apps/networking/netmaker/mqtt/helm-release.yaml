@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -34,6 +34,16 @@ spec:
               - /bin/ash
             args:
               - /mosquitto/config/wait.sh
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
         annotations:
           configmap.reloader.stakater.com/reload: netmaker-mqtt
         pod:
@@ -48,6 +58,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8883
@@ -55,7 +66,6 @@ spec:
             port: 1883
     ingress:
       main:
-        enabled: true
         className: traefik
         hosts:
           - host: netmaker-mqtt.${DOMAIN}
@@ -63,14 +73,13 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
               - netmaker-mqtt.${DOMAIN}
     persistence:
       config:
-        enabled: true
         type: configMap
         name: netmaker-mqtt
         globalMounts:
@@ -78,7 +87,6 @@ spec:
             readOnly: true
             subPath: mosquitto.conf
       wait:
-        enabled: true
         type: configMap
         name: netmaker-mqtt
         globalMounts:

@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -55,18 +55,28 @@ spec:
               EXECUTIONS_DATA_PRUNE: true
               EXECUTIONS_DATA_MAX_AGE: 24
               GENERIC_TIMEZONE: Asia/Singapore
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
             securityContext:
               runAsUser: 0
               runAsGroup: 0
               fsGroup: 1000
     service:
       main:
+        controller: main
         ports:
           http:
             port: 5678
     ingress:
       main:
-        enabled: true
         className: traefik
         hosts:
           - host: n8n.${DOMAIN}
@@ -74,14 +84,13 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
               - n8n.${DOMAIN}
     persistence:
       config:
-        enabled: true
         existingClaim: n8n-data
         globalMounts:
           - path: /home/node/.n8n
