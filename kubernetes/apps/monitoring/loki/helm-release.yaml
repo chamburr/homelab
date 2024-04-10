@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: loki
-      version: 5.47.2
+      version: 6.0.0
       sourceRef:
         kind: HelmRepository
         name: grafana
@@ -21,75 +21,50 @@ spec:
     remediation:
       retries: 3
   values:
+    deploymentMode: SingleBinary
     loki:
       storage:
         type: filesystem
-      structuredConfig:
-        auth_enabled: false
-        server:
-          log_level: info
-          http_listen_port: 3100
-          grpc_listen_port: 9095
-        memberlist:
-          join_members:
-            - loki-memberlist
-        common:
-          path_prefix: /var/loki
-          replication_factor: 1
-          storage:
-            filesystem:
-              chunks_directory: /var/loki/chunks
-              rules_directory: /var/loki/rules
-        limits_config:
-          retention_period: 14d
-          enforce_metric_name: false
-          reject_old_samples: true
-          reject_old_samples_max_age: 168h
-          max_cache_freshness_per_query: 10m
-          split_queries_by_interval: 15m
-          ingestion_rate_mb: 8
-          ingestion_burst_size_mb: 16
-        schema_config:
-          configs:
-            - from: "2022-01-11"
-              store: boltdb-shipper
-              object_store: filesystem
-              schema: v12
-              index:
-                prefix: loki_index_
-                period: 24h
-        storage_config:
-          hedging:
-            at: 250ms
-            max_per_second: 20
-            up_to: 3
-        ruler:
-          storage: {}
-        distributor:
-          ring:
-            kvstore:
-              store: memberlist
-        ingester:
-          max_chunk_age: 1h
-          lifecycler:
-            ring:
-              kvstore:
-                store: memberlist
-        compactor:
-          working_directory: /var/loki/boltdb-shipper-compactor
-          shared_store: filesystem
-          compaction_interval: 10m
-          retention_enabled: true
-          retention_delete_delay: 2h
-          retention_delete_worker_count: 150
-        analytics:
-          reporting_enabled: false
+      commonConfig:
+        path_prefix: /var/loki
+        replication_factor: 1
+      schemaConfig:
+        configs:
+          - from: "2024-04-01"
+            store: tsdb
+            object_store: filesystem
+            schema: v13
+            index:
+              prefix: loki_index_
+              period: 24h
+      auth_enabled: false
+      server:
+        log_level: info
+        http_listen_port: 3100
+        grpc_listen_port: 9095
+      limits_config:
+        retention_period: 14d
+        reject_old_samples: true
+        reject_old_samples_max_age: 168h
+        max_cache_freshness_per_query: 10m
+        split_queries_by_interval: 15m
+        ingestion_rate_mb: 64
+        ingestion_burst_size_mb: 128
+      ingester:
+        chunk_encoding: snappy
+      analytics:
+        reporting_enabled: false
     singleBinary:
       replicas: 1
+      persistence:
+        enabled: false
       extraVolumes:
         - name: storage
           persistentVolumeClaim:
             claimName: loki-data
+      extraVolumeMounts:
+        - name: storage
+          mountPath: /var/loki
     backend:
       replicas: 0
     read:
@@ -103,25 +78,8 @@ spec:
     test:
       enabled: false
     monitoring:
-      dashboards:
-        enabled: false
-      rules:
-        enabled: false
       serviceMonitor:
         enabled: true
         metricsInstance: null
-      selfMonitoring:
-        enabled: false
-        grafanaAgent:
-          installOperator: false
-      lokiCanary:
-        enabled: false
-  postRenderers:
-    - kustomize:
-        patchesJson6902:
-          - target:
-              kind: StatefulSet
-              name: loki
-            patch:
-              - op: remove
-                path: /spec/volumeClaimTemplates
+    lokiCanary:
+      enabled: false
