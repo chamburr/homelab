@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: ghcr.io/linuxserver/kasm
-              tag: 1.15.0
+              tag: 1.120.20221218
             env:
               KASM_PORT: 443
             probes:
