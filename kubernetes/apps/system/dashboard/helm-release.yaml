@@ -31,6 +31,9 @@ spec:
         ingressClassName: traefik
         hosts:
           - kubernetes.${DOMAIN}
+    kong:
+      manager:
+        enabled: false
     api:
       containers:
         resources: null
