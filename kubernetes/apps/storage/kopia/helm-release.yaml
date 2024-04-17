@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: docker.io/kopia/kopia
-              tag: 0.16.1
+              tag: 0.17.0
             env:
               KOPIA_PASSWORD: none
             command:
