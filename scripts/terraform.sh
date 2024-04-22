@@ -8,7 +8,7 @@ prepare() {
 }
 
 run() {
-  terraform -chdir=terraform "$@"
+  terraform -chdir terraform "$@"
 }
 
 prepare
