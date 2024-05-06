@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: ghcr.io/skyra-project/haste-server
-              tag: latest@sha256:39c095ff53b36eabd9068835c68a7b82f72955fdca5f9cc439d12b3a0b6a8bc2
+              tag: latest@sha256:e85bc196a36e4bc67151c33f9114a36dadfabf12e88a61ea7dd01e3f088bc38f
             args:
               - /bin/sh
               - -c
