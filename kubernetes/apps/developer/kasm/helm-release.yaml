@@ -47,6 +47,7 @@ spec:
     service:
       main:
         controller: main
+        primary: true
         ports:
           https:
             port: 443

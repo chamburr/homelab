@@ -44,6 +44,7 @@ spec:
     service:
       main:
         controller: main
+        primary: true
         type: LoadBalancer
         loadBalancerIP: ${LB_SAMBA}
         ports:
