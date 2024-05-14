@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prometheus
@@ -117,7 +117,7 @@ spec:
           - target:
               kind: Secret
               name: prometheus-prometheus
-            patch: |
+            patch: |-
               $patch: delete
               apiVersion: not-used
               kind: not-used

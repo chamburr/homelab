@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: nextcloud
@@ -128,11 +128,11 @@ spec:
       enabled: true
   postRenderers:
     - kustomize:
-        patchesJson6902:
+        patches:
           - target:
               kind: Deployment
               name: nextcloud
-            patch:
+            patch: |-
               - op: remove
                 path: /spec/template/spec/containers/0/volumeMounts/2/subPath
               - op: remove
@@ -140,7 +140,7 @@ spec:
           - target:
               kind: Secret
               name: nextcloud-db
-            patch:
+            patch: |-
               - op: add
                 path: /data/db-username
                 value: cG9zdGdyZXM=
@@ -150,7 +150,7 @@ spec:
           - target:
               kind: Service
               name: nextcloud
-            patch:
+            patch: |-
               - op: add
                 path: /spec/ports/-
                 value:
@@ -161,7 +161,7 @@ spec:
           - target:
               kind: Ingress
               name: nextcloud
-            patch:
+            patch: |-
               - op: add
                 path: /spec/rules/0/http/paths/-
                 value:

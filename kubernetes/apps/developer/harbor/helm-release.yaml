@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: harbor
@@ -84,11 +84,11 @@ spec:
       targetPath: secretKey
   postRenderers:
     - kustomize:
-        patchesJson6902:
+        patches:
           - target:
               kind: Deployment
               name: harbor-registry
-            patch:
+            patch: |-
               - op: add
                 path: /spec/template/metadata/labels/app.kubernetes.io~1name
                 value: harbor
@@ -98,7 +98,7 @@ spec:
           - target:
               kind: Deployment
               name: harbor-jobservice
-            patch:
+            patch: |-
               - op: add
                 path: /spec/template/metadata/labels/app.kubernetes.io~1name
                 value: harbor
@@ -108,7 +108,7 @@ spec:
           - target:
               kind: StatefulSet
               name: harbor-database
-            patch:
+            patch: |-
               - op: add
                 path: /spec/template/metadata/labels/app.kubernetes.io~1name
                 value: harbor
@@ -118,7 +118,7 @@ spec:
           - target:
               kind: StatefulSet
               name: harbor-redis
-            patch:
+            patch: |-
               - op: add
                 path: /spec/template/metadata/labels/app.kubernetes.io~1name
                 value: harbor

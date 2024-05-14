@@ -6,7 +6,7 @@ resources:
 patches:
   - target:
       name: "[^\\.]+"
-    patch: |
+    patch: |-
       $patch: delete
       apiVersion: not-used
       kind: not-used

@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: dashboard
@@ -48,10 +48,10 @@ spec:
         resources: null
   postRenderers:
     - kustomize:
-        patchesJson6902:
+        patches:
           - target:
               kind: Ingress
               name: dashboard
-            patch:
+            patch: |-
               - op: remove
                 path: /spec/tls/0/secretName
