@@ -62,6 +62,7 @@ spec:
 
                 MTU = 1420
               UI_TRAFFIC_STATS: true
+              UI_CHART_TYPE: 2
             probes:
               liveness:
                 enabled: true
