@@ -48,7 +48,7 @@ data:
         .v-list__group__header__append-icon {
           display: none !important;
         }
-        .nav-moments, .nav-count, .input-category {
+        .nav-moments, .nav-count, .nav-upgrade, .input-category {
           display: none !important;
         }
         .p-page-people .v-tabs__bar,
