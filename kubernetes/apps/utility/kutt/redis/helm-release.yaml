@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: redis
-      version: 19.4.0
+      version: 19.5.0
       sourceRef:
         kind: HelmRepository
         name: bitnami
@@ -26,6 +26,8 @@ spec:
     auth:
       enabled: false
     master:
+      pdb:
+        create: false
       persistence:
         enabled: true
         existingClaim: kutt-redis
