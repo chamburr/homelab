@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: thanos
-      version: 15.6.0
+      version: 15.7.2
       sourceRef:
         kind: HelmRepository
         name: bitnami
@@ -37,6 +37,8 @@ spec:
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: >-
             monitoring-thanos-basic-auth@kubernetescrd
+      pdb:
+        create: false
       resourcesPreset: none
     queryFrontend:
       enabled: false
@@ -48,6 +50,8 @@ spec:
       retentionResolutionRaw: 14d
       retentionResolution5m: 14d
       retentionResolution1h: 30d
+      pdb:
+        create: false
       persistence:
         enabled: false
       extraVolumes:
@@ -60,6 +64,8 @@ spec:
       resourcesPreset: none
     storegateway:
       enabled: true
+      pdb:
+        create: false
       persistence:
         enabled: false
       extraVolumes:
@@ -73,6 +79,8 @@ spec:
     receive:
       enabled: true
       tsdbRetention: 3h
+      pdb:
+        create: false
       persistence:
         enabled: false
       extraVolumes:
