@@ -28,6 +28,8 @@ spec:
       postgresPassword: kutt-pass
       database: kutt
     primary:
+      pdb:
+        create: false
       persistence:
         enabled: true
         existingClaim: kutt-postgresql

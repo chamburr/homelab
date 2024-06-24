@@ -28,6 +28,8 @@ spec:
       postgresPassword: mattermost-pass
       database: mattermost
     primary:
+      pdb:
+        create: false
       persistence:
         enabled: true
         existingClaim: mattermost-postgresql
