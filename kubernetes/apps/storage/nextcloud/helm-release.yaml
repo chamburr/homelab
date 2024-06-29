@@ -94,10 +94,12 @@ spec:
         postgresPassword: nextcloud-pass
         database: nextcloud
       primary:
+        pdb:
+          create: false
         persistence:
           enabled: true
           existingClaim: nextcloud-postgresql
-        resources: ""
+        resourcesPreset: none
     redis:
       enabled: true
       auth:
