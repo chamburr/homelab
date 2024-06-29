@@ -36,16 +36,40 @@ spec:
         enabled: false
     api:
       containers:
-        resources: null
+        resources:
+          limits:
+            cpu: null
+            memory: null
+          requests:
+            cpu: null
+            memory: null
     auth:
       containers:
-        resources: null
+        resources:
+          limits:
+            cpu: null
+            memory: null
+          requests:
+            cpu: null
+            memory: null
     web:
       containers:
-        resources: null
+        resources:
+          limits:
+            cpu: null
+            memory: null
+          requests:
+            cpu: null
+            memory: null
     metricsScraper:
       containers:
-        resources: null
+        resources:
+          limits:
+            cpu: null
+            memory: null
+          requests:
+            cpu: null
+            memory: null
   postRenderers:
     - kustomize:
         patches:
