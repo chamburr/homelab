@@ -106,9 +106,12 @@ spec:
         enabled: true
         password: nextcloud-pass
       master:
+        pdb:
+          create: false
         persistence:
           enabled: true
           existingClaim: nextcloud-redis
+        resourcesPreset: none
       architecture: standalone
     persistence:
       enabled: true
