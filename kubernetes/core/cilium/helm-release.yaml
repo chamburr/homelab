@@ -49,6 +49,8 @@ spec:
           enabled: true
         dashboards:
           enabled: false
+    cni:
+      resources: null
     nodeinit:
       resources: null
     securityContext:
