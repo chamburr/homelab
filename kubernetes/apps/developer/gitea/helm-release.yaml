@@ -45,7 +45,6 @@ spec:
           TYPE: level
         service:
           DISABLE_REGISTRATION: true
-          REQUIRE_SIGNIN_VIEW: true
           ENABLE_NOTIFY_MAIL: true
           DEFAULT_ALLOW_CREATE_ORGANIZATION: false
           DEFAULT_ENABLE_DEPENDENCIES: false
