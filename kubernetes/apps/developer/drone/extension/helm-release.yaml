@@ -28,12 +28,12 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/kubernetes-kubectl
-              tag: 1.29.2
+              repository: docker.io/library/alpine
+              tag: 3.20.1
             args:
               - /bin/sh
               - -c
-              - apk add --no-cache nodejs-current npm && cd /app &&
+              - apk add --no-cache kubectl nodejs-current npm && cd /app &&
                 npm install yaml micromatch && node /app/index.js
             probes:
               liveness:

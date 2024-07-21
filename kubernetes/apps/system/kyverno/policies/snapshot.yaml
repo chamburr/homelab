@@ -60,11 +60,11 @@ spec:
                     restartPolicy: OnFailure
                     initContainers:
                       - name: wait
-                        image: ghcr.io/onedr0p/alpine:3.19.1
+                        image: docker.io/library/alpine:3.20.1
                         args:
                           - /bin/sh
                           - -c
-                          - /scripts/sleep.sh 1 900
+                          - sleep $(shuf -i 1-900 -n 1)
                     containers:
                       - name: backup
                         image: docker.io/kopia/kopia:0.17.0

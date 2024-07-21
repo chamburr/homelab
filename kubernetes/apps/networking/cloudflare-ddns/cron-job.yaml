@@ -15,7 +15,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: cloudflare-ddns
-              image: ghcr.io/onedr0p/alpine:3.19.1
+              image: docker.io/library/alpine:3.20.1
               env:
                 - name: CLOUDFLARE_EMAIL
                   value: ${CLOUDFLARE_EMAIL}
@@ -26,8 +26,9 @@ spec:
                 - name: CLOUDFLARE_DOMAIN
                   value: ${CLOUDFLARE_DOMAIN}
               args:
-                - /bin/bash
-                - /app/cloudflare-ddns.sh
+                - /bin/sh
+                - -c
+                - apk add --no-cache bash curl jq && bash /app/cloudflare-ddns.sh
               volumeMounts:
                 - name: cloudflare-ddns
                   mountPath: /app/cloudflare-ddns.sh
