@@ -30,10 +30,6 @@ spec:
             image:
               repository: ghcr.io/luckyturtledev/anki
               tag: 24.06.3
-            args:
-              - /bin/sh
-              - -c
-              - SYNC_USER1=${USERNAME}:${PASSWORD} /anki-sync-server
             env:
               RUST_LOG: info
             probes:
@@ -54,7 +50,7 @@ spec:
         primary: true
         ports:
           http:
-            port: 10080
+            port: 8080
     ingress:
       main:
         className: traefik
@@ -77,9 +73,5 @@ spec:
   valuesFrom:
     - kind: Secret
       name: anki-secret
-      valuesKey: username
-      targetPath: controllers.main.containers.main.env.USERNAME
-    - kind: Secret
-      name: anki-secret
-      valuesKey: password
-      targetPath: controllers.main.containers.main.env.PASSWORD
+      valuesKey: user
+      targetPath: controllers.main.containers.main.env.SYNC_USER1
