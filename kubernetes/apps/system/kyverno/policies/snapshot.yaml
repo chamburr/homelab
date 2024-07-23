@@ -60,7 +60,7 @@ spec:
                     restartPolicy: OnFailure
                     initContainers:
                       - name: wait
-                        image: docker.io/library/alpine:3.20.1
+                        image: docker.io/library/alpine:3.20.2
                         args:
                           - /bin/sh
                           - -c
