@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: quay.io/hwdsl2/ipsec-vpn-server
-              tag: latest@sha256:9466554b51a5072dd73f900412c7a2afa8bf44df859095a7a30434f7c71d3181
+              tag: latest@sha256:b4bfc2bc585bad033f9225abf4b4b29493e2e0edec23cb582071bddd0e987445
             args:
               - /bin/sh
               - -c
