@@ -50,6 +50,10 @@ spec:
         split_queries_by_interval: 15m
         ingestion_rate_mb: 64
         ingestion_burst_size_mb: 128
+      compactor:
+        retention_enabled: true
+        delete_request_store: filesystem
+        working_directory: /var/loki/compactor/retention
       ingester:
         chunk_encoding: snappy
       analytics:
