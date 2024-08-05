@@ -28,19 +28,10 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/linuxserver/librespeed
-              tag: 5.4.20240804
-            lifecycle:
-              postStart:
-                exec:
-                  command:
-                    - /bin/sh
-                    - -c
-                    - rm /app/www/public/index.html &&
-                      mv /app/www/public/examples/example-singleServer-gauges.html
-                      /app/www/public/index.html &&
-                      rm -rf /app/www/public/examples /app/www/public/results &&
-                      sed -i 's/ Example//g' /app/www/public/index.html
+              repository: ghcr.io/librespeed/speedtest
+              tag: 5.4.0
+            env:
+              MODE: standalone
             probes:
               liveness:
                 enabled: true
