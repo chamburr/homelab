@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: docker.io/freshrss/freshrss
-              tag: 1.24.2
+              tag: 1.24.3
             env:
               CRON_MIN: 0,30
             probes:
