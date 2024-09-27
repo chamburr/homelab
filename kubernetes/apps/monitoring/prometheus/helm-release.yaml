@@ -77,9 +77,12 @@ spec:
         replicas: 1
         replicaExternalLabelName: replica
         retention: 3h
-        ruleSelectorNilUsesHelmValues: false
-        serviceMonitorSelectorNilUsesHelmValues: false
-        podMonitorSelectorNilUsesHelmValues: false
+        ruleSelector:
+          matchLabels: null
+        serviceMonitorSelector:
+          matchLabels: null
+        podMonitorSelector:
+          matchLabels: null
         remoteWrite:
           - url: http://thanos-receive.monitoring:19291/api/v1/receive
         volumes:
