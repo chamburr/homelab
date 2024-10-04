@@ -21,9 +21,8 @@ spec:
     remediation:
       retries: 3
   values:
-    installCRDs: false
-    webhook:
-      enabled: true
+    crds:
+      enabled: false
     extraArgs:
       - --dns01-recursive-nameservers=1.1.1.1:53,1.0.0.1:53
       - --dns01-recursive-nameservers-only
