@@ -84,7 +84,7 @@ spec:
         podMonitorSelector:
           matchLabels: null
         remoteWrite:
-          - url: http://thanos-receive.monitoring:19291/api/v1/receive
+          - url: http://thanos-receive:19291/api/v1/receive
         volumes:
           - name: web-config-2
             secret:

@@ -39,5 +39,5 @@ spec:
           type: vector
           inputs:
             - kubernetes_logs
-          address: vector.monitoring:6000
+          address: vector:6000
           version: "2"

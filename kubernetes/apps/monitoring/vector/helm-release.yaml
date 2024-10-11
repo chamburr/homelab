@@ -68,7 +68,7 @@ spec:
           type: loki
           inputs:
             - kubernetes_transform
-          endpoint: http://loki.monitoring:3100
+          endpoint: http://loki:3100
           encoding:
             codec: json
           batch:
@@ -82,7 +82,7 @@ spec:
           type: loki
           inputs:
             - talos_kernel_logs
-          endpoint: http://loki.monitoring:3100
+          endpoint: http://loki:3100
           encoding:
             codec: json
             except_fields:
@@ -97,7 +97,7 @@ spec:
           type: loki
           inputs:
             - talos_service_logs
-          endpoint: http://loki.monitoring:3100
+          endpoint: http://loki:3100
           encoding:
             codec: json
             except_fields:
