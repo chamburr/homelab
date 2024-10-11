@@ -79,3 +79,13 @@ spec:
         tls:
           - hosts:
               - immich.${DOMAIN}
+    persistence:
+      config:
+        existingClaim: immich-data
+        globalMounts:
+          - path: /usr/src/app/upload
+      originals:
+        existingClaim: immich-originals
+        globalMounts:
+          - path: /data
+            readOnly: true
