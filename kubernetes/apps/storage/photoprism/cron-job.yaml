@@ -16,10 +16,11 @@ spec:
           containers:
             - name: photoprism-cron
               image: docker.io/photoprism/photoprism:240915
+              command:
+                - /bin/bash
               args:
-                - /opt/photoprism/bin/photoprism
-                - index
-                - --cleanup
+                - -c
+                - /opt/photoprism/bin/photoprism index --cleanup
               env:
                 - name: PHOTOPRISM_STORAGE_PATH
                   value: /photoprism/storage
