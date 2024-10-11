@@ -89,3 +89,8 @@ spec:
         globalMounts:
           - path: /data
             readOnly: true
+      nextcloud:
+        existingClaim: nextcloud-data
+        globalMounts:
+          - path: /mnt/md0/nextcloud
+            readOnly: true
