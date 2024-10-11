@@ -15,7 +15,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: photoprism-cron
-              image: docker.io/photoprism/photoprism:221118-jammy
+              image: docker.io/photoprism/photoprism:240915
               args:
                 - /opt/photoprism/bin/photoprism
                 - index
