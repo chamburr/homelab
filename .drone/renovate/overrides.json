@@ -9,11 +9,6 @@
       "matchDatasources": ["docker"],
       "matchPackageNames": ["docker.io/linuxserver/kasm"],
       "allowedVersions": "<1.120"
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": ["docker.io/photoprism/photoprism"],
-      "allowedVersions": "<20000000"
     }
   ]
 }

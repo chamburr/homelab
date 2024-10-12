@@ -19,9 +19,9 @@ storage_nfs_options:
 
 storage_nfs_directories:
   - harbor
+  - immich
   - kopia
   - minio
   - nextcloud
-  - photoprism
   - samba
   - thanos
