@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: ghcr.io/n8n-io/n8n
-              tag: 1.65.1
+              tag: 1.65.2
             command:
               - tini
               - --
