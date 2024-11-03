@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: ghcr.io/crazy-max/samba
-              tag: 4.19.6
+              tag: 4.19.9
             env:
               SAMBA_HOSTS_ALLOW: 0.0.0.0/0
             probes:
