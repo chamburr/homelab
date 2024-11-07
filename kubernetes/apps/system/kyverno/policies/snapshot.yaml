@@ -7,8 +7,6 @@ metadata:
     policies.kyverno.io/title: Snapshot
     policies.kyverno.io/subject: PersistentVolumeClaim
 spec:
-  mutateExistingOnPolicyUpdate: true
-  generateExistingOnPolicyUpdate: true
   rules:
     - name: snapshot-cronjob
       match:
@@ -33,6 +31,7 @@ spec:
             jmesPath: request.object.metadata.labels."app.kubernetes.io/instance"
       generate:
         synchronize: true
+        generateExisting: true
         apiVersion: batch/v1
         kind: CronJob
         name: "{{ name }}-snapshot"
