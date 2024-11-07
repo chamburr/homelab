@@ -19,7 +19,7 @@ spec:
               service:
                 name: traefik-internal
                 port:
-                  number: 9000
+                  number: 8080
   tls:
     - hosts:
         - traefik.chamburr.xyz
