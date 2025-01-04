@@ -23,6 +23,9 @@ spec:
   values:
     nameOverride: immich-postgresql
     fullnameOverride: immich-postgresql
+    global:
+      security:
+        allowInsecureImages: true
     image:
       registry: docker.io
       repository: tensorchord/pgvecto-rs
