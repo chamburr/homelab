@@ -15,7 +15,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: cloudflare-ddns
-              image: docker.io/library/alpine:3.21.0
+              image: docker.io/library/alpine:3.21.1
               env:
                 - name: CLOUDFLARE_EMAIL
                   value: ${CLOUDFLARE_EMAIL}
