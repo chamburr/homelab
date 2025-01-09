@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: docker.io/library/alpine
-              tag: 3.21.1
+              tag: 3.21.2
             args:
               - /bin/sh
               - -c
