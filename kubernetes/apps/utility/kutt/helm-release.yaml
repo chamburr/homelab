@@ -34,7 +34,7 @@ spec:
           main:
             image:
               repository: docker.io/kutt/kutt
-              tag: v2.7.4
+              tag: v3.0.4
             env:
               SITE_NAME: Kutt
               DEFAULT_DOMAIN: s.${DOMAIN}
