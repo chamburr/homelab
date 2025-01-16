@@ -1,3 +1,5 @@
+Boo woo woo
+
 # Homelab
 
 My personal infrastructure and Kubernetes cluster written as code.
