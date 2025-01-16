@@ -72,7 +72,7 @@ spec:
           );
       extraSidecarContainers:
         - name: nextcloud-push
-          image: docker.io/icewind1991/notify_push:0.6.11
+          image: docker.io/icewind1991/notify_push:1.0.0
           env:
             - name: DATABASE_URL
               value: postgres://postgres:nextcloud-pass@nextcloud-postgresql/nextcloud
