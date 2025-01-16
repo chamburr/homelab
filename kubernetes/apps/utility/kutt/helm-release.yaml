@@ -34,26 +34,20 @@ spec:
           main:
             image:
               repository: docker.io/kutt/kutt
-              tag: v2.7.4
+              tag: v3.0.4
             env:
               SITE_NAME: Kutt
               DEFAULT_DOMAIN: s.${DOMAIN}
               LINK_LENGTH: 6
-              DB_HOST: kutt-postgresql
-              DB_PORT: 5432
-              DB_NAME: kutt
-              DB_USER: postgres
-              DB_PASSWORD: kutt-pass
-              REDIS_HOST: kutt-redis-master
-              REDIS_PORT: 6379
+              DB_CLIENT: sqlite3
+              REDIS_ENABLED: false
+              MAIL_ENABLED: true
               MAIL_HOST: ${MAIL_HOST}
               MAIL_PORT: ${MAIL_PORT}
               MAIL_USER: ${MAIL_USERNAME}
               MAIL_PASSWORD: ${MAIL_PASSWORD}
               DISALLOW_REGISTRATION: true
               DISALLOW_ANONYMOUS_LINKS: true
-              USER_LIMIT_PER_DAY: 10000
-              DEFAULT_MAX_STATS_PER_LINK: 10000
               CUSTOM_DOMAIN_USE_HTTPS: true
             probes:
               liveness:
@@ -93,7 +87,3 @@ spec:
       name: kutt-secret
       valuesKey: secret
       targetPath: controllers.main.containers.main.env.JWT_SECRET
-    - kind: Secret
-      name: kutt-secret
-      valuesKey: email
-      targetPath: controllers.main.containers.main.env.ADMIN_EMAILS
