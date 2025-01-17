@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: mattermost-team-edition
-      version: 6.6.67
+      version: 6.6.69
       sourceRef:
         kind: HelmRepository
         name: mattermost
