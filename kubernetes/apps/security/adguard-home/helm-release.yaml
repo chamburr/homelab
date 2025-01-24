@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: docker.io/adguard/adguardhome
-              tag: v0.107.55
+              tag: v0.107.56
             probes:
               liveness:
                 enabled: true
