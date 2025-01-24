@@ -14,11 +14,6 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  dependsOn:
-    - name: kutt-postgresql
-      namespace: utility
-    - name: kutt-redis
-      namespace: utility
   install:
     remediation:
       retries: 3
@@ -39,7 +34,7 @@ spec:
               SITE_NAME: Kutt
               DEFAULT_DOMAIN: s.${DOMAIN}
               LINK_LENGTH: 6
-              DB_CLIENT: sqlite3
+              DB_CLIENT: better-sqlite3
               REDIS_ENABLED: false
               MAIL_ENABLED: true
               MAIL_HOST: ${MAIL_HOST}
@@ -82,6 +77,11 @@ spec:
         tls:
           - hosts:
               - s.${DOMAIN}
+    persistence:
+      config:
+        existingClaim: kutt-data
+        globalMounts:
+          - path: /kutt/db
   valuesFrom:
     - kind: Secret
       name: kutt-secret
