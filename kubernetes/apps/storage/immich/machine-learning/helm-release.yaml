@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.125.2
+              tag: v1.125.3
             env:
               TRANSFORMERS_CACHE: /cache
             probes:
