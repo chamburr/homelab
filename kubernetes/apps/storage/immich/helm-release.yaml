@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.125.3
+              tag: v1.125.5
             env:
               TZ: Asia/Singapore
               IMMICH_TRUSTED_PROXIES: ${K8S_POD_CIDR},169.254.0.0/16
