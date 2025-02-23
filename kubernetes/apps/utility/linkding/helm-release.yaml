@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: docker.io/sissbruecker/linkding
-              tag: 1.37.0-alpine
+              tag: 1.38.1-alpine
             probes:
               liveness:
                 enabled: true
