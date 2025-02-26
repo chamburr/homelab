@@ -9,7 +9,7 @@ spec:
   url: https://github.com/fluxcd/flux2
   ref:
     # renovate source=github-releases name=fluxcd/flux2
-    tag: v2.4.0
+    tag: v2.5.1
   ignore: |
     /*
     !/manifests
