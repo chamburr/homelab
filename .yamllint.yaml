@@ -1,4 +1,6 @@
----
+ignore: |
+  kubernetes/**/resources/
+
 extends: default
 rules:
   braces:
@@ -7,6 +9,7 @@ rules:
     forbid: non-empty
   comments:
     min-spaces-from-content: 1
+  document-start: disable
   empty-lines:
     max: 1
   indentation:

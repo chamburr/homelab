@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: haste-clean
+  namespace: utility
+spec:
+  schedule: 0 0 * * *
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: haste-clean
+              image: docker.io/library/alpine:3.21.2
+              args:
+                - /bin/sh
+                - -c
+                - find /config -type f -mtime +30 -exec rm {} \;
+              volumeMounts:
+                - name: data
+                  mountPath: /config
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: haste
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values:
+                          - haste
+                  topologyKey: kubernetes.io/hostname

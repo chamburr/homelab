@@ -1,8 +1,0 @@
----
-- name: Reload nfs
-  ansible.builtin.command: # noqa: no-changed-when
-    cmd: exportfs -ra
-
-- name: Update initramfs
-  ansible.builtin.command: # noqa: no-changed-when
-    cmd: dracut -f

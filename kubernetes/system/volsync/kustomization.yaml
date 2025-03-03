@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+helmCharts:
+  - name: volsync
+    version: 0.11.0
+    repo: https://backube.github.io/helm-charts
+    releaseName: volsync
+    namespace: system
+    includeCRDs: true
+    valuesFile: values.yaml
+# resources:
+#   - mutatingadmissionpolicy.yaml
+#   - prometheusrule.yaml

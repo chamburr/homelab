@@ -1,0 +1,20 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/immich-app/immich-machine-learning
+          tag: v1.128.0
+        env:
+          TRANSFORMERS_CACHE: /cache
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 3003
+persistence:
+  data:
+    existingClaim: immich-machine-learning
+    globalMounts:
+      - path: /cache

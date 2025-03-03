@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "config:recommended",
+    "docker:enableMajor",
+    ":disableRateLimiting",
+    ":disableDependencyDashboard",
+    "github>chamburr/homelab//.woodpecker/renovate/auto-merge",
+    "github>chamburr/homelab//.woodpecker/renovate/commit-message",
+    "github>chamburr/homelab//.woodpecker/renovate/manager",
+    "github>chamburr/homelab//.woodpecker/renovate/pr-label",
+  ],
+  "onboarding": false,
+  "requireConfig": "optional",
+  "prBodyTemplate": "{{{table}}}{{{notes}}}{{{changelogs}}}{{{controls}}}",
+  "platform": "github",
+  "username": "chamburr-bot[bot]",
+  "gitAuthor": "chamburr-bot <113156419+chamburr-bot[bot]@users.noreply.github.com>",
+  "repositories": ["chamburr/homelab"]
+}

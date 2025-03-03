@@ -1,0 +1,36 @@
+applicationsets:
+  main:
+    namespace: argocd
+    generators:
+      - git:
+          repoURL: https://github.com/chamburr/homelab.git
+          revision: v2
+          directories: # TODO
+            - path: kubernetes/argocd/*/*
+            - path: kubernetes/kube-system/*/*
+            - path: kubernetes/rook-ceph/*/*
+            - path: kubernetes/system/*/*
+    ignoreApplicationDifferences:
+      - jsonPointers:
+          - /spec/syncPolicy
+    template:
+      metadata:
+        name: "{{ .path.basename }}"
+      spec:
+        project: default
+        source:
+          repoURL: https://github.com/chamburr/homelab.git
+          targetRevision: v2
+          path: "{{ .path.path }}"
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: "{{ index .path.segments 1 }}"
+        syncPolicy:
+          automated:
+            prune: true
+            selfHeal: true
+          managedNamespaceMetadata:
+            labels:
+            annotations:
+          syncOptions:
+            - CreateNamespace=true

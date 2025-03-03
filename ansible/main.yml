@@ -1,4 +1,3 @@
----
 - name: Main
   hosts: all
   become: true
@@ -14,9 +13,5 @@
       tags: common
     - role: network
       tags: network
-    - role: storage
-      tags: storage
-    - role: apps
-      tags: apps
     - role: kubernetes
       tags: kubernetes

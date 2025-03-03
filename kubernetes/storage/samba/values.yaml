@@ -1,0 +1,43 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/crazy-max/samba
+          tag: 4.19.9
+        env:
+          SAMBA_HOSTS_ALLOW: 0.0.0.0/0
+          USERNAME:
+            valueFrom:
+              secretKeyRef:
+                name: samba
+                key: username
+          PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: samba
+                key: password
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    type: LoadBalancer
+    annotations:
+      lbipam.cilium.io/ips: 192.168.123.32
+    ports:
+      samba:
+        port: 445
+        protocol: TCP
+        targetPort: 445
+persistence:
+  data:
+    existingClaim: samba
+    globalMounts:
+      - path: /share/samba
+  config:
+    type: configMap
+    name: samba
+    globalMounts:
+      - path: /data/config.yml
+        subPath: config.yml

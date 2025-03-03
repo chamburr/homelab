@@ -1,26 +1,49 @@
----
-- name: Add kubernetes repository
-  ansible.builtin.yum_repository:
-    name: kubernetes
-    description: Kubernetes
-    baseurl: https://pkgs.k8s.io/core:/stable:/v1.31/rpm
-    gpgkey: https://pkgs.k8s.io/core:/stable:/v1.31/rpm/repodata/repomd.xml.key
-    gpgcheck: true
+- name: Install homebrew
+  ansible.builtin.shell:
+    cmd: bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    creates: /home/linuxbrew/.linuxbrew/bin/brew
+  environment:
+    NONINTERACTIVE: "1"
+  become: false
+
+- name: Install homebrew packages
+  ansible.builtin.package:
+    name: build-essential
     state: present
 
-- name: Add kubernetes extras repository
-  ansible.builtin.yum_repository:
-    name: kubernetes-extras
-    description: Kubernetes Extras
-    baseurl: https://raw.githubusercontent.com/chamburr/kubernetes-extras/main
-    gpgcheck: false
+- name: Add homebrew to profile
+  ansible.builtin.lineinfile:
+    path: /home/{{ common_username }}/.bashrc
+    line: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     state: present
+
+- name: Add homebrew auto upgrade cron
+  ansible.builtin.cron:
+    name: Upgrade homebrew
+    minute: "0"
+    hour: "4"
+    user: "{{ common_username }}"
+    job: /home/linuxbrew/.linuxbrew/bin/brew upgrade
+    state: present
+
+- name: Install client taps
+  community.general.homebrew_tap:
+    name: "{{ kubernetes_taps }}"
+    state: present
+  become: false
 
 - name: Install client packages
-  ansible.builtin.dnf:
-    name:
-      - flux
-      - helm
-      - kubectl
-      - talos
+  community.general.homebrew:
+    name: "{{ kubernetes_packages }}"
     state: present
+  become: false
+
+- name: Add client to profile
+  ansible.builtin.lineinfile:
+    path: /home/{{ common_username }}/.bashrc
+    line: "{{ item.line }}"
+    state: present
+  loop:
+    - line: source <(kubectl completion bash)
+    - line: alias k=kubectl
+    - line: complete -F __start_kubectl k

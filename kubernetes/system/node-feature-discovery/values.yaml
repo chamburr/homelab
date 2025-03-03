@@ -1,0 +1,10 @@
+worker:
+  config:
+    core:
+      labelSources:
+        - cpu
+        - pci
+        - system
+        - usb
+prometheus:
+  enable: true

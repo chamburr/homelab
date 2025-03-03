@@ -1,0 +1,27 @@
+{
+  "kubernetes": {
+    "fileMatch": ["^kubernetes/.+\\.yaml$"]
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": ["Process comments"],
+      "fileMatch": ["^kubernetes/.+\\.yaml$"],
+      "matchStrings": [
+        "# renovate source=(?<datasource>\\S+) name=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
+        "# renovate registry=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
+    },
+    {
+      "customType": "regex",
+      "description": ["Process github urls"],
+      "fileMatch": ["^kubernetes/.+\\.yaml$", "^scripts/.+\\.yaml$"],
+      "matchStrings": [
+        "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*",
+        "https:\\/\\/github.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/releases\\/download\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
+      ],
+      "datasourceTemplate": "github-releases"
+    }
+  ]
+}

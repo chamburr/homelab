@@ -1,0 +1,22 @@
+include /etc/alertmanager-secret/__ntfy-auth.scfg
+
+alert-mode single
+
+labels {
+    order "severity"
+
+    severity "critical" {
+        tags "rotating_light"
+        priority 5
+    }
+
+    severity "warning" {
+        tags "warning"
+        priority 3
+    }
+}
+
+resolved {
+    tags "white_check_mark"
+    priority 1
+}

@@ -1,9 +1,8 @@
----
 - name: Allow passwordless sudo
   ansible.builtin.lineinfile: # noqa: no-tabs
     path: /etc/sudoers
-    regexp: ^# %wheel
-    line: "%wheel	ALL=(ALL)	NOPASSWD: ALL"
+    regexp: ^%sudo
+    line: "%sudo	ALL=(ALL:ALL) NOPASSWD: ALL"
     validate: visudo -cf %s
     state: present
 
@@ -17,7 +16,8 @@
     name: "{{ common_username }}"
     password: "{{ common_password }}"
     group: "{{ common_username }}"
-    groups: wheel
+    groups: sudo
+    shell: /bin/bash
     append: true
     state: present
 

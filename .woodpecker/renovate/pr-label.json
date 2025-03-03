@@ -1,0 +1,41 @@
+{
+  "labels": [],
+  "packageRules": [
+    {
+      "matchPaths": ["ansible/**"],
+      "addLabels": ["area/ansible"]
+    },
+    {
+      "matchPaths": ["kubernetes/**"],
+      "addLabels": ["area/kubernetes"]
+    }
+    {
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["version/major"]
+    },
+    {
+      "matchUpdateTypes": ["minor"],
+      "addLabels": ["version/minor"]
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "addLabels": ["version/patch"]
+    },
+    {
+      "matchDatasources": ["galaxy", "galaxy-collection"],
+      "addLabels": ["renovate/ansible"]
+    },
+    {
+      "matchDatasources": ["docker"],
+      "addLabels": ["renovate/docker"]
+    },
+    {
+      "matchDatasources": ["github-releases", "github-tags"],
+      "addLabels": ["renovate/github"]
+    },
+    {
+      "matchDatasources": ["helm"],
+      "addLabels": ["renovate/helm"]
+    }
+  ]
+}

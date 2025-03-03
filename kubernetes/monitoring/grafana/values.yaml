@@ -1,0 +1,63 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/grafana/grafana
+          tag: 11.5.1
+        env:
+          GF_SERVER_DOMAIN: grafana.chamburr.xyz
+          GF_SERVER_ROOT_URL: https://grafana.chamburr.xyz
+          GF_ANALYTICS_REPORTING_ENABLED: false
+          GF_ANALYTICS_CHECK_FOR_UPDATES: false
+          GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: false
+          GF_ANALYTICS_FEEDBACK_LINKS_ENABLED: false
+          GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: true
+          GF_SECURITY_ALLOW_EMBEDDING: true
+          GF_SNAPSHOTS_EXTERNAL_ENABLED: false
+          GF_SMTP_ENABLED: true
+          GF_SMTP_HOST:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: __mail-address
+          GF_SMTP_USER:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: mail-username
+          GF_SMTP_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: mail-password
+          GF_SMTP_FROM_ADDRESS:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: mail-sender
+          GF_LOG_MODE: console
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 3000
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: grafana.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  data:
+    existingClaim: grafana
+    globalMounts:
+      - path: /var/lib/grafana

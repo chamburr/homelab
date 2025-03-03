@@ -1,0 +1,27 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/mendhak/http-https-echo
+          tag: 35
+        env:
+          LOG_WITHOUT_NEWLINE: true
+          LOG_IGNORE_PATH: /healthz
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 8080
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: echo.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http

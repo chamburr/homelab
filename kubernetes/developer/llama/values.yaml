@@ -1,0 +1,31 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/open-webui/open-webui
+          tag: 0.5.11
+        env:
+          OLLAMA_BASE_URL: http://llama-api:11434
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 8080
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: llama.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  data:
+    existingClaim: llama
+    globalMounts:
+      - path: /app/backend/data

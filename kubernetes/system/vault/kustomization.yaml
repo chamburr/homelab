@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+helmCharts:
+  - name: vault
+    version: 0.29.1
+    repo: https://helm.releases.hashicorp.com
+    releaseName: vault
+    namespace: system
+    valuesFile: values.yaml
+configMapGenerator:
+  - name: vault-scripts
+    files:
+      - resources/init.sh
+    options:
+      disableNameSuffixHash: true
+resources:
+  - pvc.yaml

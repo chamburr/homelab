@@ -1,0 +1,30 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/library/redis
+          tag: 7.4.2-alpine
+        args:
+          - redis-server
+          - --require-pass
+          - ${PASSWORD}
+        env:
+          PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: immich
+                key: redis-password
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 6379
+persistence:
+  data:
+    existingClaim: immich-redis
+    globalMounts:
+      - path: /data

@@ -1,7 +1,6 @@
----
-- name: Restart networkmanager service
+- name: Restart dns service
   ansible.builtin.service:
-    name: NetworkManager
+    name: systemd-resolved
     state: restarted
 
 - name: Restart fail2ban service
@@ -9,11 +8,7 @@
     name: fail2ban
     state: restarted
 
-- name: Reload firewalld
-  ansible.builtin.command: # noqa: no-changed-when
-    cmd: firewall-cmd --reload
-
 - name: Restart ssh service
   ansible.builtin.service:
-    name: sshd
+    name: ssh
     state: restarted

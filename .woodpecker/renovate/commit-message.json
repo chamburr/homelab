@@ -1,0 +1,32 @@
+{
+  "extends": [":semanticCommits"],
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{newVersion}}",
+  "commitMessageSuffix": "",
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["*"],
+      "semanticCommitType": "build"
+    },
+    {
+      "matchDatasources": ["galaxy", "galaxy-collection"],
+      "semanticCommitScope": "ansible",
+      "commitMessageTopic": "{{depName}}"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "semanticCommitScope": "docker",
+      "commitMessageTopic": "{{{replace '.+/' '' depName}}}"
+    },
+    {
+      "matchDatasources": ["github-releases", "github-tags"],
+      "semanticCommitScope": "github",
+      "commitMessageTopic": "{{{replace '.+/' '' depName}}}"
+    },
+    {
+      "matchDatasources": ["helm"],
+      "semanticCommitScope": "helm",
+      "commitMessageTopic": "{{depName}}"
+    }
+  ]
+}

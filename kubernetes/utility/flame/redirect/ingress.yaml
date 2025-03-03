@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flame-redirect
+  namespace: utility
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: utility-flame-redirect@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: www.chamburr.xyz
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: flame
+                port:
+                  number: 5005

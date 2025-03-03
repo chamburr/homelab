@@ -1,0 +1,10 @@
+when:
+  - event: push
+    branch: main
+
+steps:
+  - name: format yaml
+    image: node
+    commands:
+      - npm install -g prettier
+      - prettier -c .
