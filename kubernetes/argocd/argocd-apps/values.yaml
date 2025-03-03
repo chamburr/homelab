@@ -12,7 +12,7 @@ applicationsets:
             - path: kubernetes/argocd/*
             - path: kubernetes/kube-system/*
             # - path: kubernetes/rook-ceph/*
-            # - path: kubernetes/system/*
+            - path: kubernetes/monitoring/*
     ignoreApplicationDifferences:
       - jsonPointers:
           - /spec/syncPolicy
