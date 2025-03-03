@@ -33,7 +33,7 @@ persistence:
     globalMounts:
       - path: /data
   config:
-    type: configmap
+    type: configMap
     name: system-backup
     globalMounts:
       - path: /app
