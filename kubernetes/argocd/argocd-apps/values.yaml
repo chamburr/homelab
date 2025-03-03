@@ -13,6 +13,8 @@ applicationsets:
             - path: kubernetes/kube-system/*
             - path: kubernetes/rook-ceph/*
             - path: kubernetes/monitoring/*
+            - path: kubernetes/networking/*
+            - path: kubernetes/system/*
     ignoreApplicationDifferences:
       - jsonPointers:
           - /spec/syncPolicy
