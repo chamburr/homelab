@@ -11,7 +11,7 @@ applicationsets:
           directories: # TODO
             - path: kubernetes/argocd/*
             - path: kubernetes/kube-system/*
-            # - path: kubernetes/rook-ceph/*
+            - path: kubernetes/rook-ceph/*
             - path: kubernetes/monitoring/*
     ignoreApplicationDifferences:
       - jsonPointers:

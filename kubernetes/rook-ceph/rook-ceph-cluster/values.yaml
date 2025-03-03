@@ -32,7 +32,9 @@ cephBlockPools:
     spec:
       failureDomain: host
       replicated:
-        size: 2
+        # TODO size: 2
+        size: 1
+        requireSafeReplicaSize: false
     storageClass:
       enabled: true
       name: ceph-block
