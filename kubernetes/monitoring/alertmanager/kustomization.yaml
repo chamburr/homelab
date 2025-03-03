@@ -4,7 +4,7 @@ helmCharts:
   - name: app-template
     version: 3.7.1
     repo: https://bjw-s.github.io/helm-charts
-    releaseName: grafana
+    releaseName: alertmanager
     namespace: monitoring
     valuesFile: values.yaml
 configMapGenerator:
