@@ -6,4 +6,5 @@ helmCharts:
     repo: https://kubernetes-sigs.github.io/node-feature-discovery/charts
     releaseName: node-feature-discovery
     namespace: system
+    includeCRDs: true
     valuesFile: values.yaml
