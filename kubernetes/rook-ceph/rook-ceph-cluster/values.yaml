@@ -7,6 +7,11 @@ monitoring:
   enabled: true
   createPrometheusRules: true
 cephClusterSpec:
+  # TODO remove
+  mon:
+    count: 1
+  mgr:
+    count: 1
   dashboard:
     ssl: false
   network:

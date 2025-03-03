@@ -26,7 +26,8 @@ run() {
 
   talosctl gen secrets -o secrets.yaml
   talosctl gen config $clustername https://$clusterendpoint:6443 --with-secrets secrets.yaml \
-    --config-patch @patch.yaml --with-docs=false --with-examples=false
+    --with-docs=false --with-examples=false --config-patch @patch.yaml --config-patch \
+    '[{"op":"replace","path":"/cluster/apiServer/admissionControl","value":[]}]'
 
   mv talosconfig config
   talosctl config endpoint $clusterendpoint
