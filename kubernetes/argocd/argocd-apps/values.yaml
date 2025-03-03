@@ -9,10 +9,10 @@ applicationsets:
           repoURL: https://github.com/chamburr/homelab.git
           revision: v2
           directories: # TODO
-            - path: kubernetes/argocd/*/*
-            - path: kubernetes/kube-system/*/*
-            # - path: kubernetes/rook-ceph/*/*
-            # - path: kubernetes/system/*/*
+            - path: kubernetes/argocd/*
+            - path: kubernetes/kube-system/*
+            # - path: kubernetes/rook-ceph/*
+            # - path: kubernetes/system/*
     ignoreApplicationDifferences:
       - jsonPointers:
           - /spec/syncPolicy
