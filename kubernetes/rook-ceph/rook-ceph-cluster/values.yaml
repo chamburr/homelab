@@ -12,6 +12,26 @@ cephClusterSpec:
     count: 1
   mgr:
     count: 1
+  resources:
+    mgr:
+      limits:
+        memory: "1Gi"
+      requests:
+        cpu: "50m"
+        memory: "100Mi"
+    mon:
+      limits:
+        memory: "2Gi"
+      requests:
+        cpu: "50m"
+        memory: "100Mi"
+    osd:
+      limits:
+        memory: "4Gi"
+      requests:
+        cpu: "50m"
+        memory: "100Mi"
+  # END TODO
   dashboard:
     ssl: false
   network:
