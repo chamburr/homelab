@@ -61,6 +61,9 @@ run() {
   kustomize build --enable-helm \
     "https://github.com/chamburr/homelab.git/kubernetes/kube-system/cilium?ref=v2" \
     | kubectl apply -f -
+  kustomize build --enable-helm \
+    "https://github.com/chamburr/homelab.git/kubernetes/kube-system/coredns?ref=v2" \
+    | kubectl apply -f -
 
   until talosctl health -n $endpoint --wait-timeout 30s > /dev/null 2>&1; do
     sleep 1

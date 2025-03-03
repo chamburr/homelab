@@ -15,16 +15,16 @@ applicationsets:
           - /spec/syncPolicy
     template:
       metadata:
-        name: "{{ .path.basename }}"
+        name: "{{ path.basename }}"
       spec:
         project: default
         source:
           repoURL: https://github.com/chamburr/homelab.git
           targetRevision: v2
-          path: "{{ .path.path }}"
+          path: "{{ path.path }}"
         destination:
           server: https://kubernetes.default.svc
-          namespace: "{{ index .path.segments 1 }}"
+          namespace: "{{ index path.segments 1 }}"
         syncPolicy:
           automated:
             prune: true
