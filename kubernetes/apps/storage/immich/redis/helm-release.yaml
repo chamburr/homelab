@@ -25,6 +25,7 @@ spec:
     fullnameOverride: immich-redis
     auth:
       enabled: false
+      usePasswordFiles: false
     master:
       pdb:
         create: false
