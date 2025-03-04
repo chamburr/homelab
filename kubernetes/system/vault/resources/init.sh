@@ -30,6 +30,6 @@ vault write auth/kubernetes/config \
   kubernetes_host=https://${KUBERNETES_PORT_443_TCP_ADDR}:443
 vault write auth/kubernetes/role/external-secrets \
   bound_service_account_names=external-secrets \
-  bound_service_account_namespaces=external-secrets \
+  bound_service_account_namespaces=system \
   policies=external-secrets \
   ttl=24h
