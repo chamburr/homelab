@@ -6,6 +6,7 @@ configs:
     kustomize.buildOptions: --enable-helm
     exec.enabled: true
   params:
+    controller.diff.server.side: true
     server.insecure: true
   secret:
     githubSecret: $argocd.github-secret
