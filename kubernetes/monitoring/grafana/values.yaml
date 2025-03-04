@@ -37,8 +37,9 @@ controllers:
                 name: global
                 key: mail-sender
           GF_LOG_MODE: console
-    securityContext:
-      fsGroup: 472
+    pod:
+      securityContext:
+        fsGroup: 472
     annotations:
       reloader.stakater.com/auto: "true"
 service:
