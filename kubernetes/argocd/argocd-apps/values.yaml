@@ -35,8 +35,8 @@ applicationsets:
             prune: true
             selfHeal: true
           managedNamespaceMetadata:
-            labels: {}
-            annotations: {}
+            labels:
+              app.kubernetes.io/managed-by: argocd
           syncOptions:
             - CreateNamespace=true
             - ApplyOutOfSyncOnly=true
