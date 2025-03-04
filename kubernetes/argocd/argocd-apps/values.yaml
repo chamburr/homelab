@@ -39,3 +39,5 @@ applicationsets:
             annotations:
           syncOptions:
             - CreateNamespace=true
+            - ApplyOutOfSyncOnly=true
+            - ServerSideApply=true
