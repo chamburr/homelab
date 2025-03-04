@@ -8,7 +8,7 @@ helmCharts:
     namespace: networking
     valuesFile: values.yaml
 resources:
-  - api
   - mqtt
+  - ui
   - pvc.yaml
   - secret.yaml

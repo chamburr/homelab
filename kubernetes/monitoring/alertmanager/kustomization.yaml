@@ -16,3 +16,4 @@ configMapGenerator:
       disableNameSuffixHash: true
 resources:
   - pvc.yaml
+  - secret.yaml
