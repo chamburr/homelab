@@ -16,8 +16,6 @@ controllers:
         env:
           KEY_LENGTH: 6
           RATE_LIMIT_MAX: 1000000000
-        securityContext:
-          fsGroup: 1000
 service:
   main:
     controller: main
