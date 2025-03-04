@@ -8,5 +8,6 @@ helmCharts:
     namespace: system
     valuesFile: values.yaml
 resources:
+  - https://github.com/rancher/system-upgrade-controller/releases/download/v0.15.1/crd.yaml
   - plans
   - rbac.yaml

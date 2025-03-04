@@ -17,17 +17,17 @@ controllers:
           MASTER_KEY:
             valueFrom:
               secretKeyRef:
-                name: netmaker-secret
+                name: netmaker
                 key: secret
           MQ_USERNAME:
             valueFrom:
               secretKeyRef:
-                name: netmaker-secret
+                name: netmaker
                 key: username
           MQ_PASSWORD:
             valueFrom:
               secretKeyRef:
-                name: netmaker-secret
+                name: netmaker
                 key: password
 service:
   main:
