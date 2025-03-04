@@ -34,6 +34,13 @@ applicationsets:
           automated:
             prune: true
             selfHeal: true
+          syncOptions:
+            - ApplyOutOfSyncOnly=true
+            - ServerSideApply=true
+    templatePatch: |
+      {{- if ne (index .path.segments 1) "kube-system" }}
+      spec:
+        syncPolicy:
           managedNamespaceMetadata:
             labels:
               app.kubernetes.io/managed-by: argocd
@@ -41,3 +48,4 @@ applicationsets:
             - CreateNamespace=true
             - ApplyOutOfSyncOnly=true
             - ServerSideApply=true
+      {{- end }}
