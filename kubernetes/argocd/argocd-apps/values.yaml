@@ -35,8 +35,8 @@ applicationsets:
             prune: true
             selfHeal: true
           managedNamespaceMetadata:
-            labels:
-            annotations:
+            labels: {}
+            annotations: {}
           syncOptions:
             - CreateNamespace=true
             - ApplyOutOfSyncOnly=true
