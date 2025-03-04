@@ -1,19 +1,19 @@
 #!/bin/sh
 
-until vault status > /dev/null 2>&1; do
+until vault status > /dev/null 2>&1 || test $? -ne 1; do
   sleep 1
 done
 
-if [ ! -f /vault/data/keys.txt ]; then
-  unseal_key=$(cat /vault/data/keys.txt | sed -i 's/.*: //g' | head -n 1)
+if [ -f /vault/data/keys.txt ]; then
+  unseal_key=$(cat /vault/data/keys.txt | sed 's/.*: //g' | head -n 1)
   vault operator unseal "$unseal_key" > /dev/null
   exit 0
 fi
 
 vault operator init -n 1 -t 1 | grep ":" > /vault/data/keys.txt
 
-unseal_key=$(cat /vault/data/keys.txt | sed -i 's/.*: //g' | head -n 1)
-root_token=$(cat /vault/data/keys.txt | sed -i 's/.*: //g' | head -n 2 | tail -n 1)
+unseal_key=$(cat /vault/data/keys.txt | sed 's/.*: //g' | head -n 1)
+root_token=$(cat /vault/data/keys.txt | sed 's/.*: //g' | head -n 2 | tail -n 1)
 
 vault operator unseal "$unseal_key" > /dev/null
 vault login -no-print "$root_token"
