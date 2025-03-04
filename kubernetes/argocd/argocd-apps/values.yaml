@@ -17,7 +17,7 @@ applicationsets:
             - path: kubernetes/system/*
     ignoreApplicationDifferences:
       - jsonPointers:
-          - /spec/syncPolicy
+          - /spec/syncPolicy/automated
     template:
       metadata:
         name: "{{ .path.basename }}"
