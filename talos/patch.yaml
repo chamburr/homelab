@@ -21,6 +21,12 @@ machine:
     disk: /dev/sda
     extraKernelArgs:
       - sysctl.kernel.kexec_load_disabled=1
+  registries:
+    config:
+      docker.io:
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
   features:
     hostDNS:
       enabled: true

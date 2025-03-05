@@ -19,7 +19,9 @@ spec:
       ignoreUpdates: true
   serviceAccountName: system-upgrade
   upgrade:
-    image: ghcr.io/jfroy/tnu:0.4.0
+    image: ghcr.io/siderolabs/talosctl:v1.9.4
     args:
-      - --node=$(SYSTEM_UPGRADE_NODE_NAME)
-      - --tag=$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
+      - --nodes=$(SYSTEM_UPGRADE_NODE_NAME)
+      - upgrade
+      - --image=ghcr.io/siderolabs/installer:v$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
+      - --stage

@@ -38,7 +38,8 @@ run() {
     filename="$name.yaml"
 
     cp controlplane.yaml $filename
-    sed -i "s/\$HOST/$name/g" $filename
+    sed -i -e "s/\$HOST/$name/g" -e "s/\$DOCKER_USERNAME/$DOCKER_USERNAME/g" \
+      -e "s/\$DOCKER_PASSWORD/$DOCKER_PASSWORD/g" $filename
     talosctl apply-config --insecure -n $endpoint -f $filename
     rm $filename
 

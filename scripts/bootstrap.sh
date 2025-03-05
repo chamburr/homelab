@@ -7,13 +7,13 @@ prepare() {
 install() {
   echo 'Installing...'
 
-  user=$(grep ^USER= .env | cut -d '=' -f2-)
+  username=$(grep ^USERNAME= .env | cut -d '=' -f2-)
   password=$(grep ^PASSWORD= .env | cut -d '=' -f2-)
 
   args=''
 
-  if [ "$user" != '' ]; then
-    args="ansible_user='$user'"
+  if [ "$username" != '' ]; then
+    args="ansible_user='$username'"
     if [ "$password" != '' ]; then
       args="$args ansible_password='$password'"
     fi
