@@ -17,7 +17,7 @@ spec:
       ignoreUpdates: true
   serviceAccountName: system-upgrade
   upgrade:
-    image: ghcr.io/siderolabs/talosctl:1.9.4
+    image: ghcr.io/siderolabs/talosctl:v1.9.4
     args:
       - --nodes=$(SYSTEM_UPGRADE_NODE_NAME)
       - upgrade-k8s
