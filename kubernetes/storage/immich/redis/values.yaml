@@ -3,7 +3,7 @@ controllers:
     containers:
       main:
         image:
-          repository: docker.io/library/redis
+          repository: public.ecr.aws/docker/library/redis
           tag: 7.4.2-alpine
         args:
           - redis-server

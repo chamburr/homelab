@@ -3,7 +3,7 @@ controllers:
     containers:
       main:
         image:
-          repository: docker.io/tensorchord/pgvecto-rs
+          repository: ghcr.io/tensorchord/pgvecto-rs
           tag: pg16-v0.3.0
         args:
           - postgres

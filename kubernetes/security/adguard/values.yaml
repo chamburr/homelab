@@ -44,6 +44,6 @@ ingress:
               port: http
 persistence:
   data:
-    existingClaim: adguard-home
+    existingClaim: adguard
     globalMounts:
       - path: /opt/adguardhome/work

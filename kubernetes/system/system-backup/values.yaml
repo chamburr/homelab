@@ -3,7 +3,7 @@ controllers:
     containers:
       main:
         image:
-          repository: docker.io/library/alpine
+          repository: public.ecr.aws/docker/library/alpine
           tag: 3.21.2
         command:
           - /bin/sh

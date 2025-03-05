@@ -9,7 +9,7 @@ controllers:
           PASSWORD_HASH:
             valueFrom:
               secretKeyRef:
-                name: wg-easy
+                name: wireguard
                 key: __password-hash
           WG_HOST: chamburr.xyz
           WG_PORT: 51820
@@ -84,6 +84,6 @@ ingress:
               port: http
 persistence:
   data:
-    existingClaim: wg-easy
+    existingClaim: wireguard
     globalMounts:
       - path: /etc/wireguard

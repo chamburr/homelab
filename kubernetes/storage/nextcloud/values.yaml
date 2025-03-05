@@ -3,7 +3,7 @@ controllers:
     containers:
       main:
         image:
-          repository: docker.io/library/nextcloud
+          repository: public.ecr.aws/docker/library/nextcloud
           tag: 30.0.6-apache
         env:
           POSTGRES_DB: nextcloud
@@ -57,7 +57,7 @@ controllers:
           APACHE_BODY_LIMIT: 0
       cron:
         image:
-          repository: docker.io/library/nextcloud
+          repository: public.ecr.aws/docker/library/nextcloud
           tag: 30.0.6-apache
         command:
           - /cron.sh

@@ -3,7 +3,7 @@ controllers:
     containers:
       main:
         image:
-          repository: docker.io/library/postgres
+          repository: public.ecr.aws/docker/library/postgres
           tag: 17.3-alpine
         env:
           POSTGRES_USER: postgres
