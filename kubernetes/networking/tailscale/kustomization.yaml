@@ -4,11 +4,17 @@ helmCharts:
   - name: app-template
     version: 3.7.1
     repo: https://bjw-s.github.io/helm-charts
-    releaseName: netmaker
+    releaseName: tailscale
     namespace: networking
     valuesFile: values.yaml
+configMapGenerator:
+  - name: tailscale
+    files:
+      - resources/config.yml
+    options:
+      disableNameSuffixHash: true
 resources:
-  - mqtt
-  - ui
+  - ingress
   - pvc.yaml
+  - rbac.yaml
   - secret.yaml

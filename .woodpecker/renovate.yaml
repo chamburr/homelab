@@ -20,7 +20,7 @@ steps:
       GITHUB_PRIVATE_KEY:
         from_secret: github_private_key
       GITHUB_INSTALLATION:
-        from_secret: github_installationc
+        from_secret: github_installation
   - name: run renovate
     image: renovate/renovate
     commands:

@@ -8,10 +8,9 @@ steps:
     image: python
     commands:
       - pip install ansible
-      - echo "USER=chamburr" > .env
       - echo "$SSH_PRIVATE_KEY" > /tmp/id_ed25519
       - chmod 400 /tmp/id_ed25519
-      - ansible playbook ansible/main.yml
+      - ansible-playbook ansible/main.yml
     environment:
       ANSIBLE_FORCE_COLOR: true
       ANSIBLE_HOST_KEY_CHECKING: false

@@ -8,5 +8,8 @@ helmCharts:
     namespace: storage
     valuesFile: values.yaml
 resources:
+  - machine-learning
+  - postgres
+  - redis
   - pvc.yaml
   - secret.yaml

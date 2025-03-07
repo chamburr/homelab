@@ -3,8 +3,8 @@
 My personal infrastructure and Kubernetes cluster written as code.
 
 This project utilises Infrastructure as Code and GitOps to automate the provisioning, operating and
-updating of self-hosted services in my homelab. These services are essential for my everyday life.
-Furthermore, this repository can also serve as a good framework for you to build your own homelab.
+updating of self-hosted services in my homelab. Furthermore, this repository can also serve as a
+good framework for you to build your own homelab.
 
 Feel free to open a [GitHub issue](https://github.com/chamburr/homelab/issues) if you have any
 questions!

@@ -1,0 +1,53 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/juanfont/headscale
+          tag: 0.25.1
+        args:
+          - serve
+      admin:
+        image:
+          repository: ghcr.io/tale/headplane
+          tag: 0.5.1
+        env:
+          HEADPLANE_LOAD_ENV_OVERRIDES: true
+          HEADPLANE_SERVER__COOKIE_SECRET:
+            valueFrom:
+              secretKeyRef:
+                name: tailscale
+                key: secret
+          HEADPLANE_HEADSCALE__URL: http://tailscale:8080
+          HEADPLANE_HEADSCALE__PUBLIC_URL: https://tailscale.chamburr.xyz
+          HEADPLANE_INTEGRATION__KUBERNETES__ENABLED: true
+          HEADPLANE_INTEGRATION__KUBERNETES__POD_NAME:
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+    pod:
+      shareProcessNamespace: true
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 8080
+  admin:
+    controller: main
+    ports:
+      http:
+        port: 3000
+persistence:
+  data:
+    existingClaim: tailscale
+    globalMounts:
+      - path: /var/lib/headscale
+  config:
+    type: configMap
+    name: tailscale
+    globalMounts:
+      - path: /etc/headscale
+serviceaccount:
+  create: true
+  name: tailscale

@@ -17,12 +17,6 @@
     port: 22
     proto: any
 
-- name: Enable firewall
+- name: Enable firewall service
   community.general.ufw:
     state: enabled
-
-- name: Enable firewall service
-  ansible.builtin.service:
-    name: ufw
-    enabled: true
-    state: started

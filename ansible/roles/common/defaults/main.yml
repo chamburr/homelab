@@ -8,7 +8,6 @@ common_remove_packages:
   - snapd
 
 common_packages:
-  - build-essential
   - iotop
   - iperf3
   - jq

@@ -20,6 +20,10 @@ install() {
   fi
 
   ansible-playbook -i ansible/hosts.yml -e "$args" ansible/main.yml --tags common
+
+  export DOCKER_USERNAME=$(grep ^DOCKER_USERNAME= .env | cut -d '=' -f2-)
+  export DOCKER_PASSWORD=$(grep ^DOCKER_PASSWORD= .env | cut -d '=' -f2-)
+
   ansible-playbook -i ansible/hosts.yml ansible/main.yml --skip-tags common
 }
 
