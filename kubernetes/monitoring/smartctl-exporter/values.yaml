@@ -1,4 +1,0 @@
-nameOverride: smartctl-exporter
-fullnameOverride: smartctl-exporter
-serviceMonitor:
-  enabled: true

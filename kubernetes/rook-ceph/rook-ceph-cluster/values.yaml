@@ -7,31 +7,6 @@ monitoring:
   enabled: true
   createPrometheusRules: true
 cephClusterSpec:
-  # TODO remove
-  mon:
-    count: 1
-  mgr:
-    count: 1
-  resources:
-    mgr:
-      limits:
-        memory: "1Gi"
-      requests:
-        cpu: "50m"
-        memory: "100Mi"
-    mon:
-      limits:
-        memory: "2Gi"
-      requests:
-        cpu: "50m"
-        memory: "100Mi"
-    osd:
-      limits:
-        memory: "4Gi"
-      requests:
-        cpu: "50m"
-        memory: "100Mi"
-  # END TODO
   dashboard:
     ssl: false
   network:
@@ -57,9 +32,7 @@ cephBlockPools:
     spec:
       failureDomain: host
       replicated:
-        # TODO size: 2
-        size: 1
-        requireSafeReplicaSize: false
+        size: 2
     storageClass:
       enabled: true
       name: ceph-block
