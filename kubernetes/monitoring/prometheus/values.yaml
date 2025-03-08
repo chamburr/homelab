@@ -33,13 +33,13 @@ prometheus:
         namespace: monitoring
         port: 9093
         apiVersion: v2
-        basicAuth:
-          username:
-            name: alertmanager
-            key: username
-          password:
-            name: alertmanager
-            key: password
+        # basicAuth:
+        #   username:
+        #     name: alertmanager
+        #     key: username
+        #   password:
+        #     name: alertmanager
+        #     key: password
     retention: 14d
     serviceMonitorSelectorNilUsesHelmValues: false
     podMonitorSelectorNilUsesHelmValues: false

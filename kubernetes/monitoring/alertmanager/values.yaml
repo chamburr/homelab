@@ -8,7 +8,7 @@ controllers:
         args:
           - --cluster.listen-address=
           - --config.file=/etc/alertmanager/alertmanager.yaml
-          - --web.config.file=/etc/alertmanager-secret/__basic-auth.yaml
+          #- --web.config.file=/etc/alertmanager-secret/__basic-auth.yaml
           - --storage.path=/alertmanager
       ntfy:
         image:
