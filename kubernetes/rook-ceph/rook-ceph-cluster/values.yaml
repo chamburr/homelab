@@ -1,12 +1,11 @@
-configOverride: |
-  [global]
-  bdev_enable_discard = true
-  bdev_async_discard = true
-  osd_class_update_on_start = false
 monitoring:
   enabled: true
   createPrometheusRules: true
 cephClusterSpec:
+  cephConfig:
+    bdev_enable_discard: "true"
+    bdev_async_discard_threads: "true"
+    osd_class_update_on_start: "false"
   dashboard:
     ssl: false
   network:
@@ -15,6 +14,19 @@ cephClusterSpec:
     provider: host
   crashCollector:
     disable: true
+  resources:
+    mgr:
+      requests:
+        cpu: "100m"
+        memory: "512Mi"
+    mon:
+      requests:
+        cpu: "50m"
+        memory: "512Mi"
+    osd:
+      requests:
+        cpu: "500m"
+        memory: "2Gi"
   storage:
     useAllNodes: true
     useAllDevices: false
