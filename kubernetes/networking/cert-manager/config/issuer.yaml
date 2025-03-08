@@ -14,7 +14,7 @@ spec:
           cloudflare:
             apiTokenSecretRef:
               name: cert-manager
-              key: api-token
+              key: cloudflare-token
         selector:
           dnsZones:
             - chamburr.xyz
