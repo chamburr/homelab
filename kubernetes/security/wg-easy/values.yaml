@@ -58,6 +58,7 @@ controllers:
 service:
   main:
     controller: main
+    primary: true
     ports:
       http:
         port: 51821
@@ -65,7 +66,7 @@ service:
     controller: main
     type: LoadBalancer
     annotations:
-      lbipam.cilium.io/ips: 192.168.123.33
+      lbipam.cilium.io/ips: 192.168.123.32
     ports:
       wireguard:
         port: 51820

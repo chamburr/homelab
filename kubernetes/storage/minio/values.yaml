@@ -31,6 +31,7 @@ controllers:
 service:
   main:
     controller: main
+    primary: true
     ports:
       http:
         port: 9000
