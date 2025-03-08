@@ -6,4 +6,5 @@ metadata:
 spec:
   headers:
     customResponseHeaders:
-      strict-transport-security: max-age=15552000; includeSubDomains; preload
+      server: cool
+      # TODO strict-transport-security: max-age=15552000; includeSubDomains; preload
