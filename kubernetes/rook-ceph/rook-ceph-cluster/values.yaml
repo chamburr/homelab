@@ -1,5 +1,6 @@
 configOverride: |
   [global]
+  osd_pool_default_size = 2
   bdev_enable_discard = true
   bdev_async_discard = true
   osd_class_update_on_start = false
