@@ -9,6 +9,9 @@ controllers:
           - --config.file=/etc/alertmanager/alertmanager.yaml
           - --web.config.file=/etc/alertmanager-secret/__basic-auth.yaml
           - --storage.path=/alertmanager
+        ports:
+          - name: http
+            containerPort: 9093
       ntfy:
         image:
           repository: docker.io/xenrox/ntfy-alertmanager
