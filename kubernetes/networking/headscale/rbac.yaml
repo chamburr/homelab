@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: tailscale
+  name: headscale
   namespace: networking
 rules:
   - apiGroups:
@@ -22,13 +22,13 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: tailscale
+  name: headscale
   namespace: networking
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: tailscale
+  name: headscale
 subjects:
   - kind: ServiceAccount
-    name: tailscale
+    name: headscale
     namespace: networking

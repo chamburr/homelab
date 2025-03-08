@@ -4,11 +4,11 @@ helmCharts:
   - name: app-template
     version: 3.7.1
     repo: https://bjw-s.github.io/helm-charts
-    releaseName: tailscale
+    releaseName: headscale
     namespace: networking
     valuesFile: values.yaml
 configMapGenerator:
-  - name: tailscale
+  - name: headscale
     files:
       - resources/config.yml
     options:

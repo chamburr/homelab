@@ -16,9 +16,9 @@ controllers:
           HEADPLANE_SERVER__COOKIE_SECRET:
             valueFrom:
               secretKeyRef:
-                name: tailscale
+                name: headscale
                 key: secret
-          HEADPLANE_HEADSCALE__URL: http://tailscale:8080
+          HEADPLANE_HEADSCALE__URL: http://headscale:8080
           HEADPLANE_HEADSCALE__PUBLIC_URL: https://tailscale.chamburr.xyz
           HEADPLANE_INTEGRATION__KUBERNETES__ENABLED: true
           HEADPLANE_INTEGRATION__KUBERNETES__POD_NAME:
@@ -40,14 +40,14 @@ service:
         port: 3000
 persistence:
   data:
-    existingClaim: tailscale
+    existingClaim: headscale
     globalMounts:
       - path: /var/lib/headscale
   config:
     type: configMap
-    name: tailscale
+    name: headscale
     globalMounts:
       - path: /etc/headscale
 serviceaccount:
   create: true
-  name: tailscale
+  name: headscale

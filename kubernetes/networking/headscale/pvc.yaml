@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: tailscale
+  name: headscale
   namespace: networking
 spec:
   accessModes:
