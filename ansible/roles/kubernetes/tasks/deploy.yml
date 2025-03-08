@@ -16,8 +16,8 @@
     chdir: /home/{{ common_username }}
     cmd: /home/{{ common_username }}/deploy.sh
   environment:
-    DOCKER_USERNAME: "{{ lookup('env', 'DOCKER_USERNAME')"
-    DOCKER_PASSWORD: "{{ lookup('env', 'DOCKER_PASSWORD')"
+    DOCKER_USERNAME: "{{ lookup('env', 'DOCKER_USERNAME') }}"
+    DOCKER_PASSWORD: "{{ lookup('env', 'DOCKER_PASSWORD') }}"
   register: kubernetes_deploy
   become: false
   when: not kubernetes_deploy_status.stat.exists
