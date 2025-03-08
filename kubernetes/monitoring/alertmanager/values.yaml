@@ -7,8 +7,8 @@ controllers:
           tag: v0.28.0
         args:
           - --cluster.listen-address=
-          - --config.file=/etc/alertmanager/alertmanager.yml
-          - --web.config.file=/etc/alertmanager-secret/__basic-auth.yml
+          - --config.file=/etc/alertmanager/alertmanager.yaml
+          - --web.config.file=/etc/alertmanager-secret/__basic-auth.yaml
           - --storage.path=/alertmanager
       ntfy:
         image:

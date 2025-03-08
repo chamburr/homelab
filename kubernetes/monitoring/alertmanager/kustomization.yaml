@@ -10,7 +10,7 @@ helmCharts:
 configMapGenerator:
   - name: alertmanager
     files:
-      - resources/alertmanager.yml
+      - resources/alertmanager.yaml
       - resources/ntfy.scfg
     options:
       disableNameSuffixHash: true
