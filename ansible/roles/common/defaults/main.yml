@@ -1,5 +1,4 @@
 common_timezone: Etc/UTC
-common_domain: localdomain
 
 common_remove_packages:
   - apport
