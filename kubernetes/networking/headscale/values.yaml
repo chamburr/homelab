@@ -20,6 +20,7 @@ controllers:
                 key: secret
           HEADPLANE_HEADSCALE__URL: http://headscale:8080
           HEADPLANE_HEADSCALE__PUBLIC_URL: https://tailscale.chamburr.xyz
+          HEADPLANE_HEADSCALE__CONFIG_STRICT: false
           HEADPLANE_INTEGRATION__KUBERNETES__ENABLED: true
           HEADPLANE_INTEGRATION__KUBERNETES__POD_NAME:
             valueFrom:
