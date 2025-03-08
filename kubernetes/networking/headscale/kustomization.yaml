@@ -11,6 +11,7 @@ configMapGenerator:
   - name: headscale
     files:
       - resources/config.yml
+      - resources/headplane.yml
     options:
       disableNameSuffixHash: true
 resources:

@@ -2,6 +2,8 @@ server_url: https://tailscale.chamburr.xyz
 listen_addr: 0.0.0.0:8080
 metrics_listen_addr: 0.0.0.0:9090
 grpc_listen_addr: 0.0.0.0:50443
+noise:
+  private_key_path: /var/lib/headscale/noise_private.key
 prefixes:
   v4: 100.64.0.0/10
   v6: fd7a:115c:a1e0::/48

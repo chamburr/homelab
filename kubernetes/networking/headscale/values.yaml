@@ -7,12 +7,12 @@ controllers:
           tag: 0.25.1
         args:
           - serve
-      admin:
+      ui:
         image:
           repository: ghcr.io/tale/headplane
           tag: 0.5.1
         env:
-          HEADPLANE_CONFIG_PATH: /dev/null
+          HEADPLANE_CONFIG_PATH: /etc/headscale/headplane.yml
           HEADPLANE_LOAD_ENV_OVERRIDES: true
           HEADPLANE_SERVER__COOKIE_SECRET:
             valueFrom:
@@ -36,7 +36,7 @@ service:
     ports:
       http:
         port: 8080
-  admin:
+  ui:
     controller: main
     ports:
       http:
