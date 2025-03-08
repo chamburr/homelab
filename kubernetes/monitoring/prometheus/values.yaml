@@ -24,6 +24,7 @@ nodeExporter:
   enabled: false
 prometheus:
   prometheusSpec:
+    logLevel: debug # TODO
     enableAdminApi: true
     enableFeatures:
       - memory-snapshot-on-shutdown
