@@ -27,6 +27,8 @@ controllers:
                 fieldPath: metadata.name
     pod:
       shareProcessNamespace: true
+    annotations:
+      reloader.stakater.com/auto: "true"
 service:
   main:
     controller: main
