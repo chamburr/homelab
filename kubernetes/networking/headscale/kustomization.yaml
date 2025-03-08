@@ -10,8 +10,8 @@ helmCharts:
 configMapGenerator:
   - name: headscale
     files:
-      - resources/config.yml
-      - resources/headplane.yml
+      - resources/config.yaml
+      - resources/headplane.yaml
     options:
       disableNameSuffixHash: true
 resources:
