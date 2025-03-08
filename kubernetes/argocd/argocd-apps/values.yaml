@@ -11,10 +11,10 @@ applicationsets:
           directories: # TODO
             - path: kubernetes/argocd/*
             - path: kubernetes/kube-system/*
-            #- path: kubernetes/rook-ceph/*
-            #- path: kubernetes/monitoring/*
-            #- path: kubernetes/networking/*
-            #- path: kubernetes/system/*
+            - path: kubernetes/rook-ceph/*
+            - path: kubernetes/monitoring/*
+            - path: kubernetes/networking/*
+            - path: kubernetes/system/*
     ignoreApplicationDifferences:
       - jsonPointers:
           - /spec/syncPolicy/automated
