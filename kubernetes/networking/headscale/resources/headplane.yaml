@@ -11,3 +11,5 @@ headscale:
 integration:
   kubernetes:
     enabled: true
+    validate_manifest: true
+    pod_name: headscale
