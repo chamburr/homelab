@@ -56,7 +56,7 @@ run() {
   talosctl kubeconfig -e $endpoint -n $endpoint ../.kube/config
 
   until talosctl health -n $clusterendpoint --wait-timeout 5s 2>&1 \
-    | grep 'waiting for all k8s nodes to report ready'; do
+    | grep -q 'waiting for all k8s nodes to report ready'; do
     sleep 1
   done
 
@@ -67,7 +67,7 @@ run() {
     "https://github.com/chamburr/homelab.git/kubernetes/kube-system/coredns?ref=v2" \
     | kubectl apply -f -
 
-  until talosctl health -n $endpoint --wait-timeout 30s > /dev/null 2>&1; do
+  until talosctl health -n $clusterendpoint --wait-timeout 5s > /dev/null 2>&1; do
     sleep 1
   done
 
