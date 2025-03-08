@@ -8,6 +8,6 @@ headscale:
   public_url: https://tailscale.chamburr.xyz
   config_path: /etc/headscale/config.yaml
   config_strict: true
-integrations:
+integration:
   kubernetes:
     enabled: true

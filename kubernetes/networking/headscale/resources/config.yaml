@@ -10,10 +10,20 @@ prefixes:
 derp:
   server:
     enabled: true
+    region_id: 999
+    region_code: "headscale"
+    region_name: "Headscale Embedded DERP"
     stun_listen_addr: 0.0.0.0:3478
+    private_key_path: /var/lib/headscale/derp_server_private.key
+  urls:
+    - https://controlplane.tailscale.com/derpmap/default
+  auto_update_enabled: true
+  update_interval: 24h
 disable_check_updates: true
 database:
   type: sqlite
+  sqlite:
+    path: /var/lib/headscale/db.sqlite
 policy:
   mode: database
 dns:
