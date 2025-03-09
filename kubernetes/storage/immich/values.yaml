@@ -45,6 +45,8 @@ controllers:
                     values:
                       - nextcloud
               topologyKey: kubernetes.io/hostname
+    annotations:
+      reloader.stakater.com/auto: "true"
 service:
   main:
     controller: main

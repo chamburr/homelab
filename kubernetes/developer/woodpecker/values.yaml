@@ -24,6 +24,8 @@ controllers:
               secretKeyRef:
                 name: woodpecker
                 key: github-secret
+    annotations:
+      reloader.stakater.com/auto: "true"
 service:
   main:
     controller: main

@@ -42,6 +42,8 @@ cni:
 devices: en+
 endpointRoutes:
   enabled: true
+socketLB:
+  hostNamespaceOnly: true
 hubble:
   metrics:
     enabled:
