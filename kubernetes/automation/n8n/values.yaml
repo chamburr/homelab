@@ -18,6 +18,9 @@ controllers:
           EXECUTIONS_DATA_PRUNE: true
           EXECUTIONS_DATA_MAX_AGE: 24
           GENERIC_TIMEZONE: Asia/Singapore
+    pod:
+      securityContext:
+        fsGroup: 1000
 service:
   main:
     controller: main
