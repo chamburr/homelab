@@ -64,13 +64,13 @@ service:
     ports:
       http:
         port: 51821
-  wireguard:
+  wg:
     controller: main
     type: LoadBalancer
     annotations:
       lbipam.cilium.io/ips: 192.168.123.32
     ports:
-      wireguard:
+      wg:
         port: 51820
         protocol: UDP
         targetPort: 51820
