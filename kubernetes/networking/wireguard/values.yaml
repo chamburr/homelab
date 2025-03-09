@@ -39,7 +39,6 @@ controllers:
           capabilities:
             add:
               - NET_ADMIN
-              - SYS_MODULE
       dns-tcp:
         image:
           repository: docker.io/alpine/socat
