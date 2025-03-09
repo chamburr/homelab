@@ -8,3 +8,7 @@ app:
       - kubernetes.chamburr.xyz
     tls:
       enabled: false
+kong:
+  proxy:
+    http:
+      enabled: true
