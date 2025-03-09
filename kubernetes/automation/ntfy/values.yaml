@@ -5,6 +5,8 @@ controllers:
         image:
           repository: docker.io/binwiederhier/ntfy
           tag: v2.11.0
+        args:
+          - serve
         env:
           NTFY_BASE_URL: https://ntfy.chamburr.xyz
           NTFY_CACHE_FILE: /var/lib/ntfy/cache.db
