@@ -18,6 +18,8 @@ controllers:
           tag: 0.4.0
         args:
           - --config=/etc/alertmanager/ntfy.scfg
+    annotations:
+      reloader.stakater.com/auto: "true"
 service:
   main:
     controller: main

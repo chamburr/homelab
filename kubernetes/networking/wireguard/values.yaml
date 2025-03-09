@@ -10,7 +10,7 @@ controllers:
             valueFrom:
               secretKeyRef:
                 name: wireguard
-                key: __password-hash
+                key: password-hash
           WG_HOST: chamburr.xyz
           WG_PORT: 51820
           WG_PERSISTENT_KEEPALIVE: 25
