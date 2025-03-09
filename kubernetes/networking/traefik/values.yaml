@@ -12,7 +12,7 @@ metrics:
     service:
       enabled: true
     serviceMonitor:
-      enabled: false
+      enabled: true
 globalArguments:
   - --api.insecure=true
   - --serverstransport.insecureskipverify=true
