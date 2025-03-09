@@ -4,6 +4,9 @@ helmCharts:
   - name: app-template
     version: 3.7.1
     repo: https://bjw-s.github.io/helm-charts
-    releaseName: echo
+    releaseName: ipsec
     namespace: networking
     valuesFile: values.yaml
+resources:
+  - pvc.yaml
+  - secret.yaml

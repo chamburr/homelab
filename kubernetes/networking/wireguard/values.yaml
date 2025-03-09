@@ -46,7 +46,7 @@ controllers:
           tag: 1.8.0.1
         args:
           - tcp-listen:53,fork,reuseaddr
-          - tcp:adguard-home-dns.security:53
+          - tcp:adguard-dns.networking:53
       dns-udp:
         image:
           repository: docker.io/alpine/socat
@@ -54,7 +54,7 @@ controllers:
         args:
           - -T30
           - udp-listen:53,fork,reuseaddr
-          - udp:adguard-home-dns.security:53
+          - udp:adguard-dns.networking:53
     annotations:
       reloader.stakater.com/auto: "true"
 service:

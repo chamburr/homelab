@@ -28,7 +28,7 @@ controllers:
                 name: ipsec
                 key: password
           VPN_DNS_NAME: chamburr.xyz
-          VPN_DNS_SRV1: adguard-home-dns.security.svc.cluster.local
+          VPN_DNS_SRV1: adguard-dns.networking.svc.cluster.local
           VPN_DNS_SRV2: ""
           VPN_DISABLE_IPSEC_L2TP: true
         probes:

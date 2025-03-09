@@ -15,7 +15,6 @@ applicationsets:
             - path: kubernetes/monitoring/*
             - path: kubernetes/networking/*
             - path: kubernetes/rook-ceph/*
-            - path: kubernetes/security/*
             - path: kubernetes/system/*
             - path: kubernetes/utility/*
     ignoreApplicationDifferences:

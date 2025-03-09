@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: vaultwarden
-  namespace: security
+  name: ipsec
+  namespace: networking
 spec:
   accessModes:
     - ReadWriteOnce
