@@ -6,7 +6,7 @@ controllers:
           repository: ghcr.io/open-webui/open-webui
           tag: 0.5.11
         env:
-          OLLAMA_BASE_URL: http://llama-api:11434
+          OLLAMA_BASE_URL: http://ollama-api:11434
 service:
   main:
     controller: main
@@ -27,6 +27,6 @@ ingress:
               port: http
 persistence:
   data:
-    existingClaim: llama
+    existingClaim: ollama
     globalMounts:
       - path: /app/backend/data

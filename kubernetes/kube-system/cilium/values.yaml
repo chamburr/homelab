@@ -67,7 +67,7 @@ hubble:
           kube-system-cilium-auth@kubernetescrd
       className: traefik
       hosts:
-        - hubble.chamburr.xyz
+        - cilium.chamburr.xyz
 ipam:
   mode: kubernetes
 kubeProxyReplacement: true

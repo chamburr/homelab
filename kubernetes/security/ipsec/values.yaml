@@ -15,17 +15,17 @@ controllers:
           VPN_IPSEC_PSK:
             valueFrom:
               secretKeyRef:
-                name: ipsec-vpn
+                name: ipsec
                 key: psk
           VPN_USER:
             valueFrom:
               secretKeyRef:
-                name: ipsec-vpn
+                name: ipsec
                 key: username
           VPN_PASSWORD:
             valueFrom:
               secretKeyRef:
-                name: ipsec-vpn
+                name: ipsec
                 key: password
           VPN_DNS_NAME: chamburr.xyz
           VPN_DNS_SRV1: adguard-home-dns.security.svc.cluster.local
@@ -69,6 +69,6 @@ service:
         targetPort: 4500
 persistence:
   data:
-    existingClaim: ipsec-vpn
+    existingClaim: ipsec
     globalMounts:
       - path: /etc/ipsec.d

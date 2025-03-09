@@ -4,9 +4,6 @@ helmCharts:
   - name: app-template
     version: 3.7.1
     repo: https://bjw-s.github.io/helm-charts
-    releaseName: ipsec-vpn
-    namespace: security
+    releaseName: ollama-api
+    namespace: developer
     valuesFile: values.yaml
-resources:
-  - pvc.yaml
-  - secret.yaml

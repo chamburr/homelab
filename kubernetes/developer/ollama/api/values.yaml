@@ -14,6 +14,6 @@ service:
         port: 11434
 persistence:
   data:
-    existingClaim: llama-api
+    existingClaim: ollama-api
     globalMounts:
       - path: /root/.ollama

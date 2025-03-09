@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: llama
+  name: ollama
   namespace: developer
 spec:
   accessModes:
@@ -14,7 +14,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: llama-api
+  name: ollama-api
   namespace: developer
 spec:
   accessModes:
