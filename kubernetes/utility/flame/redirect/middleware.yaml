@@ -6,4 +6,4 @@ metadata:
 spec:
   redirectRegex:
     regex: ^https://www\.chamburr.xyz(/.*)?$
-    replacement: https://chamburr.xyz$${1}
+    replacement: https://chamburr.xyz${1}
