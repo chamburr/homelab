@@ -24,13 +24,6 @@ controllers:
         fsGroup: 1000
     annotations:
       reloader.stakater.com/auto: "true"
-service:
-  main:
-    controller: main
-    primary: true
-    ports:
-      https:
-        port: 3000
 serviceAccount:
   create: true
   name: woodpecker-agent

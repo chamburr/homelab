@@ -34,8 +34,10 @@ service:
     controller: main
     primary: true
     ports:
-      https:
+      http:
         port: 8000
+      grpc:
+        port: 9000
 ingress:
   main:
     className: traefik
@@ -46,7 +48,7 @@ ingress:
             pathType: Prefix
             service:
               identifier: main
-              port: https
+              port: http
 persistence:
   data:
     existingClaim: woodpecker
