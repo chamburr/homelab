@@ -19,8 +19,6 @@ machine:
       - 192.168.123.1
   install:
     disk: /dev/sda
-    extraKernelArgs:
-      - sysctl.kernel.kexec_load_disabled=1
   registries:
     config:
       docker.io:
