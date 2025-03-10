@@ -4,7 +4,7 @@ helmCharts:
   - name: app-template
     version: 3.7.1
     repo: https://bjw-s.github.io/helm-charts
-    releaseName: anki
+    releaseName: minio
     namespace: storage
     valuesFile: values.yaml
 resources:
