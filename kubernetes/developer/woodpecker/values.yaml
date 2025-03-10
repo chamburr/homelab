@@ -24,6 +24,9 @@ controllers:
               secretKeyRef:
                 name: woodpecker
                 key: github-secret
+    pod:
+      securityContext:
+        fsGroup: 1000
     annotations:
       reloader.stakater.com/auto: "true"
 service:

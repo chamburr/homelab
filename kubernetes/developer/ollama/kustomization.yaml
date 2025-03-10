@@ -8,4 +8,5 @@ helmCharts:
     namespace: developer
     valuesFile: values.yaml
 resources:
+  - api
   - pvc.yaml

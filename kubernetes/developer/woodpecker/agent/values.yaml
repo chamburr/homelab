@@ -19,6 +19,9 @@ controllers:
           WOODPECKER_BACKEND_K8S_STORAGE_CLASS: ceph-block
           WOODPECKER_BACKEND_K8S_STORAGE_RWX: false
           WOODPECKER_CONNECT_RETRY_COUNT: 1
+    pod:
+      securityContext:
+        fsGroup: 1000
     annotations:
       reloader.stakater.com/auto: "true"
 service:
