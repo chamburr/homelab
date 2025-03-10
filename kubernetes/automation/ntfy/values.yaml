@@ -14,26 +14,8 @@ controllers:
           NTFY_AUTH_FILE: /var/lib/ntfy/auth.db
           NTFY_AUTH_DEFAULT_ACCESS: deny-all
           NTFY_BEHIND_PROXY: true
-          NTFY_SMTP_SENDER_ADDR:
-            valueFrom:
-              secretKeyRef:
-                name: global
-                key: __mail-address
-          NTFY_SMTP_SENDER_USER:
-            valueFrom:
-              secretKeyRef:
-                name: global
-                key: mail-username
-          NTFY_SMTP_SENDER_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: global
-                key: mail-password
-          NTFY_SMTP_SENDER_FROM:
-            valueFrom:
-              secretKeyRef:
-                name: global
-                key: mail-sender
+          NTFY_UPSTREAM_BASE_URL: https://ntfy.sh
+          NTFY_UPSTREAM_ACCESS_TOKEN: ""
           NTFY_ENABLE_LOGIN: true
           NTFY_ENABLE_RESERVATIONS: true
           NTFY_WEB_PUSH_PUBLIC_KEY:
