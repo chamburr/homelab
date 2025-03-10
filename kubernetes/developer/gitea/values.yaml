@@ -9,7 +9,7 @@ controllers:
           GITEA__server__DOMAIN: git.chamburr.xyz
           GITEA__server__ROOT_URL: https://git.chamburr.xyz
           GITEA__server__DISABLE_SSH: true
-          GITEA__oauth2__ENABLE: false
+          GITEA__oauth2__ENABLED: false
           GITEA__git__MAX_DIFF_LINES: 10000
           GITEA__git__MAX_DIFF_FILES: 300
           GITEA__git__GC_ARGS: --aggresive --auto
