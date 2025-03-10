@@ -11,6 +11,7 @@ applicationsets:
           directories: # TODO
             - path: kubernetes/argocd/*
             - path: kubernetes/automation/*
+            - path: kubernetes/developer/*
             - path: kubernetes/kube-system/*
             - path: kubernetes/monitoring/*
             - path: kubernetes/networking/*
