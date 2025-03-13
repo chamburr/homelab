@@ -1,0 +1,62 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: quay.io/minio/minio
+          tag: RELEASE.2025-02-07T23-21-09Z
+        args:
+          - minio
+          - server
+          - /data
+          - --address
+          - :9000
+          - --console-address
+          - :9001
+        env:
+          MINIO_UPDATE: false
+          MINIO_BROWSER_REDIRECT_URL: https://minio.chamburr.xyz
+          MINIO_ROOT_USER:
+            valueFrom:
+              secretKeyRef:
+                name: minio
+                key: username
+          MINIO_ROOT_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: minio
+                key: password
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 9000
+      http-console:
+        port: 9001
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: s3.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+      - host: minio.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http-console
+persistence:
+  data:
+    existingClaim: minio
+    globalMounts:
+      - path: /data

@@ -1,0 +1,41 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/skyra-project/haste-server
+          tag: latest@sha256:b67763c5e9185d0304b75a82e5dc47afcc13180464d27086e7a6f2af44dee8f6
+        args:
+          - /bin/sh
+          - -c
+          - sed -i -e 's/aeiou/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/'
+            -e 's/bcd.*xyz/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/'
+            /usr/src/app/dist/backend/lib/keyGenerator.js && sed -i 's/"txt",""/"txt","txt"/'
+            /usr/src/app/dist/frontend/assets/index.js && sed -i 's/.\/data/\/config/'
+            /usr/src/app/dist/backend/stores/FileDocumentStore.js && yarn run start
+        env:
+          KEY_LENGTH: 6
+          RATE_LIMIT_MAX: 1000000000
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 8290
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: p.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  data:
+    existingClaim: haste
+    globalMounts:
+      - path: /config

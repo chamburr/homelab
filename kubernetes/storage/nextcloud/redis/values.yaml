@@ -1,0 +1,31 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/library/redis
+          tag: 7.4.2-alpine
+        args:
+          - /bin/sh
+          - -c
+          - redis-server --requirepass $PASSWORD
+        env:
+          PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: nextcloud
+                key: redis-password
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 6379
+persistence:
+  data:
+    existingClaim: nextcloud-redis
+    globalMounts:
+      - path: /data

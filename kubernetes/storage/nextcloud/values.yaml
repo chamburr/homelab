@@ -1,0 +1,124 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/library/nextcloud
+          tag: 31.0.0-apache
+        env:
+          POSTGRES_DB: nextcloud
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: nextcloud
+                key: postgres-password
+          POSTGRES_HOST: nextcloud-postgres
+          NEXTCLOUD_TRUSTED_DOMAINS: cloud.chamburr.xyz
+          REDIS_HOST: nextcloud-redis
+          REDIS_HOST_PORT: 6379
+          REDIS_HOST_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: nextcloud
+                key: redis-password
+          SMTP_HOST:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: mail-host
+          SMTP_SECURE: tls
+          SMTP_PORT:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: mail-port
+          SMTP_NAME:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: mail-username
+          SMTP_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: mail-password
+          MAIL_FROM_ADDRESS:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: __mail-sender-local
+          MAIL_DOMAIN:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: __mail-sender-domain
+          PHP_MEMORY_LIMIT: 1G
+          PHP_UPLOAD_LIMIT: 32G
+          APACHE_BODY_LIMIT: 0
+          TRUSTED_PROXIES: 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 169.254.0.0/16
+          OVERWRITEHOST: cloud.chamburr.xyz
+          OVERWRITEPROTOCOL: https
+          OVERWRITECLIURL: https://cloud.chamburr.xyz
+        lifecycle:
+          postStart:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - apt-get -qq update && apt-get install -y sudo
+      cron:
+        image:
+          repository: docker.io/library/nextcloud
+          tag: 31.0.0-apache
+        command:
+          - /cron.sh
+      push:
+        image:
+          repository: docker.io/icewind1991/notify_push
+          tag: 1.0.0
+        env:
+          DATABASE_URL:
+            valueFrom:
+              secretKeyRef:
+                name: nextcloud
+                key: __postgres-url
+          DATABASE_PREFIX: oc_
+          REDIS_URL:
+            valueFrom:
+              secretKeyRef:
+                name: nextcloud
+                key: __redis-url
+          NEXTCLOUD_URL: http://nextcloud:80
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 80
+      push:
+        port: 7867
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: cloud.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+          - path: /push
+            pathType: Prefix
+            service:
+              identifier: main
+              port: push
+persistence:
+  data:
+    existingClaim: nextcloud
+    globalMounts:
+      - path: /var/www/html

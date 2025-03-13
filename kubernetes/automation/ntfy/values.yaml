@@ -1,0 +1,57 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/binwiederhier/ntfy
+          tag: v2.11.0
+        args:
+          - serve
+        env:
+          NTFY_BASE_URL: https://ntfy.chamburr.xyz
+          NTFY_CACHE_FILE: /var/lib/ntfy/cache.db
+          NTFY_CACHE_DURATION: 24h
+          NTFY_AUTH_FILE: /var/lib/ntfy/auth.db
+          NTFY_AUTH_DEFAULT_ACCESS: deny-all
+          NTFY_BEHIND_PROXY: true
+          NTFY_UPSTREAM_BASE_URL: https://ntfy.sh
+          NTFY_UPSTREAM_ACCESS_TOKEN: ""
+          NTFY_ENABLE_LOGIN: true
+          NTFY_ENABLE_RESERVATIONS: true
+          NTFY_WEB_PUSH_PUBLIC_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: ntfy
+                key: public-key
+          NTFY_WEB_PUSH_PRIVATE_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: ntfy
+                key: private-key
+          NTFY_WEB_PUSH_FILE: /var/lib/ntfy/webpush.db
+          NTFY_WEB_PUSH_EMAIL_ADDRESS: hi@chamburr.com
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 80
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: ntfy.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  data:
+    existingClaim: ntfy
+    globalMounts:
+      - path: /var/lib/ntfy

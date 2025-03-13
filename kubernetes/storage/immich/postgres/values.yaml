@@ -1,0 +1,36 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/tensorchord/pgvecto-rs
+          tag: pg16-v0.3.0
+        args:
+          - postgres
+          - -c
+          - shared_preload_libraries=vectors.so
+          - -c
+          - search_path="$user", public, vectors
+        env:
+          PGDATA: /var/lib/postgresql/data/pgdata
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: immich
+                key: postgres-password
+          POSTGRES_DB: immich
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 5432
+persistence:
+  data:
+    existingClaim: immich-postgres
+    globalMounts:
+      - path: /var/lib/postgresql/data

@@ -1,0 +1,38 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/fdarveau/flame
+          tag: "2023-08-04"
+        env:
+          PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: flame
+                key: password
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 5005
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  data:
+    existingClaim: flame
+    globalMounts:
+      - path: /app/data

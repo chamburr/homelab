@@ -1,0 +1,9 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: flame-redirect
+  namespace: utility
+spec:
+  redirectRegex:
+    regex: ^https://www\.chamburr.xyz(/.*)?$
+    replacement: https://chamburr.xyz${1}

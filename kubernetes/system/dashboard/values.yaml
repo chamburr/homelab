@@ -1,0 +1,14 @@
+nameOverride: dashboard
+fullnameOverride: dashboard
+app:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - kubernetes.chamburr.xyz
+    tls:
+      enabled: false
+kong:
+  proxy:
+    http:
+      enabled: true

@@ -1,0 +1,55 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: quay.io/prometheus/alertmanager
+          tag: v0.28.0
+        args:
+          - --config.file=/etc/alertmanager/alertmanager.yaml
+          - --web.config.file=/etc/alertmanager-secret/__basic-auth.yaml
+          - --storage.path=/alertmanager
+        ports:
+          - name: http
+            containerPort: 9093
+      ntfy:
+        image:
+          repository: docker.io/xenrox/ntfy-alertmanager
+          tag: 0.4.0
+        args:
+          - --config=/etc/alertmanager/ntfy.scfg
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 9093
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: alertmanager.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  data:
+    existingClaim: alertmanager
+    globalMounts:
+      - path: /alertmanager
+  config:
+    type: configMap
+    name: alertmanager
+    globalMounts:
+      - path: /etc/alertmanager
+  secret:
+    type: secret
+    name: alertmanager
+    globalMounts:
+      - path: /etc/alertmanager-secret

@@ -1,0 +1,34 @@
+injector:
+  enabled: false
+server:
+  updateStrategyType: RollingUpdate
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - host: vault.chamburr.xyz
+        paths:
+          - /
+  readinessProbe:
+    path: /v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204
+  livenessProbe:
+    enabled: true
+  postStart:
+    - /bin/sh
+    - /vault/scripts/init.sh
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: vault
+    - name: scripts
+      configMap:
+        name: vault-scripts
+  volumeMounts:
+    - name: data
+      mountPath: /vault/data
+    - name: scripts
+      mountPath: /vault/scripts
+  dataStorage:
+    enabled: false
+ui:
+  enabled: true

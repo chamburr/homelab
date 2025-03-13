@@ -1,0 +1,77 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/immich-app/immich-server
+          tag: v1.129.0
+        env:
+          TZ: Asia/Singapore
+          DB_HOSTNAME: immich-postgres
+          DB_PORT: 5432
+          DB_USERNAME: postgres
+          DB_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: immich
+                key: postgres-password
+          DB_DATABASE_NAME: immich
+          REDIS_HOSTNAME: immich-redis
+          REDIS_PORT: 6379
+          REDIS_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: immich
+                key: redis-password
+        lifecycle:
+          postStart:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - mkdir /data &&
+                  ln -s /nextcloud/data/chamburr/files/Pictures/Camera /data/Camera &&
+                  ln -s /nextcloud/data/chamburr/files/Pictures/DSLR /data/DSLR &&
+                  ln -s /nextcloud/data/chamburr/files/Pictures/Live /data/Live &&
+                  ln -s /nextcloud/data/chamburr/files/Pictures/Videos /data/Videos
+    pod:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - nextcloud
+              topologyKey: kubernetes.io/hostname
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 2283
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: photos.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  data:
+    existingClaim: immich
+    globalMounts:
+      - path: /usr/src/app/upload
+  nextcloud:
+    existingClaim: nextcloud
+    globalMounts:
+      - path: /nextcloud
+        readOnly: true

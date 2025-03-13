@@ -1,0 +1,31 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/rancher/system-upgrade-controller
+          tag: v0.14.2
+        env:
+          SYSTEM_UPGRADE_JOB_BACKOFF_LIMIT: 99
+          SYSTEM_UPGRADE_JOB_PRIVILEGED: false
+          SYSTEM_UPGRADE_CONTROLLER_NAME: system-upgrade
+          SYSTEM_UPGRADE_CONTROLLER_NAMESPACE: system
+          SYSTEM_UPGRADE_CONTROLLER_NODE_NAME:
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+    pod:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: Exists
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
+serviceAccount:
+  create: true
+  name: system-upgrade

@@ -1,0 +1,30 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/sissbruecker/linkding
+          tag: 1.38.1-alpine
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 9090
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: linkding.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  data:
+    existingClaim: linkding
+    globalMounts:
+      - path: /etc/linkding/data

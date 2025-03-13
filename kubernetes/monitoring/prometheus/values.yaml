@@ -1,0 +1,66 @@
+nameOverride: prometheus
+fullnameOverride: prometheus
+alertmanager:
+  enabled: false
+grafana:
+  enabled: false
+kubeControllerManager:
+  service:
+    selector:
+      k8s-app: kube-controller-manager
+kubeEtcd:
+  service:
+    selector:
+      k8s-app: kube-controller-manager
+kubeScheduler:
+  service:
+    selector:
+      k8s-app: kube-scheduler
+kubeProxy:
+  enabled: false
+kubeStateMetrics:
+  enabled: false
+nodeExporter:
+  enabled: false
+prometheus:
+  prometheusSpec:
+    enableAdminApi: true
+    enableFeatures:
+      - memory-snapshot-on-shutdown
+    alertingEndpoints:
+      - name: alertmanager
+        namespace: monitoring
+        port: 9093
+        apiVersion: v2
+        basicAuth:
+          username:
+            name: alertmanager
+            key: username
+          password:
+            name: alertmanager
+            key: password
+    retention: 14d
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    probeSelectorNilUsesHelmValues: false
+    scrapeConfigSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+    containers:
+      - name: prometheus
+        volumeMounts:
+          - name: prometheus-2
+            mountPath: /prometheus
+    volumes:
+      - name: prometheus-2
+        persistentVolumeClaim:
+          claimName: prometheus
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: >-
+        monitoring-prometheus-auth@kubernetescrd
+    hosts:
+      - prometheus.chamburr.xyz
+    pathType: Prefix
+cleanPrometheusOperatorObjectNames: true

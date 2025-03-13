@@ -1,0 +1,44 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/library/alpine
+          tag: 3.21.2
+        command:
+          - /bin/sh
+          - /app/entrypoint.sh
+        env:
+          NODE:
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+    annotations:
+      reloader.stakater.com/auto: "true"
+    pod:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: Exists
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
+persistence:
+  data:
+    existingClaim: system-backup
+    globalMounts:
+      - path: /data
+  config:
+    type: configMap
+    name: system-backup
+    globalMounts:
+      - path: /app
+  secret:
+    type: secret
+    name: system-backup-account
+    globalMounts:
+      - path: /var/run/secrets/talos.dev

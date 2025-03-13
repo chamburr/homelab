@@ -1,0 +1,9 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: headscale-redirect
+  namespace: networking
+spec:
+  redirectRegex:
+    regex: ^https://tailscale\.chamburr.xyz/?$
+    replacement: https://tailscale.chamburr.xyz/admin/

@@ -1,0 +1,54 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/juanfont/headscale
+          tag: 0.25.1
+        args:
+          - serve
+      ui:
+        image:
+          repository: ghcr.io/tale/headplane
+          tag: 0.5.1
+        env:
+          HEADPLANE_CONFIG_PATH: /etc/headscale/headplane.yaml
+          HEADPLANE_LOAD_ENV_OVERRIDES: true
+          HEADPLANE_SERVER__COOKIE_SECRET:
+            valueFrom:
+              secretKeyRef:
+                name: headscale
+                key: secret
+          HEADPLANE_INTEGRATION__KUBERNETES__POD_NAME:
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+    pod:
+      shareProcessNamespace: true
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 8080
+  ui:
+    controller: main
+    ports:
+      http:
+        port: 3000
+persistence:
+  data:
+    existingClaim: headscale
+    globalMounts:
+      - path: /var/lib/headscale
+  config:
+    type: configMap
+    name: headscale
+    globalMounts:
+      - path: /etc/headscale
+serviceaccount:
+  create: true
+  name: headscale

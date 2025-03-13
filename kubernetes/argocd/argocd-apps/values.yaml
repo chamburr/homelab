@@ -1,0 +1,46 @@
+applicationsets:
+  main:
+    goTemplate: true
+    goTemplateOptions:
+      - missingkey=error
+    namespace: argocd
+    generators:
+      - git:
+          repoURL: https://github.com/chamburr/homelab.git
+          revision: main
+          directories:
+            - path: kubernetes/*/*
+    ignoreApplicationDifferences:
+      - jsonPointers:
+          - /spec/syncPolicy/automated
+    template:
+      metadata:
+        name: "{{ .path.basename }}"
+      spec:
+        project: default
+        source:
+          repoURL: https://github.com/chamburr/homelab.git
+          targetRevision: main
+          path: "{{ .path.path }}"
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: "{{ index .path.segments 1 }}"
+        syncPolicy:
+          automated:
+            prune: true
+            selfHeal: true
+          syncOptions:
+            - ApplyOutOfSyncOnly=true
+            - ServerSideApply=true
+    templatePatch: |
+      {{- if ne (index .path.segments 1) "kube-system" }}
+      spec:
+        syncPolicy:
+          managedNamespaceMetadata:
+            labels:
+              app.kubernetes.io/managed-by: argocd
+          syncOptions:
+            - CreateNamespace=true
+            - ApplyOutOfSyncOnly=true
+            - ServerSideApply=true
+      {{- end }}

@@ -1,0 +1,67 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: quay.io/hwdsl2/ipsec-vpn-server
+          tag: latest@sha256:312b657736a60a78670a31f4812ae6c649902b5e9cb63792c5d8e572d0002726
+        args:
+          - /bin/sh
+          - -c
+          - if [ -f /etc/ipsec.d/ikev2.conf]; then sed -i -e 's/mobike=yes/mobike=no/g'
+            -e 's/modecfgdns=.*/modecfgdns='$(dig -t A -4 +short "$VPN_DNS_SRV1")'/g'
+            /etc/ipsec.d/ikev2.conf; fi && /opt/src/run.sh
+        env:
+          VPN_IPSEC_PSK:
+            valueFrom:
+              secretKeyRef:
+                name: ipsec
+                key: psk
+          VPN_USER:
+            valueFrom:
+              secretKeyRef:
+                name: ipsec
+                key: username
+          VPN_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: ipsec
+                key: password
+          VPN_DNS_NAME: chamburr.xyz
+          VPN_DNS_SRV1: adguard-dns.networking.svc.cluster.local
+          VPN_DNS_SRV2: ""
+          VPN_DISABLE_IPSEC_L2TP: true
+        probes:
+          liveness:
+            enabled: false
+          readiness:
+            enabled: false
+          startup:
+            enabled: false
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    type: LoadBalancer
+    annotations:
+      lbipam.cilium.io/ips: 192.168.123.31
+    ports:
+      ipsec:
+        port: 500
+        protocol: UDP
+        targetPort: 500
+      ikev2:
+        port: 4500
+        protocol: UDP
+        targetPort: 4500
+persistence:
+  data:
+    existingClaim: ipsec
+    globalMounts:
+      - path: /etc/ipsec.d

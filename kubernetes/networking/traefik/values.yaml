@@ -1,0 +1,52 @@
+deployment:
+  replicas: 2
+providers:
+  kubernetesIngress:
+    allowExternalNameServices: true
+    ingressClass: traefik
+logs:
+  access:
+    enabled: true
+metrics:
+  prometheus:
+    service:
+      enabled: true
+    serviceMonitor:
+      enabled: true
+globalArguments:
+  - --api.insecure=true
+  - --serverstransport.insecureskipverify=true
+  - --global.checknewversion=false
+additionalArguments:
+  - --providers.kubernetesingress.ingressendpoint.ip=192.168.123.30
+  - --entrypoints.web.transport.respondingTimeouts.readTimeout=0
+  - --entrypoints.websecure.transport.respondingTimeouts.readTimeout=0
+ports:
+  traefik:
+    expose:
+      internal: true
+  web:
+    redirections:
+      entryPoint:
+        to: websecure
+        scheme: https
+        permanent: true
+  websecure:
+    tls:
+      options: default
+    middlewares:
+      - networking-global-headers@kubernetescrd
+tlsOptions:
+  default:
+    minVersion: VersionTLS10
+    maxVersion: VersionTLS13
+    sniStrict: false
+service:
+  type: LoadBalancer
+  annotations:
+    lbipam.cilium.io/ips: 192.168.123.30
+  additionalServices:
+    internal:
+      type: ClusterIP
+      labels:
+        traefik-service-label: internal

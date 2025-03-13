@@ -1,0 +1,4 @@
+fullnameOverride: reloader
+reloader:
+  deployment:
+    replicas: 1

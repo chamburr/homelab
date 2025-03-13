@@ -1,0 +1,43 @@
+global:
+  domain: argocd.chamburr.xyz
+configs:
+  cm:
+    statusbadge.enabled: true
+    kustomize.buildOptions: --enable-helm
+    exec.enabled: true
+    resource.ignoreResourceUpdatesEnabled: true
+    resource.customizations.ignoreResourceUpdates.all: |
+      jsonPointers:
+        - /status
+  params:
+    controller.diff.server.side: true
+    server.insecure: true
+  secret:
+    githubSecret: $argocd:github-secret
+controller:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+dex:
+  enabled: false
+server:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+repoServer:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+applicationSet:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+notifications:
+  enabled: false

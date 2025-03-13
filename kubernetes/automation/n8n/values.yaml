@@ -1,0 +1,46 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/n8n-io/n8n
+          tag: 1.82.1
+        env:
+          N8N_PORT: 5678
+          N8N_PROTOCOL: https
+          WEBHOOK_URL: https://n8n.chamburr.xyz
+          N8N_EDITOR_BASE_URL: https://n8n.chamburr.xyz
+          N8N_TEMPLATES_ENABLED: false
+          N8N_PERSONALIZATION_ENABLED: false
+          N8N_VERSION_NOTIFICATIONS_ENABLED: false
+          N8N_DIAGONISTICS_ENABLED: false
+          N8N_HIRING_BANNER_ENABLED: false
+          EXECUTIONS_DATA_PRUNE: true
+          EXECUTIONS_DATA_MAX_AGE: 24
+          GENERIC_TIMEZONE: Asia/Singapore
+    pod:
+      securityContext:
+        fsGroup: 1000
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 5678
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: n8n.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  data:
+    existingClaim: n8n
+    globalMounts:
+      - path: /home/node/.n8n

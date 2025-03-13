@@ -1,0 +1,8 @@
+csi:
+  enableCephfsDriver: false
+  cephFSKernelMountOptions: ms_mode=prefer-crc
+  enableLiveness: false
+  serviceMonitor:
+    enabled: true
+monitoring:
+  enabled: true

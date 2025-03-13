@@ -1,0 +1,36 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/woodpeckerci/woodpecker-agent
+          tag: v3.3.0-alpine
+        env:
+          WOODPECKER_SERVER: woodpecker:9000
+          WOODPECKER_MAX_WORKFLOWS: 10
+          WOODPECKER_AGENT_SECRET:
+            valueFrom:
+              secretKeyRef:
+                name: woodpecker
+                key: agent-secret
+          WOODPECKER_BACKEND: kubernetes
+          WOODPECKER_BACKEND_K8S_NAMESPACE: woodpecker
+          WOODPECKER_BACKEND_K8S_VOLUME_SIZE: 10G
+          WOODPECKER_BACKEND_K8S_STORAGE_CLASS: ceph-block
+          WOODPECKER_BACKEND_K8S_STORAGE_RWX: false
+          WOODPECKER_CONNECT_RETRY_COUNT: 1
+    pod:
+      securityContext:
+        fsGroup: 1000
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 3000
+serviceAccount:
+  create: true
+  name: woodpecker-agent

@@ -1,0 +1,39 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/luckyturtledev/anki
+          tag: 24.06.3
+        env:
+          RUST_LOG: info
+          SYNC_USER1:
+            valueFrom:
+              secretKeyRef:
+                name: anki
+                key: __sync-user
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 8080
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: anki.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  data:
+    existingClaim: anki
+    globalMounts:
+      - path: /data

@@ -1,0 +1,26 @@
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: kubernetes
+spec:
+  # renovate source=docker name=ghcr.io/siderolabs/kubelet
+  version: 1.32.2
+  concurrency: 1
+  exclusive: true
+  nodeSelector:
+    matchExpressions:
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+  secrets:
+    - name: system-upgrade-account
+      path: /var/run/secrets/talos.dev
+      ignoreUpdates: true
+  serviceAccountName: system-upgrade
+  upgrade:
+    image: ghcr.io/siderolabs/talosctl:v1.9.4
+    args:
+      - --nodes=$(SYSTEM_UPGRADE_NODE_NAME)
+      - upgrade-k8s
+      - --to=$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
+      - --with-docs=false
+      - --with-examples=false

@@ -1,0 +1,30 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/home-assistant/home-assistant
+          tag: 2025.3.1
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 8123
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: home.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  data:
+    existingClaim: home-assistant
+    globalMounts:
+      - path: /config

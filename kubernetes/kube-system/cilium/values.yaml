@@ -1,0 +1,104 @@
+k8sServiceHost: 127.0.0.1
+k8sServicePort: 7445
+cluster:
+  name: main
+  id: 1
+rollOutCiliumPods: true
+securityContext:
+  capabilities:
+    ciliumAgent:
+      - CHOWN
+      - KILL
+      - NET_ADMIN
+      - NET_RAW
+      - IPC_LOCK
+      - SYS_ADMIN
+      - SYS_RESOURCE
+      - PERFMON
+      - BPF
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    cleanCiliumState:
+      - NET_ADMIN
+      - SYS_ADMIN
+      - SYS_RESOURCE
+autoDirectNodeRoutes: true
+bandwidthManager:
+  enabled: true
+  bbr: true
+l2announcements:
+  enabled: true
+bgpControlPlane:
+  enabled: true
+bpf:
+  preallocateMaps: true
+  masquerade: true
+  tproxy: true
+  datapathMode: netkit
+cni:
+  exclusive: false
+devices: en+
+endpointRoutes:
+  enabled: true
+socketLB:
+  hostNamespaceOnly: true
+hubble:
+  metrics:
+    enabled:
+      - dns:query
+      - drop
+      - tcp
+      - flow
+      - port-distribution
+      - icmp
+      - http
+    serviceMonitor:
+      enabled: true
+  relay:
+    enabled: true
+    rollOutPods: true
+  ui:
+    enabled: true
+    rollOutPods: true
+    ingress:
+      enabled: true
+      annotations:
+        traefik.ingress.kubernetes.io/router.middlewares: >-
+          kube-system-cilium-auth@kubernetescrd
+      className: traefik
+      hosts:
+        - cilium.chamburr.xyz
+ipam:
+  mode: kubernetes
+kubeProxyReplacement: true
+kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+localRedirectPolicy: true
+enableIPv4BIGTCP: true
+ipv4NativeRoutingCIDR: 10.244.0.0/16
+loadBalancer:
+  algorithm: maglev
+  mode: dsr
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    trustCRDsExist: true
+envoy:
+  enabled: false
+tls:
+  secretsNamespace:
+    create: false
+    name: ""
+routingMode: native
+operator:
+  rollOutPods: true
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+cgroup:
+  autoMount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup

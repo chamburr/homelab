@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+helmCharts:
+  - name: app-template
+    version: 3.7.2
+    repo: https://bjw-s.github.io/helm-charts
+    releaseName: headscale
+    namespace: networking
+    valuesFile: values.yaml
+configMapGenerator:
+  - name: headscale
+    files:
+      - resources/config.yaml
+      - resources/headplane.yaml
+    options:
+      disableNameSuffixHash: true
+resources:
+  - ingress
+  - pvc.yaml
+  - rbac.yaml
+  - secret.yaml

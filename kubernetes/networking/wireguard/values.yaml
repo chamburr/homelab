@@ -1,0 +1,91 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/wg-easy/wg-easy
+          tag: "14"
+        env:
+          PASSWORD_HASH:
+            valueFrom:
+              secretKeyRef:
+                name: wireguard
+                key: password-hash
+          WG_HOST: chamburr.xyz
+          WG_PORT: 51820
+          WG_PERSISTENT_KEEPALIVE: 25
+          WG_DEFAULT_ADDRESS: 10.8.0.x
+          WG_DEFAULT_DNS: 10.8.0.1
+          WG_ALLOWED_IPS: 0.0.0.0/0
+          WG_POST_UP: >-
+            iptables -A INPUT -m udp -p udp --dport 51820 -j ACCEPT;
+            iptables -A FORWARD -i wg0 -o eth0 -m iprange
+            --src-range 10.8.0.5-10.8.0.254 -d 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 -j DROP;
+            iptables -A FORWARD -i wg0 -o eth0 -j ACCEPT;
+            iptables -A FORWARD -i eth0 -o wg0 -j ACCEPT;
+            iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+          WG_POST_DOWN: >-
+            iptables -D INPUT -m udp -p udp --dport 51820 -j ACCEPT;
+            iptables -A FORWARD -i wg0 -o eth0 -m iprange
+            --src-range 10.8.0.5-10.8.0.254 -d 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 -j DROP;
+            iptables -D FORWARD -i wg0 -o eth0 -j ACCEPT;
+            iptables -D FORWARD -i eth0 -o wg0 -j ACCEPT;
+            iptables -t nat -D POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+
+            MTU = 1420
+          UI_TRAFFIC_STATS: true
+          UI_CHART_TYPE: 2
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+      dns-tcp:
+        image:
+          repository: docker.io/alpine/socat
+          tag: 1.8.0.1
+        args:
+          - tcp-listen:53,fork,reuseaddr
+          - tcp:adguard-dns.networking:53
+      dns-udp:
+        image:
+          repository: docker.io/alpine/socat
+          tag: 1.8.0.1
+        args:
+          - -T30
+          - udp-listen:53,fork,reuseaddr
+          - udp:adguard-dns.networking:53
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 51821
+  wg:
+    controller: main
+    type: LoadBalancer
+    annotations:
+      lbipam.cilium.io/ips: 192.168.123.32
+    ports:
+      wg:
+        port: 51820
+        protocol: UDP
+        targetPort: 51820
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: wireguard.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  data:
+    existingClaim: wireguard
+    globalMounts:
+      - path: /etc/wireguard

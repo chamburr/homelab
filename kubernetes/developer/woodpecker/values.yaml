@@ -1,0 +1,58 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/woodpeckerci/woodpecker-server
+          tag: v3.3.0-alpine
+        env:
+          WOODPECKER_HOST: https://woodpecker.chamburr.xyz
+          WOODPECKER_DISABLE_VERSION_CHECK: true
+          WOODPECKER_ADMIN:
+            valueFrom:
+              secretKeyRef:
+                name: woodpecker
+                key: username
+          WOODPECKER_PLUGINS_PRIVILEGED: woodpeckerci/plugin-docker-buildx
+          WOODPECKER_STATUS_CONTEXT: ci
+          WOODPECKER_GITHUB: true
+          WOODPECKER_GITHUB_CLIENT:
+            valueFrom:
+              secretKeyRef:
+                name: woodpecker
+                key: github-id
+          WOODPECKER_GITHUB_SECRET:
+            valueFrom:
+              secretKeyRef:
+                name: woodpecker
+                key: github-secret
+    pod:
+      securityContext:
+        fsGroup: 1000
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 8000
+      grpc:
+        port: 9000
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: woodpecker.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  data:
+    existingClaim: woodpecker
+    globalMounts:
+      - path: /var/lib/woodpecker

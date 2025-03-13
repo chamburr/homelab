@@ -1,0 +1,18 @@
+route:
+  receiver: webhook
+  group_by:
+    - ...
+  repeat_interval: 3h
+  routes:
+    - matchers:
+        - alertname=~"InfoInhibitor|Watchdog"
+      receiver: none
+    - matchers:
+        - severity=~"warning|critical"
+      receiver: webhook
+
+receivers:
+  - name: none
+  - name: webhook
+    webhook_configs:
+      - url: http://localhost:8080

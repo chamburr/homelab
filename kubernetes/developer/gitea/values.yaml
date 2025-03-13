@@ -1,0 +1,74 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/gitea/gitea
+          tag: 1.23.4
+        env:
+          GITEA__server__DOMAIN: git.chamburr.xyz
+          GITEA__server__ROOT_URL: https://git.chamburr.xyz
+          GITEA__server__DISABLE_SSH: true
+          GITEA__oauth2__ENABLED: false
+          GITEA__git__MAX_DIFF_LINES: 10000
+          GITEA__git__MAX_DIFF_FILES: 300
+          GITEA__git__GC_ARGS: --aggresive --auto
+          GITEA__service__DISABLE_REGISTRATION: true
+          GITEA__service__ENABLE_NOTIFY_MAIL: true
+          GITEA__service__ENABLE_TIMETRACKING: false
+          GITEA__indexer__REPO_INDEXER_ENABLED: true
+          GITEA__mailer__ENABLED: true
+          GITEA__mailer__PROTOCOL: smtp+starttls
+          GITEA__mailer__SMTP_ADDR:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: mail-host
+          GITEA__mailer__SMTP_PORT:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: mail-port
+          GITEA__mailer__FROM:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: mail-sender
+          GITEA__mailer__USER:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: mail-username
+          GITEA__mailer__PASSWD:
+            valueFrom:
+              secretKeyRef:
+                name: global
+                key: mail-password
+          GITEA__cron__ENABLED: true
+          GITEA__packages__ENABLED: false
+          GITEA__actions__ENABLED: false
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 3000
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: git.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  data:
+    existingClaim: gitea
+    globalMounts:
+      - path: /data

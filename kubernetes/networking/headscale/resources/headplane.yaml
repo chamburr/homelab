@@ -1,0 +1,15 @@
+server:
+  host: 0.0.0.0
+  port: 3000
+  cookie_secret: <change_me_to_something_secure!>
+  cookie_secure: true
+headscale:
+  url: http://headscale:8080
+  public_url: https://tailscale.chamburr.xyz
+  config_path: /etc/headscale/config.yaml
+  config_strict: true
+integration:
+  kubernetes:
+    enabled: true
+    validate_manifest: true
+    pod_name: headscale

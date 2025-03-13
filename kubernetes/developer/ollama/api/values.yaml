@@ -1,0 +1,19 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/ollama/ollama
+          tag: 0.5.11
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 11434
+persistence:
+  data:
+    existingClaim: ollama-api
+    globalMounts:
+      - path: /root/.ollama

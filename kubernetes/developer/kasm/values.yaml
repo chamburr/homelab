@@ -1,0 +1,34 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/linuxserver/kasm
+          tag: 1.15.0
+        env:
+          KASM_PORT: 443
+        securityContext:
+          privileged: true
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      https:
+        port: 443
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: kasm.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: https
+persistence:
+  data:
+    existingClaim: kasm
+    globalMounts:
+      - path: /opt

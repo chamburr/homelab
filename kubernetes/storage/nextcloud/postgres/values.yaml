@@ -1,0 +1,30 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/library/postgres
+          tag: 17.3-alpine
+        env:
+          PGDATA: /var/lib/postgresql/data/pgdata
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: nextcloud
+                key: postgres-password
+          POSTGRES_DB: nextcloud
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 5432
+persistence:
+  data:
+    existingClaim: nextcloud-postgres
+    globalMounts:
+      - path: /var/lib/postgresql/data
