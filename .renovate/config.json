@@ -7,7 +7,7 @@
     "github>chamburr/homelab//.renovate/auto-merge",
     "github>chamburr/homelab//.renovate/commit-message",
     "github>chamburr/homelab//.renovate/manager",
-    "github>chamburr/homelab//.renovate/pr-label",
+    "github>chamburr/homelab//.renovate/pr-label"
   ],
   "onboarding": false,
   "requireConfig": "optional",

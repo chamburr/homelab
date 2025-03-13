@@ -8,7 +8,7 @@
     {
       "matchPaths": ["kubernetes/**"],
       "addLabels": ["area/kubernetes"]
-    }
+    },
     {
       "matchUpdateTypes": ["major"],
       "addLabels": ["version/major"]
