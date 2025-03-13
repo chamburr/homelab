@@ -14,7 +14,7 @@ steps:
       # yamllint disable rule:line-length
       - timeout 180 /bin/sh -c -- 'while true; do sleep 5;
         result=$(curl -s -u $PROMETHEUS_USERNAME:$PROMETHEUS_PASSWORD
-        https://prometheus.chamburr.xyz/api/v1/query -G -d "query=sum%28argocd_app_info%7Bsync_status%21%3D%22Synced%22%7D%20or%20argocd_app_info%7Bhealth_status%21%3D%22Healthy%22%7D%29" |
+        https://prometheus.chamburr.xyz/api/v1/query -G -d "query=sum%28argocd_app_info%7Bsync_status%21%3D%22Synced%22%7D%20or%20argocd_app_info%7Bhealth_status%21%3D%22Healthy%22%7D%29%20or%20vector%280%29" |
         jq -r ".data.result[0].value[1]"); if [ "$result" = "0" ]; then break; fi; done'
       # yamllint enable rule:line-length
     environment:
