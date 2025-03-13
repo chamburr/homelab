@@ -5,7 +5,7 @@ metadata:
   namespace: networking
 rules:
   - apiGroups:
-      - ''
+      - ""
     resources:
       - pods
     verbs:

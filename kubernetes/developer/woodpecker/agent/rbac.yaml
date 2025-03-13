@@ -5,7 +5,7 @@ metadata:
   namespace: woodpecker
 rules:
   - apiGroups:
-      - ''
+      - ""
     resources:
       - persistentvolumeclaims
       - services
@@ -14,7 +14,7 @@ rules:
       - create
       - delete
   - apiGroups:
-      - ''
+      - ""
     resources:
       - pods
     verbs:
@@ -24,7 +24,7 @@ rules:
       - get
       - list
   - apiGroups:
-      - ''
+      - ""
     resources:
       - pods/log
     verbs:
