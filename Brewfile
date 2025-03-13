@@ -9,8 +9,6 @@ brew "helm"
 brew "kubernetes-cli"
 brew "prettier"
 brew "sshpass"
-brew "terraform"
-brew "tflint"
 brew "yamllint"
 brew "yq"
 

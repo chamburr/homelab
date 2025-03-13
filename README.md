@@ -55,11 +55,6 @@ install prerequisites in Brewfile and update Ansible and environmental variables
     <td>Base operating system for Kubernetes nodes</td>
   </tr>
   <tr>
-    <td><img width="32" src="https://vectorlogo.zone/logos/terraformio/terraformio-icon.svg"></td>
-    <td><a href="https://terraform.io">Terraform</a></td>
-    <td>Provision resources on external environments</td>
-  </tr>
-  <tr>
     <td><img width="32" src="https://vectorlogo.zone/logos/traefikio/traefikio-icon.svg"></td>
     <td><a href="https://traefik.io">Traefik</a></td>
     <td>Cloud native ingress controller for Kubernetes</td>

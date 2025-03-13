@@ -5,10 +5,5 @@ Thumbs.db
 # Kubernetes
 kubeconfig
 
-# Terraform
-.terraform
-.terraform.tfstate*
-terraform.tfstate*
-
 # Environment
 .env
