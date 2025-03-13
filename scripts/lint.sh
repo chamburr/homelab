@@ -3,13 +3,13 @@
 lintYaml() {
   echo 'Linting yaml...'
 
-  yamllint .
+  yamllint -s .
 }
 
 lintAnsible() {
   echo 'Linting ansible...'
 
-  ansible-lint ansible -q
+  ansible-lint -q ansible
 }
 
 lintYaml

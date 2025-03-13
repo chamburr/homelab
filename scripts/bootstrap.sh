@@ -7,17 +7,25 @@ prepare() {
 install() {
   echo 'Installing...'
 
-  ./scripts/ansible.sh playbook ansible/main.yml --tags common
+  username=$(grep ^USERNAME= .env | cut -d '=' -f2-)
+  password=$(grep ^PASSWORD= .env | cut -d '=' -f2-)
 
-  sed -i \
-    -e "s/^USER=.*/USER=$(cat ansible/group_vars/all.yml | yq '.common_username')/" \
-    -e "s/^PASSWORD=.*/PASSWORD=/" \
-    .env
+  args=''
 
-  export CONFIGURE_VARS=$(cat .env | grep '=' \
-   | grep -v -e '^USER=' -e '^PASSWORD=' | sed 's/\(.*\)=/\L\1=/' | xargs)
+  if [ "$username" != '' ]; then
+    args="ansible_user='$username'"
+    if [ "$password" != '' ]; then
+      args="$args ansible_password='$password'"
+    fi
+  fi
 
-  ./scripts/ansible.sh playbook ansible/main.yml --skip-tags common
+  ansible-playbook -i ansible/hosts.yml -e "$args" ansible/main.yml --tags common
+
+  export DOCKER_USERNAME=$(grep ^DOCKER_USERNAME= .env | cut -d '=' -f2-)
+  export DOCKER_PASSWORD=$(grep ^DOCKER_PASSWORD= .env | cut -d '=' -f2-)
+
+  ansible-playbook -i ansible/hosts.yml ansible/main.yml --skip-tags common
 }
 
+prepare
 install
