@@ -27,11 +27,6 @@
       "matchDatasources": ["helm"],
       "semanticCommitScope": "helm",
       "commitMessageTopic": "{{depName}}"
-    },
-    {
-      "matchDatasources": ["terraform-provider"],
-      "semanticCommitScope": "terraform",
-      "commitMessageTopic": "{{depName}}"
     }
   ]
 }

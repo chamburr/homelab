@@ -1,0 +1,41 @@
+when:
+  - event: cron
+    cron: daily
+
+skip_clone: true
+
+steps:
+  - name: generate token
+    image: ubuntu
+    commands:
+      - apt-get -qq update
+      - apt-get install -y curl
+      - curl -sLo /tmp/ght https://github.com/Link-/gh-token/releases/latest/download/linux-amd64
+      - chmod +x /tmp/ght
+      - /tmp/ght generate --app-id $GITHUB_ID --base64-key "$(printenv GITHUB_PRIVATE_KEY | base64)"
+        --installation-id $GITHUB_INSTALLATION --token-only > token.txt
+    environment:
+      GITHUB_ID:
+        from_secret: github_id
+      GITHUB_PRIVATE_KEY:
+        from_secret: github_private_key
+      GITHUB_INSTALLATION:
+        from_secret: github_installation
+  - name: run renovate
+    image: renovate/renovate
+    commands:
+      - export RENOVATE_TOKEN=$(cat token.txt)
+      - curl -sO https://raw.githubusercontent.com/chamburr/homelab/main/.renovate/config.json
+      - sed -i 's/renovateRepository(repoConfig, false)/renovateRepository(repoConfig, true)/'
+        /usr/local/renovate/dist/workers/repository/index.js
+      - renovate
+    environment:
+      LOG_LEVEL: info
+      RENOVATE_DRY_RUN: false
+      RENOVATE_CONFIG_FILE: config.json
+    privileged: true
+    backend_options:
+      kubernetes:
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0

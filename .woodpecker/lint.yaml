@@ -1,0 +1,15 @@
+when:
+  - event: push
+    branch: main
+
+steps:
+  - name: lint yaml
+    image: python
+    commands:
+      - pip install yamllint
+      - yamllint -s .
+  - name: lint ansible
+    image: python
+    commands:
+      - pip install ansible-lint
+      - ansible-lint -q ansible

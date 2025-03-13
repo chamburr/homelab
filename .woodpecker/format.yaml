@@ -1,6 +1,6 @@
----
-kind: pipeline
-name: format
+when:
+  - event: push
+    branch: main
 
 steps:
   - name: format yaml
@@ -8,9 +8,3 @@ steps:
     commands:
       - npm install -g prettier
       - prettier -c .
-
-trigger:
-  event:
-    - push
-  branch:
-    - main

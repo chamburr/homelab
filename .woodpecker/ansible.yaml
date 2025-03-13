@@ -1,27 +1,19 @@
----
-kind: pipeline
-name: ansible
+when:
+  - event: push
+    branch: main
+    path: ansible/**
 
 steps:
   - name: run playbook
     image: python
     commands:
       - pip install ansible
-      - echo "USER=chamburr" > .env
       - echo "$SSH_PRIVATE_KEY" > /tmp/id_ed25519
       - chmod 400 /tmp/id_ed25519
-      - ./scripts/ansible.sh playbook ansible/main.yml
+      - ansible-playbook -i ansible/hosts.yml ansible/main.yml
     environment:
       ANSIBLE_FORCE_COLOR: true
       ANSIBLE_HOST_KEY_CHECKING: false
       ANSIBLE_PRIVATE_KEY_FILE: /tmp/id_ed25519
       SSH_PRIVATE_KEY:
         from_secret: ssh_private_key
-
-trigger:
-  event:
-    - push
-  branch:
-    - main
-  paths:
-    - ansible/**/*

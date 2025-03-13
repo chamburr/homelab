@@ -21,11 +21,6 @@
       "matchDatasources": ["helm"],
       "matchUpdateTypes": ["patch", "digest"],
       "automerge": true
-    },
-    {
-      "matchDatasources": ["terraform-provider"],
-      "matchUpdateTypes": ["minor", "patch", "digest"],
-      "automerge": true
     }
   ]
 }

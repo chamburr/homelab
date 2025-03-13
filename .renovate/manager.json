@@ -1,7 +1,11 @@
 {
-  "regexManagers": [
+  "kubernetes": {
+    "fileMatch": ["^kubernetes/.+\\.yaml$"]
+  },
+  "customManagers": [
     {
-      "description": "Process comments",
+      "customType": "regex",
+      "description": ["Process comments"],
       "fileMatch": ["^kubernetes/.+\\.yaml$"],
       "matchStrings": [
         "# renovate source=(?<datasource>\\S+) name=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
@@ -10,7 +14,8 @@
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
     },
     {
-      "description": "Process github urls",
+      "customType": "regex",
+      "description": ["Process github urls"],
       "fileMatch": ["^kubernetes/.+\\.yaml$", "^scripts/.+\\.yaml$"],
       "matchStrings": [
         "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*",
