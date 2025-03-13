@@ -7,6 +7,7 @@ spec:
   version: 1.9.5
   concurrency: 1
   exclusive: true
+  postCompleteDelay: 10m
   nodeSelector:
     matchExpressions:
       - key: feature.node.kubernetes.io/system-os_release.ID
@@ -25,3 +26,4 @@ spec:
       - upgrade
       - --image=ghcr.io/siderolabs/installer:v$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
       - --stage
+      - --wait=false
