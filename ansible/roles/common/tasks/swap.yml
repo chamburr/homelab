@@ -1,4 +1,3 @@
----
 - name: Create swap file
   ansible.builtin.command:
     cmd: dd if=/dev/zero of={{ common_swap_path }} bs=1M count={{ common_swap_size }}

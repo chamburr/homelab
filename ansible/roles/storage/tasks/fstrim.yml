@@ -1,6 +1,0 @@
----
-- name: Enable fstrim service
-  ansible.builtin.service:
-    name: fstrim.timer
-    enabled: true
-    state: started

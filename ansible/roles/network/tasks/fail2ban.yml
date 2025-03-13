@@ -1,6 +1,5 @@
----
 - name: Install fail2ban package
-  ansible.builtin.dnf:
+  ansible.builtin.package:
     name: fail2ban
     state: present
 

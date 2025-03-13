@@ -1,22 +1,12 @@
----
-kubernetes_network_name: kubernetes
-kubernetes_network_address: 192.168.123.1
-kubernetes_network_mask: 255.255.255.0
-kubernetes_network_start: 192.168.123.200
-kubernetes_network_end: 192.168.123.254
+kubernetes_taps:
+  - siderolabs/tap
 
-kubernetes_pool_name: default
-kubernetes_pool_path: /var/lib/libvirt/images
+kubernetes_packages:
+  - argocd
+  - helm
+  - k9s
+  - kubernetes-cli
+  - kustomize
+  - talosctl
 
-kubernetes_volume_name: kubernetes
-kubernetes_volume_size: 200G
-kubernetes_volume_format: raw
-
-kubernetes_vms:
-  - talos-1
-
-kubernetes_vm_cpu: 32
-kubernetes_vm_ram: 32768
-kubernetes_vm_disk: 100
-kubernetes_vm_image: https://github.com/siderolabs/talos/releases/latest/download/talos-amd64.iso
-kubernetes_vm_script: https://raw.githubusercontent.com/chamburr/homelab/main/scripts/configure.sh
+kubernetes_script: https://raw.githubusercontent.com/chamburr/homelab/main/scripts/deploy.sh

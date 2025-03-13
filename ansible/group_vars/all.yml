@@ -1,6 +1,3 @@
----
-common_timezone: Asia/Singapore
-
 common_username: chamburr
 common_ssh_keys:
   - ssh-ed25519

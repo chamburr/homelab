@@ -1,9 +1,0 @@
----
-- name: Include backup tasks
-  ansible.builtin.include_tasks: backup.yml
-
-- name: Include cron tasks
-  ansible.builtin.include_tasks: cron.yml
-
-- name: Include netmaker tasks
-  ansible.builtin.include_tasks: netmaker.yml

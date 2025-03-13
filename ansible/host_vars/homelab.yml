@@ -1,0 +1,6 @@
+common_timezone: Asia/Singapore
+
+common_swap_enabled: false
+
+network_dns_enabled: false
+network_firewall_enabled: false

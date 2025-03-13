@@ -1,29 +1,50 @@
----
-- name: Add epel repository
-  ansible.builtin.dnf:
-    name: epel-release
-    state: present
+- name: Remove snap
+  community.general.snap:
+    name: "{{ item }}"
+    state: absent
+  loop:
+    - lxd
+    - core20
+    - core22
+    - snapd
+  register: common_snap_remove
+  failed_when:
+    - common_snap_remove.failed
+    - "'Failed to find required executable' not in common_snap_remove.msg"
+
+- name: Delete snap directory
+  ansible.builtin.file:
+    path: /root/snap
+    state: absent
+
+- name: Remove packages
+  ansible.builtin.package:
+    name: "{{ common_remove_packages }}"
+    state: absent
 
 - name: Install packages
-  ansible.builtin.dnf:
+  ansible.builtin.package:
     name: "{{ common_packages }}"
     state: present
 
 - name: Install auto upgrade package
-  ansible.builtin.dnf:
-    name: dnf-automatic
+  ansible.builtin.package:
+    name: unattended-upgrades
     state: present
 
 - name: Copy auto upgrade configuration
   ansible.builtin.copy:
-    src: automatic.conf
-    dest: /etc/dnf/automatic.conf
+    src: "{{ item }}"
+    dest: /etc/apt/apt.conf.d/{{ item }}
     owner: root
     group: root
     mode: 0644
+  loop:
+    - 20auto-upgrades
+    - 50unattended-upgrades
 
 - name: Enable auto upgrade service
   ansible.builtin.service:
-    name: dnf-automatic.timer
+    name: unattended-upgrades
     enabled: true
     state: started

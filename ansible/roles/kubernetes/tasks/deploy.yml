@@ -1,0 +1,34 @@
+- name: Check cluster status
+  ansible.builtin.stat:
+    path: /home/{{ common_username }}/.talos
+  register: kubernetes_deploy_status
+
+- name: Download deploy script
+  ansible.builtin.get_url:
+    url: "{{ kubernetes_script }}"
+    dest: /home/{{ common_username }}/deploy.sh
+    mode: 0755
+  become: false
+  when: not kubernetes_deploy_status.stat.exists
+
+- name: Run deploy script
+  ansible.builtin.command: # noqa: no-changed-when
+    chdir: /home/{{ common_username }}
+    cmd: /home/{{ common_username }}/deploy.sh
+  environment:
+    DOCKER_USERNAME: "{{ lookup('env', 'DOCKER_USERNAME') }}"
+    DOCKER_PASSWORD: "{{ lookup('env', 'DOCKER_PASSWORD') }}"
+  register: kubernetes_deploy
+  become: false
+  when: not kubernetes_deploy_status.stat.exists
+
+- name: Print deploy script output
+  ansible.builtin.debug:
+    var: kubernetes_deploy.stdout_lines
+  when: not kubernetes_deploy_status.stat.exists
+
+- name: Delete deploy script
+  ansible.builtin.file:
+    path: /home/{{ common_username }}/deploy.sh
+    state: absent
+  when: not kubernetes_deploy_status.stat.exists

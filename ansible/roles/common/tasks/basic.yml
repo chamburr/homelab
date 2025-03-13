@@ -1,34 +1,23 @@
----
 - name: Set hostname
   ansible.builtin.hostname:
     name: "{{ inventory_hostname }}"
     use: systemd
 
-- name: Add hostname to hosts file
-  ansible.builtin.lineinfile:
-    path: /etc/hosts
-    regexp: ^127.0.1.1
-    line: 127.0.1.1        {{ inventory_hostname }}
-    state: present
+- name: Preserve hostname
+  ansible.builtin.template:
+    src: 99_hostname.cfg.j2
+    dest: /etc/cloud/cloud.cfg.d/99_hostname.cfg
+    owner: root
+    group: root
+    mode: 0644
+  register: common_hostname_preserve
+  failed_when:
+    - common_hostname_preserve.failed
+    - "'does not exist' not in common_hostname_preserve.msg"
 
 - name: Set timezone
   community.general.timezone:
     name: "{{ common_timezone }}"
-
-- name: Enable kernel modules
-  community.general.modprobe:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ common_kernel_modules }}"
-
-- name: Enable kernel modules on boot
-  ansible.builtin.copy: # noqa: template-instead-of-copy
-    content: "{{ item }}"
-    dest: /etc/modules-load.d/{{ item }}.conf
-    owner: root
-    group: root
-    mode: 0644
-  loop: "{{ common_kernel_modules }}"
 
 - name: Configure sysctl
   ansible.posix.sysctl:
@@ -38,16 +27,4 @@
     state: present
   with_dict:
     net.ipv4.ip_forward: 1
-    net.ipv4.conf.all.rp_filter: 0
-    net.ipv4.conf.all.forwarding: 1
     net.ipv6.conf.all.forwarding: 1
-    net.bridge.bridge-nf-call-iptables: 0
-    net.bridge.bridge-nf-call-ip6tables: 0
-    net.bridge.bridge-nf-call-arptables: 0
-    fs.inotify.max_user_watches: 524288
-    fs.inotify.max_user_instances: 512
-
-- name: Configure selinux
-  ansible.posix.selinux:
-    state: permissive
-    policy: targeted

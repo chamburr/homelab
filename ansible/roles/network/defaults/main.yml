@@ -1,4 +1,4 @@
----
+network_dns_enabled: true
 network_dns_servers:
   - 1.1.1.1
   - 1.0.0.1
@@ -9,30 +9,15 @@ network_fail2ban_find_time: 600
 network_fail2ban_ban_time: 86400
 network_fail2ban_ignore_ip:
   - 10.0.0.0/8
-  - 127.0.0.0/8
+  - 127.16.0.0/12
   - 192.168.0.0/16
 
-network_firewall_name: Wired connection 1
-network_firewall_cidr: 192.168.123.0/24
+network_firewall_enabled: true
 network_firewall_services:
-  ssh: enabled
-  dhcpv6-client: enabled
-  cockpit: disabled
-  nfs: disabled
-network_firewall_ports:
-  51821/udp: enabled
-network_firewall_forwards:
-  - 192.168.123.105/53/tcp
-  - 192.168.123.105/53/udp
-  - 192.168.123.101/80/tcp
-  - 192.168.123.101/443/tcp
-  - 192.168.123.103/445/tcp
-  - 192.168.123.102/500/udp
-  - 192.168.123.102/4500/udp
-  - 192.168.123.104/51820/udp
-network_firewall_interfaces:
-  - virbr1
-  - netmaker
+  22/tcp: allow
+  80/tcp: allow
+  443/tcp: allow
+  51820/udp: allow
 
 network_ssh_password: "no"
 network_ssh_root: "no"

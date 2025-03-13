@@ -1,42 +1,25 @@
----
 common_timezone: Etc/UTC
 
-common_kernel_modules:
-  - br_netfilter
-  - overlay
-  - rbd
+common_remove_packages:
+  - apport
+  - landscape-common
+  - lxd-agent-loader
+  - snapd
 
 common_packages:
-  - bc
-  - bind-utils
-  - bridge-utils
-  - curl
-  - git
-  - htop
   - iotop
   - iperf3
   - jq
-  - lm_sensors
-  - lsof
-  - man-pages
-  - nano
   - net-tools
   - ncdu
   - neofetch
   - neovim
-  - rsync
-  - sysstat
-  - tar
-  - tcpdump
-  - telnet
-  - tmux
   - tree
   - unzip
-  - usbutils
-  - wget
 
+common_swap_enabled: true
 common_swap_path: /swapfile
-common_swap_size: 8192
+common_swap_size: 2048
 common_swap_swappiness: 60
 
 common_username: user

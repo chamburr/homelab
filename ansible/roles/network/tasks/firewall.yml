@@ -1,73 +1,22 @@
----
 - name: Install firewall package
-  ansible.builtin.dnf:
-    name: firewalld
+  ansible.builtin.package:
+    name: ufw
     state: present
-
-- name: Enable firewall service
-  ansible.builtin.service:
-    name: firewalld
-    enabled: true
-    state: started
-
-- name: Set firewall zone
-  community.general.nmcli:
-    conn_name: "{{ network_firewall_name }}"
-    zone: public
-    state: present
-
-- name: Set firewall default zone
-  ansible.builtin.command:
-    cmd: firewall-cmd --set-default-zone=trusted
-  register: network_zone_set
-  changed_when:
-    - "'ZONE_ALREADY_SET' not in network_zone_set.stderr"
-
-- name: Allow firewall masquerade
-  ansible.posix.firewalld:
-    zone: public
-    masquerade: true
-    permanent: true
-    immediate: true
-    state: enabled
 
 - name: Configure firewall services
-  ansible.posix.firewalld:
-    zone: public
-    service: "{{ item.key }}"
-    permanent: true
-    immediate: true
-    state: "{{ item.value }}"
+  community.general.ufw:
+    rule: "{{ item.value }}"
+    port: "{{ item.key.split('/')[0] }}"
+    proto: "{{ item.key.split('/')[1] }}"
   with_dict: "{{ network_firewall_services }}"
 
-- name: Configure firewall ports
-  ansible.posix.firewalld:
-    zone: public
-    port: "{{ item.key }}"
-    permanent: true
-    immediate: true
-    state: "{{ item.value }}"
-  with_dict: "{{ network_firewall_ports }}"
+- name: Delete firewall services
+  community.general.ufw:
+    delete: true
+    rule: allow
+    port: 22
+    proto: any
 
-- name: Configure firewall prerouting
-  ansible.builtin.command:
-    cmd: >
-      firewall-cmd --direct --permanent --add-rule ipv4 nat PREROUTING 0
-      -m addrtype --dst-type LOCAL -p {{ item.split('/')[2] }} --dport {{ item.split('/')[1] }}
-      -j DNAT --to-destination {{ item.split('/')[0] }}
-  loop: "{{ network_firewall_forwards }}"
-  register: network_prerouting_set
-  changed_when:
-    - "'ALREADY_ENABLED' not in network_prerouting_set.stderr"
-  notify: Reload firewalld
-
-- name: Configure firewall postrouting
-  ansible.builtin.command:
-    cmd: >
-      firewall-cmd --direct --permanent --add-rule ipv4 nat POSTROUTING 0
-      -s {{ network_firewall_cidr }} -o {{ item }} -j MASQUERADE
-  loop: "{{ network_firewall_interfaces }}"
-  register: network_postrouting_set
-  changed_when:
-    - "'ALREADY_ENABLED' not in network_postrouting_set.stderr"
-  notify: Reload firewalld
+- name: Enable firewall service
+  community.general.ufw:
+    state: enabled

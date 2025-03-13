@@ -1,17 +1,12 @@
----
-- name: Copy networkmanager configuration
-  ansible.builtin.copy:
-    src: NetworkManager.conf
-    dest: /etc/NetworkManager/NetworkManager.conf
-    owner: root
-    group: root
-    mode: 0644
-  notify: Restart networkmanager service
+- name: Enable dns service
+  ansible.builtin.service:
+    name: systemd-resolved
+    state: started
 
-- name: Copy resolv configuration
-  ansible.builtin.template:
-    src: resolv.conf.j2
-    dest: /etc/resolv.conf
-    owner: root
-    group: root
-    mode: 0644
+- name: Update dns configuration
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/resolved.conf
+    regexp: ^#?DNS=
+    line: DNS={{ network_dns_servers | join(' ') }}
+    state: present
+  notify: Restart dns service
