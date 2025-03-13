@@ -1,9 +1,2 @@
-# Trash
-.DS_Store
-Thumbs.db
-
-# Kubernetes
-kubeconfig
-
 # Environment
 .env
