@@ -1,0 +1,10 @@
+cluster:
+  name: homelab
+  endpoint: 192.168.123.20
+nodes:
+  - name: talos-1
+    endpoint: 192.168.123.21
+  - name: talos-2
+    endpoint: 192.168.123.22
+  - name: talos-3
+    endpoint: 192.168.123.23

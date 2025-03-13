@@ -1,0 +1,59 @@
+machine:
+  certSANs:
+    - 192.168.123.20
+    - 127.0.0.1
+  kubelet:
+    extraConfig:
+      maxPods: 250
+    nodeIP:
+      validSubnets:
+        - 192.168.123.0/24
+  network:
+    hostname: $HOST
+    interfaces:
+      - interface: ens18
+        dhcp: true
+        vip:
+          ip: 192.168.123.20
+    nameservers:
+      - 192.168.123.1
+  install:
+    disk: /dev/sda
+  registries:
+    config:
+      registry-1.docker.io:
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
+  features:
+    hostDNS:
+      enabled: true
+      forwardKubeDNSToHost: false
+      resolveMemberNames: true
+    kubernetesTalosAPIAccess:
+      enabled: true
+      allowedRoles:
+        - os:admin
+      allowedKubernetesNamespaces:
+        - system
+cluster:
+  network:
+    cni:
+      name: none
+  apiServer:
+    certSANs:
+      - 127.0.0.1
+  controllerManager:
+    extraArgs:
+      bind-address: 0.0.0.0
+  proxy:
+    disabled: true
+  scheduler:
+    extraArgs:
+      bind-address: 0.0.0.0
+  etcd:
+    extraArgs:
+      listen-metrics-urls: http://0.0.0.0:2381
+  coreDNS:
+    disabled: true
+  allowSchedulingOnControlPlanes: true
