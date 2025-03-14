@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: quay.io/prometheus/alertmanager
-          tag: v0.28.0
+          tag: v0.28.1
         args:
           - --config.file=/etc/alertmanager/alertmanager.yaml
           - --web.config.file=/etc/alertmanager-secret/__basic-auth.yaml
