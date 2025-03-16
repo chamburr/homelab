@@ -5,10 +5,10 @@ route:
   repeat_interval: 3h
   routes:
     - matchers:
-        - alertname=~"InfoInhibitor|Watchdog"
+        - alertname=~"InfoInhibitor|Watchdog|warning"
       receiver: none
     - matchers:
-        - severity=~"warning|critical"
+        - severity=~"critical"
       receiver: webhook
 
 receivers:
