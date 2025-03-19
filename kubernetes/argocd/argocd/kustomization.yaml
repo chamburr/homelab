@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 helmCharts:
   - name: argo-cd
-    version: 7.8.11
+    version: 7.8.12
     repo: https://argoproj.github.io/argo-helm
     releaseName: argocd
     namespace: argocd
