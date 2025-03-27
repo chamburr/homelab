@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/immich-app/immich-server
-          tag: v1.130.1
+          tag: v1.130.2
         env:
           TZ: Asia/Singapore
           DB_HOSTNAME: immich-postgres
