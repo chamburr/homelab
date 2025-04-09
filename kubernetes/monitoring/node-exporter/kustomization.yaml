@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 helmCharts:
   - name: prometheus-node-exporter
-    version: 4.45.0
+    version: 4.45.2
     repo: https://prometheus-community.github.io/helm-charts
     releaseName: node-exporter
     namespace: monitoring
