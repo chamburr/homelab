@@ -5,12 +5,6 @@ controllers:
         image:
           repository: docker.io/louislam/uptime-kuma
           tag: 1.23.16
-    pod:
-      dnsPolicy: None
-      dnsConfig:
-        nameservers:
-          - 1.1.1.1
-          - 1.0.0.1
 service:
   main:
     controller: main
