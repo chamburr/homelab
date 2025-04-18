@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/luckyturtledev/anki
-          tag: 24.06.3
+          tag: 25.02.1
         env:
           RUST_LOG: info
           SYNC_USER1:
