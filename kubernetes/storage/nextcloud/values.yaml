@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: docker.io/library/nextcloud
-          tag: 31.0.2-apache
+          tag: 31.0.4-apache
         env:
           POSTGRES_DB: nextcloud
           POSTGRES_USER: postgres
@@ -70,7 +70,7 @@ controllers:
       cron:
         image:
           repository: docker.io/library/nextcloud
-          tag: 31.0.2-apache
+          tag: 31.0.4-apache
         command:
           - /cron.sh
       push:
