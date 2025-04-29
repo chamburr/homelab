@@ -11,11 +11,14 @@ controllers:
           - sed -i -e 's/aeiou/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/'
             -e 's/bcd.*xyz/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/'
             /usr/src/app/dist/backend/lib/keyGenerator.js && sed -i 's/"txt",""/"txt","txt"/'
-            /usr/src/app/dist/frontend/assets/index.js && sed -i 's/.\/data/\/config/'
+            /usr/src/app/dist/frontend/assets/index.js && sed -i 's/.\/data/\/data/'
             /usr/src/app/dist/backend/stores/FileDocumentStore.js && yarn run start
         env:
           KEY_LENGTH: 6
           RATE_LIMIT_MAX: 1000000000
+    pod:
+      securityContext:
+        fsGroup: 1000
 service:
   main:
     controller: main
@@ -38,4 +41,4 @@ persistence:
   data:
     existingClaim: haste
     globalMounts:
-      - path: /config
+      - path: /data

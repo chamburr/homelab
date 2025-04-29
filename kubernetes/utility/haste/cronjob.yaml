@@ -18,10 +18,10 @@ spec:
               args:
                 - /bin/sh
                 - -c
-                - find /config -type f -mtime +30 -exec rm {} \;
+                - find /data -type f -mtime +30 -exec rm {} \;
               volumeMounts:
                 - name: data
-                  mountPath: /config
+                  mountPath: /data
           volumes:
             - name: data
               persistentVolumeClaim:
