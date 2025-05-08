@@ -4,7 +4,7 @@ metadata:
   name: talos
 spec:
   # renovate source=docker name=ghcr.io/siderolabs/installer
-  version: 1.9.5
+  version: 1.10.1
   concurrency: 1
   exclusive: true
   postCompleteDelay: 10m
