@@ -76,7 +76,7 @@ controllers:
       push:
         image:
           repository: docker.io/icewind1991/notify_push
-          tag: 1.0.0
+          tag: 1.1.0
         env:
           DATABASE_URL:
             valueFrom:
