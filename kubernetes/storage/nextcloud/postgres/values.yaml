@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: docker.io/library/postgres
-          tag: 17.4-alpine
+          tag: 17.5-alpine
         env:
           PGDATA: /var/lib/postgresql/data/pgdata
           POSTGRES_USER: postgres
