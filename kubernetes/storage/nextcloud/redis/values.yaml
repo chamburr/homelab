@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: docker.io/library/redis
-          tag: 7.4.3-alpine
+          tag: 8.0.1-alpine
         args:
           - /bin/sh
           - -c
