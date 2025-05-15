@@ -5,10 +5,6 @@ configs:
     statusbadge.enabled: true
     kustomize.buildOptions: --enable-helm
     exec.enabled: true
-    resource.ignoreResourceUpdatesEnabled: true
-    resource.customizations.ignoreResourceUpdates.all: |
-      jsonPointers:
-        - /status
   params:
     controller.diff.server.side: true
     server.insecure: true
