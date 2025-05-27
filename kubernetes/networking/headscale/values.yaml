@@ -10,7 +10,7 @@ controllers:
       ui:
         image:
           repository: ghcr.io/tale/headplane
-          tag: 0.5.10
+          tag: 0.6.0
         env:
           HEADPLANE_CONFIG_PATH: /etc/headscale/headplane.yaml
           HEADPLANE_LOAD_ENV_OVERRIDES: true
