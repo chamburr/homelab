@@ -2,11 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 helmCharts:
   - name: kube-state-metrics
-<<<<<<< renovate/kube-state-metrics-6.x
     version: 6.0.0
-=======
-    version: 5.37.0
->>>>>>> main
     repo: https://prometheus-community.github.io/helm-charts
     releaseName: kube-state-metrics
     namespace: monitoring
