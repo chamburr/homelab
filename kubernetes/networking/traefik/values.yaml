@@ -13,11 +13,12 @@ metrics:
       enabled: true
     serviceMonitor:
       enabled: true
-globalArguments:
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+additionalArguments:
   - --api.insecure=true
   - --serverstransport.insecureskipverify=true
-  - --global.checknewversion=false
-additionalArguments:
   - --providers.kubernetesingress.ingressendpoint.ip=192.168.123.30
   - --entrypoints.web.transport.respondingTimeouts.readTimeout=0
   - --entrypoints.websecure.transport.respondingTimeouts.readTimeout=0
