@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/open-webui/open-webui
-          tag: 0.6.16
+          tag: v0.6.18
         env:
           OLLAMA_BASE_URL: http://ollama-api:11434
 service:
