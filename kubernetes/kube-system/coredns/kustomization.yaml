@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 helmCharts:
   - name: coredns
-    version: 1.43.0
+    version: 1.43.1
     repo: https://coredns.github.io/helm
     releaseName: coredns
     namespace: kube-system
