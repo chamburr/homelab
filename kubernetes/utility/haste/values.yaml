@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/skyra-project/haste-server
-          tag: latest@sha256:cfb8f582246f8fd208eb73d2429033bbb73dd4f3f2949b5f49a0caf854fd39f4
+          tag: latest@sha256:55087a92bb004a92a0fc0a8ea8e9324fbbe6c819904e55db27bec06417f78a71
         args:
           - /bin/sh
           - -c
