@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: docker.io/adguard/adguardhome
-          tag: v0.107.64
+          tag: v0.107.65
         args:
           - --no-check-update
           - -c
