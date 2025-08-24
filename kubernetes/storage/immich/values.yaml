@@ -29,7 +29,7 @@ controllers:
               command:
                 - /bin/sh
                 - -c
-                - mkdir /data &&
+                - mkdir -p /data &&
                   ln -s /nextcloud/data/chamburr/files/Pictures/Camera /data/Camera &&
                   ln -s /nextcloud/data/chamburr/files/Pictures/DSLR /data/DSLR &&
                   ln -s /nextcloud/data/chamburr/files/Pictures/Live /data/Live &&
