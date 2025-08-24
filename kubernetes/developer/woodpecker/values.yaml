@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: docker.io/woodpeckerci/woodpecker-server
-          tag: v3.7.0-alpine
+          tag: v3.9.0-alpine
         env:
           WOODPECKER_HOST: https://woodpecker.chamburr.xyz
           WOODPECKER_DISABLE_VERSION_CHECK: true
