@@ -6,7 +6,7 @@ controllers:
           repository: ghcr.io/immich-app/immich-server
           tag: v1.139.2
         env:
-          TZ: Asia/Singapore
+          TZ: America/Los_Angeles
           DB_HOSTNAME: immich-postgres
           DB_PORT: 5432
           DB_USERNAME: postgres
