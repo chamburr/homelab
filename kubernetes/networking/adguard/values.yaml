@@ -13,6 +13,7 @@ controllers:
           - /opt/adguardhome/work
 service:
   main:
+    forceRename: adguard
     controller: main
     primary: true
     ports:

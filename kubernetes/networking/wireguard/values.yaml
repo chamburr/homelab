@@ -58,6 +58,7 @@ controllers:
       reloader.stakater.com/auto: "true"
 service:
   main:
+    forceRename: wireguard
     controller: main
     primary: true
     ports:
