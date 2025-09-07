@@ -49,6 +49,5 @@ persistence:
     name: headscale
     globalMounts:
       - path: /etc/headscale
-serviceaccount:
-  create: true
-  name: headscale
+serviceAccount:
+  headscale: {}
