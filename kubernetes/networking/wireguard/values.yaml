@@ -4,37 +4,10 @@ controllers:
       main:
         image:
           repository: ghcr.io/wg-easy/wg-easy
-          tag: "14"
+          tag: 15.1.0
         env:
-          PASSWORD_HASH:
-            valueFrom:
-              secretKeyRef:
-                name: wireguard
-                key: password-hash
-          WG_HOST: chamburr.xyz
-          WG_PORT: 51820
-          WG_PERSISTENT_KEEPALIVE: 25
-          WG_DEFAULT_ADDRESS: 10.8.0.x
-          WG_DEFAULT_DNS: 10.8.0.1
-          WG_ALLOWED_IPS: 0.0.0.0/0
-          WG_POST_UP: >-
-            iptables -A INPUT -m udp -p udp --dport 51820 -j ACCEPT;
-            iptables -A FORWARD -i wg0 -o eth0 -m iprange
-            --src-range 10.8.0.5-10.8.0.254 -d 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 -j DROP;
-            iptables -A FORWARD -i wg0 -o eth0 -j ACCEPT;
-            iptables -A FORWARD -i eth0 -o wg0 -j ACCEPT;
-            iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
-          WG_POST_DOWN: >-
-            iptables -D INPUT -m udp -p udp --dport 51820 -j ACCEPT;
-            iptables -A FORWARD -i wg0 -o eth0 -m iprange
-            --src-range 10.8.0.5-10.8.0.254 -d 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 -j DROP;
-            iptables -D FORWARD -i wg0 -o eth0 -j ACCEPT;
-            iptables -D FORWARD -i eth0 -o wg0 -j ACCEPT;
-            iptables -t nat -D POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
-
-            MTU = 1420
-          UI_TRAFFIC_STATS: true
-          UI_CHART_TYPE: 2
+          INSECURE: true
+          DISABLE_IPV6: true
         securityContext:
           capabilities:
             add:
@@ -54,8 +27,6 @@ controllers:
           - -T30
           - udp-listen:53,fork,reuseaddr
           - udp:adguard-dns.networking:53
-    annotations:
-      reloader.stakater.com/auto: "true"
 service:
   main:
     forceRename: wireguard

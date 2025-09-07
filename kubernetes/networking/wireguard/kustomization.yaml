@@ -9,4 +9,3 @@ helmCharts:
     valuesFile: values.yaml
 resources:
   - pvc.yaml
-  - secret.yaml
