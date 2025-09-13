@@ -7,7 +7,7 @@ spec:
   version: 1.11.1
   concurrency: 1
   exclusive: true
-  postCompleteDelay: 10m
+  postCompleteDelay: 5m
   nodeSelector:
     matchExpressions:
       - key: feature.node.kubernetes.io/system-os_release.ID
