@@ -8,5 +8,6 @@ kubernetes_packages:
   - kubernetes-cli
   - kustomize
   - talosctl
+  - velero
 
 kubernetes_script: https://raw.githubusercontent.com/chamburr/homelab/main/scripts/deploy.sh

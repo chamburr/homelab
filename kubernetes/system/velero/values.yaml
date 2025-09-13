@@ -1,0 +1,65 @@
+annotations:
+  secret.reloader.stakater.com/reload: velero
+initContainers:
+  - name: velero-plugin-for-aws
+    image: velero/velero-plugin-for-aws:v1.12.2
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+      - mountPath: /target
+        name: plugins
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  prometheusRule:
+    enabled: true
+    spec:
+      - alert: VeleroBackupFailed
+        annotations:
+          message: Velero backup {{ $labels.schedule }} has failed
+        expr: >-
+          increase(velero_backup_failure_total{schedule!=""}[25m]) > 0 or
+          increase(velero_backup_partial_failure_total{schedule!=""}[25m]) > 0
+        for: 15m
+        labels:
+          severity: warning
+      - alert: VeleroNoNewBackup
+        annotations:
+          message: Velero backup {{ $labels.schedule }} has not run successfuly in the last 30h
+        expr: >-
+          (rate(velero_backup_last_successful_timestamp{schedule!=""}[15m]) <= bool 0 or
+          absent(velero_backup_last_successful_timestamp{schedule!=""})) == 1
+        for: 30h
+        labels:
+          severity: critical
+kubectl:
+  image:
+    repository: docker.io/bitnamilegacy/kubectl
+    tag: 1.33.4
+configuration:
+  backupStorageLocation:
+    - name: default
+      provider: aws
+      bucket: chamburr-homelab
+      default: true
+      credential:
+        name: velero
+        key: __cloud
+      config:
+        region: us-west-004
+        s3ForcePathStyle: true
+        s3Url: https://s3.us-west-004.backblazeb2.com
+  volumeSnapshotLocation:
+    - name: default
+      provider: csi
+  defaultSnapshotMoveData: true
+  features: EnableCSI
+  namespace: system
+deployNodeAgent: true
+schedules:
+  test:
+    schedule: "*/10 * * * *"
+    template:
+      ttl: 1h
+      includedNamespaces:
+        - automation
