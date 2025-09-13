@@ -52,12 +52,12 @@ configuration:
   volumeSnapshotLocation:
     - name: default
       provider: csi
-  defaultSnapshotMoveData: true
   features: EnableCSI
   namespace: system
 deployNodeAgent: true
-schedules:
-  daily:
-    schedule: "0 11 * * *"
-    template:
-      ttl: 168h
+# schedules:
+#   daily:
+#     schedule: "0 11 * * *"
+#     template:
+#       ttl: 168h
+#       snapshotMoveData: true
