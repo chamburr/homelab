@@ -57,9 +57,7 @@ configuration:
   namespace: system
 deployNodeAgent: true
 schedules:
-  test:
-    schedule: "*/10 * * * *"
+  daily:
+    schedule: "0 11 * * *"
     template:
-      ttl: 1h
-      includedNamespaces:
-        - automation
+      ttl: 168h
