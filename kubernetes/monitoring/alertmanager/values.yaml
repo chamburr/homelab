@@ -18,6 +18,9 @@ controllers:
           tag: 0.5.0
         args:
           - --config=/etc/alertmanager/ntfy.scfg
+    pod:
+      securityContext:
+        fsGroup: 65534
     annotations:
       reloader.stakater.com/auto: "true"
 service:
