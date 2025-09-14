@@ -57,9 +57,9 @@ configuration:
   extraArgs:
     - --backup-repository-configmap=velero-backup-repository
 deployNodeAgent: true
-# schedules:
-#   daily:
-#     schedule: "0 11 * * *"
-#     template:
-#       ttl: 168h
-#       snapshotMoveData: true
+schedules:
+  daily:
+    schedule: "0 11 * * *"
+    template:
+      ttl: 168h
+      snapshotMoveData: true
