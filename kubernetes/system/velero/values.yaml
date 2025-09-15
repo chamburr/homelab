@@ -16,16 +16,16 @@ metrics:
     spec:
       - alert: VeleroBackupFailed
         annotations:
-          message: Velero backup {{ $labels.schedule }} has failed
+          summary: Velero backup has failed
         expr: >-
-          increase(velero_backup_failure_total{schedule!=""}[25m]) > 0 or
-          increase(velero_backup_partial_failure_total{schedule!=""}[25m]) > 0
+          increase(velero_backup_failure_total{schedule!=""}[1h]) > bool 0 or
+          increase(velero_backup_partial_failure_total{schedule!=""}[1h]) > bool 0
         for: 15m
         labels:
           severity: warning
       - alert: VeleroNoNewBackup
         annotations:
-          message: Velero backup {{ $labels.schedule }} has not run successfuly in the last 30h
+          summary: Velero backup has not run successfully in the last 30h
         expr: >-
           (rate(velero_backup_last_successful_timestamp{schedule!=""}[15m]) <= bool 0 or
           absent(velero_backup_last_successful_timestamp{schedule!=""})) == 1
