@@ -60,7 +60,7 @@ configuration:
 deployNodeAgent: true
 schedules:
   daily:
-    schedule: "0 11 * * *"
+    schedule: 0 11 * * *
     template:
       ttl: 168h
       snapshotMoveData: true
