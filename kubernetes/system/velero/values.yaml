@@ -18,8 +18,8 @@ metrics:
         annotations:
           summary: Velero backup has failed
         expr: >-
-          increase(velero_backup_failure_total{schedule!=""}[1h]) > bool 0 or
-          increase(velero_backup_partial_failure_total{schedule!=""}[1h]) > bool 0
+          sum(increase(velero_backup_failure_total{schedule!=""}[1h]) +
+          increase(velero_backup_partial_failure_total{schedule!=""}[1h])) > bool 0
         for: 15m
         labels:
           severity: warning
