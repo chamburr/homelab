@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: docker.io/freshrss/freshrss
-          tag: 1.27.0
+          tag: 1.27.1
         env:
           CRON_MIN: 0,30
 service:
