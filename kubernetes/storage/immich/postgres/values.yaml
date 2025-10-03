@@ -3,14 +3,8 @@ controllers:
     containers:
       main:
         image:
-          repository: ghcr.io/tensorchord/pgvecto-rs
-          tag: pg16-v0.3.0
-        args:
-          - postgres
-          - -c
-          - shared_preload_libraries=vectors.so
-          - -c
-          - search_path="$user", public, vectors
+          repository: ghcr.io/immich-app/postgres
+          tag: 16-vectorchord0.3.0-pgvectors0.3.0
         env:
           PGDATA: /var/lib/postgresql/data/pgdata
           POSTGRES_USER: postgres
