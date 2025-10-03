@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/immich-app/postgres
-          tag: 16-vectorchord0.3.0-pgvectors0.3.0
+          tag: 17-vectorchord0.4.3
         env:
           PGDATA: /var/lib/postgresql/data/pgdata
           POSTGRES_USER: postgres
