@@ -7,6 +7,8 @@ configOverride: |
 monitoring:
   enabled: true
   createPrometheusRules: true
+cephImage:
+  imagePullPolicy: IfNotPresent
 cephClusterSpec:
   dashboard:
     ssl: false
