@@ -6,7 +6,6 @@ controllers:
           repository: docker.io/library/postgres
           tag: 18.0-alpine
         env:
-          PGDATA: /var/lib/postgresql/data/pgdata
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD:
             valueFrom:
@@ -27,4 +26,4 @@ persistence:
   data:
     existingClaim: nextcloud-postgres
     globalMounts:
-      - path: /var/lib/postgresql/data
+      - path: /var/lib/postgresql
