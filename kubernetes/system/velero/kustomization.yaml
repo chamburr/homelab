@@ -9,5 +9,4 @@ helmCharts:
     includeCRDs: true
     valuesFile: values.yaml
 resources:
-  - configmap.yaml
   - secret.yaml

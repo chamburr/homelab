@@ -55,8 +55,6 @@ configuration:
       provider: csi
   features: EnableCSI
   namespace: system
-  extraArgs:
-    - --backup-repository-configmap=velero-backup-repository
 deployNodeAgent: true
 schedules:
   daily:
