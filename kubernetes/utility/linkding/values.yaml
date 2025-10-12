@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: docker.io/sissbruecker/linkding
-          tag: 1.44.0-alpine
+          tag: 1.44.1-alpine
 service:
   main:
     controller: main
