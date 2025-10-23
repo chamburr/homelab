@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: docker.io/louislam/uptime-kuma
-          tag: 1.23.17
+          tag: 2.0.2
 service:
   main:
     controller: main
