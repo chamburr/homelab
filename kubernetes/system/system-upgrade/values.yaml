@@ -6,7 +6,7 @@ controllers:
       main:
         image:
           repository: docker.io/rancher/system-upgrade-controller
-          tag: v0.17.0
+          tag: v0.18.0
         env:
           SYSTEM_UPGRADE_JOB_BACKOFF_LIMIT: 99
           SYSTEM_UPGRADE_JOB_PRIVILEGED: false
