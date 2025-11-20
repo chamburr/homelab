@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: docker.io/ollama/ollama
-          tag: 0.12.11
+          tag: 0.13.0
 service:
   main:
     controller: main
