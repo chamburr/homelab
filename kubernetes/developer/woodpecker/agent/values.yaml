@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: docker.io/woodpeckerci/woodpecker-agent
-          tag: v3.11.0-alpine
+          tag: v3.12.0-alpine
         env:
           WOODPECKER_SERVER: woodpecker:9000
           WOODPECKER_MAX_WORKFLOWS: 10
