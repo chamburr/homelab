@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/n8n-io/n8n
-          tag: 1.122.4
+          tag: 1.123.0
         env:
           N8N_PORT: 5678
           N8N_PROTOCOL: https
