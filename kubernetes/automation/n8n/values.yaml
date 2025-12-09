@@ -6,17 +6,16 @@ controllers:
           repository: ghcr.io/n8n-io/n8n
           tag: 2.0.0
         env:
+          N8N_EDITOR_BASE_URL: https://n8n.chamburr.xyz
           N8N_PORT: 5678
           N8N_PROTOCOL: https
-          WEBHOOK_URL: https://n8n.chamburr.xyz
-          N8N_EDITOR_BASE_URL: https://n8n.chamburr.xyz
-          N8N_TEMPLATES_ENABLED: false
           N8N_PERSONALIZATION_ENABLED: false
           N8N_VERSION_NOTIFICATIONS_ENABLED: false
           N8N_DIAGONISTICS_ENABLED: false
           N8N_HIRING_BANNER_ENABLED: false
-          EXECUTIONS_DATA_PRUNE: true
-          EXECUTIONS_DATA_MAX_AGE: 24
+          N8N_PROXY_HOPS: 1
+          WEBHOOK_URL: https://n8n.chamburr.xyz
+          EXECUTIONS_DATA_MAX_AGE: 168
           GENERIC_TIMEZONE: America/Los_Angeles
     pod:
       securityContext:
