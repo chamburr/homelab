@@ -1,8 +1,6 @@
 {
-  "extends": [":semanticCommits"],
   "commitMessageTopic": "{{depName}}",
   "commitMessageExtra": "to {{newVersion}}",
-  "commitMessageSuffix": "",
   "packageRules": [
     {
       "matchPackagePatterns": ["*"],

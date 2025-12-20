@@ -4,6 +4,7 @@
     "docker:enableMajor",
     ":disableRateLimiting",
     ":disableDependencyDashboard",
+    ":semanticCommits",
     "github>chamburr/homelab//.renovate/auto-merge",
     "github>chamburr/homelab//.renovate/commit-message",
     "github>chamburr/homelab//.renovate/manager",

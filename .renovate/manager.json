@@ -5,7 +5,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "description": ["Process comments"],
+      "description": "Process comments",
       "fileMatch": ["^kubernetes/.+\\.yaml$"],
       "matchStrings": [
         "# renovate source=(?<datasource>\\S+) name=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
@@ -15,7 +15,7 @@
     },
     {
       "customType": "regex",
-      "description": ["Process github urls"],
+      "description": "Process github urls",
       "fileMatch": ["^kubernetes/.+\\.yaml$", "^scripts/.+\\.yaml$"],
       "matchStrings": [
         "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*",
