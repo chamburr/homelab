@@ -7,3 +7,15 @@ spec:
   headers:
     customResponseHeaders:
       strict-transport-security: max-age=15552000; includeSubDomains; preload
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: global-internal-only
+  namespace: networking
+spec:
+  ipAllowList:
+    sourceRange:
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16

@@ -3,6 +3,9 @@ fullnameOverride: dashboard
 app:
   ingress:
     enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: >-
+        networking-global-internal-only@kubernetescrd
     ingressClassName: traefik
     hosts:
       - kubernetes.chamburr.xyz

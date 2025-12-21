@@ -66,7 +66,7 @@ hubble:
       enabled: true
       annotations:
         traefik.ingress.kubernetes.io/router.middlewares: >-
-          kube-system-cilium-auth@kubernetescrd
+          networking-global-internal-only@kubernetescrd,kube-system-cilium-auth@kubernetescrd
       className: traefik
       hosts:
         - cilium.chamburr.xyz

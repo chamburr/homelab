@@ -24,6 +24,9 @@ server:
       enabled: true
   ingress:
     enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: >-
+        networking-global-internal-only@kubernetescrd
     ingressClassName: traefik
 repoServer:
   metrics:

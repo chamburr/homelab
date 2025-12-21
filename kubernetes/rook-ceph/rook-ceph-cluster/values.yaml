@@ -51,6 +51,9 @@ cephClusterSpec:
       osdsPerDevice: "1"
 ingress:
   dashboard:
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: >-
+        networking-global-internal-only@kubernetescrd
     ingressClassName: traefik
     host:
       name: ceph.chamburr.xyz

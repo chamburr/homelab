@@ -4,6 +4,9 @@ server:
   updateStrategyType: RollingUpdate
   ingress:
     enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: >-
+        networking-global-internal-only@kubernetescrd
     ingressClassName: traefik
     hosts:
       - host: vault.chamburr.xyz

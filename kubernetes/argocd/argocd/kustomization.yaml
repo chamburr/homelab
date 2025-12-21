@@ -9,5 +9,6 @@ helmCharts:
     includeCRDs: true
     valuesFile: values.yaml
 resources:
+  - ingress.yaml
   - prometheusrule.yaml
   - secret.yaml

@@ -16,6 +16,9 @@ kind: Ingress
 metadata:
   name: traefik-openmediavault
   namespace: networking
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: >-
+      networking-global-internal-only@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
