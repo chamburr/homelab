@@ -19,7 +19,7 @@ metrics:
           summary: Velero backup has failed
         expr: >-
           sum(increase(velero_backup_failure_total{schedule!=""}[1h]) +
-          increase(velero_backup_partial_failure_total{schedule!=""}[1h])) > bool 0
+          increase(velero_backup_partial_failure_total{schedule!=""}[1h])) > 0
         for: 15m
         labels:
           severity: warning
@@ -27,7 +27,7 @@ metrics:
         annotations:
           summary: Velero backup has not run successfully in the last 30h
         expr: >-
-          (rate(velero_backup_last_successful_timestamp{schedule!=""}[15m]) <= bool 0 or
+          (rate(velero_backup_last_successful_timestamp{schedule!=""}[15m]) <= 0 or
           absent(velero_backup_last_successful_timestamp{schedule!=""})) == 1
         for: 30h
         labels:
