@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/n8n-io/n8n
-          tag: 2.2.1
+          tag: 2.2.2
         env:
           N8N_EDITOR_BASE_URL: https://n8n.chamburr.xyz
           N8N_PORT: 5678
