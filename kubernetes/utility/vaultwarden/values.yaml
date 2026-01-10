@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/dani-garcia/vaultwarden
-          tag: 1.35.1
+          tag: 1.35.2
         env:
           DATA_FOLDER: data
           DOMAIN: https://bitwarden.chamburr.xyz
