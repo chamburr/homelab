@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/wg-easy/wg-easy
-          tag: 15.1.0
+          tag: 15.2.1
         env:
           INSECURE: true
           DISABLE_IPV6: true
