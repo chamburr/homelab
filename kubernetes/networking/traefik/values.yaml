@@ -27,16 +27,18 @@ ports:
     expose:
       internal: true
   web:
-    redirections:
-      entryPoint:
-        to: websecure
-        scheme: https
-        permanent: true
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
   websecure:
-    tls:
-      options: default
-    middlewares:
-      - networking-global-headers@kubernetescrd
+    http:
+      tls:
+        options: default
+      middlewares:
+        - networking-global-headers@kubernetescrd
 tlsOptions:
   default:
     minVersion: VersionTLS10
