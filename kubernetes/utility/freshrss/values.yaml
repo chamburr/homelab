@@ -18,7 +18,7 @@ ingress:
   main:
     className: traefik
     hosts:
-      - host: freshrss.chamburr.xyz
+      - host: rss.chamburr.xyz
         paths:
           - path: /
             pathType: Prefix

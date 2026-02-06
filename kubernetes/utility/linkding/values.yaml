@@ -16,7 +16,7 @@ ingress:
   main:
     className: traefik
     hosts:
-      - host: linkding.chamburr.xyz
+      - host: links.chamburr.xyz
         paths:
           - path: /
             pathType: Prefix
