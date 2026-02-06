@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: woodpecker-redirect
+  namespace: developer
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: developer-woodpecker-redirect@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: woodpecker.chamburr.xyz
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: woodpecker
+                port:
+                  number: 8000

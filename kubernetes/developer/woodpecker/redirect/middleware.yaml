@@ -1,0 +1,9 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: woodpecker-redirect
+  namespace: developer
+spec:
+  redirectRegex:
+    regex: ^https://woodpecker\.chamburr.xyz(/.*)?$
+    replacement: https://ci.chamburr.xyz${1}

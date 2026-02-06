@@ -6,7 +6,7 @@ controllers:
           repository: docker.io/woodpeckerci/woodpecker-server
           tag: v3.13.0-alpine
         env:
-          WOODPECKER_HOST: https://woodpecker.chamburr.xyz
+          WOODPECKER_HOST: https://ci.chamburr.xyz
           WOODPECKER_DISABLE_VERSION_CHECK: true
           WOODPECKER_ADMIN:
             valueFrom:
@@ -44,7 +44,7 @@ ingress:
   main:
     className: traefik
     hosts:
-      - host: woodpecker.chamburr.xyz
+      - host: ci.chamburr.xyz
         paths:
           - path: /
             pathType: Prefix
