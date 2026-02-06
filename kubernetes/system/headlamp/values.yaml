@@ -1,0 +1,17 @@
+config:
+  oidc:
+    secret:
+      create: false
+serviceAccount:
+  name: headlamp
+ingress:
+  enabled: true
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: >-
+      networking-global-internal-only@kubernetescrd
+  ingressClassName: traefik
+  hosts:
+    - host: headlamp.chamburr.xyz
+      paths:
+        - path: /
+          type: Prefix
