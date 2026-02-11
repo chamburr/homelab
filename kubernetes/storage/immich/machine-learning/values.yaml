@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/immich-app/immich-machine-learning
-          tag: v2.5.5
+          tag: v2.5.6
         env:
           TRANSFORMERS_CACHE: /cache
 service:
