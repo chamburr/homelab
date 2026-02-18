@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 helmCharts:
   - name: snapshot-controller
-    version: 5.0.2
+    version: 5.0.3
     repo: https://piraeus.io/helm-charts
     releaseName: snapshot-controller
     namespace: system
