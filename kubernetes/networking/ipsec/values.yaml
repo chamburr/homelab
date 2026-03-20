@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: quay.io/hwdsl2/ipsec-vpn-server
-          tag: latest@sha256:06b1446c427531e0e947ec0b5113ae4042218bc6d32b2e22f4bba28d30e5281c
+          tag: latest@sha256:4ad632416cea6bfa225185146d1821d340d92d490c528a361cc482f0ce0d1fd3
         args:
           - /bin/sh
           - -c
