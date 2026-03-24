@@ -32,10 +32,6 @@ metrics:
         for: 30h
         labels:
           severity: critical
-kubectl:
-  image:
-    repository: docker.io/bitnamilegacy/kubectl
-    tag: 1.33.4
 configuration:
   backupStorageLocation:
     - name: default
