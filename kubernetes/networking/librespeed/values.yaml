@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/librespeed/speedtest
-          tag: 5.5.1
+          tag: 6.0.0
         env:
           MODE: standalone
 service:
