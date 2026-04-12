@@ -7,6 +7,7 @@ controllers:
           tag: 6.0.0
         env:
           MODE: standalone
+          USE_NEW_DESIGN: true
 service:
   main:
     controller: main
