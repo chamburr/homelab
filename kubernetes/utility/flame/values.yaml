@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/fdarveau/flame
-          tag: latest@sha256:28819eb04625db802d7948f3afc780c5cbdbeacd1b4e167404437a5d6c283527
+          tag: latest@sha256:ccd4718f42871d5c9803e269e2201ab7879faeafe2274ce59a8a309a181b1862
         env:
           PASSWORD:
             valueFrom:
