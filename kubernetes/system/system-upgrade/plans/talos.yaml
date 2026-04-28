@@ -24,7 +24,7 @@ spec:
       ignoreUpdates: true
   serviceAccountName: system-upgrade
   upgrade:
-    image: ghcr.io/siderolabs/talosctl:v1.12.7
+    image: ghcr.io/siderolabs/talosctl:v1.13.0
     args:
       - --nodes=$(SYSTEM_UPGRADE_NODE_NAME)
       - upgrade
