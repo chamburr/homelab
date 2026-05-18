@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: docker.io/kutt/kutt
-          tag: v3.2.3
+          tag: v3.2.5
         env:
           SITE_NAME: Kutt
           DEFAULT_DOMAIN: s.chamburr.xyz
