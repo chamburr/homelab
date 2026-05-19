@@ -24,6 +24,7 @@ controllers:
               fieldRef:
                 fieldPath: metadata.name
     pod:
+      automountServiceAccountToken: true
       shareProcessNamespace: true
     annotations:
       reloader.stakater.com/auto: "true"
@@ -50,5 +51,3 @@ persistence:
     name: headscale
     globalMounts:
       - path: /etc/headscale
-serviceAccount:
-  headscale: {}
