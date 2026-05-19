@@ -18,6 +18,7 @@ controllers:
               fieldRef:
                 fieldPath: spec.nodeName
     pod:
+      automountServiceAccountToken: true
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -29,5 +30,3 @@ controllers:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
           effect: NoSchedule
-serviceAccount:
-  system-upgrade: {}
