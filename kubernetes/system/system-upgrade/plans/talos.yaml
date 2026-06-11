@@ -29,5 +29,5 @@ spec:
       - --nodes=$(SYSTEM_UPGRADE_NODE_NAME)
       - upgrade
       - --image=ghcr.io/siderolabs/installer:v$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
-      - --stage
+      - --drain=false
       - --wait=false
