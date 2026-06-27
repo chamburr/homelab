@@ -4,9 +4,8 @@ providers:
   kubernetesIngress:
     allowExternalNameServices: true
     ingressClass: traefik
-logs:
-  access:
-    enabled: true
+accessLog:
+  enabled: true
 metrics:
   prometheus:
     service:
