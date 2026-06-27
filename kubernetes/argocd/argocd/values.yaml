@@ -1,5 +1,7 @@
 global:
   domain: argocd.chamburr.xyz
+  networkPolicy:
+    create: false
 configs:
   cm:
     statusbadge.enabled: true
