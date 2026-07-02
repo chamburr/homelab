@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: ghcr.io/juanfont/headscale
-          tag: v0.29.1
+          tag: v0.29.2
         args:
           - serve
       ui:
