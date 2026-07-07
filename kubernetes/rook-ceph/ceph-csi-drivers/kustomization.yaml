@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 helmCharts:
   - name: ceph-csi-drivers
-    version: v1.20.1
+    version: 1.0.3
     repo: https://ceph.github.io/ceph-csi-operator
     releaseName: ceph-csi-drivers
     namespace: rook-ceph
