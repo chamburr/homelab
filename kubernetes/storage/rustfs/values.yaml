@@ -1,0 +1,58 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: docker.io/rustfs/rustfs
+          tag: 1.0.0-beta.8
+        args:
+          - /data
+        env:
+          RUSTFS_CONSOLE_ENABLE: true
+          RUSTFS_ACCESS_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: rustfs
+                key: username
+          RUSTFS_SECRET_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: rustfs
+                key: password
+    pod:
+      securityContext:
+        fsGroup: 10001
+    annotations:
+      reloader.stakater.com/auto: "true"
+service:
+  main:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 9000
+      http-console:
+        port: 9001
+ingress:
+  main:
+    className: traefik
+    hosts:
+      - host: s3-rustfs.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+      - host: rustfs.chamburr.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http-console
+persistence:
+  data:
+    existingClaim: rustfs
+    globalMounts:
+      - path: /data
