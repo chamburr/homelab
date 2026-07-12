@@ -18,6 +18,20 @@ spec:
                 name: headscale
                 port:
                   number: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: headscale-admin
+  namespace: networking
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: networking-global-internal-only@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: tailscale.chamburr.xyz
+      http:
+        paths:
           - path: /admin
             pathType: Prefix
             backend:

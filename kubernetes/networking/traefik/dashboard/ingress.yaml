@@ -5,7 +5,7 @@ metadata:
   namespace: networking
   annotations:
     traefik.ingress.kubernetes.io/router.middlewares: >-
-      networking-traefik-auth@kubernetescrd,networking-traefik-redirect@kubernetescrd
+      networking-traefik-auth@kubernetescrd,networking-traefik-redirect@kubernetescrd,networking-global-internal-only@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:

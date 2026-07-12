@@ -57,6 +57,9 @@ service:
 ingress:
   main:
     className: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.middlewares: >-
+        networking-global-internal-only@kubernetescrd
     hosts:
       - host: photos.chamburr.xyz
         paths:

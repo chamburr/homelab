@@ -59,7 +59,7 @@ prometheus:
     ingressClassName: traefik
     annotations:
       traefik.ingress.kubernetes.io/router.middlewares: >-
-        monitoring-prometheus-auth@kubernetescrd
+        monitoring-prometheus-auth@kubernetescrd,networking-global-internal-only@kubernetescrd
     hosts:
       - prometheus.chamburr.xyz
     pathType: Prefix
