@@ -1,0 +1,20 @@
+apiVersion: tuppr.home-operations.com/v1alpha1
+kind: KubernetesUpgrade
+metadata:
+  name: kubernetes
+spec:
+  kubernetes:
+    # renovate source=docker name=ghcr.io/siderolabs/kubelet
+    version: v1.36.2
+  healthChecks:
+    - apiVersion: v1
+      kind: Node
+      expr: status.conditions.exists(c, c.type == "Ready" && c.status == "True")
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      expr: status.ceph.health in ['HEALTH_OK']
+  maintenance:
+    windows:
+      - start: 0 4 * * *
+        duration: 1h
+        timezone: America/Los_Angeles

@@ -1,0 +1,20 @@
+apiVersion: tuppr.home-operations.com/v1alpha1
+kind: TalosUpgrade
+metadata:
+  name: talos
+spec:
+  talos:
+    # renovate source=docker name=ghcr.io/siderolabs/installer
+    version: v1.13.6
+  healthChecks:
+    - apiVersion: v1
+      kind: Node
+      expr: status.conditions.exists(c, c.type == "Ready" && c.status == "True")
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      expr: status.ceph.health in ['HEALTH_OK']
+  maintenance:
+    windows:
+      - start: 0 1 * * *
+        duration: 3h
+        timezone: America/Los_Angeles
