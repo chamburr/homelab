@@ -41,7 +41,7 @@ ingress:
   main:
     className: traefik
     hosts:
-      - host: s3.chamburr.xyz
+      - host: s3-old.chamburr.xyz
         paths:
           - path: /
             pathType: Prefix
