@@ -9,6 +9,5 @@ helmCharts:
     valuesFile: values.yaml
 resources:
   - agent
-  - redirect
   - pvc.yaml
   - secret.yaml
