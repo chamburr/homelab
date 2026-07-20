@@ -9,5 +9,6 @@ helmCharts:
     valuesFile: values.yaml
 resources:
   - agent
+  - ingress.yaml
   - pvc.yaml
   - secret.yaml
