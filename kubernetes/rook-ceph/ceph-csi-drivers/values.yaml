@@ -11,6 +11,7 @@ drivers:
   rbd:
     enabled: true
     name: rook-ceph.rbd.csi.ceph.com
+    snapshotPolicy: volumeSnapshot
   cephfs:
     enabled: false
     name: rook-ceph.cephfs.csi.ceph.com
