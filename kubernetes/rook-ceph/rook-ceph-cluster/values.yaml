@@ -11,6 +11,23 @@ monitoring:
 cephImage:
   imagePullPolicy: IfNotPresent
 cephClusterSpec:
+  security:
+    cephx:
+      daemon:
+        keyRotationPolicy: KeyGeneration
+        keyGeneration: 2
+      csi:
+        # TODO: AES256K requires kernel 7.0+
+        keyType: aes
+  healthCheck:
+    muteHealthWarning:
+      # Unmute once all keys have been rotated to AES256K
+      AUTH_INSECURE_CLIENT_KEY_TYPE:
+        policy: mute
+      AUTH_INSECURE_KEYS_ALLOWED:
+        policy: mute
+      AUTH_INSECURE_KEYS_CREATABLE:
+        policy: mute
   dashboard:
     ssl: false
   network:
