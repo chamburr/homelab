@@ -30,6 +30,8 @@ cephClusterSpec:
         policy: mute
   dashboard:
     ssl: false
+    prometheusEndpoint: http://prometheus-prometheus.monitoring.svc.cluster.local:9090
+    prometheusEndpointSSLVerify: false
   network:
     connections:
       requireMsgr2: true
