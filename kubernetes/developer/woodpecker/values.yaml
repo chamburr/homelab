@@ -6,6 +6,7 @@ controllers:
           repository: docker.io/woodpeckerci/woodpecker-server
           tag: v3.18.1-alpine
         env:
+          TZ: America/Los_Angeles
           WOODPECKER_HOST: https://ci.chamburr.xyz
           WOODPECKER_DISABLE_VERSION_CHECK: true
           WOODPECKER_ADMIN:
