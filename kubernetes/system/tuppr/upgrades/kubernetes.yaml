@@ -15,6 +15,6 @@ spec:
       expr: status.ceph.health in ['HEALTH_OK']
   maintenance:
     windows:
-      - start: 0 4 * * *
+      - start: 0 13 * * *
         duration: 1h
-        timezone: America/Los_Angeles
+        timezone: UTC
