@@ -14,7 +14,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: haste-clean
-              image: docker.io/library/alpine:3.24.1
+              image: docker.io/library/alpine:3.24.2
               args:
                 - /bin/sh
                 - -c
