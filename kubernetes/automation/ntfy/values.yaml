@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: docker.io/binwiederhier/ntfy
-          tag: v2.30.0
+          tag: v2.31.1
         args:
           - serve
         env:
