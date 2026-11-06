@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: docker.io/library/alpine
-          tag: 3.24.3
+          tag: 3.24.4
         command:
           - /bin/sh
           - /app/entrypoint.sh
